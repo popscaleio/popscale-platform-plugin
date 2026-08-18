@@ -1,0 +1,13 @@
+interface:
+  display_name: "Safe Journey Creation"
+  short_description: "Create and publish Popscale journeys safely"
+  default_prompt: "Use $safe-journey-creation to create a validated Popscale learning journey from approved company knowledge."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "popscale-platform"
+      description: "Company-scoped Popscale tools and Journey Review MCP App"
+      transport: "streamable_http"
+      url: "https://app.popscale.io/mcp/"
+policy:
+  allow_implicit_invocation: true

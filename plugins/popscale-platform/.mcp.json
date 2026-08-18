@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "popscale-platform": {
+      "type": "http",
+      "url": "https://app.popscale.io/mcp/"
+    },
+    "popscale-docs": {
+      "type": "http",
+      "url": "https://docs.popscale.io/mcp"
+    }
+  }
+}

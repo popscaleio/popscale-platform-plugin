@@ -1,0 +1,20 @@
+{
+  "name": "popscale",
+  "interface": {
+    "displayName": "Popscale"
+  },
+  "plugins": [
+    {
+      "name": "popscale-platform",
+      "source": {
+        "source": "local",
+        "path": "./plugins/popscale-platform"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

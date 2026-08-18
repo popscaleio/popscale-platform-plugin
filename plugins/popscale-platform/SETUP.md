@@ -1,0 +1,100 @@
+---
+name: setup
+description: Install and verify the public Popscale Docs MCP and the authenticated Popscale Platform MCP in OpenAI or Claude hosts.
+---
+
+# Set Up Popscale Platform
+
+The plugin packages both remote HTTP MCP servers from its root `.mcp.json`:
+
+```text
+popscale-docs     https://docs.popscale.io/mcp      No auth; public read-only docs
+popscale-platform https://app.popscale.io/mcp/      OAuth; company-scoped product
+```
+
+Keep the product URL's trailing slash and keep the docs URL without one. Do not
+add headers, environment variables, API keys, or bearer tokens to the docs
+server. Do not ask a customer to create or paste a product bearer token.
+
+## Install the package
+
+For Codex, install the public repository marketplace:
+
+```bash
+codex plugin marketplace add popscaleio/popscale-platform-plugin
+codex plugin add popscale-platform@popscale
+```
+
+The Codex manifest points to `./.mcp.json` and `./skills/`, so one plugin install
+supplies both servers and both skills. Start a new task after installation.
+
+That one-install contract applies to repository/local marketplace distribution.
+OpenAI's public submission form accepts one primary MCP server URL, and uploaded
+skills may declare additional MCP dependencies. The intended public package
+submits **Popscale Platform** as its primary URL and keeps **Popscale Docs** in
+the routing skill dependency metadata. Validate a clean directory install before
+release. If OpenAI does not provision the dependency, connect a separate
+**Popscale Docs** entry as the documented fallback; never claim the routing
+workflow unless both servers are present.
+
+For Claude Code, add and install the public repository marketplace from an
+interactive session:
+
+```text
+/plugin marketplace add popscaleio/popscale-platform-plugin
+/plugin install popscale-platform@popscale
+/reload-plugins
+/mcp
+```
+
+Claude discovers `.mcp.json` and `skills/` at the plugin root. Run
+`/reload-plugins` or restart Claude Code after an update so changed MCP
+connections are reloaded.
+
+Claude.ai, Desktop, and Cowork users can add the GitHub marketplace and install
+the complete package from **Customize → Plugins**. For connector-only testing,
+add each endpoint as its own custom connector; never label the public docs
+connector as the authenticated product connector.
+
+## Authenticate product access
+
+The first `popscale-platform` use opens Popscale authorization:
+
+1. Sign in to Popscale in the browser.
+2. Select the intended company and approve the requested scopes.
+3. After redirecting to the host, call `current_user` and `capabilities`.
+4. Confirm the returned company is the company the user intended to use.
+5. If authorization is unavailable, ask a Popscale company admin to enable the
+   company feature and the user's MCP access.
+
+`popscale-docs` must work without this flow and must never receive the product
+OAuth session or customer data.
+
+## Verify both servers
+
+1. Ask for a public docs overview. Confirm the host uses `popscale-docs` without
+   opening OAuth.
+2. Search for “Popscale MCP plugin,” retrieve the returned canonical page with
+   `get_pages`, and confirm the response includes document `status` metadata.
+3. Ask which company is connected. Confirm the host uses `popscale-platform`,
+   opens OAuth when needed, and returns the intended company.
+4. Ask a mixed question such as “Explain journeys, then list ours.” Confirm the
+   host clearly separates the public explanation from the authenticated lookup.
+
+## Troubleshoot
+
+- If neither server appears, reinstall/reload the plugin and verify the shared
+  `.mcp.json` contains both named entries.
+- If docs prompts open OAuth, confirm they route to `popscale-docs` and that its
+  configuration contains only `type` and `url`.
+- If a docs page is missing, run `get_docs_overview` or `search_docs` before
+  `get_pages`; do not invent or guess a path.
+- If product tools return an authorization challenge, reconnect
+  `popscale-platform`; do not copy its credentials to `popscale-docs`.
+- If the MCP App does not render, continue from the product server's structured
+  result. App support is not required for safe product actions.
+
+Public docs are maintained in the separate `popscale-docs` repository through a
+branch and PR. This plugin has no documentation write tool. To disconnect product
+access completely, remove the product connector in the host and revoke the
+corresponding connected MCP session in Popscale.
