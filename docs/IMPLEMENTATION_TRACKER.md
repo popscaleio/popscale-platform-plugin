@@ -18,6 +18,7 @@ Last updated: 2026-08-18
 - [x] Production custom-connector flow verified manually in Claude Cowork.
 - [x] Migration review: no database or migration changes.
 - [x] Deployment review: repository publication does not trigger maintenance.
+- [x] Official Popscale logo packaged and covered by manifest contract tests.
 
 ## Public repository release
 
@@ -27,6 +28,7 @@ Last updated: 2026-08-18
 - [x] `v1.0.0` release and Claude archive published.
 - [x] Clean Codex install from public GitHub marketplace verified.
 - [x] Clean Claude marketplace install from public GitHub repository verified.
+- [ ] `v1.0.1` logo patch and archive published.
 
 ## Manual directory gates
 

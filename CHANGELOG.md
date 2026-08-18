@@ -2,6 +2,14 @@
 
 All notable changes to the Popscale Platform plugin are documented here.
 
+## [1.0.1] - 2026-08-18
+
+### Added
+
+- Packaged the official Popscale symbol inside the plugin archive.
+- Added Codex composer icon, logo, and brand-color metadata.
+- Added release validation that rejects missing or invalid logo assets.
+
 ## [1.0.0] - 2026-08-18
 
 ### Added

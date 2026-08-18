@@ -20,6 +20,7 @@ contains no product actions or customer data.
 - `.claude-plugin/plugin.json`: Claude plugin identity and cache version; Claude
   discovers `.mcp.json` and `skills/` from the same plugin root.
 - `.mcp.json`: both production remote-MCP connections.
+- `assets/icon.png`: packaged Popscale symbol used by Codex plugin surfaces.
 - `skills/route-popscale-requests/`: portable routing policy for public
   documentation versus authenticated product work.
 - `skills/safe-journey-creation/`: authenticated journey workflow used by both

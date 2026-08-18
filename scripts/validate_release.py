@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PLUGIN = ROOT / "plugins" / "popscale-platform"
-EXPECTED_VERSION = "1.0.0"
+EXPECTED_VERSION = "1.0.1"
 EXPECTED_SERVERS = {
     "popscale-platform": {"type": "http", "url": "https://app.popscale.io/mcp/"},
     "popscale-docs": {"type": "http", "url": "https://docs.popscale.io/mcp"},
@@ -24,6 +24,7 @@ REQUIRED_FILES = (
     PLUGIN / ".codex-plugin" / "plugin.json",
     PLUGIN / ".claude-plugin" / "plugin.json",
     PLUGIN / ".mcp.json",
+    PLUGIN / "assets" / "icon.png",
     PLUGIN / "skills" / "route-popscale-requests" / "SKILL.md",
     PLUGIN / "skills" / "safe-journey-creation" / "SKILL.md",
     ROOT / "SECURITY.md",
@@ -101,6 +102,25 @@ def main(tag: str | None = None) -> int:
             fail("Host manifest repository metadata mismatch")
         if manifest.get("license") != "MIT":
             fail("Host manifest license metadata mismatch")
+
+    interface = codex["interface"]
+    if interface.get("brandColor") != "#4B1693":
+        fail("Codex manifest brand color mismatch")
+    for field in ("composerIcon", "logo"):
+        if interface.get(field) != "./assets/icon.png":
+            fail(f"Codex manifest {field} must reference the packaged icon")
+    icon = PLUGIN / "assets" / "icon.png"
+    icon_bytes = icon.read_bytes()
+    if icon_bytes[:8] != b"\x89PNG\r\n\x1a\n":
+        fail("Packaged icon is not a PNG file")
+    dimensions = (
+        int.from_bytes(icon_bytes[16:20], "big"),
+        int.from_bytes(icon_bytes[20:24], "big"),
+    )
+    if dimensions != (512, 512):
+        fail(f"Packaged icon must be 512x512 pixels, got {dimensions[0]}x{dimensions[1]}")
+    if icon_bytes[25] not in {4, 6}:
+        fail("Packaged icon must include an alpha channel")
 
     if "apps" in codex or (PLUGIN / ".app.json").exists():
         fail("Do not ship a placeholder app mapping before host registration")

@@ -5,7 +5,7 @@ from pathlib import Path
 
 PLUGIN_ROOT = Path(__file__).resolve().parents[1]
 REPO_ROOT = PLUGIN_ROOT.parents[1]
-EXPECTED_VERSION = "1.0.0"
+EXPECTED_VERSION = "1.0.1"
 EXPECTED_SERVERS = {
     "popscale-platform": {
         "type": "http",
@@ -68,6 +68,27 @@ class PluginPackageContractTests(unittest.TestCase):
         self.assertLessEqual(len(codex["interface"]["defaultPrompt"]), 3)
         for prompt in codex["interface"]["defaultPrompt"]:
             self.assertLessEqual(len(prompt), 128)
+
+    def test_codex_manifest_packages_popscale_logo(self):
+        codex = load_json(PLUGIN_ROOT / ".codex-plugin" / "plugin.json")
+        interface = codex["interface"]
+        self.assertEqual(interface["brandColor"], "#4B1693")
+        self.assertEqual(interface["composerIcon"], "./assets/icon.png")
+        self.assertEqual(interface["logo"], "./assets/icon.png")
+
+        icon = PLUGIN_ROOT / "assets" / "icon.png"
+        self.assertTrue(icon.is_file())
+        self.assertGreater(icon.stat().st_size, 1024)
+        icon_bytes = icon.read_bytes()
+        self.assertEqual(icon_bytes[:8], b"\x89PNG\r\n\x1a\n")
+        self.assertEqual(
+            (
+                int.from_bytes(icon_bytes[16:20], "big"),
+                int.from_bytes(icon_bytes[20:24], "big"),
+            ),
+            (512, 512),
+        )
+        self.assertIn(icon_bytes[25], {4, 6})
 
     def test_claude_manifest_has_public_release_metadata(self):
         claude = load_json(PLUGIN_ROOT / ".claude-plugin" / "plugin.json")

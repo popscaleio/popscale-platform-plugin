@@ -5,7 +5,7 @@
     "url": "https://popscale.io/"
   },
   "description": "Official Popscale plugins for public documentation and company-scoped learning and sales enablement workflows.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "plugins": [
     {
       "name": "popscale-platform",
