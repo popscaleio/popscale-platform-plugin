@@ -44,7 +44,7 @@ Inside an interactive Claude Code session:
 Authenticate `popscale-platform` from `/mcp`, or from the shell:
 
 ```bash
-claude mcp login popscale-platform
+claude mcp login plugin:popscale-platform:popscale-platform
 ```
 
 Claude Code may use an ephemeral loopback callback. The callback's scheme,

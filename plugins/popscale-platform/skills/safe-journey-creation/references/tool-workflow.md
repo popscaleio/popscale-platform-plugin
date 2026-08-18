@@ -15,9 +15,9 @@ If the required capability or scope is absent, stop before the affected action.
 ## Plan and Generation
 
 Use `generation_request_create` only when a suitable request does not already
-exist. Use `generation_request_detail`, `generation_request_steps`, and
-`generation_request_detail` to understand existing work before starting or
-retrying it. `generation_request_start`, `generation_step_retry`,
+exist. Use `generation_requests_list`, `generation_request_detail`, and
+`generation_request_steps` to discover and understand existing work before
+starting or retrying it. `generation_request_start`, `generation_step_retry`,
 `generation_request_cancel`, and `journey_plan_reconcile` are explicit
 state-changing operations.
 

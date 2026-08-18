@@ -3,8 +3,10 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -44,12 +46,24 @@ def fail(message: str) -> None:
     raise AssertionError(message)
 
 
-def main() -> int:
+def release_paths() -> list[Path]:
+    """Return tracked and non-ignored untracked files that could enter a release."""
+    result = subprocess.run(
+        ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+    )
+    return [ROOT / item.decode("utf-8") for item in result.stdout.split(b"\0") if item]
+
+
+def main(tag: str | None = None) -> int:
     for path in REQUIRED_FILES:
         if not path.is_file():
             fail(f"Required file is missing: {path.relative_to(ROOT)}")
 
-    for path in ROOT.rglob("*"):
+    package_paths = release_paths()
+    for path in package_paths:
         if path.is_symlink():
             fail(f"Symlinks are not allowed in the public package: {path.relative_to(ROOT)}")
         if path.is_file() and path.name in FORBIDDEN_NAMES:
@@ -62,6 +76,8 @@ def main() -> int:
     versions = {codex["version"], claude["version"], claude_marketplace["version"]}
     if versions != {EXPECTED_VERSION}:
         fail(f"Release versions diverge: {sorted(versions)}")
+    if tag is not None and tag != f"v{EXPECTED_VERSION}":
+        fail(f"Release tag {tag!r} does not match plugin version v{EXPECTED_VERSION}")
 
     mcp = load_json(PLUGIN / ".mcp.json")
     if mcp != {"mcpServers": EXPECTED_SERVERS}:
@@ -89,8 +105,8 @@ def main() -> int:
     if "apps" in codex or (PLUGIN / ".app.json").exists():
         fail("Do not ship a placeholder app mapping before host registration")
 
-    for path in ROOT.rglob("*"):
-        if not path.is_file() or ".git" in path.parts:
+    for path in package_paths:
+        if not path.is_file():
             continue
         if path.suffix.lower() not in {".md", ".json", ".yaml", ".yml", ".py"}:
             continue
@@ -109,8 +125,11 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--tag", help="Require this release tag to match v<manifest version>")
+    args = parser.parse_args()
     try:
-        raise SystemExit(main())
-    except (AssertionError, KeyError, json.JSONDecodeError) as exc:
+        raise SystemExit(main(tag=args.tag))
+    except (AssertionError, KeyError, json.JSONDecodeError, subprocess.CalledProcessError) as exc:
         print(f"release validation failed: {exc}", file=sys.stderr)
         raise SystemExit(1)

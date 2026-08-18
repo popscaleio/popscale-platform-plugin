@@ -125,6 +125,30 @@ class PluginPackageContractTests(unittest.TestCase):
         self.assertIn("maintenance mode", lowered_docs)
         self.assertIn("no database", lowered_docs)
 
+    def test_release_workflow_binds_tag_to_manifest_version(self):
+        workflow = (REPO_ROOT / ".github" / "workflows" / "release.yml").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn('validate_release.py --tag "$GITHUB_REF_NAME"', workflow)
+
+    def test_claude_shell_login_uses_plugin_server_namespace(self):
+        installation = (REPO_ROOT / "docs" / "INSTALLATION.md").read_text(encoding="utf-8")
+        self.assertIn(
+            "claude mcp login plugin:popscale-platform:popscale-platform",
+            installation,
+        )
+
+    def test_safe_journey_discovers_existing_generation_requests(self):
+        workflow = (
+            PLUGIN_ROOT
+            / "skills"
+            / "safe-journey-creation"
+            / "references"
+            / "tool-workflow.md"
+        ).read_text(encoding="utf-8")
+        self.assertIn("generation_requests_list", workflow)
+        self.assertEqual(workflow.count("`generation_request_detail`"), 1)
+
     def test_no_placeholder_app_mapping_is_shipped(self):
         self.assertFalse((PLUGIN_ROOT / ".app.json").exists())
         codex = load_json(PLUGIN_ROOT / ".codex-plugin" / "plugin.json")
