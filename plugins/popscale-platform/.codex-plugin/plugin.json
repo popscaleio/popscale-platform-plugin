@@ -1,6 +1,6 @@
 {
   "name": "popscale-platform",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Read public Popscale documentation and safely create, review, validate, and publish company-scoped learning journeys through separate remote MCP servers.",
   "author": {
     "name": "Popscale",
@@ -30,6 +30,9 @@
       "Write"
     ],
     "websiteURL": "https://docs.popscale.io/integrations/popscale-mcp/",
+    "brandColor": "#4B1693",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/icon.png",
     "defaultPrompt": [
       "Search the public Popscale docs for how journeys work and cite the page status.",
       "Create a safe Popscale journey from approved company knowledge and let me review it before publishing."

@@ -75,6 +75,7 @@ plugins/popscale-platform/             Shared plugin package
   .codex-plugin/plugin.json            Codex manifest
   .claude-plugin/plugin.json           Claude manifest
   .mcp.json                            Both remote MCP servers
+  assets/icon.png                      Packaged Popscale symbol
   skills/                              Portable routing and journey workflows
 ```
 

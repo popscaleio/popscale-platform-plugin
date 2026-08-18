@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "popscale-platform",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Read public Popscale documentation and safely create, review, validate, and publish company-scoped learning journeys through separate remote MCP servers.",
   "author": {
     "name": "Popscale",
