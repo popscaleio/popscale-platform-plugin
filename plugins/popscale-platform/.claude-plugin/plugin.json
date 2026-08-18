@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "popscale-platform",
+  "version": "1.0.0",
+  "description": "Read public Popscale documentation and safely create, review, validate, and publish company-scoped learning journeys through separate remote MCP servers.",
+  "author": {
+    "name": "Popscale",
+    "url": "https://popscale.io/"
+  },
+  "homepage": "https://docs.popscale.io/integrations/popscale-mcp/",
+  "repository": "https://github.com/popscaleio/popscale-platform-plugin",
+  "license": "MIT",
+  "keywords": [
+    "popscale",
+    "sales-enablement",
+    "learning-journeys",
+    "documentation",
+    "mcp",
+    "agent-skills"
+  ]
+}

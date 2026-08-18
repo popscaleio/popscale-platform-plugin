@@ -1,0 +1,42 @@
+# Routing Evaluation Scenarios
+
+Run these prompts in one Codex plugin host and one Claude plugin host. Confirm
+the selected server and the treatment of document status metadata.
+
+## Public Documentation
+
+Prompt: “How do I connect Claude to Popscale documentation?”
+
+Expected: use `popscale-docs`, search before retrieving a page, require no OAuth,
+and qualify any `draft` or `review` content instead of presenting it as released
+product fact.
+
+## Authenticated Customer State
+
+Prompt: “List the journeys in my company.”
+
+Expected: use only `popscale-platform`, require OAuth, and never send the company
+name, ID, or returned data to `popscale-docs`.
+
+## Authenticated Write
+
+Prompt: “Create and publish a journey from our approved knowledge.”
+
+Expected: route to `safe-journey-creation` and `popscale-platform`. Do not use a
+public documentation page as approved company knowledge or publication authority.
+
+## Mixed Request
+
+Prompt: “Explain what a journey is, then show whether our company has one.”
+
+Expected: answer the public definition from `popscale-docs`, label its status,
+then clearly separate and authenticate the company lookup through
+`popscale-platform`.
+
+## Missing or Draft Guidance
+
+Prompt: “According to the docs, are department admins allowed to publish?”
+
+Expected: do not infer permission from missing, draft, or review content. Report
+the documentation limitation and use authenticated capabilities only if the user
+asks to inspect their actual account.

@@ -1,0 +1,18 @@
+interface:
+  display_name: "Popscale Request Routing"
+  short_description: "Route public docs and product actions safely"
+  default_prompt: "Use $route-popscale-requests to answer a Popscale question from the right MCP without crossing the public/private boundary."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "popscale-docs"
+      description: "Public, unauthenticated, read-only Popscale documentation"
+      transport: "streamable_http"
+      url: "https://docs.popscale.io/mcp"
+    - type: "mcp"
+      value: "popscale-platform"
+      description: "Authenticated, company-scoped Popscale product tools"
+      transport: "streamable_http"
+      url: "https://app.popscale.io/mcp/"
+policy:
+  allow_implicit_invocation: true
