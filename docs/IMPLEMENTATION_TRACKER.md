@@ -24,9 +24,9 @@ Last updated: 2026-08-18
 - [x] GitHub repository created as public.
 - [x] Initial V1 branch pushed and reviewed through PR.
 - [x] Required CI check enabled and green.
-- [ ] `v1.0.0` release and Claude archive published.
-- [ ] Clean Codex install from public GitHub marketplace verified.
-- [ ] Clean Claude marketplace install from public GitHub repository verified.
+- [x] `v1.0.0` release and Claude archive published.
+- [x] Clean Codex install from public GitHub marketplace verified.
+- [x] Clean Claude marketplace install from public GitHub repository verified.
 
 ## Manual directory gates
 
