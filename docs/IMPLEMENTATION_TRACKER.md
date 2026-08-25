@@ -1,6 +1,6 @@
 # V1 implementation tracker
 
-Last updated: 2026-08-18
+Last updated: 2026-08-25
 
 ## Complete
 
@@ -19,6 +19,16 @@ Last updated: 2026-08-18
 - [x] Migration review: no database or migration changes.
 - [x] Deployment review: repository publication does not trigger maintenance.
 - [x] Official Popscale logo packaged and covered by manifest contract tests.
+- [x] Interview Admin Product MCP downstream impact reviewed against the
+  stabilized backend contract.
+- [x] Portable Interview administration skill added for current-state reads,
+  focused edits, invitation safety, and bounded insights.
+- [x] Routing, capability metadata, setup/OAuth consent guidance, evaluation
+  scenarios, and package contract tests updated for Interview scopes.
+- [x] `safe-journey-creation` reviewed and intentionally unchanged because the
+  Journey tool and safety contract did not change.
+- [x] Interview plugin delivery remains package-only: no MCP App, backend deploy,
+  database migration, or maintenance mode action is included.
 
 ## Public repository release
 
@@ -29,6 +39,8 @@ Last updated: 2026-08-18
 - [x] Clean Codex install from public GitHub marketplace verified.
 - [x] Clean Claude marketplace install from public GitHub repository verified.
 - [ ] `v1.0.1` logo patch and archive published.
+- [ ] `v1.1.0` Interview administration package reviewed, merged, tagged, and
+  published after the backend contract is deployed and host smoke tests pass.
 
 ## Manual directory gates
 

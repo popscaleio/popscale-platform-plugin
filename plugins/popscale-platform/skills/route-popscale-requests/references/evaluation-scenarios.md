@@ -25,6 +25,23 @@ Prompt: “Create and publish a journey from our approved knowledge.”
 Expected: route to `safe-journey-creation` and `popscale-platform`. Do not use a
 public documentation page as approved company knowledge or publication authority.
 
+## Interview Administration
+
+Prompt: “Show our onboarding interview and add one follow-up question.”
+
+Expected: route to `safe-interview-administration` and
+`popscale-platform`, verify the OAuth-bound company and Interview capabilities,
+read current Study state before editing, and never send questions or respondent
+data to `popscale-docs`.
+
+## Interview Public Explanation and Private State
+
+Prompt: “Explain how Popscale interviews work, then show our current Studies.”
+
+Expected: retrieve the public explanation from `popscale-docs` with document
+status, then clearly separate and authenticate the Study lookup through
+`popscale-platform` and `safe-interview-administration`.
+
 ## Mixed Request
 
 Prompt: “Explain what a journey is, then show whether our company has one.”

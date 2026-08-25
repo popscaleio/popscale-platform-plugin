@@ -8,10 +8,11 @@ remote MCP connections:
 | `popscale-docs` | `https://docs.popscale.io/mcp` | Public, no authentication, read-only | Search and retrieve indexed public documentation |
 | `popscale-platform` | `https://app.popscale.io/mcp/` | Popscale OAuth, company-scoped | Read customer data and perform authorized product actions |
 
-The product server lets a company administrator create a learning-journey plan
-from approved knowledge, validate every generated item, review the plan in the
-Journey Review MCP App, and explicitly execute or publish it. The docs server
-contains no product actions or customer data.
+The product server lets a company administrator inspect and precisely edit
+Interview Studies, distribute invitations, review bounded evidence and analyses,
+and create validated learning journeys. Publishing, invitation delivery, and
+other sensitive operations keep their dedicated scopes and confirmation gates.
+The docs server contains no product actions or customer data.
 
 ## What is in the package
 
@@ -23,6 +24,8 @@ contains no product actions or customer data.
 - `assets/icon.png`: packaged Popscale symbol used by Codex plugin surfaces.
 - `skills/route-popscale-requests/`: portable routing policy for public
   documentation versus authenticated product work.
+- `skills/safe-interview-administration/`: company-scoped Interview authoring,
+  distribution, evidence, and analysis workflow.
 - `skills/safe-journey-creation/`: authenticated journey workflow used by both
   hosts.
 - `SETUP.md`: installation, authentication, verification, and troubleshooting.
@@ -53,6 +56,9 @@ customer credential, token, tenant identifier, or embedded API implementation.
 - Send customer records, selected-company state, approved knowledge, and all
   actions to `popscale-platform`. It requires OAuth and derives company scope
   from the authenticated session.
+- Route Interview Study reads, precise question edits, invitations, respondent
+  links, transcripts, and analyses through `safe-interview-administration` and
+  `popscale-platform`. Never send that data to the Docs MCP.
 - Never send customer data or credentials to the public server, and never treat
   public docs as authorization or approved company knowledge for a write.
 - The Journey Review App is an optional presentation layer. Hosts without App
@@ -67,6 +73,12 @@ Authenticated product work additionally requires:
 1. The customer's company has the `mcp_access` feature enabled.
 2. The user is an active `company_admin` and has MCP access enabled.
 3. The user completes Popscale OAuth and selects the intended company.
+
+Interview administration additionally requires the company `interviews` feature
+and one or more dedicated scopes: `interview:read`, `interview:write`, and
+`interview:distribute`. Study publication also requires `publish:write`.
+Existing grants are not widened automatically; reconnect and review the new
+consent scopes before using these tools.
 
 The staging product endpoint is `https://staging.popscale.io/mcp/`; it is not
 packaged and must only be used for testing.

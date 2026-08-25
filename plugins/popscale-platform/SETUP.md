@@ -26,7 +26,8 @@ codex plugin add popscale-platform@popscale
 ```
 
 The Codex manifest points to `./.mcp.json` and `./skills/`, so one plugin install
-supplies both servers and both skills. Start a new task after installation.
+supplies both servers and the routing, Interview-administration, and Journey
+skills. Start a new task after installation.
 
 That one-install contract applies to repository/local marketplace distribution.
 OpenAI's public submission form accepts one primary MCP server URL, and uploaded
@@ -67,6 +68,14 @@ The first `popscale-platform` use opens Popscale authorization:
 5. If authorization is unavailable, ask a Popscale company admin to enable the
    company feature and the user's MCP access.
 
+Interview administration uses the dedicated `interview:read`,
+`interview:write`, and `interview:distribute` scopes. Publishing an Interview
+Study also requires `publish:write`. Existing OAuth grants are not silently
+widened after a plugin or server update. Reconnect `popscale-platform`, review
+the consent page, and approve only the scopes needed for the requested work. A
+read-only user can list PII-safe invitation summaries, but individual respondent
+links require both `interview:read` and `interview:distribute`.
+
 `popscale-docs` must work without this flow and must never receive the product
 OAuth session or customer data.
 
@@ -80,6 +89,9 @@ OAuth session or customer data.
    opens OAuth when needed, and returns the intended company.
 4. Ask a mixed question such as “Explain journeys, then list ours.” Confirm the
    host clearly separates the public explanation from the authenticated lookup.
+5. In a company with Interviews enabled, ask to list Interview Studies. Confirm
+   the host uses `safe-interview-administration` and `popscale-platform`, makes
+   no mutation, and exposes no respondent link or raw contact data.
 
 ## Troubleshoot
 
@@ -91,6 +103,9 @@ OAuth session or customer data.
   `get_pages`; do not invent or guess a path.
 - If product tools return an authorization challenge, reconnect
   `popscale-platform`; do not copy its credentials to `popscale-docs`.
+- If Interview tools or respondent-link access are missing after an update,
+  reconnect `popscale-platform` and review the dedicated Interview scopes. Do
+  not paste a bearer token or treat `interview:read` as distribution authority.
 - If the MCP App does not render, continue from the product server's structured
   result. App support is not required for safe product actions.
 
