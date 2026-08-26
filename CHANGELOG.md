@@ -17,6 +17,12 @@ All notable changes to the Popscale Platform plugin are documented here.
 - Added OAuth guidance for `content:read`, `content:write`,
   `generation:write`, and `publish:write` without silently widening existing
   grants.
+- Added the portable `company-usage-insights` skill for privacy-safe Journey
+  participation and content-outcome aggregates plus bounded member/attempt
+  drilldown through the dedicated `usage:read` scope.
+- Added analytics evaluation scenarios for department and role comparisons,
+  small-cohort suppression, company isolation, pagination/date/row bounds, and
+  historical Roleplay, Coaching, Flashcard, and Episode score limitations.
 
 ### Changed
 
@@ -26,7 +32,9 @@ All notable changes to the Popscale Platform plugin are documented here.
 - Updated `safe-journey-creation` only where its child-content activation step
   now requires `content:read` alongside write and publication scopes.
 - Updated package contracts to require the complete granular content tool
-  workflow and the fourth portable skill.
+  workflow, the five usage-insights tools, and all five portable skills.
+- Expanded routing and package metadata to distinguish learner outcomes from
+  `get_content_usage` dependency review and from Journey authoring/publication.
 
 ### Security
 
@@ -34,6 +42,9 @@ All notable changes to the Popscale Platform plugin are documented here.
   acting as company admins, root `expected_revision` checks, explicit active
   edit confirmation, stable-ID component mutations, bounded dependency review,
   and separate generation/publication confirmations.
+- Documented authoritative small-cohort suppression, PII-minimized drilldown,
+  bounded analytics, current organization dimensions, and historical score
+  notices that must not be reconstructed or presented as immutable snapshots.
 
 ## [1.1.0] - 2026-08-25
 

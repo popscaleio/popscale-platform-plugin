@@ -22,6 +22,12 @@ additionally requires `content:write`; targeted generation requires
 not silently widened. Content mutations use the current root
 `expected_revision`, and active edits require explicit `confirm_active_edit`.
 
+Company usage and Journey insights require the dedicated read-only
+`usage:read` scope. Existing grants are not silently widened when it becomes
+available. Aggregates can suppress cohorts below a server-returned threshold;
+that suppression must not be reconstructed through narrower filters or member
+enumeration.
+
 Never paste a bearer token or add a static authorization header. Popscale uses
 OAuth and stores the resulting host credential through the host's secure flow.
 
@@ -136,6 +142,23 @@ editable/component metadata, and no mutation. If `content:read` was not granted,
 reconnect and review consent. A later focused edit requires `content:write`;
 generation and publication retain their additional scopes and confirmations.
 
+### Company usage read and consent
+
+In a dedicated test company with a Journey assigned across multiple sufficiently
+large departments:
+
+```text
+Use only popscale-platform and company-usage-insights. Compare current Journey
+completion by department. Do not list members or attempts and do not make any
+change. Preserve every suppressed group and state the denominator.
+```
+
+Expected: bounded company-scoped aggregates, the effective company and current
+metric definition, no mutation, and no reconstruction of suppressed cohorts. If
+`usage:read` was not granted, reconnect and review consent. A later explicit
+member drilldown can return names and stable membership IDs, but not email,
+transcripts, reflections, feedback text, or raw result payloads.
+
 ### Persistence
 
 Close the host, start a new task, and repeat the product read test. The stored
@@ -161,5 +184,8 @@ session should be reused without a new login unless it was revoked or expired.
   `content:read`, `content:write`, `generation:write`, and `publish:write` for the
   requested operation. Do not paste tokens, guess a company ID, or treat a read
   grant as mutation authority.
+- **Usage insights are unavailable:** reconnect the product connector and
+  approve `usage:read`. Do not substitute Journey/content write scopes, public
+  Docs, generic REST, UI scraping, or broad member enumeration.
 - **App UI does not render:** continue from structured MCP results. UI rendering
   is optional and does not change the product authorization boundary.

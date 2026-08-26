@@ -49,6 +49,23 @@ Last updated: 2026-08-26
 - [x] Content plugin delivery remains package-only: no MCP App, backend deploy,
   database migration, maintenance mode, or plugin release is included in this
   PR.
+- [x] Company Usage and Journey Insights downstream impact reviewed against the
+  backend contract deployed green to staging at `d5c90e0`.
+- [x] Portable `company-usage-insights` skill added for `get_journey_insights`,
+  `list_journey_members`, `get_member_journey`, `get_content_outcomes`, and
+  `list_content_attempts` through `usage:read`.
+- [x] Aggregate-first department/role comparisons, bounded member/attempt
+  drilldown, small-cohort suppression, tenant authority, PII minimization,
+  pagination/window/row guards, and current versus historical metric semantics
+  documented and covered by evaluation scenarios.
+- [x] Routing, Codex/Claude metadata, setup/OAuth consent, security model,
+  release smoke guidance, and package contracts updated for usage insights.
+- [x] `safe-content-administration`, `safe-journey-creation`, and
+  `safe-interview-administration` reviewed and intentionally unchanged: the new
+  contract is read-only analytics, while `get_content_usage` remains an
+  authoring dependency/impact check.
+- [x] Usage-insights plugin delivery remains package-only: no MCP App, backend
+  deploy, migration, maintenance mode, or plugin release is included in this PR.
 
 ## Public repository release
 
@@ -61,8 +78,9 @@ Last updated: 2026-08-26
 - [ ] `v1.0.1` logo patch and archive published.
 - [ ] `v1.1.0` Interview administration package reviewed, merged, tagged, and
   published after the backend contract is deployed and host smoke tests pass.
-- [ ] `v1.2.0` granular company-content package reviewed, merged, tagged, and
-  published after production backend availability and clean host smoke tests.
+- [ ] `v1.2.0` granular company-content and usage-insights package reviewed,
+  merged, tagged, and published after production backend availability and clean
+  host smoke tests.
 
 ## Manual directory gates
 

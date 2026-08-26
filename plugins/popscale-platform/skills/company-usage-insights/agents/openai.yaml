@@ -1,0 +1,13 @@
+interface:
+  display_name: "Popscale Company Usage Insights"
+  short_description: "Analyze company learning usage safely"
+  default_prompt: "Use $company-usage-insights to compare journey completion or content outcomes for my company with privacy-safe drilldown."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "popscale-platform"
+      description: "OAuth-authenticated, company-scoped Popscale usage insights"
+      transport: "streamable_http"
+      url: "https://app.popscale.io/mcp/"
+policy:
+  allow_implicit_invocation: true

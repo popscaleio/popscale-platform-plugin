@@ -72,6 +72,13 @@ EXPECTED_CONTENT_TOOLS = (
     "content_activation_readiness",
     "content_activate",
 )
+EXPECTED_USAGE_TOOLS = (
+    "get_journey_insights",
+    "list_journey_members",
+    "get_member_journey",
+    "get_content_outcomes",
+    "list_content_attempts",
+)
 
 
 def load_json(path: Path):
@@ -169,6 +176,7 @@ class PluginPackageContractTests(unittest.TestCase):
             "safe-journey-creation",
             "safe-interview-administration",
             "safe-content-administration",
+            "company-usage-insights",
         ):
             self.assertIn(required, skill)
         self.assertNotIn("[TODO:", skill)
@@ -176,6 +184,86 @@ class PluginPackageContractTests(unittest.TestCase):
         self.assertIn('url: "https://docs.popscale.io/mcp"', metadata)
         self.assertIn('value: "popscale-platform"', metadata)
         self.assertIn('url: "https://app.popscale.io/mcp/"', metadata)
+
+    def test_usage_skill_covers_tools_privacy_bounds_and_metric_contract(self):
+        skill_root = PLUGIN_ROOT / "skills" / "company-usage-insights"
+        skill = (skill_root / "SKILL.md").read_text(encoding="utf-8")
+        metadata = (skill_root / "agents" / "openai.yaml").read_text(
+            encoding="utf-8"
+        )
+        workflow = (skill_root / "references" / "tool-workflow.md").read_text(
+            encoding="utf-8"
+        )
+        metrics = (skill_root / "references" / "metric-semantics.md").read_text(
+            encoding="utf-8"
+        )
+        privacy = (skill_root / "references" / "privacy-and-limits.md").read_text(
+            encoding="utf-8"
+        )
+        evaluations = (
+            skill_root / "references" / "evaluation-scenarios.md"
+        ).read_text(encoding="utf-8")
+
+        for required in (
+            "current_user",
+            "capabilities",
+            "usage:read",
+            "OAuth-selected company",
+            "suppressed",
+            "score_contract",
+            "historical_score_notice",
+            "get_content_usage",
+            "366-day",
+            "20,000",
+        ):
+            self.assertIn(required, skill)
+        for required_tool in EXPECTED_USAGE_TOOLS:
+            self.assertIn(required_tool, workflow)
+        for required_semantic in (
+            "current-state view",
+            "current stored values",
+            "Roleplay and Coaching history",
+            "Flashcard sessions",
+            "Legacy attempts",
+            "Challenge pass/no-pass",
+        ):
+            self.assertIn(required_semantic, metrics)
+        for required_boundary in (
+            "Never:",
+            "subtract visible groups",
+            "email",
+            "20,000-attempt",
+            "different company",
+        ):
+            self.assertIn(required_boundary, privacy)
+        for required_scenario in (
+            "Department Journey Completion",
+            "Department-manager Roleplay Outcomes",
+            "Explicit Member Drilldown",
+            "Missing Usage Scope",
+            "Wrong Company or Prompt-supplied Company ID",
+            "Suppressed Small Cohort",
+            "Bounded Window, Pagination, and Row Guard",
+            "Historical Roleplay and Coaching Scores",
+            "Flashcard and Legacy Episode History",
+            "Current Organization Dimensions",
+        ):
+            self.assertIn(required_scenario, evaluations)
+        self.assertNotIn("popscale-docs", metadata)
+        self.assertIn('value: "popscale-platform"', metadata)
+        self.assertIn('url: "https://app.popscale.io/mcp/"', metadata)
+
+    def test_manifest_advertises_company_usage_insights(self):
+        codex = load_json(PLUGIN_ROOT / ".codex-plugin" / "plugin.json")
+        claude = load_json(PLUGIN_ROOT / ".claude-plugin" / "plugin.json")
+        marketplace = load_json(REPO_ROOT / ".claude-plugin" / "marketplace.json")
+        for manifest in (codex, claude, marketplace["plugins"][0]):
+            self.assertIn("learning-analytics", manifest["keywords"])
+            self.assertIn("journey-insights", manifest["keywords"])
+            self.assertIn("usage", manifest["description"].lower())
+        self.assertTrue(
+            any("outcomes" in prompt.lower() for prompt in codex["interface"]["defaultPrompt"])
+        )
 
     def test_content_skill_covers_granular_tools_formats_and_safety_contract(self):
         skill_root = PLUGIN_ROOT / "skills" / "safe-content-administration"
@@ -344,6 +432,22 @@ class PluginPackageContractTests(unittest.TestCase):
         self.assertIn("not silently", docs)
         self.assertIn("expected_revision", docs)
         self.assertIn("confirm_active_edit", docs)
+
+    def test_usage_oauth_guidance_requires_scope_and_privacy_boundaries(self):
+        docs = "\n".join(
+            path.read_text(encoding="utf-8")
+            for path in (
+                REPO_ROOT / "docs" / "INSTALLATION.md",
+                REPO_ROOT / "docs" / "SECURITY_MODEL.md",
+                PLUGIN_ROOT / "README.md",
+                PLUGIN_ROOT / "SETUP.md",
+            )
+        )
+        self.assertIn("usage:read", docs)
+        self.assertIn("not silently", docs)
+        self.assertIn("small-cohort", docs.lower())
+        self.assertIn("membership", docs.lower())
+        self.assertIn("transcript", docs.lower())
 
     def test_safe_journey_skill_remains_product_only(self):
         safe_root = PLUGIN_ROOT / "skills" / "safe-journey-creation"

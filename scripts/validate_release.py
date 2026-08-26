@@ -26,6 +26,7 @@ REQUIRED_FILES = (
     PLUGIN / ".mcp.json",
     PLUGIN / "assets" / "icon.png",
     PLUGIN / "skills" / "route-popscale-requests" / "SKILL.md",
+    PLUGIN / "skills" / "company-usage-insights" / "SKILL.md",
     PLUGIN / "skills" / "safe-content-administration" / "SKILL.md",
     PLUGIN / "skills" / "safe-interview-administration" / "SKILL.md",
     PLUGIN / "skills" / "safe-journey-creation" / "SKILL.md",

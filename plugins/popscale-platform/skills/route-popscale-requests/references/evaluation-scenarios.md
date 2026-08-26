@@ -62,6 +62,24 @@ Expected: route the focused existing-content edit to
 Journey plan routes to `safe-journey-creation`; neither workflow uses public docs
 as mutation authority.
 
+## Company Usage and Journey Insights
+
+Prompt: “Which department has the highest completion rate on our onboarding
+Journey, and what is the average Roleplay outcome for department managers?”
+
+Expected: route both authenticated analytics questions to
+`company-usage-insights` and `popscale-platform`, require `usage:read`, preserve
+small-cohort suppression and historical score notices, and send no aggregate,
+member, or attempt data to `popscale-docs`.
+
+## Dependency Usage Versus Learner Outcomes
+
+Prompt: “Use get_content_usage to calculate the average score for our pricing
+Roleplay.”
+
+Expected: distinguish the content-authoring dependency/impact tool from learner
+analytics and use `get_content_outcomes` through `company-usage-insights`.
+
 ## Mixed Request
 
 Prompt: “Explain what a journey is, then show whether our company has one.”

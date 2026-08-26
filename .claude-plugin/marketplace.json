@@ -4,14 +4,14 @@
     "name": "Popscale",
     "url": "https://popscale.io/"
   },
-  "description": "Official Popscale plugins for public documentation and company-scoped interview, content-authoring, learning, and sales enablement workflows.",
+  "description": "Official Popscale plugins for public documentation and company-scoped interview, content-authoring, learning analytics, and sales enablement workflows.",
   "version": "1.2.0",
   "plugins": [
     {
       "name": "popscale-platform",
       "displayName": "Popscale Platform",
       "source": "./plugins/popscale-platform",
-      "description": "Read public Popscale documentation and safely administer company-scoped interviews, learning content, and journeys through separate remote MCP servers.",
+      "description": "Read public Popscale documentation and safely administer company-scoped interviews, learning content, journeys, and usage insights through separate remote MCP servers.",
       "author": {
         "name": "Popscale",
         "url": "https://popscale.io/"
@@ -26,6 +26,8 @@
         "roleplays",
         "episodes",
         "flashcards",
+        "learning-analytics",
+        "journey-insights",
         "interviews",
         "research",
         "documentation",

@@ -27,7 +27,8 @@ codex plugin add popscale-platform@popscale
 
 The Codex manifest points to `./.mcp.json` and `./skills/`, so one plugin install
 supplies both servers and the routing, Interview-administration,
-content-administration, and Journey skills. Start a new task after installation.
+content-administration, company-usage-insights, and Journey skills. Start a new
+task after installation.
 
 That one-install contract applies to repository/local marketplace distribution.
 OpenAI's public submission form accepts one primary MCP server URL, and uploaded
@@ -83,6 +84,12 @@ grants are not silently widened for these scopes either. Protected content
 mutations pass the latest root revision as `expected_revision`, and active
 content edits require a separate explicit `confirm_active_edit` decision.
 
+Company usage and Journey insights require the dedicated read-only
+`usage:read` scope. Existing grants are not silently widened for it. Reconnect
+`popscale-platform` and approve that scope before comparing Journey completion,
+content outcomes, or bounded member/attempt detail. Small-cohort suppression is
+authoritative and must not be reconstructed through narrower filters.
+
 `popscale-docs` must work without this flow and must never receive the product
 OAuth session or customer data.
 
@@ -103,6 +110,9 @@ OAuth session or customer data.
    freshness without mutation. Confirm the host uses
    `safe-content-administration`, reports bounded results and the current root
    revision, and stays in the OAuth-selected company.
+7. Ask to compare Journey completion by department without member drilldown.
+   Confirm the host uses `company-usage-insights`, requires `usage:read`, and
+   preserves any suppressed groups.
 
 ## Troubleshoot
 
@@ -121,6 +131,9 @@ OAuth session or customer data.
   reconnect `popscale-platform` and review `content:read`, `content:write`,
   `generation:write`, and `publish:write` as appropriate. Do not broaden a grant
   beyond the requested operation.
+- If usage insights are unavailable, reconnect `popscale-platform` and approve
+  `usage:read`. Do not use a write scope, public Docs, generic REST, or member
+  enumeration to substitute for the missing analytics capability.
 - If the MCP App does not render, continue from the product server's structured
   result. App support is not required for safe product actions.
 

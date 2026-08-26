@@ -12,9 +12,11 @@ The product server lets a company administrator find, create, and granularly
 edit roleplays, coaching sessions, challenges, episodes, flashcards, and
 existing Journey sections/items; trigger supported format-specific generation;
 inspect and precisely edit Interview Studies; and create validated learning
-journeys. Active edits, generation, publishing, and invitation delivery keep
-their dedicated scopes, revision checks, and confirmation gates. The docs
-server contains no product actions or customer data.
+journeys. It also compares company-scoped Journey participation and learning
+outcomes with privacy-safe aggregates and bounded member or attempt drilldown.
+Active edits, generation, publishing, and invitation delivery keep their
+dedicated scopes, revision checks, and confirmation gates. The docs server
+contains no product actions or customer data.
 
 ## What is in the package
 
@@ -30,6 +32,8 @@ server contains no product actions or customer data.
   distribution, evidence, and analysis workflow.
 - `skills/safe-content-administration/`: company-scoped content discovery,
   stable-ID component editing, generation, history/freshness, and activation.
+- `skills/company-usage-insights/`: read-only Journey participation and
+  format-aware content outcomes with suppression and bounded drilldown.
 - `skills/safe-journey-creation/`: authenticated journey workflow used by both
   hosts.
 - `SETUP.md`: installation, authentication, verification, and troubleshooting.
@@ -68,6 +72,11 @@ customer credential, token, tenant identifier, or embedded API implementation.
   `safe-content-administration` and `popscale-platform`. Use
   `safe-journey-creation` for designing/executing a new Journey plan, not for a
   one-field edit to an existing Journey item.
+- Route company, department, or role comparisons of Journey completion/mastery
+  and content outcomes through `company-usage-insights` and
+  `popscale-platform`. Keep suppressed aggregates, names, membership IDs, and
+  attempt data away from the Docs MCP. Use `get_content_usage` only for
+  dependency/impact review before a content mutation, not learner statistics.
 - Never send customer data or credentials to the public server, and never treat
   public docs as authorization or approved company knowledge for a write.
 - The Journey Review App is an optional presentation layer. Hosts without App
@@ -96,6 +105,12 @@ Existing grants are not silently widened after these scopes become available.
 Reconnect and review consent before using a missing capability. Protected
 mutations use the latest root `revision` as `expected_revision`; active edits
 also require an explicit `confirm_active_edit` boundary.
+
+Company usage and Journey insights require the dedicated read-only
+`usage:read` scope. Existing grants must be reauthorized before it is available.
+Aggregates can suppress small cohorts; member and attempt drilldowns remain
+private company data even though email, transcripts, reflections, feedback
+text, and raw result payloads are omitted.
 
 The staging product endpoint is `https://staging.popscale.io/mcp/`; it is not
 packaged and must only be used for testing.
