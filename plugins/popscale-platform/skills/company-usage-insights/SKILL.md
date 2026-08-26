@@ -35,8 +35,10 @@ definitions, and server bounds authoritative.
    timezone, notice, and availability field. Never reconstruct a suppressed
    value by changing filters, subtracting groups, combining calls, or using
    member-level results.
-6. Drill down only when the user asks or an identified group needs explanation.
-   Use `list_journey_members` before `get_member_journey`, and
+6. Drill down only when the user explicitly asks for member- or attempt-level
+   detail. An aggregate result, outlier, or group that appears to need
+   explanation is not consent to disclose people or attempts. Use
+   `list_journey_members` before `get_member_journey`, and
    `list_content_attempts` behind a content aggregate. Names and stable
    membership IDs are private personal data even though email, transcripts,
    reflections, feedback text, and raw result payloads are omitted.

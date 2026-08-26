@@ -59,11 +59,13 @@ is not part of the `archive_company_content` schema.
 ## Truncated Dependency Usage
 
 Return more Journey or department dependencies than `get_content_usage` can
-materialize for a requested destructive operation.
+materialize at its default limit for a requested destructive operation. Cover
+one case that fits within 100 and one that still exceeds 100.
 
-Expected: reports the server-returned totals and truncation flags and stops if
-the decision requires every dependency. It does not invent a filter, offset, or
-cursor, because `get_content_usage` exposes no narrowing or pagination input.
+Expected: retries once with a sufficient `limit` capped at 100. It proceeds only
+when the retry is complete; if it remains truncated, it reports the returned
+totals and stops when the decision requires every dependency. It does not invent
+a filter, offset, or cursor, because `get_content_usage` exposes no such inputs.
 
 ## Targeted format generation
 

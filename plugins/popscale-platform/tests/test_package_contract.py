@@ -257,6 +257,9 @@ class PluginPackageContractTests(unittest.TestCase):
         self.assertNotIn("popscale-docs", metadata)
         self.assertIn('value: "popscale-platform"', metadata)
         self.assertIn('url: "https://app.popscale.io/mcp/"', metadata)
+        self.assertIn("only when the user explicitly asks", skill)
+        self.assertIn("is not consent", skill)
+        self.assertIn("is not consent to drill down", privacy)
 
     def test_manifest_advertises_company_usage_insights(self):
         codex = load_json(PLUGIN_ROOT / ".codex-plugin" / "plugin.json")
@@ -332,8 +335,11 @@ class PluginPackageContractTests(unittest.TestCase):
         self.assertIn('url: "https://app.popscale.io/mcp/"', metadata)
         self.assertIn("does not accept `confirm_active_edit`", skill)
         self.assertIn("does not send `confirm_active_edit`", evaluations)
-        self.assertIn("cannot be filtered or paged", skill)
-        self.assertIn("exposes no narrowing or pagination input", evaluations)
+        self.assertIn("server maximum of 100", skill)
+        self.assertIn("If the retry remains", skill)
+        self.assertIn("if the retry is still truncated", workflow)
+        self.assertIn("retries once with a sufficient `limit` capped at 100", evaluations)
+        self.assertIn("exposes no such inputs", evaluations)
 
     def test_manifest_advertises_company_content_administration(self):
         codex = load_json(PLUGIN_ROOT / ".codex-plugin" / "plugin.json")

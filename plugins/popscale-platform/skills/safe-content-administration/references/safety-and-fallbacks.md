@@ -29,10 +29,12 @@ regeneration, and publication remain separate approvals. Archive calls use
 `confirm_learner_impact`; they do not accept `confirm_active_edit`.
 
 Before delete, reorder, reassignment, or archive, inspect bounded usage. If
-usage is truncated, do not infer that unseen dependencies are absent. Report
-the returned totals and truncation flags, and stop when the decision requires
-exact dependency details. `get_content_usage` has no filters, offset, or cursor;
-do not retry it with unsupported narrowing or pagination arguments.
+usage is truncated, do not infer that unseen dependencies are absent. Retry
+once with `limit` equal to the larger returned Journey/department count, capped
+at the server maximum of 100. If the retry remains truncated, report the totals
+and truncation flags and stop when the decision requires exact dependency
+details. `get_content_usage` has no filters, offset, or cursor; do not invent
+unsupported narrowing or pagination arguments.
 
 ## Async generation and partial failure
 

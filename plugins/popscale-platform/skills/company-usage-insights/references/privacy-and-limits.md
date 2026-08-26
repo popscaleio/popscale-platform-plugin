@@ -31,6 +31,8 @@ department, progress, and safe attempt metrics. They deliberately omit email,
 transcripts, reflections, evaluation feedback text, and raw result payloads.
 Treat even the included identity and behavior as private company data:
 
+- require an explicit user request for member- or attempt-level detail; an
+  aggregate outlier or unexplained group is not consent to drill down;
 - show only rows needed for the user's explicit question;
 - do not enrich identifiers from public docs or outside sources;
 - do not expose hidden fields, reconstruct omitted text, or produce a broad

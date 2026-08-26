@@ -37,8 +37,10 @@ confirmation boundaries authoritative.
 7. Before deleting, reordering, replacing department assignments, or archiving,
    inspect `get_content_usage`. Use the dedicated confirmation required by the
    tool and describe any learner or journey impact. If usage details are
-   truncated, report the returned totals and stop when the requested decision
-   requires exact dependency details; this tool cannot be filtered or paged.
+   truncated, retry once with `limit` large enough for the returned Journey and
+   department counts, capped at the server maximum of 100. If the retry remains
+   truncated, report the totals and stop when the decision requires exact
+   dependency details. This tool cannot be filtered, offset, or paged.
 8. Before generation, call `content_generation_capabilities` and follow the
    returned format/subpart contract. Generation is draft-only, asynchronous,
    and idempotent. Poll the returned request with `generation_request_detail`

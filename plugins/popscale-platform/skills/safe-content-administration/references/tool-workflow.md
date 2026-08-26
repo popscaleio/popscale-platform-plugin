@@ -20,9 +20,11 @@ schemas, and authorization remain authoritative over this reference.
 
 Search results are summaries. Read detail before a mutation and preserve
 `has_more`, offsets, cursors, truncation, and unavailable-history indicators.
-`get_content_usage` is bounded but not pageable or filterable: preserve its
-returned totals and truncation flags, and do not invent offset, cursor, or filter
-arguments.
+`get_content_usage` is bounded but not pageable or filterable. When the default
+result is truncated, retry once with `limit` equal to the larger returned
+Journey/department count, capped at the server maximum of 100. Preserve totals
+and truncation flags; if the retry is still truncated, stop when exact details
+are required. Do not invent offset, cursor, or filter arguments.
 
 ## Focused authoring
 
