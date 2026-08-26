@@ -3,6 +3,8 @@
 ## Assets protected
 
 - customer content and approved company knowledge;
+- Interview Studies, questions, respondent-intro localizations, invitation
+  links, respondent contact data, transcripts, evidence, and analyses;
 - journey plans, generation jobs, and publication actions;
 - Popscale OAuth access and refresh tokens;
 - company membership, role, and feature state;
@@ -35,6 +37,12 @@ still reject unauthorized scopes, roles, memberships, and companies server-side.
 - Product grants remain company-scoped and revocable.
 - Write and publication flows require explicit human confirmation where defined
   by the safe journey workflow.
+- Interview scopes remain separated: `interview:read` for bounded reads,
+  `interview:write` for authoring and analysis mutations, and
+  `interview:distribute` for respondent links and invitation operations. Study
+  publication additionally requires `publish:write`.
+- Existing grants are never silently widened; users reauthorize before newly
+  requested Interview scopes become available.
 - Docs marked `draft` or `review` are labeled and not used as verified mutation
   authority.
 - Customer identifiers, content, credentials, and OAuth material never go to
@@ -47,6 +55,8 @@ still reject unauthorized scopes, roles, memberships, and companies server-side.
 | Public docs receive customer data | Routing skill prohibition; separate server; no product capability |
 | Docs are treated as authorization | Skill boundary plus server-side product authorization |
 | Cross-company product access | Company derived from authenticated membership; server-side isolation tests |
+| Respondent link or PII disclosed by a broad read | Focused detail tool requires `interview:distribute`; list results omit links and raw contact data |
+| Stale or broad Interview edit overwrites concurrent work | Current-draft requirement, focused mutation tools, and optimistic concurrency tokens |
 | OAuth callback substitution | Exact callback binding with narrowly scoped loopback-port compatibility |
 | Unreviewed write or publish | Safe journey workflow and explicit confirmation |
 | Secret committed to plugin | Public-repo validation, review, and no secret-bearing config fields |

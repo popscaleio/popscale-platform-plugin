@@ -1,0 +1,13 @@
+interface:
+  display_name: "Safe Interview Administration"
+  short_description: "Manage Popscale interviews with scoped, precise edits"
+  default_prompt: "Use $safe-interview-administration to inspect my current Popscale interview Studies and make only the specific confirmed change I request."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "popscale-platform"
+      description: "OAuth-authenticated, company-scoped Popscale Interview tools"
+      transport: "streamable_http"
+      url: "https://app.popscale.io/mcp/"
+policy:
+  allow_implicit_invocation: true

@@ -5,7 +5,7 @@ from pathlib import Path
 
 PLUGIN_ROOT = Path(__file__).resolve().parents[1]
 REPO_ROOT = PLUGIN_ROOT.parents[1]
-EXPECTED_VERSION = "1.0.1"
+EXPECTED_VERSION = "1.1.0"
 EXPECTED_SERVERS = {
     "popscale-platform": {
         "type": "http",
@@ -16,6 +16,39 @@ EXPECTED_SERVERS = {
         "url": "https://docs.popscale.io/mcp",
     },
 }
+EXPECTED_INTERVIEW_TOOLS = (
+    "list_interview_studies",
+    "get_interview_study",
+    "ensure_interview_study_draft",
+    "create_interview_study",
+    "update_interview_study",
+    "update_interview_draft",
+    "create_interview_topic",
+    "update_interview_topic",
+    "delete_interview_topic",
+    "reorder_interview_topics",
+    "upsert_interview_localization",
+    "delete_interview_localization",
+    "generate_interview_localizations",
+    "get_interview_publish_readiness",
+    "publish_interview_study",
+    "list_interview_invites",
+    "get_interview_invite",
+    "create_interview_invite",
+    "create_interview_invites_bulk",
+    "send_interview_invite_email",
+    "revoke_interview_invite",
+    "expire_interview_invite",
+    "list_interview_runs",
+    "get_interview_run_review",
+    "list_interview_analyses",
+    "preview_interview_analysis",
+    "generate_interview_analysis",
+    "get_interview_analysis",
+    "retry_interview_analysis",
+    "update_interview_run_action_status",
+    "update_interview_analysis_action_status",
+)
 
 
 def load_json(path: Path):
@@ -111,6 +144,7 @@ class PluginPackageContractTests(unittest.TestCase):
             "Never send customer",
             "Never use `popscale-docs` for a write",
             "safe-journey-creation",
+            "safe-interview-administration",
         ):
             self.assertIn(required, skill)
         self.assertNotIn("[TODO:", skill)
@@ -118,6 +152,81 @@ class PluginPackageContractTests(unittest.TestCase):
         self.assertIn('url: "https://docs.popscale.io/mcp"', metadata)
         self.assertIn('value: "popscale-platform"', metadata)
         self.assertIn('url: "https://app.popscale.io/mcp/"', metadata)
+
+    def test_interview_skill_is_product_only_and_preserves_safety_contract(self):
+        skill_root = PLUGIN_ROOT / "skills" / "safe-interview-administration"
+        skill = (skill_root / "SKILL.md").read_text(encoding="utf-8")
+        metadata = (skill_root / "agents" / "openai.yaml").read_text(
+            encoding="utf-8"
+        )
+        workflow = (skill_root / "references" / "tool-workflow.md").read_text(
+            encoding="utf-8"
+        )
+        evaluations = (
+            skill_root / "references" / "evaluation-scenarios.md"
+        ).read_text(encoding="utf-8")
+
+        for required in (
+            "current_user",
+            "capabilities",
+            "expected_updated_at",
+            "confirm_publish=true",
+            "confirm_send=true",
+            "interview:read",
+            "interview:write",
+            "interview:distribute",
+            "publish:write",
+            "500",
+            "Never send Interview data",
+        ):
+            self.assertIn(required, skill)
+        for required_tool in EXPECTED_INTERVIEW_TOOLS:
+            self.assertIn(required_tool, workflow)
+        for required_scenario in (
+            "Stale edit conflict",
+            "Read-only grant and respondent link",
+            "Oversized delivery batch",
+            "Publish boundary",
+            "Bounded evidence review",
+            "Wrong company",
+        ):
+            self.assertIn(required_scenario, evaluations)
+        self.assertNotIn("popscale-docs", metadata)
+        self.assertIn('value: "popscale-platform"', metadata)
+        self.assertIn('url: "https://app.popscale.io/mcp/"', metadata)
+
+    def test_manifest_advertises_interview_admin_capability(self):
+        codex = load_json(PLUGIN_ROOT / ".codex-plugin" / "plugin.json")
+        claude = load_json(PLUGIN_ROOT / ".claude-plugin" / "plugin.json")
+        marketplace = load_json(REPO_ROOT / ".claude-plugin" / "marketplace.json")
+        self.assertIn("interviews", codex["keywords"])
+        self.assertIn("interviews", claude["keywords"])
+        self.assertIn("interviews", marketplace["plugins"][0]["keywords"])
+        self.assertIn("interview", codex["description"].lower())
+        self.assertIn("interview", claude["description"].lower())
+        self.assertTrue(
+            any("interview" in prompt.lower() for prompt in codex["interface"]["defaultPrompt"])
+        )
+
+    def test_interview_oauth_guidance_requires_reauthorization_and_scopes(self):
+        docs = "\n".join(
+            path.read_text(encoding="utf-8")
+            for path in (
+                REPO_ROOT / "docs" / "INSTALLATION.md",
+                REPO_ROOT / "docs" / "SECURITY_MODEL.md",
+                PLUGIN_ROOT / "README.md",
+                PLUGIN_ROOT / "SETUP.md",
+            )
+        )
+        for required in (
+            "interview:read",
+            "interview:write",
+            "interview:distribute",
+            "publish:write",
+        ):
+            self.assertIn(required, docs)
+        self.assertIn("not silently", docs)
+        self.assertIn("respondent", docs.lower())
 
     def test_safe_journey_skill_remains_product_only(self):
         safe_root = PLUGIN_ROOT / "skills" / "safe-journey-creation"

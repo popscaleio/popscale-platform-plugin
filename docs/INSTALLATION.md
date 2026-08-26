@@ -10,6 +10,12 @@ requires all of the following:
 3. The user's role grants the requested product scopes.
 4. The user selects and approves the intended company during OAuth.
 
+Interview administration also requires the company `interviews` feature and the
+dedicated scopes appropriate to the task: `interview:read`, `interview:write`,
+and `interview:distribute`. Publishing a Study additionally requires
+`publish:write`. Existing grants are not automatically widened when these tools
+become available.
+
 Never paste a bearer token or add a static authorization header. Popscale uses
 OAuth and stores the resulting host credential through the host's secure flow.
 
@@ -94,6 +100,21 @@ and whether both calls succeeded.
 Expected: the company selected during OAuth and resource
 `https://app.popscale.io/mcp/`.
 
+### Interview read and consent
+
+In a dedicated test company with Interviews enabled:
+
+```text
+Use only popscale-platform and safe-interview-administration. List Interview
+Studies without making changes. Do not open an individual invitation or expose
+respondent links or contact data.
+```
+
+Expected: the OAuth-bound company, bounded Study summaries, and no mutation or
+respondent-link material. If `interview:read` was not granted, reconnect the
+product connector and review the requested consent scopes. Accessing one
+respondent link also requires `interview:distribute`.
+
 ### Persistence
 
 Close the host, start a new task, and repeat the product read test. The stored
@@ -111,5 +132,9 @@ session should be reused without a new login unless it was revoked or expired.
   complete callback URL; do not rewrite `localhost` to `127.0.0.1` or vice versa.
 - **Wrong company:** revoke or clear the product connector authentication, sign
   into Popscale, select the correct company, and authenticate again.
+- **Interview tools or links are unavailable:** reconnect the product connector
+  and review `interview:read`, `interview:write`, and
+  `interview:distribute`. Do not manually paste tokens or assume a read scope
+  authorizes respondent-link access.
 - **App UI does not render:** continue from structured MCP results. UI rendering
   is optional and does not change the product authorization boundary.
