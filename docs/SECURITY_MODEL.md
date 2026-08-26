@@ -74,6 +74,7 @@ still reject unauthorized scopes, roles, memberships, and companies server-side.
 | Respondent link or PII disclosed by a broad read | Focused detail tool requires `interview:distribute`; list results omit links and raw contact data |
 | Stale or broad Interview edit overwrites concurrent work | Current-draft requirement, focused mutation tools, and optimistic concurrency tokens |
 | Stale or broad content edit overwrites a root or sibling collection | Stable-ID component tools, allowlisted fields, root `expected_revision`, and refresh after every mutation |
+| Truncated dependency usage is treated as complete or paged with unsupported inputs | Preserve returned totals/truncation and stop when exact dependency detail is required; `get_content_usage` has no filters, offset, or cursor |
 | Active content changes current learner behavior without review | Explicit active-edit confirmation plus separate delete, reorder, archive, generation, and publication boundaries |
 | Cross-company reference ID is injected into content or generation | OAuth-selected company plus server validation of departments, languages, models, voices, assets, roots, and components |
 | Cross-company analytics identifier or prompt company is supplied | OAuth-selected company plus server validation of Journeys, content, departments, memberships, and cursors |

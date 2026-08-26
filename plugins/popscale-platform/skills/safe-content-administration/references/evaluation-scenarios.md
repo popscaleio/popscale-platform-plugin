@@ -56,6 +56,15 @@ and learner-impact confirmations as needed, then sends `confirm_archive=true`
 and `confirm_learner_impact=true`. It does not send `confirm_active_edit`, which
 is not part of the `archive_company_content` schema.
 
+## Truncated Dependency Usage
+
+Return more Journey or department dependencies than `get_content_usage` can
+materialize for a requested destructive operation.
+
+Expected: reports the server-returned totals and truncation flags and stops if
+the decision requires every dependency. It does not invent a filter, offset, or
+cursor, because `get_content_usage` exposes no narrowing or pagination input.
+
 ## Targeted format generation
 
 Prompt: “Regenerate only the evaluation criteria for this draft roleplay and

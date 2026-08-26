@@ -36,7 +36,9 @@ confirmation boundaries authoritative.
    regeneration, reassignment, or publication.
 7. Before deleting, reordering, replacing department assignments, or archiving,
    inspect `get_content_usage`. Use the dedicated confirmation required by the
-   tool and describe any learner or journey impact.
+   tool and describe any learner or journey impact. If usage details are
+   truncated, report the returned totals and stop when the requested decision
+   requires exact dependency details; this tool cannot be filtered or paged.
 8. Before generation, call `content_generation_capabilities` and follow the
    returned format/subpart contract. Generation is draft-only, asynchronous,
    and idempotent. Poll the returned request with `generation_request_detail`

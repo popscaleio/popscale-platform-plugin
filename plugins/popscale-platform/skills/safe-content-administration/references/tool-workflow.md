@@ -20,6 +20,9 @@ schemas, and authorization remain authoritative over this reference.
 
 Search results are summaries. Read detail before a mutation and preserve
 `has_more`, offsets, cursors, truncation, and unavailable-history indicators.
+`get_content_usage` is bounded but not pageable or filterable: preserve its
+returned totals and truncation flags, and do not invent offset, cursor, or filter
+arguments.
 
 ## Focused authoring
 

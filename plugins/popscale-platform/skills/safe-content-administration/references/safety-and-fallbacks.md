@@ -29,8 +29,10 @@ regeneration, and publication remain separate approvals. Archive calls use
 `confirm_learner_impact`; they do not accept `confirm_active_edit`.
 
 Before delete, reorder, reassignment, or archive, inspect bounded usage. If
-usage is truncated, do not infer that unseen dependencies are absent. Ask the
-user to narrow or page the review, or stop if complete impact cannot be shown.
+usage is truncated, do not infer that unseen dependencies are absent. Report
+the returned totals and truncation flags, and stop when the decision requires
+exact dependency details. `get_content_usage` has no filters, offset, or cursor;
+do not retry it with unsupported narrowing or pagination arguments.
 
 ## Async generation and partial failure
 
