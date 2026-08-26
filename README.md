@@ -2,8 +2,8 @@
 
 The official Popscale plugin for Codex, Claude Code, Claude Desktop, and Claude
 Cowork. One install provides public Popscale documentation and authenticated,
-company-scoped Interview and learning-journey workflows while keeping those
-trust boundaries separate.
+company-scoped Interview, granular learning-content, and journey workflows while
+keeping those trust boundaries separate.
 
 ## Included connections
 
@@ -61,9 +61,12 @@ endpoints are public HTTPS services; only the product endpoint requires OAuth.
 3. If the test company has Interviews enabled, ask it to list Interview Studies
    without making changes. It must use `popscale-platform` and expose no
    respondent link or raw contact data.
-4. Restart the host and repeat the product read test. It should reuse the saved
+4. Ask it to search company content and read one returned object's status,
+   revision, editable fields, and freshness without making changes. It must use
+   `safe-content-administration` and remain inside the OAuth-selected company.
+5. Restart the host and repeat the product read test. It should reuse the saved
    OAuth session.
-5. Do not test writes in a customer company. Use a dedicated test company and
+6. Do not test writes in a customer company. Use a dedicated test company and
    explicit human confirmation for mutation or publication tests.
 
 See [installation](docs/INSTALLATION.md), the
@@ -80,7 +83,7 @@ plugins/popscale-platform/             Shared plugin package
   .claude-plugin/plugin.json           Claude manifest
   .mcp.json                            Both remote MCP servers
   assets/icon.png                      Packaged Popscale symbol
-  skills/                              Portable routing, Interview, and journey workflows
+  skills/                              Portable routing, Interview, content, and journey workflows
 ```
 
 This repository contains distribution metadata and agent workflows only. The

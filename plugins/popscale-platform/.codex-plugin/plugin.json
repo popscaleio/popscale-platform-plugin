@@ -1,7 +1,7 @@
 {
   "name": "popscale-platform",
-  "version": "1.1.0",
-  "description": "Read public Popscale documentation and safely administer company-scoped interviews and learning journeys through separate remote MCP servers.",
+  "version": "1.2.0",
+  "description": "Read public Popscale documentation and safely administer company-scoped interviews, learning content, and journeys through separate remote MCP servers.",
   "author": {
     "name": "Popscale",
     "url": "https://popscale.io/"
@@ -13,6 +13,10 @@
     "popscale",
     "sales-enablement",
     "learning-journeys",
+    "content-authoring",
+    "roleplays",
+    "episodes",
+    "flashcards",
     "interviews",
     "research",
     "documentation",
@@ -22,8 +26,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Popscale Platform",
-    "shortDescription": "Manage Popscale interviews and safe journeys",
-    "longDescription": "Search the public, read-only Popscale Docs MCP or connect to the company-scoped Popscale Platform MCP to administer interview Studies, questions, invitations, evidence and analyses, or build validated learning journeys. Sensitive and publishing actions require the server's dedicated scopes and explicit confirmation.",
+    "shortDescription": "Manage Popscale content, interviews, and journeys",
+    "longDescription": "Search the public, read-only Popscale Docs MCP or connect to the company-scoped Popscale Platform MCP to find, create, and granularly edit roleplays, coaching sessions, challenges, episodes, flashcards, and existing journeys; administer interview Studies; or build validated learning journeys. Active edits, generation, distribution, and publication retain dedicated scopes, revision checks, and explicit confirmation boundaries.",
     "developerName": "Popscale",
     "category": "Productivity",
     "capabilities": [
@@ -37,7 +41,7 @@
     "logo": "./assets/icon.png",
     "defaultPrompt": [
       "Search the public Popscale docs for how journeys work and cite the page status.",
-      "Create a safe Popscale journey from approved company knowledge and let me review it before publishing.",
+      "Find our pricing roleplay and help me add one follow-up question without changing anything else.",
       "Show my interview Studies and help me edit one question safely."
     ]
   },

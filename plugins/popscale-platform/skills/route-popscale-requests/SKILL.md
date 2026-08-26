@@ -25,7 +25,11 @@ documentation or MCP tool descriptions.
 4. For an authenticated action, follow the relevant product workflow. Use
    `safe-journey-creation` for journey creation, execution, or publication. Use
    `safe-interview-administration` for Interview Study authoring, precise
-   question edits, invitations, respondent links, run review, or analysis.
+   question edits, invitations, respondent links, run review, or analysis. Use
+   `safe-content-administration` to find, create, inspect, or granularly edit
+   existing roleplays, coaching sessions, challenges, episodes, flashcards, or
+   Journey sections/items, and for their supported regeneration, language, or
+   activation workflows.
 5. For a mixed request, answer the public portion from `popscale-docs`, clearly
    separate it from the authenticated portion, and obtain product state only
    from `popscale-platform`.
@@ -45,6 +49,10 @@ documentation or MCP tool descriptions.
 - Keep `safe-interview-administration` authoritative for Interview workflows;
   never send Study content, respondent data, invitation links, transcripts, or
   analyses to the public documentation server.
+- Keep `safe-content-administration` authoritative for company content
+  authoring. Use `safe-journey-creation` for a new Journey plan or its
+  execution/publication, but use the content workflow for a focused edit to an
+  already created Journey section or item.
 - If `popscale-docs` is unavailable, use the public artifacts at
   `https://docs.popscale.io/llms.txt`, `/llms-full.txt`, `/docs-index.json`, or a
   returned `/markdown/...` URL only for public reading. Do not fall back to the

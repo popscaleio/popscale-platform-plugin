@@ -13,7 +13,9 @@ authenticated company, server validation, and human approval authoritative.
 1. Call `current_user`, then `capabilities`.
 2. Confirm the user is an active `company_admin`, the intended company matches
    the authenticated session, and the required journey/generation scopes exist.
-   Do not accept a company identifier from the prompt as an authorization input.
+   Inspecting or activating child content also requires `content:read`; activation
+   additionally requires `content:write` and `publish:write`. Do not accept a
+   company identifier from the prompt as an authorization input.
 3. Inspect `knowledge_agent_context_manifest`, then use `knowledge_assets_list`
    and `knowledge_generation_context` for the approved, generation-eligible
    knowledge selected for this journey. If the stored manifest or selected
@@ -55,6 +57,8 @@ authenticated company, server validation, and human approval authoritative.
   or overwrite merely because the user earlier asked to create a journey.
 - If scopes are missing, surface the server's required scopes and ask the user to
   reauthorize or contact their Popscale admin.
+- Do not infer child-content activation authority from Journey scopes. Existing
+  grants may need reauthorization for `content:read` before publication.
 - If a tool or App view is unavailable, use the structured tool fallback; do not
   work around Popscale's authorization or validation layer.
 - Never activate the journey until `journey_activation_readiness` confirms that

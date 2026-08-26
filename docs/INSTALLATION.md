@@ -16,6 +16,12 @@ and `interview:distribute`. Publishing a Study additionally requires
 `publish:write`. Existing grants are not automatically widened when these tools
 become available.
 
+Granular content inspection requires `content:read`; root/component mutation
+additionally requires `content:write`; targeted generation requires
+`generation:write`; and activation requires `publish:write`. Existing grants are
+not silently widened. Content mutations use the current root
+`expected_revision`, and active edits require explicit `confirm_active_edit`.
+
 Never paste a bearer token or add a static authorization header. Popscale uses
 OAuth and stores the resulting host credential through the host's secure flow.
 
@@ -115,6 +121,21 @@ respondent-link material. If `interview:read` was not granted, reconnect the
 product connector and review the requested consent scopes. Accessing one
 respondent link also requires `interview:distribute`.
 
+### Company content read and consent
+
+In a dedicated test company with representative content:
+
+```text
+Use only popscale-platform and safe-content-administration. Search company
+content, then read one returned roleplay or episode and its freshness. Do not
+make changes, generate content, open media upload URLs, or publish anything.
+```
+
+Expected: bounded company-scoped summaries, the current root revision and
+editable/component metadata, and no mutation. If `content:read` was not granted,
+reconnect and review consent. A later focused edit requires `content:write`;
+generation and publication retain their additional scopes and confirmations.
+
 ### Persistence
 
 Close the host, start a new task, and repeat the product read test. The stored
@@ -136,5 +157,9 @@ session should be reused without a new login unless it was revoked or expired.
   and review `interview:read`, `interview:write`, and
   `interview:distribute`. Do not manually paste tokens or assume a read scope
   authorizes respondent-link access.
+- **Content tools are unavailable:** reconnect the product connector and review
+  `content:read`, `content:write`, `generation:write`, and `publish:write` for the
+  requested operation. Do not paste tokens, guess a company ID, or treat a read
+  grant as mutation authority.
 - **App UI does not render:** continue from structured MCP results. UI rendering
   is optional and does not change the product authorization boundary.

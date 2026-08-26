@@ -26,8 +26,8 @@ codex plugin add popscale-platform@popscale
 ```
 
 The Codex manifest points to `./.mcp.json` and `./skills/`, so one plugin install
-supplies both servers and the routing, Interview-administration, and Journey
-skills. Start a new task after installation.
+supplies both servers and the routing, Interview-administration,
+content-administration, and Journey skills. Start a new task after installation.
 
 That one-install contract applies to repository/local marketplace distribution.
 OpenAI's public submission form accepts one primary MCP server URL, and uploaded
@@ -76,6 +76,13 @@ the consent page, and approve only the scopes needed for the requested work. A
 read-only user can list PII-safe invitation summaries, but individual respondent
 links require both `interview:read` and `interview:distribute`.
 
+Granular company-content reads use `content:read`. Creating or editing roots and
+stable-ID components additionally requires `content:write`; targeted generation
+requires `generation:write`; activation requires `publish:write`. Existing
+grants are not silently widened for these scopes either. Protected content
+mutations pass the latest root revision as `expected_revision`, and active
+content edits require a separate explicit `confirm_active_edit` decision.
+
 `popscale-docs` must work without this flow and must never receive the product
 OAuth session or customer data.
 
@@ -92,6 +99,10 @@ OAuth session or customer data.
 5. In a company with Interviews enabled, ask to list Interview Studies. Confirm
    the host uses `safe-interview-administration` and `popscale-platform`, makes
    no mutation, and exposes no respondent link or raw contact data.
+6. Ask to search company content and inspect one returned object and its
+   freshness without mutation. Confirm the host uses
+   `safe-content-administration`, reports bounded results and the current root
+   revision, and stays in the OAuth-selected company.
 
 ## Troubleshoot
 
@@ -106,6 +117,10 @@ OAuth session or customer data.
 - If Interview tools or respondent-link access are missing after an update,
   reconnect `popscale-platform` and review the dedicated Interview scopes. Do
   not paste a bearer token or treat `interview:read` as distribution authority.
+- If content search, focused editing, generation, or activation is unavailable,
+  reconnect `popscale-platform` and review `content:read`, `content:write`,
+  `generation:write`, and `publish:write` as appropriate. Do not broaden a grant
+  beyond the requested operation.
 - If the MCP App does not render, continue from the product server's structured
   result. App support is not required for safe product actions.
 

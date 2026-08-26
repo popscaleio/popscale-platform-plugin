@@ -1,6 +1,6 @@
 # V1 implementation tracker
 
-Last updated: 2026-08-25
+Last updated: 2026-08-26
 
 ## Complete
 
@@ -29,6 +29,26 @@ Last updated: 2026-08-25
   Journey tool and safety contract did not change.
 - [x] Interview plugin delivery remains package-only: no MCP App, backend deploy,
   database migration, or maintenance mode action is included.
+- [x] Granular Company Content Product MCP downstream impact reviewed against
+  the backend contract deployed to staging at `44735b3`.
+- [x] Portable `safe-content-administration` skill added for bounded discovery,
+  root/component CRUD, usage/history/freshness, targeted regeneration, language
+  generation, and explicit activation.
+- [x] Roleplay customers/questions/objections/decision rules/criteria, Episode
+  script/media state, Flashcard cards/translations/languages, and existing
+  Journey sections/items mapped to stable-ID workflows and eval scenarios.
+- [x] Routing, capability metadata, setup/OAuth consent guidance, security
+  model, release validation, and package contract tests updated for
+  `content:read`, `content:write`, `generation:write`, and `publish:write`.
+- [x] `safe-journey-creation` updated only for the new `content:read` requirement
+  on child-content activation. Journey plan/execution, MCP App, and final Journey
+  publication remain unchanged; existing-Journey component edits route to
+  `safe-content-administration`.
+- [x] `safe-interview-administration` reviewed and intentionally unchanged
+  because the Interview contract did not change in this backend slice.
+- [x] Content plugin delivery remains package-only: no MCP App, backend deploy,
+  database migration, maintenance mode, or plugin release is included in this
+  PR.
 
 ## Public repository release
 
@@ -41,6 +61,8 @@ Last updated: 2026-08-25
 - [ ] `v1.0.1` logo patch and archive published.
 - [ ] `v1.1.0` Interview administration package reviewed, merged, tagged, and
   published after the backend contract is deployed and host smoke tests pass.
+- [ ] `v1.2.0` granular company-content package reviewed, merged, tagged, and
+  published after production backend availability and clean host smoke tests.
 
 ## Manual directory gates
 

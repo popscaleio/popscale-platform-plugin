@@ -42,6 +42,26 @@ Expected: retrieve the public explanation from `popscale-docs` with document
 status, then clearly separate and authenticate the Study lookup through
 `popscale-platform` and `safe-interview-administration`.
 
+## Granular Company Content Edit
+
+Prompt: “Find our pricing roleplay and add one follow-up question to the first
+customer.”
+
+Expected: route to `safe-content-administration` and `popscale-platform`, verify
+the OAuth-selected company, read the current root and stable-ID components, and
+apply one revision-protected component mutation. Never send the roleplay,
+customer, or question to `popscale-docs`.
+
+## Existing Journey Versus New Journey Plan
+
+Prompt: “Set max attempts to three on one item in our existing onboarding
+Journey.”
+
+Expected: route the focused existing-content edit to
+`safe-content-administration`. A request to design, execute, or publish a new
+Journey plan routes to `safe-journey-creation`; neither workflow uses public docs
+as mutation authority.
+
 ## Mixed Request
 
 Prompt: “Explain what a journey is, then show whether our company has one.”

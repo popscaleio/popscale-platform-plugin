@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PLUGIN = ROOT / "plugins" / "popscale-platform"
-EXPECTED_VERSION = "1.1.0"
+EXPECTED_VERSION = "1.2.0"
 EXPECTED_SERVERS = {
     "popscale-platform": {"type": "http", "url": "https://app.popscale.io/mcp/"},
     "popscale-docs": {"type": "http", "url": "https://docs.popscale.io/mcp"},
@@ -26,6 +26,7 @@ REQUIRED_FILES = (
     PLUGIN / ".mcp.json",
     PLUGIN / "assets" / "icon.png",
     PLUGIN / "skills" / "route-popscale-requests" / "SKILL.md",
+    PLUGIN / "skills" / "safe-content-administration" / "SKILL.md",
     PLUGIN / "skills" / "safe-interview-administration" / "SKILL.md",
     PLUGIN / "skills" / "safe-journey-creation" / "SKILL.md",
     ROOT / "SECURITY.md",

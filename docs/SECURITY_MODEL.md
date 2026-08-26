@@ -6,6 +6,8 @@
 - Interview Studies, questions, respondent-intro localizations, invitation
   links, respondent contact data, transcripts, evidence, and analyses;
 - journey plans, generation jobs, and publication actions;
+- roleplays, coaching sessions, challenges, episodes, flashcards, existing
+  Journey components, media metadata, change history, and freshness state;
 - Popscale OAuth access and refresh tokens;
 - company membership, role, and feature state;
 - the integrity and status of public documentation.
@@ -42,7 +44,12 @@ still reject unauthorized scopes, roles, memberships, and companies server-side.
   `interview:distribute` for respondent links and invitation operations. Study
   publication additionally requires `publish:write`.
 - Existing grants are never silently widened; users reauthorize before newly
-  requested Interview scopes become available.
+  requested Interview or content scopes become available.
+- Content scopes remain separated: `content:read` for bounded inspection,
+  `content:write` for focused mutations, `generation:write` for targeted
+  generation, and `publish:write` for activation. Protected mutations use
+  `expected_revision`; active edits additionally require
+  `confirm_active_edit`.
 - Docs marked `draft` or `review` are labeled and not used as verified mutation
   authority.
 - Customer identifiers, content, credentials, and OAuth material never go to
@@ -57,6 +64,9 @@ still reject unauthorized scopes, roles, memberships, and companies server-side.
 | Cross-company product access | Company derived from authenticated membership; server-side isolation tests |
 | Respondent link or PII disclosed by a broad read | Focused detail tool requires `interview:distribute`; list results omit links and raw contact data |
 | Stale or broad Interview edit overwrites concurrent work | Current-draft requirement, focused mutation tools, and optimistic concurrency tokens |
+| Stale or broad content edit overwrites a root or sibling collection | Stable-ID component tools, allowlisted fields, root `expected_revision`, and refresh after every mutation |
+| Active content changes current learner behavior without review | Explicit active-edit confirmation plus separate delete, reorder, archive, generation, and publication boundaries |
+| Cross-company reference ID is injected into content or generation | OAuth-selected company plus server validation of departments, languages, models, voices, assets, roots, and components |
 | OAuth callback substitution | Exact callback binding with narrowly scoped loopback-port compatibility |
 | Unreviewed write or publish | Safe journey workflow and explicit confirmation |
 | Secret committed to plugin | Public-repo validation, review, and no secret-bearing config fields |

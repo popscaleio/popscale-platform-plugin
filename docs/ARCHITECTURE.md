@@ -2,7 +2,7 @@
 
 ## Package shape
 
-Popscale Platform is one plugin with two remote MCP servers and three portable
+Popscale Platform is one plugin with two remote MCP servers and four portable
 skills. Codex and Claude use host-specific manifests but share the same plugin
 root, MCP configuration, and skill source.
 
@@ -12,6 +12,7 @@ Host marketplace
        ├─ route-popscale-requests
        ├─ safe-journey-creation
        ├─ safe-interview-administration
+       ├─ safe-content-administration
        ├─ popscale-docs (public and read-only)
        └─ popscale-platform (OAuth and company-scoped)
 ```
@@ -46,8 +47,12 @@ The skill deliberately does not copy documentation or tool schemas. The
 existing `safe-journey-creation` skill remains authoritative for authenticated
 journey workflows. `safe-interview-administration` owns the Interview workflow,
 including current-state reads, focused draft edits, distribution safeguards,
-and bounded evidence review. Neither workflow imports public docs as mutation
-authority.
+and bounded evidence review. `safe-content-administration` owns discovery and
+revision-protected root/component edits for existing roleplays, coaching
+sessions, challenges, episodes, flashcards, and Journeys, plus supported
+generation and activation. `safe-journey-creation` remains authoritative for a
+new Journey plan, execution, and publication. None of these workflows imports
+public docs as mutation authority.
 
 ## MCP App
 
