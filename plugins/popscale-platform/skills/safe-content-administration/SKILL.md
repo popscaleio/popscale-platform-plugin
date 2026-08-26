@@ -29,7 +29,8 @@ confirmation boundaries authoritative.
    mutation. Refresh after each successful mutation because root revision
    changes. On conflict, re-read and reconcile the user's requested delta; never
    retry blindly.
-6. For active content, present the learner-visible consequence and obtain
+6. For an active-content edit through a tool whose live schema exposes
+   `confirm_active_edit`, present the learner-visible consequence and obtain
    immediate explicit approval before setting `confirm_active_edit=true`.
    Editing approval does not authorize deletion, reordering, archiving,
    regeneration, reassignment, or publication.
@@ -61,6 +62,9 @@ confirmation boundaries authoritative.
 - Existing grants are not widened automatically. Surface the server's missing
   scopes and ask the user to reconnect or reauthorize instead of requesting a
   bearer token.
+- Never add a confirmation field that the live tool schema does not expose.
+  `archive_company_content` uses `confirm_archive` and, when required by the
+  server, `confirm_learner_impact`; it does not accept `confirm_active_edit`.
 - Treat `allowed_fields`, component types, generation capabilities, readiness,
   and validation errors returned by the server as authoritative. Never work
   around them through generic REST calls or guessed fields.

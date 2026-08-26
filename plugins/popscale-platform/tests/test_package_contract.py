@@ -319,6 +319,7 @@ class PluginPackageContractTests(unittest.TestCase):
             "One roleplay question",
             "Stale edit conflict",
             "Active content confirmation",
+            "Active Content Archive",
             "Episode language and audio",
             "Existing Journey item",
             "Wrong company and superuser acting context",
@@ -328,6 +329,8 @@ class PluginPackageContractTests(unittest.TestCase):
         self.assertNotIn("popscale-docs", metadata)
         self.assertIn('value: "popscale-platform"', metadata)
         self.assertIn('url: "https://app.popscale.io/mcp/"', metadata)
+        self.assertIn("does not accept `confirm_active_edit`", skill)
+        self.assertIn("does not send `confirm_active_edit`", evaluations)
 
     def test_manifest_advertises_company_content_administration(self):
         codex = load_json(PLUGIN_ROOT / ".codex-plugin" / "plugin.json")

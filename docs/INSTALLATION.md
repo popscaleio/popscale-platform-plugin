@@ -20,8 +20,10 @@ Granular content inspection requires `content:read`; root/component mutation
 additionally requires `content:write`; supported generation workflows require
 `generation:read` for voice/status reads and `generation:write` to queue work;
 and activation requires `publish:write`. Existing grants are not silently
-widened. Content mutations use the current root
-`expected_revision`, and active edits require explicit `confirm_active_edit`.
+widened. Content mutations use the current root `expected_revision`; active
+field/component edits require explicit `confirm_active_edit` only when the live
+tool schema exposes it. Archive instead uses its dedicated archive and optional
+learner-impact confirmations.
 
 Company usage and Journey insights require the dedicated read-only
 `usage:read` scope. Existing grants are not silently widened when it becomes

@@ -50,8 +50,9 @@ still reject unauthorized scopes, roles, memberships, and companies server-side.
 - Content scopes remain separated: `content:read` for bounded inspection,
   `content:write` for focused mutations, `generation:read` for voice/status
   reads, `generation:write` for targeted generation, and `publish:write` for
-  activation. Protected mutations use `expected_revision`; active edits
-  additionally require `confirm_active_edit`.
+  activation. Protected mutations use `expected_revision`; active edits use
+  `confirm_active_edit` only when exposed by the tool schema. Archive has
+  separate archive and learner-impact confirmations.
 - Company usage analytics require the dedicated read-only `usage:read` scope.
   The OAuth-selected company is authoritative; prompt-supplied company IDs do
   not change it. Small cohorts remain suppressed and member/attempt drilldowns

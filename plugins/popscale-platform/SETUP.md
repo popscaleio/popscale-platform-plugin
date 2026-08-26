@@ -82,8 +82,9 @@ stable-ID components additionally requires `content:write`; supported
 generation requires `generation:read` for voice/status reads and
 `generation:write` to queue work; activation requires `publish:write`. Existing
 grants are not silently widened for these scopes either. Protected content
-mutations pass the latest root revision as `expected_revision`, and active
-content edits require a separate explicit `confirm_active_edit` decision.
+mutations pass the latest root revision as `expected_revision`. Active
+field/component edits require `confirm_active_edit` only when exposed by the
+live schema; archive uses its separate archive and learner-impact confirmations.
 
 Company usage and Journey insights require the dedicated read-only
 `usage:read` scope. Existing grants are not silently widened for it. Reconnect

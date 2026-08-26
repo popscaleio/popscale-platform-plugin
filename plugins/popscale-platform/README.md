@@ -104,8 +104,9 @@ for voice/status reads and `generation:write` to queue work; activation
 additionally requires `publish:write`.
 Existing grants are not silently widened after these scopes become available.
 Reconnect and review consent before using a missing capability. Protected
-mutations use the latest root `revision` as `expected_revision`; active edits
-also require an explicit `confirm_active_edit` boundary.
+mutations use the latest root `revision` as `expected_revision`; active
+field/component edits use `confirm_active_edit` only when the live schema
+exposes it. Archive uses separate archive and learner-impact confirmations.
 
 Company usage and Journey insights require the dedicated read-only
 `usage:read` scope. Existing grants must be reauthorized before it is available.

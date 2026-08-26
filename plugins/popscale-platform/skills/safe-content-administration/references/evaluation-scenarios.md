@@ -47,6 +47,15 @@ and complete department assignments, explains that the tool replaces the full
 set, obtains approval when learner impact exists, and sends no prompt-supplied
 department ID.
 
+## Active Content Archive
+
+Prompt: “Archive this active roleplay after showing its learner impact.”
+
+Expected: reads bounded usage and the latest revision, obtains separate archive
+and learner-impact confirmations as needed, then sends `confirm_archive=true`
+and `confirm_learner_impact=true`. It does not send `confirm_active_edit`, which
+is not part of the `archive_company_content` schema.
+
 ## Targeted format generation
 
 Prompt: “Regenerate only the evaluation criteria for this draft roleplay and

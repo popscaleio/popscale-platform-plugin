@@ -22,8 +22,11 @@ Never convert a focused edit into a broad replacement to avoid a conflict.
 ## Active content and destructive boundaries
 
 Active edits can affect current learners. Show the exact active object and field
-delta before requesting `confirm_active_edit`. Delete, reorder, department
-replacement, archive, regeneration, and publication remain separate approvals.
+delta before requesting `confirm_active_edit`, and send that flag only when the
+live tool schema exposes it. Delete, reorder, department replacement, archive,
+regeneration, and publication remain separate approvals. Archive calls use
+`confirm_archive` and, when the server reports learner impact,
+`confirm_learner_impact`; they do not accept `confirm_active_edit`.
 
 Before delete, reorder, reassignment, or archive, inspect bounded usage. If
 usage is truncated, do not infer that unseen dependencies are absent. Ask the

@@ -35,10 +35,12 @@ Search results are summaries. Read detail before a mutation and preserve
 | `archive_company_content` | Move supported content to its non-destructive inactive/archive state | `content:read`, `content:write` |
 
 Every protected mutation uses the latest root `revision` as
-`expected_revision`. Refresh root detail after success. Active content also
-requires `confirm_active_edit=true` after the user approves the exact edit.
-Deletion requires `confirm_delete=true`; archive requires
-`confirm_archive=true` and may require a separate learner-impact confirmation.
+`expected_revision`. Refresh root detail after success. Active-content edits
+require `confirm_active_edit=true` only on tools whose live schema exposes that
+field, after the user approves the exact edit. Deletion requires
+`confirm_delete=true`. `archive_company_content` does not accept
+`confirm_active_edit`; it requires `confirm_archive=true` and may require
+`confirm_learner_impact=true` after a separate learner-impact confirmation.
 
 Use component CRUD for a single roleplay customer/question/objection/decision
 rule/criterion, episode script variant, flashcard/card translation, or journey
