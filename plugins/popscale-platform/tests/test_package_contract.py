@@ -224,6 +224,8 @@ class PluginPackageContractTests(unittest.TestCase):
         for required_semantic in (
             "current-state view",
             "current stored values",
+            "removed or inactive customer-human memberships",
+            "support and service identities",
             "Roleplay and Coaching history",
             "Flashcard sessions",
             "Legacy attempts",

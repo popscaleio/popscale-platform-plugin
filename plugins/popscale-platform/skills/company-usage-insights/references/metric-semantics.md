@@ -17,6 +17,14 @@ organizational reorganization could change the interpretation.
 
 ## Content attempts
 
+Content-attempt windows preserve company learning history: they can include
+attempts from removed or inactive customer-human memberships. Journey insights,
+by contrast, use active customer-human memberships. Both cohort paths exclude
+support and service identities. Department and role grouping still use the
+membership's current stored dimensions, not an attempt-time organization
+snapshot. Report this lifecycle distinction whenever `members_with_attempts` is
+compared with a current learner, enrollment, department, or role population.
+
 An evaluated attempt depends on its format:
 
 - Roleplay and Coaching Session: evaluation finished and an evaluation score

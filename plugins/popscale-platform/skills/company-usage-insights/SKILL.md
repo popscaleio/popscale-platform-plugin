@@ -28,6 +28,9 @@ definitions, and server bounds authoritative.
 4. Use `group_by=department` or `group_by=role` only when the comparison calls
    for it. Apply company-validated department and role filters before adding
    detail; do not infer an organization snapshot at the time of an attempt.
+   Journey cohorts use active customer-human memberships, while historical
+   content windows can retain attempts from removed or inactive customer-human
+   memberships. Both exclude support and service identities.
 5. Preserve every `suppressed`, `minimum_cohort_size`, count, metric-definition,
    timezone, notice, and availability field. Never reconstruct a suppressed
    value by changing filters, subtracting groups, combining calls, or using
@@ -44,9 +47,10 @@ definitions, and server bounds authoritative.
    `score_contract` and `historical_score_notice` next to affected historical
    Roleplay, Coaching, Flashcard, or legacy Episode results; never describe
    those values as immutable snapshots.
-9. Report the filters, denominator, time window/timezone, suppression, and
-   historical limitations needed to interpret the answer. Do not perform a
-   mutation, request a write scope, or imply that analytics authorized one.
+9. Report the filters, denominator, membership-lifecycle cohort, time
+   window/timezone, suppression, and historical limitations needed to interpret
+   the answer. Do not perform a mutation, request a write scope, or imply that
+   analytics authorized one.
 
 ## Boundaries
 

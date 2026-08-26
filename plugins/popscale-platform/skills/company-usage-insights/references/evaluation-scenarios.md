@@ -96,7 +96,10 @@ limitations to stored Challenge pass/no-pass outcomes.
 Ask for a historical department comparison after members changed departments.
 
 Expected: states that grouping uses current stored department and role values,
-not an organization snapshot captured at attempt time.
+not an organization snapshot captured at attempt time. It also explains that
+historical content windows can retain attempts from removed or inactive
+customer-human memberships, while Journey cohorts use active customer-human
+memberships; support and service identities are excluded from both.
 
 ## Dependency Usage Is Not Outcome Analytics
 
