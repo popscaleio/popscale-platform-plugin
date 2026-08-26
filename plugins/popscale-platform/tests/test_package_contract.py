@@ -213,6 +213,8 @@ class PluginPackageContractTests(unittest.TestCase):
             "score_contract",
             "historical_score_notice",
             "get_content_usage",
+            "search_company_content",
+            "server-returned ID/link",
             "366-day",
             "20,000",
         ):
@@ -241,6 +243,7 @@ class PluginPackageContractTests(unittest.TestCase):
             "Department-manager Roleplay Outcomes",
             "Explicit Member Drilldown",
             "Missing Usage Scope",
+            "Title-only Resolution With Usage-only Grant",
             "Wrong Company or Prompt-supplied Company ID",
             "Suppressed Small Cohort",
             "Bounded Window, Pagination, and Row Guard",
@@ -289,6 +292,7 @@ class PluginPackageContractTests(unittest.TestCase):
             "confirm_publish=true",
             "content:read",
             "content:write",
+            "generation:read",
             "generation:write",
             "publish:write",
             "Never send customer content",
@@ -425,6 +429,7 @@ class PluginPackageContractTests(unittest.TestCase):
         for required in (
             "content:read",
             "content:write",
+            "generation:read",
             "generation:write",
             "publish:write",
         ):

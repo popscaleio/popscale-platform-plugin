@@ -15,9 +15,12 @@ definitions, and server bounds authoritative.
    `company_admin` in the intended OAuth-selected company and `usage:read`.
    A superuser acting for a company still needs that explicit company context;
    a company ID or name in the prompt is never authorization.
-2. Resolve the Journey or content object from authenticated product state. Do
-   not guess IDs and do not send its title, identifiers, or results to
-   `popscale-docs`.
+2. Resolve the Journey or content object from authenticated product state. Use
+   a stable ID/link already returned in the current Product MCP context. For a
+   title-only request, call `search_company_content` only when `content:read` is
+   granted; otherwise ask the user for a server-returned ID/link or offer scoped
+   reauthorization for name resolution. Never guess an ID or send the title,
+   identifier, or result to `popscale-docs`.
 3. Start with the smallest aggregate that answers the question:
    `get_journey_insights` for current Journey participation/completion/mastery,
    or `get_content_outcomes` for Roleplay, Coaching Session, Episode,
@@ -49,6 +52,9 @@ definitions, and server bounds authoritative.
 
 - `usage:read` is a dedicated read-only scope. Existing grants are not silently
   widened; ask the user to reconnect or reauthorize when it is missing.
+- The five analytics tools require only `usage:read`, but title-based catalog
+  resolution uses `search_company_content` and therefore also requires
+  `content:read`. Do not silently broaden the grant when an ID is already known.
 - `get_content_usage` belongs to `safe-content-administration`: it reviews
   Journey/department dependencies before a content mutation. It is not the
   source for learner outcomes or attempt statistics.

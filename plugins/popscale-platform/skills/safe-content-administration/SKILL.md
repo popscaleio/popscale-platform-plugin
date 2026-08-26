@@ -53,9 +53,11 @@ confirmation boundaries authoritative.
 - Never send customer content, generated artifacts, identifiers, or OAuth
   material to `popscale-docs`.
 - Use `content:read` for inspection; focused mutations additionally require
-  `content:write`. Targeted regeneration requires `content:write` and
-  `generation:write`; language generation also requires `content:read`;
-  activation additionally requires `publish:write`.
+  `content:write`. Supported generation workflows also require
+  `generation:read` for voice discovery and asynchronous status/step reads;
+  targeted regeneration requires `content:write` and `generation:write`, while
+  language generation additionally requires `content:read` and
+  `generation:write`. Activation additionally requires `publish:write`.
 - Existing grants are not widened automatically. Surface the server's missing
   scopes and ask the user to reconnect or reauthorize instead of requesting a
   bearer token.

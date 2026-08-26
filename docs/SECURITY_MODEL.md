@@ -48,14 +48,16 @@ still reject unauthorized scopes, roles, memberships, and companies server-side.
 - Existing grants are never silently widened; users reauthorize before newly
   requested Interview or content scopes become available.
 - Content scopes remain separated: `content:read` for bounded inspection,
-  `content:write` for focused mutations, `generation:write` for targeted
-  generation, and `publish:write` for activation. Protected mutations use
-  `expected_revision`; active edits additionally require
-  `confirm_active_edit`.
+  `content:write` for focused mutations, `generation:read` for voice/status
+  reads, `generation:write` for targeted generation, and `publish:write` for
+  activation. Protected mutations use `expected_revision`; active edits
+  additionally require `confirm_active_edit`.
 - Company usage analytics require the dedicated read-only `usage:read` scope.
   The OAuth-selected company is authoritative; prompt-supplied company IDs do
   not change it. Small cohorts remain suppressed and member/attempt drilldowns
-  stay bounded and PII-minimized.
+  stay bounded and PII-minimized. Known-ID analytics do not require a content
+  grant; title resolution through `search_company_content` separately requires
+  `content:read` and must not be guessed when that scope is absent.
 - Docs marked `draft` or `review` are labeled and not used as verified mutation
   authority.
 - Customer identifiers, content, credentials, and OAuth material never go to

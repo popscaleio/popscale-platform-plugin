@@ -99,8 +99,9 @@ Existing grants are not widened automatically; reconnect and review the new
 consent scopes before using these tools.
 
 Company-content inspection requires `content:read`; focused edits additionally
-require `content:write`. Targeted regeneration also requires
-`generation:write`, and activation additionally requires `publish:write`.
+require `content:write`. Supported generation also requires `generation:read`
+for voice/status reads and `generation:write` to queue work; activation
+additionally requires `publish:write`.
 Existing grants are not silently widened after these scopes become available.
 Reconnect and review consent before using a missing capability. Protected
 mutations use the latest root `revision` as `expected_revision`; active edits
@@ -110,7 +111,10 @@ Company usage and Journey insights require the dedicated read-only
 `usage:read` scope. Existing grants must be reauthorized before it is available.
 Aggregates can suppress small cohorts; member and attempt drilldowns remain
 private company data even though email, transcripts, reflections, feedback
-text, and raw result payloads are omitted.
+text, and raw result payloads are omitted. Analytics by known stable ID requires
+only `usage:read`; title resolution through `search_company_content` also needs
+`content:read`, or the user must provide an ID/link already returned by the
+Product MCP.
 
 The staging product endpoint is `https://staging.popscale.io/mcp/`; it is not
 packaged and must only be used for testing.

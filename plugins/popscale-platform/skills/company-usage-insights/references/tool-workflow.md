@@ -9,6 +9,7 @@ privacy metadata, and server validation remain authoritative over this guide.
 | --- | --- | --- |
 | `current_user` | Verify the effective role and OAuth-selected company | Authenticated session |
 | `capabilities` | Verify tool availability and `usage:read` | Authenticated session |
+| `search_company_content` | Resolve a title to a company-scoped stable ID when needed | Optional `content:read`; ask for a server-returned ID/link if absent |
 | `get_journey_insights` | Compare current Journey participation, completion, and mastery | `journey_id`; `group_by`; optional `department_ids`, `roles`, `minimum_cohort_size` |
 | `get_content_outcomes` | Compare attempt outcomes for one content root | `content_type`, `object_id`; optional group/filter/date/cohort inputs |
 
@@ -17,6 +18,12 @@ comparisons, and `role` for `company_admin`, `department_admin`, or `employee`
 comparisons. Department IDs must come from the authenticated company. The
 minimum cohort defaults to 3 and can be 2 through 20; never lower or reshape it
 to reveal a suppressed result.
+
+Do not guess `journey_id` or `object_id`. Prefer an ID/link already returned in
+the current authenticated context. A title-only prompt needs
+`search_company_content` and `content:read`; if that optional discovery scope is
+absent, ask for a server-returned ID/link or offer scoped reauthorization rather
+than claiming that `usage:read` can search the catalog.
 
 Supported content outcome types are `roleplay`, `coaching_session`, `episode`,
 `challenge`, and `flashcard_deck`. The default date window is the last 90

@@ -78,8 +78,9 @@ read-only user can list PII-safe invitation summaries, but individual respondent
 links require both `interview:read` and `interview:distribute`.
 
 Granular company-content reads use `content:read`. Creating or editing roots and
-stable-ID components additionally requires `content:write`; targeted generation
-requires `generation:write`; activation requires `publish:write`. Existing
+stable-ID components additionally requires `content:write`; supported
+generation requires `generation:read` for voice/status reads and
+`generation:write` to queue work; activation requires `publish:write`. Existing
 grants are not silently widened for these scopes either. Protected content
 mutations pass the latest root revision as `expected_revision`, and active
 content edits require a separate explicit `confirm_active_edit` decision.
@@ -88,7 +89,10 @@ Company usage and Journey insights require the dedicated read-only
 `usage:read` scope. Existing grants are not silently widened for it. Reconnect
 `popscale-platform` and approve that scope before comparing Journey completion,
 content outcomes, or bounded member/attempt detail. Small-cohort suppression is
-authoritative and must not be reconstructed through narrower filters.
+authoritative and must not be reconstructed through narrower filters. Analytics
+tools accept stable IDs; title resolution through `search_company_content`
+additionally requires `content:read`. With a usage-only grant, provide an ID or
+link already returned by the Product MCP rather than guessing.
 
 `popscale-docs` must work without this flow and must never receive the product
 OAuth session or customer data.
@@ -129,11 +133,14 @@ OAuth session or customer data.
   not paste a bearer token or treat `interview:read` as distribution authority.
 - If content search, focused editing, generation, or activation is unavailable,
   reconnect `popscale-platform` and review `content:read`, `content:write`,
-  `generation:write`, and `publish:write` as appropriate. Do not broaden a grant
-  beyond the requested operation.
+  `generation:read`, `generation:write`, and `publish:write` as appropriate. Do
+  not broaden a grant beyond the requested operation or queue generation that
+  the grant cannot monitor.
 - If usage insights are unavailable, reconnect `popscale-platform` and approve
   `usage:read`. Do not use a write scope, public Docs, generic REST, or member
-  enumeration to substitute for the missing analytics capability.
+  enumeration to substitute for the missing analytics capability. For a
+  title-only request, approve optional `content:read` or provide a Product
+  MCP-returned ID/link.
 - If the MCP App does not render, continue from the product server's structured
   result. App support is not required for safe product actions.
 

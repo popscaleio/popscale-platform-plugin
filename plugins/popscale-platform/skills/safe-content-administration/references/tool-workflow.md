@@ -58,7 +58,8 @@ child edits when no collection operation is needed.
    `gemini_tts_voices_list` when Episode audio voice names are needed.
 5. Poll `generation_request_detail` and `generation_request_steps`. Retry or
    cancel only when the server reports a supported state and the user approves
-   that separate mutation.
+   that separate mutation. Voice discovery and both polling tools require
+   `generation:read`; do not queue work under a grant that cannot monitor it.
 6. Refresh `content_detail`, `list_content_components`, and
    `get_content_freshness` after completion before reporting the generated
    result.

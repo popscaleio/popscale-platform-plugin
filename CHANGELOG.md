@@ -14,9 +14,9 @@ All notable changes to the Popscale Platform plugin are documented here.
   sessions, challenges, episodes, flashcards, and existing Journey sections and
   items, including active edits, stale revisions, wrong-company context, and
   publication boundaries.
-- Added OAuth guidance for `content:read`, `content:write`,
+- Added OAuth guidance for `content:read`, `content:write`, `generation:read`,
   `generation:write`, and `publish:write` without silently widening existing
-  grants.
+  grants or queuing asynchronous generation that cannot be monitored.
 - Added the portable `company-usage-insights` skill for privacy-safe Journey
   participation and content-outcome aggregates plus bounded member/attempt
   drilldown through the dedicated `usage:read` scope.
@@ -35,6 +35,9 @@ All notable changes to the Popscale Platform plugin are documented here.
   workflow, the five usage-insights tools, and all five portable skills.
 - Expanded routing and package metadata to distinguish learner outcomes from
   `get_content_usage` dependency review and from Journey authoring/publication.
+- Documented that title-based analytics discovery uses
+  `search_company_content` with optional `content:read`, while known-ID
+  analytics remain available through `usage:read` alone.
 
 ### Security
 

@@ -39,7 +39,8 @@ Last updated: 2026-08-26
   Journey sections/items mapped to stable-ID workflows and eval scenarios.
 - [x] Routing, capability metadata, setup/OAuth consent guidance, security
   model, release validation, and package contract tests updated for
-  `content:read`, `content:write`, `generation:write`, and `publish:write`.
+  `content:read`, `content:write`, `generation:read`, `generation:write`, and
+  `publish:write`.
 - [x] `safe-journey-creation` updated only for the new `content:read` requirement
   on child-content activation. Journey plan/execution, MCP App, and final Journey
   publication remain unchanged; existing-Journey component edits route to
@@ -58,6 +59,9 @@ Last updated: 2026-08-26
   drilldown, small-cohort suppression, tenant authority, PII minimization,
   pagination/window/row guards, and current versus historical metric semantics
   documented and covered by evaluation scenarios.
+- [x] Title-only analytics resolution uses company-scoped
+  `search_company_content` under optional `content:read`; known-ID analytics
+  remain `usage:read`-only and never guess prompt-supplied IDs.
 - [x] Routing, Codex/Claude metadata, setup/OAuth consent, security model,
   release smoke guidance, and package contracts updated for usage insights.
 - [x] `safe-content-administration`, `safe-journey-creation`, and

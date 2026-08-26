@@ -96,8 +96,9 @@ Company B. It never treats global superuser status as cross-company authority.
 Use a `content:read`-only grant and ask for a regeneration.
 
 Expected: bounded reads remain available, mutation stops, and the host surfaces
-`content:write` and `generation:write` reauthorization guidance. It never asks
-for or pastes a bearer token.
+`content:write`, `generation:read`, and `generation:write` reauthorization
+guidance. It never queues work it cannot monitor and never asks for or pastes a
+bearer token.
 
 ## Publication boundary
 
