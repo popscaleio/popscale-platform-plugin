@@ -16,6 +16,24 @@ and `interview:distribute`. Publishing a Study additionally requires
 `publish:write`. Existing grants are not automatically widened when these tools
 become available.
 
+Granular content inspection requires `content:read`; root/component mutation
+additionally requires `content:write`; supported generation workflows require
+`generation:read` for voice/status reads and `generation:write` to queue work;
+and activation requires `publish:write`. Existing grants are not silently
+widened. Content mutations use the current root `expected_revision`; active
+field/component edits require explicit `confirm_active_edit` only when the live
+tool schema exposes it. Archive instead uses its dedicated archive and optional
+learner-impact confirmations.
+
+Company usage and Journey insights require the dedicated read-only
+`usage:read` scope. Existing grants are not silently widened when it becomes
+available. Aggregates can suppress cohorts below a server-returned threshold;
+that suppression must not be reconstructed through narrower filters or member
+enumeration. The analytics tools accept stable IDs; resolving a title through
+`search_company_content` additionally requires `content:read`. With a
+`usage:read`-only grant, provide a Product MCP-returned ID/link instead of
+guessing or silently widening consent.
+
 Never paste a bearer token or add a static authorization header. Popscale uses
 OAuth and stores the resulting host credential through the host's secure flow.
 
@@ -115,6 +133,38 @@ respondent-link material. If `interview:read` was not granted, reconnect the
 product connector and review the requested consent scopes. Accessing one
 respondent link also requires `interview:distribute`.
 
+### Company content read and consent
+
+In a dedicated test company with representative content:
+
+```text
+Use only popscale-platform and safe-content-administration. Search company
+content, then read one returned roleplay or episode and its freshness. Do not
+make changes, generate content, open media upload URLs, or publish anything.
+```
+
+Expected: bounded company-scoped summaries, the current root revision and
+editable/component metadata, and no mutation. If `content:read` was not granted,
+reconnect and review consent. A later focused edit requires `content:write`;
+generation and publication retain their additional scopes and confirmations.
+
+### Company usage read and consent
+
+In a dedicated test company with a Journey assigned across multiple sufficiently
+large departments:
+
+```text
+Use only popscale-platform and company-usage-insights. Compare current Journey
+completion by department. Do not list members or attempts and do not make any
+change. Preserve every suppressed group and state the denominator.
+```
+
+Expected: bounded company-scoped aggregates, the effective company and current
+metric definition, no mutation, and no reconstruction of suppressed cohorts. If
+`usage:read` was not granted, reconnect and review consent. A later explicit
+member drilldown can return names and stable membership IDs, but not email,
+transcripts, reflections, feedback text, or raw result payloads.
+
 ### Persistence
 
 Close the host, start a new task, and repeat the product read test. The stored
@@ -136,5 +186,15 @@ session should be reused without a new login unless it was revoked or expired.
   and review `interview:read`, `interview:write`, and
   `interview:distribute`. Do not manually paste tokens or assume a read scope
   authorizes respondent-link access.
+- **Content tools are unavailable:** reconnect the product connector and review
+  `content:read`, `content:write`, `generation:read`, `generation:write`, and
+  `publish:write` for the requested operation. Do not paste tokens, guess a
+  company ID, queue generation that cannot be monitored, or treat a read grant
+  as mutation authority.
+- **Usage insights are unavailable:** reconnect the product connector and
+  approve `usage:read`. Do not substitute Journey/content write scopes, public
+  Docs, generic REST, UI scraping, or broad member enumeration. If only
+  title-based discovery fails, provide a Product MCP-returned ID/link or approve
+  optional `content:read` for `search_company_content`.
 - **App UI does not render:** continue from structured MCP results. UI rendering
   is optional and does not change the product authorization boundary.

@@ -2,6 +2,53 @@
 
 All notable changes to the Popscale Platform plugin are documented here.
 
+## [1.2.0] - 2026-08-26
+
+### Added
+
+- Added the portable `safe-content-administration` skill for bounded company
+  content discovery, stable-ID root/component authoring, usage/history/freshness
+  review, targeted regeneration, Episode/Flashcard language generation, and
+  explicit activation.
+- Added format maps and host evaluation scenarios for roleplays, coaching
+  sessions, challenges, episodes, flashcards, and existing Journey sections and
+  items, including active edits, stale revisions, wrong-company context, and
+  publication boundaries.
+- Added OAuth guidance for `content:read`, `content:write`, `generation:read`,
+  `generation:write`, and `publish:write` without silently widening existing
+  grants or queuing asynchronous generation that cannot be monitored.
+- Added the portable `company-usage-insights` skill for privacy-safe Journey
+  participation and content-outcome aggregates plus bounded member/attempt
+  drilldown through the dedicated `usage:read` scope.
+- Added analytics evaluation scenarios for department and role comparisons,
+  small-cohort suppression, company isolation, pagination/date/row bounds, and
+  historical Roleplay, Coaching, Flashcard, and Episode score limitations.
+
+### Changed
+
+- Expanded Codex and Claude package metadata and routing to distinguish
+  granular edits to existing company content from Interview administration and
+  new Journey-plan creation/execution.
+- Updated `safe-journey-creation` only where its child-content activation step
+  now requires `content:read` alongside write and publication scopes.
+- Updated package contracts to require the complete granular content tool
+  workflow, the five usage-insights tools, and all five portable skills.
+- Expanded routing and package metadata to distinguish learner outcomes from
+  `get_content_usage` dependency review and from Journey authoring/publication.
+- Documented that title-based analytics discovery uses
+  `search_company_content` with optional `content:read`, while known-ID
+  analytics remain available through `usage:read` alone.
+
+### Security
+
+- Documented OAuth-selected company authority for company admins and superusers
+  acting as company admins, root `expected_revision` checks, explicit active
+  edit confirmation, stable-ID component mutations, bounded dependency review,
+  and separate generation/publication confirmations.
+- Documented authoritative small-cohort suppression, PII-minimized drilldown,
+  bounded analytics, current organization dimensions, and historical score
+  notices that must not be reconstructed or presented as immutable snapshots.
+
 ## [1.1.0] - 2026-08-25
 
 ### Added

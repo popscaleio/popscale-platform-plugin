@@ -6,6 +6,10 @@
 - Interview Studies, questions, respondent-intro localizations, invitation
   links, respondent contact data, transcripts, evidence, and analyses;
 - journey plans, generation jobs, and publication actions;
+- roleplays, coaching sessions, challenges, episodes, flashcards, existing
+  Journey components, media metadata, change history, and freshness state;
+- Journey participation, completion, mastery, content outcome aggregates,
+  member identities/progress, attempt metrics, and organization dimensions;
 - Popscale OAuth access and refresh tokens;
 - company membership, role, and feature state;
 - the integrity and status of public documentation.
@@ -42,7 +46,19 @@ still reject unauthorized scopes, roles, memberships, and companies server-side.
   `interview:distribute` for respondent links and invitation operations. Study
   publication additionally requires `publish:write`.
 - Existing grants are never silently widened; users reauthorize before newly
-  requested Interview scopes become available.
+  requested Interview or content scopes become available.
+- Content scopes remain separated: `content:read` for bounded inspection,
+  `content:write` for focused mutations, `generation:read` for voice/status
+  reads, `generation:write` for targeted generation, and `publish:write` for
+  activation. Protected mutations use `expected_revision`; active edits use
+  `confirm_active_edit` only when exposed by the tool schema. Archive has
+  separate archive and learner-impact confirmations.
+- Company usage analytics require the dedicated read-only `usage:read` scope.
+  The OAuth-selected company is authoritative; prompt-supplied company IDs do
+  not change it. Small cohorts remain suppressed and member/attempt drilldowns
+  stay bounded and PII-minimized. Known-ID analytics do not require a content
+  grant; title resolution through `search_company_content` separately requires
+  `content:read` and must not be guessed when that scope is absent.
 - Docs marked `draft` or `review` are labeled and not used as verified mutation
   authority.
 - Customer identifiers, content, credentials, and OAuth material never go to
@@ -57,6 +73,14 @@ still reject unauthorized scopes, roles, memberships, and companies server-side.
 | Cross-company product access | Company derived from authenticated membership; server-side isolation tests |
 | Respondent link or PII disclosed by a broad read | Focused detail tool requires `interview:distribute`; list results omit links and raw contact data |
 | Stale or broad Interview edit overwrites concurrent work | Current-draft requirement, focused mutation tools, and optimistic concurrency tokens |
+| Stale or broad content edit overwrites a root or sibling collection | Stable-ID component tools, allowlisted fields, root `expected_revision`, and refresh after every mutation |
+| Truncated dependency usage is treated as complete or paged with unsupported inputs | Retry once with `limit` capped at 100; if still truncated, preserve totals and stop when exact detail is required; never invent filters, offset, or cursor |
+| Active content changes current learner behavior without review | Explicit active-edit confirmation plus separate delete, reorder, archive, generation, and publication boundaries |
+| Cross-company reference ID is injected into content or generation | OAuth-selected company plus server validation of departments, languages, models, voices, assets, roots, and components |
+| Cross-company analytics identifier or prompt company is supplied | OAuth-selected company plus server validation of Journeys, content, departments, memberships, and cursors |
+| A small cohort is inferred from multiple analytics calls | Server suppression plus skill prohibition on threshold reduction, overlapping filters, subtraction, or detail-page reconstruction |
+| Member drilldown exposes unnecessary PII | Explicit bounded drilldown; stable membership ID and safe display name only; no email, transcript, reflection, feedback text, or raw result payload |
+| Historical score is presented as an immutable snapshot | Preserve `score_contract` and `historical_score_notice`; distinguish current thresholds/configuration and legacy Episode fallbacks |
 | OAuth callback substitution | Exact callback binding with narrowly scoped loopback-port compatibility |
 | Unreviewed write or publish | Safe journey workflow and explicit confirmation |
 | Secret committed to plugin | Public-repo validation, review, and no secret-bearing config fields |

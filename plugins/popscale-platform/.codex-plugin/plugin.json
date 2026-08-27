@@ -1,7 +1,7 @@
 {
   "name": "popscale-platform",
-  "version": "1.1.0",
-  "description": "Read public Popscale documentation and safely administer company-scoped interviews and learning journeys through separate remote MCP servers.",
+  "version": "1.2.0",
+  "description": "Read public Popscale documentation and safely administer company-scoped interviews, learning content, journeys, and usage insights through separate remote MCP servers.",
   "author": {
     "name": "Popscale",
     "url": "https://popscale.io/"
@@ -13,6 +13,12 @@
     "popscale",
     "sales-enablement",
     "learning-journeys",
+    "content-authoring",
+    "roleplays",
+    "episodes",
+    "flashcards",
+    "learning-analytics",
+    "journey-insights",
     "interviews",
     "research",
     "documentation",
@@ -22,8 +28,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Popscale Platform",
-    "shortDescription": "Manage Popscale interviews and safe journeys",
-    "longDescription": "Search the public, read-only Popscale Docs MCP or connect to the company-scoped Popscale Platform MCP to administer interview Studies, questions, invitations, evidence and analyses, or build validated learning journeys. Sensitive and publishing actions require the server's dedicated scopes and explicit confirmation.",
+    "shortDescription": "Manage content and analyze company learning",
+    "longDescription": "Search the public, read-only Popscale Docs MCP or connect to the company-scoped Popscale Platform MCP to find, create, and granularly edit learning content; administer interview Studies; build validated journeys; or compare privacy-safe Journey participation and content outcomes with bounded member drilldown. Customer data stays inside the OAuth-selected company, while active edits, generation, distribution, and publication retain dedicated scopes and confirmation boundaries.",
     "developerName": "Popscale",
     "category": "Productivity",
     "capabilities": [
@@ -37,7 +43,7 @@
     "logo": "./assets/icon.png",
     "defaultPrompt": [
       "Search the public Popscale docs for how journeys work and cite the page status.",
-      "Create a safe Popscale journey from approved company knowledge and let me review it before publishing.",
+      "Compare department outcomes for our pricing roleplay and explain any historical score limitations.",
       "Show my interview Studies and help me edit one question safely."
     ]
   },

@@ -27,6 +27,10 @@ Then perform read-only OAuth smoke tests in clean Codex and Claude installations
 
 - docs search and page retrieval without authentication;
 - `current_user` and `capabilities` against the intended Popscale company;
+- bounded `search_company_content` plus one `content_detail` read without any
+  mutation, generation, or publication;
+- one sufficiently large department-grouped Journey aggregate through
+  `company-usage-insights`, preserving suppression and without member drilldown;
 - host restart and credential persistence;
 - no write or mutation unless separately approved in a dedicated test company.
 

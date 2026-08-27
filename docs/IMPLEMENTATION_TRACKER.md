@@ -1,6 +1,6 @@
 # V1 implementation tracker
 
-Last updated: 2026-08-25
+Last updated: 2026-08-26
 
 ## Complete
 
@@ -29,6 +29,47 @@ Last updated: 2026-08-25
   Journey tool and safety contract did not change.
 - [x] Interview plugin delivery remains package-only: no MCP App, backend deploy,
   database migration, or maintenance mode action is included.
+- [x] Granular Company Content Product MCP downstream impact reviewed against
+  the backend contract deployed to staging at `44735b3`.
+- [x] Portable `safe-content-administration` skill added for bounded discovery,
+  root/component CRUD, usage/history/freshness, targeted regeneration, language
+  generation, and explicit activation.
+- [x] Roleplay customers/questions/objections/decision rules/criteria, Episode
+  script/media state, Flashcard cards/translations/languages, and existing
+  Journey sections/items mapped to stable-ID workflows and eval scenarios.
+- [x] Routing, capability metadata, setup/OAuth consent guidance, security
+  model, release validation, and package contract tests updated for
+  `content:read`, `content:write`, `generation:read`, `generation:write`, and
+  `publish:write`.
+- [x] `safe-journey-creation` updated only for the new `content:read` requirement
+  on child-content activation. Journey plan/execution, MCP App, and final Journey
+  publication remain unchanged; existing-Journey component edits route to
+  `safe-content-administration`.
+- [x] `safe-interview-administration` reviewed and intentionally unchanged
+  because the Interview contract did not change in this backend slice.
+- [x] Content plugin delivery remains package-only: no MCP App, backend deploy,
+  database migration, maintenance mode, or plugin release is included in this
+  PR.
+- [x] Company Usage and Journey Insights downstream impact reviewed against the
+  backend contract deployed green to staging at `d5c90e0`.
+- [x] Portable `company-usage-insights` skill added for `get_journey_insights`,
+  `list_journey_members`, `get_member_journey`, `get_content_outcomes`, and
+  `list_content_attempts` through `usage:read`.
+- [x] Aggregate-first department/role comparisons, bounded member/attempt
+  drilldown, small-cohort suppression, tenant authority, PII minimization,
+  pagination/window/row guards, and current versus historical metric semantics
+  documented and covered by evaluation scenarios.
+- [x] Title-only analytics resolution uses company-scoped
+  `search_company_content` under optional `content:read`; known-ID analytics
+  remain `usage:read`-only and never guess prompt-supplied IDs.
+- [x] Routing, Codex/Claude metadata, setup/OAuth consent, security model,
+  release smoke guidance, and package contracts updated for usage insights.
+- [x] `safe-content-administration`, `safe-journey-creation`, and
+  `safe-interview-administration` reviewed and intentionally unchanged: the new
+  contract is read-only analytics, while `get_content_usage` remains an
+  authoring dependency/impact check.
+- [x] Usage-insights plugin delivery remains package-only: no MCP App, backend
+  deploy, migration, maintenance mode, or plugin release is included in this PR.
 
 ## Public repository release
 
@@ -41,6 +82,9 @@ Last updated: 2026-08-25
 - [ ] `v1.0.1` logo patch and archive published.
 - [ ] `v1.1.0` Interview administration package reviewed, merged, tagged, and
   published after the backend contract is deployed and host smoke tests pass.
+- [ ] `v1.2.0` granular company-content and usage-insights package reviewed,
+  merged, tagged, and published after production backend availability and clean
+  host smoke tests.
 
 ## Manual directory gates
 

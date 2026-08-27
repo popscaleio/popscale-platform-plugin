@@ -8,11 +8,15 @@ remote MCP connections:
 | `popscale-docs` | `https://docs.popscale.io/mcp` | Public, no authentication, read-only | Search and retrieve indexed public documentation |
 | `popscale-platform` | `https://app.popscale.io/mcp/` | Popscale OAuth, company-scoped | Read customer data and perform authorized product actions |
 
-The product server lets a company administrator inspect and precisely edit
-Interview Studies, distribute invitations, review bounded evidence and analyses,
-and create validated learning journeys. Publishing, invitation delivery, and
-other sensitive operations keep their dedicated scopes and confirmation gates.
-The docs server contains no product actions or customer data.
+The product server lets a company administrator find, create, and granularly
+edit roleplays, coaching sessions, challenges, episodes, flashcards, and
+existing Journey sections/items; trigger supported format-specific generation;
+inspect and precisely edit Interview Studies; and create validated learning
+journeys. It also compares company-scoped Journey participation and learning
+outcomes with privacy-safe aggregates and bounded member or attempt drilldown.
+Active edits, generation, publishing, and invitation delivery keep their
+dedicated scopes, revision checks, and confirmation gates. The docs server
+contains no product actions or customer data.
 
 ## What is in the package
 
@@ -26,6 +30,10 @@ The docs server contains no product actions or customer data.
   documentation versus authenticated product work.
 - `skills/safe-interview-administration/`: company-scoped Interview authoring,
   distribution, evidence, and analysis workflow.
+- `skills/safe-content-administration/`: company-scoped content discovery,
+  stable-ID component editing, generation, history/freshness, and activation.
+- `skills/company-usage-insights/`: read-only Journey participation and
+  format-aware content outcomes with suppression and bounded drilldown.
 - `skills/safe-journey-creation/`: authenticated journey workflow used by both
   hosts.
 - `SETUP.md`: installation, authentication, verification, and troubleshooting.
@@ -59,6 +67,16 @@ customer credential, token, tenant identifier, or embedded API implementation.
 - Route Interview Study reads, precise question edits, invitations, respondent
   links, transcripts, and analyses through `safe-interview-administration` and
   `popscale-platform`. Never send that data to the Docs MCP.
+- Route existing company content discovery, focused root/component edits,
+  targeted regeneration, languages, and activation through
+  `safe-content-administration` and `popscale-platform`. Use
+  `safe-journey-creation` for designing/executing a new Journey plan, not for a
+  one-field edit to an existing Journey item.
+- Route company, department, or role comparisons of Journey completion/mastery
+  and content outcomes through `company-usage-insights` and
+  `popscale-platform`. Keep suppressed aggregates, names, membership IDs, and
+  attempt data away from the Docs MCP. Use `get_content_usage` only for
+  dependency/impact review before a content mutation, not learner statistics.
 - Never send customer data or credentials to the public server, and never treat
   public docs as authorization or approved company knowledge for a write.
 - The Journey Review App is an optional presentation layer. Hosts without App
@@ -79,6 +97,25 @@ and one or more dedicated scopes: `interview:read`, `interview:write`, and
 `interview:distribute`. Study publication also requires `publish:write`.
 Existing grants are not widened automatically; reconnect and review the new
 consent scopes before using these tools.
+
+Company-content inspection requires `content:read`; focused edits additionally
+require `content:write`. Supported generation also requires `generation:read`
+for voice/status reads and `generation:write` to queue work; activation
+additionally requires `publish:write`.
+Existing grants are not silently widened after these scopes become available.
+Reconnect and review consent before using a missing capability. Protected
+mutations use the latest root `revision` as `expected_revision`; active
+field/component edits use `confirm_active_edit` only when the live schema
+exposes it. Archive uses separate archive and learner-impact confirmations.
+
+Company usage and Journey insights require the dedicated read-only
+`usage:read` scope. Existing grants must be reauthorized before it is available.
+Aggregates can suppress small cohorts; member and attempt drilldowns remain
+private company data even though email, transcripts, reflections, feedback
+text, and raw result payloads are omitted. Analytics by known stable ID requires
+only `usage:read`; title resolution through `search_company_content` also needs
+`content:read`, or the user must provide an ID/link already returned by the
+Product MCP.
 
 The staging product endpoint is `https://staging.popscale.io/mcp/`; it is not
 packaged and must only be used for testing.

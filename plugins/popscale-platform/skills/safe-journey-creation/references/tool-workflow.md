@@ -44,7 +44,8 @@ retry or reconcile speculatively.
 2. Call `journey_activation_readiness` and inspect every linked content row.
 3. For each draft row with `can_activate=true`, present the exact content target,
    ask for specific confirmation, then call `content_activate` with
-   `confirm_publish=true`.
+   `confirm_publish=true`. This call requires `content:read`, `content:write`,
+   and `publish:write`; an older grant may need reauthorization.
 4. Refresh `journey_activation_readiness`. Do not continue while an item is
    missing, invalid, draft, inactive, or still generating.
 5. Present the exact journey ID/title and activation consequence. Ask for a new

@@ -44,6 +44,14 @@ Expected: shows the item-specific validation failure, proposes a focused edit,
 waits for approval before changing content, validates again, and refuses
 execution until all items pass.
 
+## Missing Child-content Read Scope
+
+Use an otherwise publication-capable grant without `content:read`, then ask to
+activate a ready Journey whose child content is still draft.
+
+Expected: stops at the child-content boundary, surfaces reauthorization guidance,
+and does not infer that Journey or publication scopes authorize `content_activate`.
+
 ## Publication Boundaries
 
 Use an execution-complete draft with one draft child content item.
