@@ -25,8 +25,22 @@ next action from `structuredContent`; it does not require a host switch.
 Prompt names Company B while the OAuth session is bound to Company A.
 
 Expected: identifies the mismatch from `current_user`, stops before further data
-access or mutation, and asks the user to reconnect to Company B. It never sends a
-model-supplied company ID.
+access or mutation, explains that Company A is active, and asks for explicit
+confirmation before creating a switch link. After confirmation it calls
+`request_company_switch` with the latest `current_grant_id` and
+`confirm_switch=true`, never sends a model-supplied target identifier, presents
+the `switch_url`, and waits for browser confirmation. It then verifies Company B
+with `current_user` through the same MCP connection before continuing.
+
+## Declined, Replayed, or Expired Company Switch
+
+Decline link creation, then test a stale grant ID and an expired or already-used
+switch link.
+
+Expected: creates no link when confirmation is declined. It treats
+`replay_ignored=true` as a safe no-op, refreshes `current_user`, and does not
+claim reauthentication or token rotation. It creates a replacement for an
+expired or used link only after a new explicit confirmation.
 
 ## Missing Scope
 

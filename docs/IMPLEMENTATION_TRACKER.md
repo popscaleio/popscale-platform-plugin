@@ -1,6 +1,6 @@
 # V1 implementation tracker
 
-Last updated: 2026-08-26
+Last updated: 2026-08-29
 
 ## Complete
 
@@ -70,6 +70,17 @@ Last updated: 2026-08-26
   authoring dependency/impact check.
 - [x] Usage-insights plugin delivery remains package-only: no MCP App, backend
   deploy, migration, maintenance mode, or plugin release is included in this PR.
+- [x] Browser-confirmed company-switch Product MCP downstream impact reviewed
+  against the production backend contract for `request_company_switch`.
+- [x] Routing, Journey, Interview, content-administration, and usage-insights
+  guidance updated to stop reads/writes on a mismatch, require explicit link
+  creation confirmation, and verify the selected company on the same connection.
+- [x] Setup, installation, security documentation, evaluation scenarios, and
+  package contracts cover target-free tool input, stale replay, expired links,
+  and preserved OAuth access and refresh tokens.
+- [x] Company-switch plugin delivery remains package-only: no MCP endpoint,
+  OAuth scope, MCP App mapping, database migration, backend deploy, or
+  maintenance-mode action is included in this PR.
 
 ## Public repository release
 
@@ -85,6 +96,9 @@ Last updated: 2026-08-26
 - [ ] `v1.2.0` granular company-content and usage-insights package reviewed,
   merged, tagged, and published after production backend availability and clean
   host smoke tests.
+- [ ] `v1.3.0` company-switch package reviewed, merged, tagged, and published
+  after the production switch page is available and clean Codex/Claude host
+  smoke tests pass.
 
 ## Manual directory gates
 

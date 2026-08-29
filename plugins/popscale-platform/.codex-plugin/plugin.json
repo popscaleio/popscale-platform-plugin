@@ -1,6 +1,6 @@
 {
   "name": "popscale-platform",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Read public Popscale documentation and safely administer company-scoped interviews, learning content, journeys, and usage insights through separate remote MCP servers.",
   "author": {
     "name": "Popscale",

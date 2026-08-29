@@ -2,6 +2,32 @@
 
 All notable changes to the Popscale Platform plugin are documented here.
 
+## [1.3.0] - 2026-08-29
+
+### Added
+
+- Added a browser-confirmed company-switch workflow using
+  `request_company_switch`, the latest `current_grant_id`, and explicit
+  confirmation before a short-lived switch link is created.
+- Added Codex and Claude evaluation scenarios for successful switching,
+  declined confirmation, stale-grant replay, and expired or used links.
+
+### Changed
+
+- Replaced wrong-company reconnect guidance across routing, Journey, Interview,
+  content-administration, usage-insights, setup, and installation documentation
+  with same-connection company verification through `current_user`.
+- Kept reconnect and OAuth reauthorization guidance for actual authentication
+  challenges or missing scopes rather than ordinary membership switching.
+
+### Security
+
+- Documented that the MCP tool never accepts a target company or membership
+  identifier; eligible membership selection and final confirmation happen only
+  in Popscale's authenticated browser flow.
+- Added package contracts for explicit switch-link confirmation, replay-safe
+  grant binding, same-connection verification, and non-rotation behavior.
+
 ## [1.2.0] - 2026-08-26
 
 ### Added

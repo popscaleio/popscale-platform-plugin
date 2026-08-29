@@ -39,6 +39,12 @@ still reject unauthorized scopes, roles, memberships, and companies server-side.
 - PKCE and exact redirect binding for OAuth authorization-code flows.
 - No static customer credential in the repository or MCP configuration.
 - Product grants remain company-scoped and revocable.
+- Company switching preserves the active OAuth connection and requires two
+  explicit boundaries: confirmation before `request_company_switch` creates a
+  short-lived link, then authenticated membership selection and confirmation in
+  Popscale. The MCP tool accepts only the latest `current_grant_id` plus
+  `confirm_switch=true`, never a target company or membership identifier, and
+  the client verifies the result with `current_user` on the same connection.
 - Write and publication flows require explicit human confirmation where defined
   by the safe journey workflow.
 - Interview scopes remain separated: `interview:read` for bounded reads,
@@ -71,6 +77,8 @@ still reject unauthorized scopes, roles, memberships, and companies server-side.
 | Public docs receive customer data | Routing skill prohibition; separate server; no product capability |
 | Docs are treated as authorization | Skill boundary plus server-side product authorization |
 | Cross-company product access | Company derived from authenticated membership; server-side isolation tests |
+| Prompt injection chooses a switch target | `request_company_switch` accepts no target identifier; the signed-in user selects an eligible membership in Popscale's authenticated browser |
+| Stale switch request changes a newer binding | Latest `current_grant_id` binding, `replay_ignored` safe no-op, short-lived single-use link, and post-switch `current_user` verification on the same connection |
 | Respondent link or PII disclosed by a broad read | Focused detail tool requires `interview:distribute`; list results omit links and raw contact data |
 | Stale or broad Interview edit overwrites concurrent work | Current-draft requirement, focused mutation tools, and optimistic concurrency tokens |
 | Stale or broad content edit overwrites a root or sibling collection | Stable-ID component tools, allowlisted fields, root `expected_revision`, and refresh after every mutation |

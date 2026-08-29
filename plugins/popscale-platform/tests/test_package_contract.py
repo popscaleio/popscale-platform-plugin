@@ -5,7 +5,7 @@ from pathlib import Path
 
 PLUGIN_ROOT = Path(__file__).resolve().parents[1]
 REPO_ROOT = PLUGIN_ROOT.parents[1]
-EXPECTED_VERSION = "1.2.0"
+EXPECTED_VERSION = "1.3.0"
 EXPECTED_SERVERS = {
     "popscale-platform": {
         "type": "http",
@@ -177,6 +177,9 @@ class PluginPackageContractTests(unittest.TestCase):
             "safe-interview-administration",
             "safe-content-administration",
             "company-usage-insights",
+            "request_company_switch",
+            "current_grant_id",
+            "confirm_switch=true",
         ):
             self.assertIn(required, skill)
         self.assertNotIn("[TODO:", skill)
@@ -184,6 +187,77 @@ class PluginPackageContractTests(unittest.TestCase):
         self.assertIn('url: "https://docs.popscale.io/mcp"', metadata)
         self.assertIn('value: "popscale-platform"', metadata)
         self.assertIn('url: "https://app.popscale.io/mcp/"', metadata)
+
+    def test_company_switch_guidance_matches_product_contract(self):
+        switch_paths = (
+            PLUGIN_ROOT / "skills" / "route-popscale-requests" / "SKILL.md",
+            PLUGIN_ROOT
+            / "skills"
+            / "safe-journey-creation"
+            / "references"
+            / "safety-and-fallbacks.md",
+            PLUGIN_ROOT
+            / "skills"
+            / "safe-interview-administration"
+            / "references"
+            / "safety-and-fallbacks.md",
+            PLUGIN_ROOT
+            / "skills"
+            / "safe-content-administration"
+            / "references"
+            / "safety-and-fallbacks.md",
+            PLUGIN_ROOT
+            / "skills"
+            / "company-usage-insights"
+            / "references"
+            / "privacy-and-limits.md",
+            PLUGIN_ROOT / "SETUP.md",
+            REPO_ROOT / "docs" / "INSTALLATION.md",
+            REPO_ROOT / "docs" / "SECURITY_MODEL.md",
+        )
+        guidance = "\n".join(
+            path.read_text(encoding="utf-8") for path in switch_paths
+        )
+        for required in (
+            "request_company_switch",
+            "current_grant_id",
+            "confirm_switch=true",
+            "switch_url",
+            "current_user",
+            "same MCP connection",
+            "replay_ignored=true",
+            "reauthentication_required=false",
+        ):
+            self.assertIn(required, guidance)
+        self.assertNotIn("reconnect to Company B", guidance)
+        self.assertNotIn("reconnect/select Company B", guidance)
+
+    def test_company_switch_evaluations_cover_confirmation_and_safe_replay(self):
+        evaluations = "\n".join(
+            path.read_text(encoding="utf-8")
+            for path in (
+                PLUGIN_ROOT
+                / "skills"
+                / "route-popscale-requests"
+                / "references"
+                / "evaluation-scenarios.md",
+                PLUGIN_ROOT
+                / "skills"
+                / "safe-journey-creation"
+                / "references"
+                / "evaluation-scenarios.md",
+            )
+        )
+        for required in (
+            "Authenticated Company Switch",
+            "Declined or Stale Company Switch",
+            "Declined, Replayed, or Expired Company Switch",
+            "explicit confirmation",
+            "confirm_switch=true",
+            "replay_ignored=true",
+            "expired or used link",
+        ):
+            self.assertIn(required, evaluations)
 
     def test_usage_skill_covers_tools_privacy_bounds_and_metric_contract(self):
         skill_root = PLUGIN_ROOT / "skills" / "company-usage-insights"
@@ -485,6 +559,8 @@ class PluginPackageContractTests(unittest.TestCase):
         for required_scope in ("content:read", "content:write", "publish:write"):
             self.assertIn(required_scope, workflow)
         self.assertIn("Missing Child-content Read Scope", evaluations)
+        self.assertIn("request_company_switch", safe_skill)
+        self.assertIn("confirm_switch=true", safe_skill)
 
     def test_public_docs_name_endpoints_auth_and_maintenance_boundary(self):
         docs = "\n".join(

@@ -88,6 +88,27 @@ Expected: answer the public definition from `popscale-docs`, label its status,
 then clearly separate and authenticate the company lookup through
 `popscale-platform`.
 
+## Authenticated Company Switch
+
+Prompt names Company B while `current_user` reports Company A, then the user
+confirms that they want to switch.
+
+Expected: stays on `popscale-platform`, stops product reads and writes, uses the
+latest `current_user` grant ID, and calls `request_company_switch` only after
+explicit confirmation with `current_grant_id` and `confirm_switch=true`. It
+passes no target identifier, presents the short-lived `switch_url`, waits for
+the user to select and confirm the membership in Popscale, then verifies Company
+B with `current_user` through the same MCP connection before resuming.
+
+## Declined or Stale Company Switch
+
+Decline link creation, then separately test a confirmed request with an old
+grant ID.
+
+Expected: creates no link after the declined confirmation. For the stale request
+it respects `replay_ignored=true`, does not retry the old grant or claim a token
+rotation, refreshes `current_user`, and asks again before creating any new link.
+
 ## Missing or Draft Guidance
 
 Prompt: “According to the docs, are department admins allowed to publish?”

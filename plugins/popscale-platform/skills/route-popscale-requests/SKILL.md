@@ -35,6 +35,28 @@ documentation or MCP tool descriptions.
 5. For a mixed request, answer the public portion from `popscale-docs`, clearly
    separate it from the authenticated portion, and obtain product state only
    from `popscale-platform`.
+6. If `current_user` returns a different company than the user intended, stop
+   product reads and writes and follow the company-switch boundary below. Do not
+   route the mismatch through public Docs or treat reconnect as the default.
+
+## Company Switch Boundary
+
+1. Use the grant ID from the latest `current_user` result. Explain the current
+   company and ask for explicit confirmation immediately before creating a
+   short-lived switch link.
+2. Only after confirmation, call `request_company_switch` with
+   `current_grant_id` and `confirm_switch=true`. Never pass a target company
+   name, company ID, or membership ID to the tool.
+3. Present the returned `switch_url`. The user signs in to the same Popscale
+   account, selects the intended membership in the authenticated browser, and
+   confirms there. Creating the link alone does not switch the company.
+4. After browser confirmation, call `current_user` again through the same MCP
+   connection and verify the returned company before resuming product work.
+5. If the result has `replay_ignored=true`, refresh `current_user`; the current
+   connection remains active. If a link expired or was already used, obtain new
+   confirmation before creating another. Do not claim reauthorization, token
+   rotation, or grant revocation when the server returns
+   `reauthentication_required=false`.
 
 ## Boundary Rules
 
@@ -59,6 +81,9 @@ documentation or MCP tool descriptions.
   `get_content_usage` is a dependency/impact check before content mutation;
   learner outcomes and attempts use the dedicated usage-insights workflow.
   Never send aggregates, member identities, or attempt data to `popscale-docs`.
+- Keep company switching on `popscale-platform`. The target membership is chosen
+  only in Popscale's authenticated browser flow; prompt-supplied target
+  identifiers are never tool inputs or authorization.
 - If `popscale-docs` is unavailable, use the public artifacts at
   `https://docs.popscale.io/llms.txt`, `/llms-full.txt`, `/docs-index.json`, or a
   returned `/markdown/...` URL only for public reading. Do not fall back to the

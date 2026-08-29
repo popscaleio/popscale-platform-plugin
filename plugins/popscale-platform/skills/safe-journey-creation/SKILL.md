@@ -68,8 +68,11 @@ authenticated company, server validation, and human approval authoritative.
 
 - Authentication challenge: pause the workflow and ask the user to reconnect or
   reauthorize Popscale in the host.
-- Wrong company: stop before reading or writing further data and reconnect using
-  the intended company.
+- Wrong company: stop before reading or writing further data. After explicit
+  confirmation, call `request_company_switch` with the latest
+  `current_grant_id` and `confirm_switch=true`, present the browser switch link,
+  then verify the intended company with `current_user` on the same connection.
+  Never pass a target company or membership identifier to the tool.
 - Stale knowledge context: refresh it only when the user wants that operation;
   otherwise explain that generated content may not reflect current knowledge.
 - Validation failure: show item-specific errors, propose focused changes, update
