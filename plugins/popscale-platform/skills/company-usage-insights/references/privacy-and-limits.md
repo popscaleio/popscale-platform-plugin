@@ -9,6 +9,18 @@ effective company-admin catalog for that session. Cross-company department,
 Journey, content, membership, or cursor identifiers must be rejected by the
 server and must not be retried in another context.
 
+If `current_user` reports a different company than the user intended, stop all
+analytics reads. Explain the active company and ask for explicit confirmation
+immediately before creating a switch link. Only after confirmation, call
+`request_company_switch` with the latest `current_grant_id` and
+`confirm_switch=true`; never send a target company or membership identifier.
+Present the returned `switch_url`, wait for the user to select and confirm the
+membership in Popscale's authenticated browser, then verify the company with
+`current_user` through the same MCP connection. Treat `replay_ignored=true` as a
+safe no-op and require a new confirmation before replacing an expired or used
+link. Do not claim reauthorization or token rotation when
+`reauthentication_required=false`.
+
 ## Suppression
 
 Aggregate rows below `minimum_cohort_size` are suppressed. Preserve the flag and

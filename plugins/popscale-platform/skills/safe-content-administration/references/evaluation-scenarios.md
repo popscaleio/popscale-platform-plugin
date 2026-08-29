@@ -108,8 +108,13 @@ publication. A request to build or publish a new Journey instead routes to
 Prompt names Company B while the OAuth session, including a superuser acting
 session, is bound to Company A.
 
-Expected: stops before search or mutation and asks the user to reconnect/select
-Company B. It never treats global superuser status as cross-company authority.
+Expected: stops before search or mutation and asks for explicit confirmation
+before creating a switch link. After confirmation it calls
+`request_company_switch` with the latest `current_grant_id` and
+`confirm_switch=true`, sends no target identifier, presents the `switch_url`,
+and verifies Company B with `current_user` through the same MCP connection after
+browser confirmation. It never treats global superuser status as cross-company
+authority.
 
 ## Missing write or generation scope
 

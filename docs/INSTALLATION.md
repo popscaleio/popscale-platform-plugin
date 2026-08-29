@@ -180,8 +180,13 @@ session should be reused without a new login unless it was revoked or expired.
   Popscale authorization route and preserved its original `redirect_uri`.
 - **Callback page cannot connect:** follow the host instruction to paste the
   complete callback URL; do not rewrite `localhost` to `127.0.0.1` or vice versa.
-- **Wrong company:** revoke or clear the product connector authentication, sign
-  into Popscale, select the correct company, and authenticate again.
+- **Wrong company:** stop product reads and writes, explicitly confirm link
+  creation, then call `request_company_switch` with `current_grant_id` from the
+  latest `current_user` result and `confirm_switch=true`. Open the returned
+  `switch_url`, select and confirm the intended membership in Popscale, then
+  verify it with `current_user` through the same MCP connection. Never pass the
+  target company to the tool. If `replay_ignored=true`, refresh `current_user`;
+  if the link expired or was used, confirm again before creating another.
 - **Interview tools or links are unavailable:** reconnect the product connector
   and review `interview:read`, `interview:write`, and
   `interview:distribute`. Do not manually paste tokens or assume a read scope

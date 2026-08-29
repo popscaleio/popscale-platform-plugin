@@ -69,6 +69,28 @@ The first `popscale-platform` use opens Popscale authorization:
 5. If authorization is unavailable, ask a Popscale company admin to enable the
    company feature and the user's MCP access.
 
+## Switch the active company
+
+When `current_user` reports a different company than the user intended, keep the
+existing MCP connection and stop product reads and writes:
+
+1. Ask for explicit confirmation immediately before creating a short-lived
+   switch link.
+2. Call `request_company_switch` with the grant ID from the latest
+   `current_user` result as `current_grant_id` and `confirm_switch=true`. Do not
+   pass a target company name, company ID, or membership ID.
+3. Open or present the returned `switch_url`. The user signs in to the same
+   Popscale account, selects the intended membership, and confirms in the
+   authenticated browser.
+4. Call `current_user` again through the same MCP connection and verify the
+   returned company before resuming product work.
+
+Creating the link does not complete the switch. If `replay_ignored=true`, refresh
+`current_user`; the connection remains active. If the link expired or was
+already used, ask for new confirmation before creating another. When
+`reauthentication_required=false`, do not reconnect the connector or claim that
+its OAuth access or refresh token was rotated or revoked.
+
 Interview administration uses the dedicated `interview:read`,
 `interview:write`, and `interview:distribute` scopes. Publishing an Interview
 Study also requires `publish:write`. Existing OAuth grants are not silently
@@ -129,6 +151,10 @@ OAuth session or customer data.
   `get_pages`; do not invent or guess a path.
 - If product tools return an authorization challenge, reconnect
   `popscale-platform`; do not copy its credentials to `popscale-docs`.
+- If the wrong company is active, use the confirmed `request_company_switch`
+  flow above instead of reconnecting. Never pass the intended company as a tool
+  input; select it only in Popscale's authenticated browser and verify it with
+  `current_user` on the same connection.
 - If Interview tools or respondent-link access are missing after an update,
   reconnect `popscale-platform` and review the dedicated Interview scopes. Do
   not paste a bearer token or treat `interview:read` as distribution authority.

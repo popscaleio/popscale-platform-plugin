@@ -92,6 +92,12 @@ Authenticated product work additionally requires:
 2. The user is an active `company_admin` and has MCP access enabled.
 3. The user completes Popscale OAuth and selects the intended company.
 
+If the active company later needs to change, the agent can keep the same MCP
+connection. After explicit confirmation it calls `request_company_switch` with
+the latest `current_user` grant ID, presents the short-lived browser link, and
+verifies the selected membership with `current_user` after browser confirmation.
+The target company is selected only in Popscale and is never an MCP tool input.
+
 Interview administration additionally requires the company `interviews` feature
 and one or more dedicated scopes: `interview:read`, `interview:write`, and
 `interview:distribute`. Study publication also requires `publish:write`.
