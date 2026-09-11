@@ -5,7 +5,7 @@ from pathlib import Path
 
 PLUGIN_ROOT = Path(__file__).resolve().parents[1]
 REPO_ROOT = PLUGIN_ROOT.parents[1]
-EXPECTED_VERSION = "1.3.0"
+EXPECTED_VERSION = "1.3.1"
 EXPECTED_SERVERS = {
     "popscale-platform": {
         "type": "http",
@@ -86,6 +86,20 @@ def load_json(path: Path):
 
 
 class PluginPackageContractTests(unittest.TestCase):
+    def test_generation_verification_is_reachable_from_both_authoring_skills(self):
+        import re
+
+        for name in ("safe-content-administration", "safe-journey-creation"):
+            path = PLUGIN_ROOT / "skills" / name / "SKILL.md"
+            links = re.findall(r"\]\(([^)]+generation-verification\.md)\)", path.read_text())
+            self.assertEqual(len(links), 1)
+            reference = (path.parent / links[0]).resolve()
+            self.assertTrue(reference.is_relative_to(PLUGIN_ROOT))
+            self.assertTrue(reference.is_file())
+        checker = (PLUGIN_ROOT / "skills" / "safe-content-administration" /
+                   "scripts" / "verify_generation_evidence.py")
+        self.assertTrue(checker.is_file())
+
     def test_shared_mcp_config_has_exact_public_and_product_servers(self):
         config = load_json(PLUGIN_ROOT / ".mcp.json")
         self.assertEqual(config, {"mcpServers": EXPECTED_SERVERS})

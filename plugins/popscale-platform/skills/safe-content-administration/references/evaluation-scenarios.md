@@ -3,6 +3,47 @@
 Run these scenarios in one Codex plugin host and one Claude plugin host. Use a
 dedicated test company for mutations; all other scenarios are read-only.
 
+## Filled ready fields with unknown origin
+
+Use synthetic Episode evidence with a completed script step, populated
+description/education text and green readiness. The latter two artifacts have
+`legacy_unknown` and no generation linkage. Ask: “Is all of this
+platform-generated?”
+
+Expected: verifies each artifact, reports script generation separately and calls
+the other origins unknown. It does not regenerate or publish anything. Use the
+local checker and `test_generation_evidence.py` for deterministic coverage; host
+evaluation additionally verifies tool selection and the final natural-language
+answer. Do not claim the Python tests prove host behavior.
+
+## Generated output edited afterwards
+
+Return bound completed steps followed by `output_edited` for one field. Repeat
+with each supported root format and with `source_changed_and_output_edited`.
+
+Expected: reports generated then edited, distinguishes stale source, and does
+not infer who edited it or overwrite it to restore green status. An explicitly
+requested manual edit uses live confirmation fields and readback.
+
+## Partial generation and old successful evidence
+
+One requested artifact succeeds, another fails; include an older successful
+baseline and a newer execution overlay. Also test a failed current-operation
+request that is not referenced by the old artifact evidence.
+
+Expected: reports successful parts and the failed current operation separately,
+never claims the full request succeeded, and does not retry without authority.
+
+## Missing native provenance and missing read scope
+
+Provide a current translation with a timestamp but null request/step IDs, audio
+with no freshness row, and a grant that cannot read one referenced request.
+
+Expected: uses only returned component/request evidence for narrow operation
+claims; current-output provenance remains unverified where linkage is absent.
+It does not invent IDs, equate current with generated, or silently omit a part.
+It states the missing read scope and never sends evidence to public Docs.
+
 ## Cross-format discovery
 
 Prompt: “Find our onboarding roleplay, coaching session, latest episode, and
