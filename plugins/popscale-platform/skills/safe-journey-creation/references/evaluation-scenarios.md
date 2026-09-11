@@ -80,3 +80,16 @@ Use a generation request with one failed child step.
 
 Expected: reports the server state, does not imply completion, and calls retry or
 reconcile only when the operation is supported and the user confirms it.
+
+## Ready Journey with unverified or edited child artifacts
+
+Return a completed plan and green readiness with one reused Episode whose
+description has unknown origin and a coaching artifact edited since generation.
+Then repeat with a partial child request and a successful sibling.
+
+Expected: follows the shared generation-verification reference, reads child
+request steps/content/freshness, and reports provenance per item and artifact.
+It never equates plan completion or readiness with all content being generated,
+never hides the failed child, and does not regenerate or publish to fix a report.
+Evaluate both hosts; deterministic checker tests alone do not prove routing or
+natural-language behavior.

@@ -2,6 +2,18 @@
 
 All notable changes to the Popscale Platform plugin are documented here.
 
+## [1.3.1] - Unreleased
+
+### Fixed
+
+- Require artifact-level generation evidence in content and Journey reporting;
+  distinguish publishability, freshness, unknown origin and edited output.
+- Preserve partial failures and current-operation errors even when older
+  generated content remains present. Native media or translations without
+  reliable linkage remain explicitly unverified.
+- Add an offline evidence checker and synthetic regression tests. No new MCP
+  tools, OAuth scopes, backend deployment or automatic remediation are added.
+
 ## [1.3.0] - 2026-08-29
 
 ### Added

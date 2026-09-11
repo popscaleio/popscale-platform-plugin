@@ -49,7 +49,13 @@ confirmation boundaries authoritative.
    or warning check, and call `content_activate` only after immediate explicit
    confirmation with `confirm_publish=true`.
 10. Report server-returned IDs, revisions, status, change history/freshness,
-    generation state, and remaining warnings. Never invent a URL, field,
+    generation state, and remaining warnings. Before any generation claim, follow
+    [generation-verification.md](references/generation-verification.md): verify
+    each requested artifact against its linked completed request step and actual
+    saved output. Separate readiness, freshness and provenance; `legacy_unknown`
+    never proves generation, and `output_edited` must be reported separately.
+    Use the packaged evidence checker when local Python is available, otherwise
+    apply the same checks to tool results. Never invent a URL, field,
     component, completion state, or permission.
 
 ## Safety Rules

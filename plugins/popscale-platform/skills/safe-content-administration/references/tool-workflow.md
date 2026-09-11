@@ -68,8 +68,10 @@ child edits when no collection operation is needed.
    that separate mutation. Voice discovery and both polling tools require
    `generation:read`; do not queue work under a grant that cannot monitor it.
 6. Refresh `content_detail`, `list_content_components`, and
-   `get_content_freshness` after completion before reporting the generated
-   result.
+   `get_content_freshness` after completion. Follow
+   [generation-verification.md](generation-verification.md) before reporting:
+   check each requested artifact, linked completed step, saved output and any
+   current failed/running attempt. Readiness does not prove generator origin.
 
 An idempotency key replay is safe only for identical input. A conflict means the
 key was already used for different work; create a new key rather than mutating

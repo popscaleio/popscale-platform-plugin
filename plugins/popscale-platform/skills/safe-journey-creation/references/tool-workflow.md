@@ -63,3 +63,12 @@ auditing, and error handling.
 After execution, use the returned generation request or journey identifiers to
 poll status. Report server-returned IDs and status, not model-generated URLs or
 guessed completion state. If the result is only a draft, say so plainly.
+
+Before claiming that child content is platform-generated, follow the shared
+[generation verification](../../safe-content-administration/references/generation-verification.md).
+Use execution mappings to find each child root and request, then inspect its
+saved content, linked steps and artifact freshness. Check reused content too;
+plan completion and publication readiness cannot substitute for these reads.
+Never treat Journey-level `available=false` freshness as proof of current child
+content. Keep successful, edited, unknown and failed parts visible in the final
+report; a partial child request must not disappear from the summary.

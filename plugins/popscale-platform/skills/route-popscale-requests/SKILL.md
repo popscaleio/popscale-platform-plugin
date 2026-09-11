@@ -77,6 +77,9 @@ documentation or MCP tool descriptions.
   authoring. Use `safe-journey-creation` for a new Journey plan or its
   execution/publication, but use the content workflow for a focused edit to an
   already created Journey section or item.
+- Questions about whether an artifact was generated, edited or is current are
+  private product-state reads. Route them to `safe-content-administration` and
+  its generation-verification workflow; public docs are not provenance evidence.
 - Keep `company-usage-insights` authoritative for private usage analytics.
   `get_content_usage` is a dependency/impact check before content mutation;
   learner outcomes and attempts use the dedicated usage-insights workflow.

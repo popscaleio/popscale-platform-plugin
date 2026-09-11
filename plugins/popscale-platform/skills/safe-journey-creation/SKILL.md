@@ -41,8 +41,15 @@ authenticated company, server validation, and human approval authoritative.
     each ready draft child through `content_activate` only after a specific
     confirmation. Refresh readiness, present the final journey target, ask for a
     new publication confirmation, then call `journey_activate`.
-11. Report the created draft/published object, remaining warnings, and a concise
-    audit-friendly summary of actions taken.
+11. Before reporting generated content, follow the shared
+    [generation verification](../safe-content-administration/references/generation-verification.md)
+    for every requested item/root, including reused content. Read child request
+    steps, saved output and freshness; a completed plan or green Journey
+    readiness does not prove child artifact provenance. Use the packaged local
+    checker when available, or the same evidence rules without local execution.
+    Report draft/published status, each part's provenance and freshness, remaining
+    warnings, and a concise audit-friendly summary. A partial result is not a
+    completed Journey generation.
 
 ## Safety Rules
 

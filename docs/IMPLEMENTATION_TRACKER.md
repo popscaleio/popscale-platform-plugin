@@ -1,6 +1,34 @@
 # V1 implementation tracker
 
-Last updated: 2026-08-29
+Last updated: 2026-09-11
+
+## Generation verification — 1.3.1 candidate
+
+- [x] Shared evidence rules connected to content administration, Journey
+  completion and private product-state routing. Readiness, freshness and origin
+  are reported separately for every requested artifact.
+- [x] Local standard-library evidence checker with synthetic regressions for
+  populated ready fields with unknown origin, edited output, partial requests,
+  newer failed attempts, missing native linkage and incomplete/mismatched reads.
+  It performs no network requests, writes, or product actions.
+- [x] Current Product MCP read contracts reviewed. No endpoint, tool, OAuth scope
+  or backend change is needed for this conservative reporting improvement.
+  Existing native language/audio evidence limitations are explicit.
+- [x] Routing and safe-journey-creation updated; manifest capabilities and setup
+  reviewed with no new scope/capability requirement. Host manifests and the
+  Claude marketplace are aligned at candidate version 1.3.1.
+- [x] Validation: `python3 -m unittest discover -s plugins/popscale-platform/tests
+  -p 'test_*.py' -v` (47 tests); `python3 scripts/validate_release.py` and
+  `git diff --check` pass. A focused independent read review found no actionable
+  issues. Python coverage validates the checker/package, not host LLM behavior.
+- [ ] `python3 scripts/live_docs_smoke.py` fails at the canonical integration
+  path assertion in the search result. The same failure was reproduced with
+  the unmodified main script. Initialization and tool listing pass; later page
+  and resource assertions were not reached. No Docs code changed here.
+- [ ] Clean Codex and Claude evaluations of the new scenarios and read-only
+  OAuth smoke tests remain release checks; they were not run in this PR work.
+- [ ] Review, merge, tag and publish 1.3.1 separately. This candidate performs no
+  backend deployment, migration, maintenance-mode action or customer mutation.
 
 ## Complete
 
