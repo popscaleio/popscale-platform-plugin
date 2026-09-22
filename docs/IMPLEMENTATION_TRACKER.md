@@ -2,6 +2,17 @@
 
 Last updated: 2026-09-22
 
+## Live Docs smoke repair
+
+- [x] Replace the retired `/integrations/popscale-mcp/` fixture with the published
+  `/integrations/connect-assistant/` guide and its listed resource URI.
+- [x] Check exact structured search/page paths, published status and nonempty
+  Markdown; reject MCP tool errors explicitly with actionable diagnostics.
+- [x] All 76 unit tests pass, including five smoke regressions. Release validation,
+  `git diff --check` and the full read-only live Docs MCP smoke pass.
+- [x] Preserve public unauthenticated Docs access, tool annotations and protocol
+  checks. No endpoint, product mutation, manifest version or release changes.
+
 ## Generation-only evaluation outputs — unreleased fix
 
 - [x] Coaching input updates require new platform generation of both instruction
@@ -23,9 +34,8 @@ Last updated: 2026-09-22
   regressions), `scripts/validate_release.py`, `quick_validate.py` for both
   changed skills, and `git diff --check`. Review includes pre-activation checks
   for protected outputs outside a prior report's scope.
-- [ ] The unchanged `scripts/live_docs_smoke.py` still fails the previously
-  documented legacy `/integrations/popscale-mcp/` search assertion after
-  successful initialization and tool listing. It is not a generation test.
+- [x] The legacy Docs smoke path failure is resolved by the separate repair
+  above. This public documentation check is not a generation test.
 - [ ] Run clean Codex/Claude tool-trace evaluations in an authorized dedicated
   test company. Automated local tests do not establish live host behavior.
 - [ ] Release separately. No manifest version bump, tag, backend change, live
@@ -47,11 +57,9 @@ Last updated: 2026-09-22
   reproducibility, reference closure, content hashes, size/path limits, actual
   committed provenance, dirty inputs and symlinks. `python3
   scripts/validate_release.py` and `git diff --check` pass.
-- [ ] Live Docs smoke still fails the unchanged canonical search path assertion.
-  The baseline script reproduces the failure; initialize and listing succeed.
-  No gate is removed or weakened. Resolve this external smoke failure before
-  tag publication; clean host evaluations/OAuth smoke remain manual release
-  checks and were not run here.
+- [x] Live Docs smoke passes after the separate current-guide repair above.
+  Clean host evaluations/OAuth smoke remain manual release checks and were not
+  run here.
 - [ ] Separate approval, merge and public release remain required. No release,
   backend deployment, price/feature activation or maintenance action performed.
 
