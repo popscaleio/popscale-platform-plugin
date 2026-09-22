@@ -2,6 +2,31 @@
 
 Last updated: 2026-09-22
 
+## Generation-only evaluation outputs — unreleased fix
+
+- [x] Exclude Roleplay/Coaching `evaluation_instructions`, Coaching `agent_prompt`,
+  and Challenge `evaluation_prompt` from manual plugin writes, including explicit
+  rewrite requests and schema-provided override confirmation.
+- [x] Add dependency regeneration/draft-blocker handling and align the format
+  map, tool flow, reporting, safety guidance, and Journey child-content boundary.
+- [x] Add an offline field guard to the existing evidence checker, plus explicit
+  workflow-failure reporting for edited protected artifacts. This is a host-side
+  aid, not a server-enforced write prohibition or a new MCP tool.
+- [x] Add synthetic regressions and host scenarios for active and draft content,
+  manual rewrite requests, green readiness after editing, and ordinary manual
+  fields. No customer data or incident identifiers enter the public package.
+- [x] Local validation passes: 58 unit tests (including 11 new behavioral
+  regressions), `scripts/validate_release.py`, `quick_validate.py` for both
+  changed skills, and `git diff --check`. Review includes pre-activation checks
+  for protected outputs outside a prior report's scope.
+- [ ] The unchanged `scripts/live_docs_smoke.py` still fails the previously
+  documented legacy `/integrations/popscale-mcp/` search assertion after
+  successful initialization and tool listing. It is not a generation test.
+- [ ] Run clean Codex/Claude tool-trace evaluations in an authorized dedicated
+  test company. Automated local tests do not establish live host behavior.
+- [ ] Release separately. No manifest version bump, tag, backend change, live
+  content repair, or customer mutation is part of this fix.
+
 ## Study design quality — unreleased guidance
 
 - [x] Add a conditional authoring reference to `safe-interview-administration`

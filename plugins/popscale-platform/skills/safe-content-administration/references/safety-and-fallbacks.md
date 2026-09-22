@@ -39,6 +39,13 @@ regeneration, and publication remain separate approvals. Archive calls use
 `confirm_archive` and, when the server reports learner impact,
 `confirm_learner_impact`; they do not accept `confirm_active_edit`.
 
+Active-edit approval never permits a manual write to a generation-only output.
+If source changes require regenerating protected instructions but generation is
+draft-only, use an authorized documented draft flow or report the blocker. Do
+not use `confirm_generated_output_override`, demote the root, or manually repair
+the instructions to work around the restriction. Report any source changes
+already saved and that the generated output remains unsynchronized.
+
 Before delete, reorder, reassignment, or archive, inspect bounded usage. If
 usage is truncated, do not infer that unseen dependencies are absent. Retry
 once with `limit` equal to the larger returned Journey/department count, capped

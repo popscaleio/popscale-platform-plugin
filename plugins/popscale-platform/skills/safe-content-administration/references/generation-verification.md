@@ -39,7 +39,7 @@ green readiness, a filled field, `current`, or a timestamp alone.**
 | Evidence | Permitted report |
 | --- | --- |
 | Bound completed step, generation timestamp, unchanged output | Platform-generated; report freshness separately |
-| Same bound evidence plus `output_edited`, `source_changed_and_output_edited` or `output_modified=true` | Platform-generated, then edited; this alone does not identify who or what edited it |
+| Same bound evidence plus `output_edited`, `source_changed_and_output_edited` or `output_modified=true` | Historical generation followed by an edit; generation-only outputs additionally have a workflow failure and cannot be called synchronized |
 | `source_changed` with bound generation evidence | Platform-generated from an older source; not up to date |
 | `legacy_unknown` | Origin unknown; never call it generated or directly authored |
 | `not_generated` | Not generated according to the available artifact evidence |
@@ -52,10 +52,24 @@ a generation claim for that artifact. A manually entered value is only known to
 be directly authored when a confirmed write and readback/history prove it;
 missing generation IDs do not establish that origin.
 
-For an explicitly requested manual edit, explain its provenance consequence and
-use any override confirmation exposed by the live schema. Do not add unsupported
-confirmation fields. Read the result and freshness again. Do not regenerate
-unknown or edited content automatically to make a report green.
+Manual override applies only to fields explicitly editable under both the live
+contract and the plugin's [format policy](content-format-map.md). It never
+applies to Roleplay or Coaching `evaluation_instructions`, Coaching
+`agent_prompt`, or Challenge `evaluation_prompt`, even on an explicit request
+to rewrite, correct, translate, or clear them. These are generation-only outputs.
+For other permitted, explicitly requested manual edits, explain the provenance
+consequence, use only confirmation fields exposed by the live schema, and read
+back the result and freshness.
+
+`source_changed_and_output_edited` on a generation-only output is a workflow
+failure, not successful synchronization. The same stop applies to `output_edited`
+or `output_modified=true`, including when linkage is missing or a generation
+attempt is still running. Historical provenance may remain valid; it does not
+verify the current edited text. Report the failure separately, do not activate
+the affected root or its Journey, and follow the supported platform regeneration
+flow when authorized. Do not regenerate unknown or edited content merely to
+make a read-only report green. If draft creation or regeneration is unavailable,
+leave the blocker explicit and never repair the text manually.
 
 ## Native languages and media
 
@@ -109,6 +123,32 @@ supports linked registered artifacts; native rows without linkage stay
 unverified. Exit zero means a report was produced, not that verification passed.
 Read `can_report_requested_generation_complete` and every artifact row. A true
 value covers only the supplied scope, not a whole Journey or publication.
+For generation-only outputs, also read `generation_only_workflow_failures` and
+each row's `workflow_status`. An edited output stays a failure despite green
+readiness. Those rows and failures cover only `requested_artifacts`; before
+activation, inspect every protected output on each affected root, including
+ones outside a prior report's scope. The checker evaluates supplied metadata;
+reading the actual saved
+output and verifying its linkage remains required in the tool workflow.
+
+### Guard a proposed manual write
+
+Before `content_update`, hosts with local Python must run:
+
+```text
+python3 <skill-directory>/scripts/verify_generation_evidence.py --check-manual-write < proposed-arguments.json
+```
+
+Provide the proposed tool arguments privately through stdin or a private local
+temporary file. The guard examines `content_type` and `fields`, never prints
+field values, and makes no product call. Exit 3 means protected fields are
+present: do not send the payload or silently remove fields and pretend the full
+request succeeded. Exit 2 means invalid input. Exit 0 only means this field guard
+passed; it does not grant authorization, establish editability, or bypass other
+checks. Confirmations, active/draft status, and manual-edit requests cannot
+override the exclusion. Without local Python, apply the identical field check
+before calling a write tool. Creation and other write routes obey the same
+generation-only rule even though this CLI mode checks `content_update` arguments.
 
 Without local execution, apply the same rules to tool results and disclose that
 the checker was not run. Missing evidence must still remain unverified.
