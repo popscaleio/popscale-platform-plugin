@@ -1,6 +1,30 @@
 # V1 implementation tracker
 
-Last updated: 2026-09-11
+Last updated: 2026-09-22
+
+## Study design quality — unreleased guidance
+
+- [x] Add a conditional authoring reference to `safe-interview-administration`
+  for new Studies and substantial redesigns, preserving focused-edit scope.
+- [x] Cover conditional probes, completion by information rather than question
+  quotas, transitions, respondent choice, relevant extraction, time expectations,
+  and the boundary between interviewing and coaching.
+- [x] Add separate authoring-host and respondent-conversation evaluation cases.
+  Design review, publish readiness, and observed behavior remain distinct.
+- [x] Align with the companion public Studies guide using synthetic examples.
+  No customer evidence or runtime implementation is included in the package.
+- [x] Package checks pass: 47 unit tests, `scripts/validate_release.py`, skill
+  `quick_validate.py`, and `git diff --check`. PyYAML for the skill validator was
+  installed in a temporary directory, without a package dependency change.
+- [ ] `scripts/live_docs_smoke.py` reaches search but fails its legacy canonical
+  path assertion for `/integrations/popscale-mcp/`, as already recorded for the
+  1.3.1 candidate below. The script is unchanged; this guidance does not fix the
+  existing smoke-test mismatch. No conversation behavior is validated by it.
+- [ ] Evaluate in clean Codex and Claude hosts and run authorized synthetic
+  conversations in a dedicated test company. These checks are not replaced by
+  package validation and are not claimed as completed by this change.
+- [ ] Review and release separately; no manifest version change, tag, runtime
+  change, backend deployment, or customer Study mutation is included here.
 
 ## Generation verification — 1.3.1 candidate
 
