@@ -9,6 +9,8 @@ import urllib.request
 
 ENDPOINT = "https://docs.popscale.io/mcp"
 PROTOCOL_VERSION = "2025-11-25"
+CANONICAL_PATH = "/integrations/connect-assistant/"
+PAGE_RESOURCE_URI = "docs://pages/integrations--connect-assistant"
 
 
 def rpc(request_id: int, method: str, params: dict) -> dict:
@@ -46,6 +48,16 @@ def rpc(request_id: int, method: str, params: dict) -> dict:
     return message["result"]
 
 
+def call_tool(request_id: int, name: str, arguments: dict) -> dict:
+    result = rpc(
+        request_id, "tools/call", {"name": name, "arguments": arguments}
+    )
+    assert not result.get("isError"), f"{name} returned a tool error: {result}"
+    data = result.get("structuredContent")
+    assert isinstance(data, dict), f"{name} returned no structured content: {result}"
+    return data
+
+
 def main() -> None:
     initialized = rpc(
         1,
@@ -75,30 +87,28 @@ def main() -> None:
         assert annotations["idempotentHint"] is True
         assert annotations["openWorldHint"] is False
 
-    search = rpc(
-        3,
-        "tools/call",
-        {
-            "name": "search_docs",
-            "arguments": {"query": "Popscale MCP plugin", "limit": 5},
-        },
+    search = call_tool(
+        3, "search_docs", {"query": "Anslut en AI-assistent", "limit": 5}
     )
-    search_text = json.dumps(search)
-    canonical_path = "/integrations/popscale-mcp/"
-    assert canonical_path in search_text
+    paths = [result["path"] for result in search.get("results", [])]
+    assert CANONICAL_PATH in paths, f"search_docs missing {CANONICAL_PATH}; got {paths}"
 
-    pages = rpc(
-        4,
-        "tools/call",
-        {"name": "get_pages", "arguments": {"paths": [canonical_path]}},
+    pages = call_tool(4, "get_pages", {"paths": [CANONICAL_PATH]})
+    matching_pages = [
+        page for page in pages.get("pages", []) if page.get("path") == CANONICAL_PATH
+    ]
+    assert len(matching_pages) == 1, f"get_pages missing unique page {CANONICAL_PATH}"
+    page = matching_pages[0]
+    assert page.get("status") == "published", f"{CANONICAL_PATH} is not published"
+    assert isinstance(page.get("markdown"), str) and page["markdown"].strip(), (
+        f"{CANONICAL_PATH} returned no Markdown content"
     )
-    pages_text = json.dumps(pages)
-    assert canonical_path in pages_text
-    assert '"status"' in pages_text
 
     resources = rpc(5, "resources/list", {})["resources"]
     assert any(resource["uri"] == "docs://overview" for resource in resources)
-    assert any(resource["uri"] == "docs://pages/integrations--popscale-mcp" for resource in resources)
+    assert any(resource["uri"] == PAGE_RESOURCE_URI for resource in resources), (
+        f"resources/list missing {PAGE_RESOURCE_URI}"
+    )
 
     print("Live Popscale Docs MCP smoke passed")
     print("initialize, tools/list, search_docs, get_pages, and resources/list succeeded")

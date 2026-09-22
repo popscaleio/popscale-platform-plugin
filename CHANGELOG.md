@@ -6,6 +6,9 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ### Fixed
 
+- Point the live Docs MCP smoke test at the published assistant connection
+  guide, and verify structured search/page results, published Markdown and tool
+  errors instead of matching text anywhere in a response.
 - Coaching input updates always regenerate both agent and evaluation
   instructions through the platform, regardless of per-output freshness.
   Completion requires both outputs to link to new post-edit generation requests.
