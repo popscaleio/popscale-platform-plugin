@@ -9,6 +9,10 @@ Keep public documentation retrieval separate from authenticated product data and
 actions. This skill supplies routing policy only; it does not duplicate Popscale
 documentation or MCP tool descriptions.
 
+Read the shared [product action contract](references/product-actions.md) before any
+mutation. Stable command identity and server-side human approval apply alongside
+the workflow below; confirmation booleans alone do not approve effects.
+
 ## Route the Request
 
 1. Classify each part of the request:

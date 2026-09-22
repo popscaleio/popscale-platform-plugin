@@ -2,6 +2,30 @@
 
 Last updated: 2026-09-22
 
+## Public skill distribution — 1.3.1 candidate
+
+- [x] Deterministic committed-source JSON/checksum builder and tag-release assets.
+  Complete recursive Markdown text is included; private host instructions,
+  configuration, executables and customer content are outside the artifact.
+- [x] Routing, content, Journey and Interview skills link the shared Product
+  Actions v1 contract. Existing OAuth/public Docs endpoints remain unchanged.
+  Setup/capability metadata reviewed: no additional scopes or host capabilities.
+- [x] Compatibility fixture and consumer contract documented, including refresh,
+  provenance, cached fallback, immutable conversations and version rollback.
+  Backend PR #438 consumes the assets; publication is a separate dependency.
+- [x] `python3 -m unittest discover -s plugins/popscale-platform/tests -p
+  'test_*.py' -v`: 54 tests pass, including seven bundle regressions covering
+  reproducibility, reference closure, content hashes, size/path limits, actual
+  committed provenance, dirty inputs and symlinks. `python3
+  scripts/validate_release.py` and `git diff --check` pass.
+- [ ] Live Docs smoke still fails the unchanged canonical search path assertion.
+  The baseline script reproduces the failure; initialize and listing succeed.
+  No gate is removed or weakened. Resolve this external smoke failure before
+  tag publication; clean host evaluations/OAuth smoke remain manual release
+  checks and were not run here.
+- [ ] Separate approval, merge and public release remain required. No release,
+  backend deployment, price/feature activation or maintenance action performed.
+
 ## Study design quality — unreleased guidance
 
 - [x] Add a conditional authoring reference to `safe-interview-administration`

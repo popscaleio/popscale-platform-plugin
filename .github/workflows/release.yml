@@ -26,6 +26,9 @@ jobs:
           python3 -m unittest discover -s plugins/popscale-platform/tests -p 'test_*.py' -v
           python3 scripts/live_docs_smoke.py
 
+      - name: Build public skill assets
+        run: python3 scripts/build_public_skills.py
+
       - name: Build Claude and local-install archive
         run: |
           mkdir -p dist
@@ -39,6 +42,7 @@ jobs:
         run: |
           gh release create "$GITHUB_REF_NAME" \
             "dist/popscale-platform-${GITHUB_REF_NAME}.zip" \
+            "dist/public-skills.json" "dist/public-skills.sha256" \
             --verify-tag \
             --generate-notes \
             --title "Popscale Platform ${GITHUB_REF_NAME}"

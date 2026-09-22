@@ -17,6 +17,15 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [1.3.1] - Unreleased
 
+### Added
+
+- Deterministic text-only public skill release assets with file hashes, complete
+  Markdown dependencies, source provenance and Product Actions v1 requirements.
+- Shared mutation guidance for stable UUID command identity, authenticated human
+  approval, asynchronous result verification and server-owned generation prices.
+- Bundle consumers can refresh compatible published skills independently of a
+  backend deployment; private instructions and host adapters remain external.
+
 ### Fixed
 
 - Require artifact-level generation evidence in content and Journey reporting;

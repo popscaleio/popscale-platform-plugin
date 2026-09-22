@@ -8,6 +8,10 @@ description: Create or revise a Popscale learning journey from approved company 
 Create Popscale journeys through the `popscale-platform` MCP while keeping the
 authenticated company, server validation, and human approval authoritative.
 
+Read the shared [product action contract](../route-popscale-requests/references/product-actions.md) before any
+mutation. Stable command identity and server-side human approval apply alongside
+the workflow below; confirmation booleans alone do not approve effects.
+
 ## Required Workflow
 
 1. Call `current_user`, then `capabilities`.
