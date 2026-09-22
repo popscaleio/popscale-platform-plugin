@@ -107,3 +107,11 @@ Read [tool-workflow.md](references/tool-workflow.md) when selecting exact tool
 order or required scopes. Read
 [safety-and-fallbacks.md](references/safety-and-fallbacks.md) when authorization,
 validation, async execution, or host capability differs from the happy path.
+
+## Product feedback and navigation
+
+When the user wants to report a product problem or idea, use
+[safe-product-feedback](../safe-product-feedback/SKILL.md) without copying private
+content into a report implicitly. For a requested page destination, follow
+[navigation and activity](../route-popscale-requests/references/navigation-and-activity.md).
+A navigation proposal does not approve any content change or publication.

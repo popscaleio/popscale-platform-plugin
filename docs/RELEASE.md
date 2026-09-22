@@ -91,7 +91,7 @@ The JSON `schema_version` is `popscale.public_skills.v1`. It contains:
 - `required_tools`, the supported Product MCP tool names referenced by the
   bundled methods, including the shared product-action contract;
 - UTF-8 `files` with relative `skills/...` paths, SHA-256 and verbatim `content`;
-- `instruction_paths`, the five skill entrypoints in declared order followed by
+- `instruction_paths`, the six skill entrypoints in declared order followed by
   their sorted recursive Markdown dependencies, and `required_reference_paths`;
 - `skill_bundle_sha256`, SHA-256 of the path-sorted `{path, sha256}` array encoded
   as Python `json.dumps(..., sort_keys=True, separators=(',', ':'))` UTF-8.
@@ -126,3 +126,20 @@ now requires the Product Actions v1 API; deploy that compatible backend before
 publishing this plugin candidate. Coordinate with backend PR #438's consumer,
 which can only fetch these assets after a separately authorized release. A
 private assistant prompt or runtime configuration must never be added here.
+
+## Feedback and navigation candidate — 1.4.0
+
+Before publication, deploy compatible feedback/navigation tools, permissions and
+schema, then verify target-environment discovery. The Product Actions v1 envelope
+and bundle schema are unchanged; required_tools now includes the new capabilities.
+Run synthetic feedback/navigation evaluations in clean Codex and Claude hosts.
+Read-only OAuth checks do not prove submissions or approvals work. Any live write
+needs separate explicit confirmation and a dedicated test company.
+
+New first-party sessions use the verified current profile/cache; existing sessions
+retain their immutable accepted instructions and delegation. Start a new session
+to pick up this workflow. Preserve compatibility/checksum/dependency gates and
+never load arbitrary branch assets to bypass release verification. Record exact
+commit, validation commands/results and artifact hashes in the PR. Publishing,
+frontend integration, clean-host checks and backend deployment remain separate
+release gates; a packaged skill is not proof of end-to-end behavior.

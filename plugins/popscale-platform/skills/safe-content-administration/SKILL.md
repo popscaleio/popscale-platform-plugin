@@ -138,3 +138,11 @@ choosing a root, component, or generation target. Read
 active content, bounded results, and partial failures. Read
 [evaluation-scenarios.md](references/evaluation-scenarios.md) when validating a
 host or changing the Product MCP catalog.
+
+## Product feedback and navigation
+
+When the user wants to report a product problem or idea, use
+[safe-product-feedback](../safe-product-feedback/SKILL.md) without copying private
+content into a report implicitly. For a requested page destination, follow
+[navigation and activity](../route-popscale-requests/references/navigation-and-activity.md).
+A navigation proposal does not approve any content change or publication.

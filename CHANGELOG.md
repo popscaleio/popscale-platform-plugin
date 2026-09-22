@@ -2,6 +2,16 @@
 
 All notable changes to the Popscale Platform plugin are documented here.
 
+## [1.4.0] - 2026-09-22
+
+- Add product feedback submission, actor-private reads and explicitly authorized
+  platform review, with context consent and ProductAction approval boundaries.
+- Add typed navigation and host-dependent link guidance, plus safe activity and
+  background-job semantics; route existing workflows to shared guidance.
+- Extend public skill assets and tool requirements with feedback/navigation,
+  synthetic evaluation cases and package coverage. Optional feedback:review is
+  never requested globally. Publication requires compatible backend discovery.
+
 ## [Unreleased]
 
 ### Fixed

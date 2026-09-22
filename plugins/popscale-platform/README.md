@@ -134,3 +134,21 @@ not add a docs write tool or update docs through the product MCP.
 
 Public architecture, installation, security, release, and implementation status
 are maintained in this repository's `docs/` directory.
+
+## Product feedback and page navigation
+
+The `safe-product-feedback` workflow submits bugs, ideas and improvements and
+reads the caller's own feedback with optional `admin:write` / `admin:read` scopes.
+Conversation sharing is explicit, bounded and reviewed through authenticated
+ProductAction approval. External chat history cannot be retrieved later.
+
+Platform review requires optional `feedback:review`, an eligible company admin,
+active superuser status and explicitly assigned review permission. Existing
+connections must reauthorize for this scope; it is not a default for all users.
+A missing tool or denied request does not mean there are no reports.
+
+Navigation returns verified typed destinations. A capable host resolves them to
+trusted links; otherwise the assistant describes the page without claiming it
+opened. Host progress UI varies; a completed submission tool does not mean its
+background job is finished. Compatible backend discovery must precede publication
+of version 1.4.0; first-party sessions must be restarted to pick up new profiles.

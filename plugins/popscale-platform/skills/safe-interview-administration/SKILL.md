@@ -97,3 +97,11 @@ scope mapping. Read [safety-and-fallbacks.md](references/safety-and-fallbacks.md
 for conflicts, PII, asynchronous work, and bounded-result handling. Read
 [evaluation-scenarios.md](references/evaluation-scenarios.md) when validating a
 host, changing the Product MCP catalog, or evaluating Study design guidance.
+
+## Product feedback and navigation
+
+When the user wants to report a product problem or idea, use
+[safe-product-feedback](../safe-product-feedback/SKILL.md) without copying private
+content into a report implicitly. For a requested page destination, follow
+[navigation and activity](../route-popscale-requests/references/navigation-and-activity.md).
+A navigation proposal does not approve any content change or publication.

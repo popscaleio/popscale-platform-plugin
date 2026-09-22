@@ -21,6 +21,7 @@ MAX_INSTRUCTION_CHARS = 200_000
 SKILLS = (
     "route-popscale-requests", "safe-content-administration",
     "safe-journey-creation", "safe-interview-administration", "company-usage-insights",
+    "safe-product-feedback",
 )
 
 
