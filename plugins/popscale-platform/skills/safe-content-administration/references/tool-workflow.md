@@ -11,6 +11,7 @@ an editable field or override flag does not authorize bypassing them.
 | --- | --- | --- |
 | `current_user` | Verify effective role and OAuth-selected company | Authenticated MCP session |
 | `capabilities` | Discover enabled tools and missing scopes | Authenticated MCP session |
+| `company_assets_list`, `company_asset_detail` | Inspect paginated company assets and read back exact saved values/revisions | `content:read` |
 | `search_company_content` | Search bounded summaries across supported root formats | `content:read` |
 | `list_company_content_references` | Resolve company languages, departments, models, voices, or tags | `content:read` |
 | `content_detail` | Read one root or directly addressable child plus editable fields and root revision | `content:read` |
@@ -69,6 +70,9 @@ before making a new input edit rather than completing a source-only update.
 If generation is already known to be unavailable for the target, resolve the
 draft/capability blocker before starting new Coaching input edits. Report any
 inputs already saved as an incomplete update.
+This includes missing company inputs or context evidence under the shared
+[company asset preflight](company-asset-preflight.md). Do not save new Coaching
+inputs while the mandatory pair is known to be blocked by that gate.
 
 1. Identify whether the requested source/component changes affect a protected
    output using current detail, freshness, dependency hints, and capabilities.
@@ -108,6 +112,12 @@ Never use `content_update` on the generation-only output itself, including when
 generation is unavailable, fails, or the user explicitly asks for manual text.
 
 ## Generation
+
+Complete the shared [company asset preflight](company-asset-preflight.md) before
+any generation dispatch, including targeted regeneration, language/media work
+and retries. Verify bound source revisions again after relevant changes. Do not
+confuse asset existence or a successful Knowledge context read with proof of
+the actual company context consumed by the operation.
 
 1. Call `content_generation_capabilities` with `content:read` immediately before
    choosing a format, subpart, or granular generation operation.

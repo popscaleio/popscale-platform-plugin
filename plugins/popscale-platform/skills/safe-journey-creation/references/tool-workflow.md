@@ -6,11 +6,16 @@
 | --- | --- | --- | --- |
 | 1 | `current_user` | Verify identity, role, selected company, and granted scopes | Authenticated MCP session |
 | 2 | `capabilities` | Discover allowed Popscale capabilities for this session | Authenticated MCP session |
-| 3 | `knowledge_agent_context_manifest` | Inspect the stored company context snapshot and source hash | `knowledge:read` |
-| 4 | `knowledge_assets_list` | Select approved, generation-eligible assets | `knowledge:read` |
-| 5 | `knowledge_generation_context` | Build the approved context used for this generation | `knowledge:read` |
+| 3 | `company_assets_list`, `company_asset_detail` | Inspect required assets, category coverage, saved values and revisions for the selected format mix | `content:read` |
+| 4 | `list_company_content_references` | Resolve languages, models and applicable voices; separately verify actual configuration | `content:read` |
+| 5 | `knowledge_agent_context_manifest` | Inspect the stored Knowledge manifest and source hash; it does not prove company-asset inclusion | `knowledge:read` |
+| 6 | `knowledge_assets_list` | Select approved, active, generation-eligible assets | `knowledge:read` |
+| 7 | `knowledge_generation_context` | Read the approved Knowledge context; reading may diagnose gaps before generation is allowed | `knowledge:read` |
 
 If the required capability or scope is absent, stop before the affected action.
+Complete the shared [company asset preflight](../../safe-content-administration/references/company-asset-preflight.md),
+including actual context inclusion evidence, before generation. The reads above
+alone do not establish that the generator will consume the verified revisions.
 
 ## Plan and Generation
 
@@ -20,6 +25,9 @@ exist. Use `generation_requests_list`, `generation_request_detail`, and
 starting or retrying it. `generation_request_start`, `generation_step_retry`,
 `generation_request_cancel`, and `journey_plan_reconcile` are explicit
 state-changing operations.
+The preflight gates request creation/start, item-input generation, execution and
+generation retries. Revalidate changed sources or formats against the bound
+request/plan context; unavailable preview/binding evidence is a blocker.
 
 The workflow is asynchronous. Poll status at a reasonable cadence and stop when
 the request is completed, failed, canceled, or awaiting user action. Do not call

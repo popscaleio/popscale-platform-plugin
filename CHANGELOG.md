@@ -6,6 +6,12 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ### Fixed
 
+- Require a shared company-asset preflight for Journey and standalone learning
+  generation: substantive format-specific inputs, paginated discovery, exact
+  read-back and evidence that verified sources reach the generation context.
+  Missing or unverifiable required inputs block dispatch; source/configuration
+  changes invalidate the prior check. Review source use in plans and saved
+  exercises separately, while preserving mandatory paired Coaching generation.
 - Point the live Docs MCP smoke test at the published assistant connection
   guide, and verify structured search/page results, published Markdown and tool
   errors instead of matching text anywhere in a response.

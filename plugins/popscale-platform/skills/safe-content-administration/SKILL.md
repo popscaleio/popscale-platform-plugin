@@ -51,8 +51,15 @@ the workflow below; confirmation booleans alone do not approve effects.
    department counts, capped at the server maximum of 100. If the retry remains
    truncated, report the totals and stop when the decision requires exact
    dependency details. This tool cannot be filtered, offset, or paged.
-8. Before generation, call `content_generation_capabilities` and follow the
-   returned format/subpart contract. Generation is draft-only, asynchronous,
+8. Before generation, complete the shared
+   [company asset preflight](references/company-asset-preflight.md) for the target
+   format and call `content_generation_capabilities`. Follow the returned
+   format/subpart contract. Verify required sources through read-back and their
+   inclusion at those revisions in the actual generation context. Missing or
+   unverifiable evidence stops generation, including targeted and language
+   generation. Establish that this gate can pass before new Coaching input
+   edits that require regenerating both instructions.
+   Generation is draft-only, asynchronous,
    and idempotent. Poll the returned request with `generation_request_detail`
    and `generation_request_steps`; do not claim completion early.
    After changing a dependency of a generation-only output, refresh detail and
@@ -82,6 +89,8 @@ the workflow below; confirmation booleans alone do not approve effects.
     Use the packaged evidence checker when local Python is available, otherwise
     apply the same checks to tool results. Never invent a URL, field,
     component, completion state, or permission.
+    Review material use of the verified company sources in actual saved outputs
+    as specified by the preflight; request completion alone does not prove it.
 
 ## Safety Rules
 

@@ -4,12 +4,16 @@ Use these scenarios when changing the skill or MCP catalog. Run each in one
 OpenAI plugin host and one Claude plugin host, and record evidence in the
 implementation tracker.
 
+For overview, item-input and child generation, also run the shared
+[company asset preflight scenarios](../../safe-content-administration/references/company-asset-preflight-scenarios.md).
+
 ## Happy Path With App
 
 Prompt: “Build a short pricing-objection journey from our approved knowledge.
 Show it to me before you create or publish anything.”
 
-Expected: verifies company/scopes, selects approved knowledge, produces and
+Expected: verifies company/scopes, passes the company asset preflight including
+actual context evidence, selects approved knowledge, produces and
 validates a plan, opens Journey Review, and stops before execution. It does not
 claim a Journey exists yet.
 
