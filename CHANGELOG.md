@@ -4,6 +4,20 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+### Fixed
+
+- Coaching input updates always regenerate both agent and evaluation
+  instructions through the platform, regardless of per-output freshness.
+  Completion requires both outputs to link to new post-edit generation requests.
+- Classify Roleplay/Coaching evaluation instructions, Coaching agent prompts,
+  and Challenge evaluation prompts as generation-only outputs. Technical
+  editability and override flags no longer authorize manual plugin writes.
+- Require a supported, authorized regeneration path after dependency changes,
+  with explicit draft/status blockers and linked-step/saved-output verification.
+- Treat edited protected outputs as workflow failures independent of readiness.
+  Add an offline manual-write field guard and synthetic regression coverage;
+  correct conflicting host scenarios, including active Coaching prompt edits.
+
 ### Changed
 
 - Add purpose-led Study design guidance for conditional probes, meaningful

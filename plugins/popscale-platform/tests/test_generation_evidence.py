@@ -39,6 +39,74 @@ def sample():
 
 
 class GenerationEvidenceTests(unittest.TestCase):
+    def protected_sample(self, content_type, key):
+        data = sample()
+        data["root"]["content_type"] = content_type
+        data["freshness"]["root"]["content_type"] = content_type
+        data["requested_artifacts"] = [key]
+        data["freshness"]["artifacts"][0]["key"] = key
+        return data
+
+    def test_edited_protected_outputs_fail_even_with_green_readiness(self):
+        for content_type, key in (("roleplay", "evaluation_instructions"),
+                                  ("coaching_session", "evaluation_instructions"),
+                                  ("coaching_session", "agent_prompt"),
+                                  ("challenge", "evaluation_prompt")):
+            for status in ("active", "draft"):
+                with self.subTest(content_type=content_type, key=key, status=status):
+                    data = self.protected_sample(content_type, key)
+                    data["root"]["status"] = status
+                    data["readiness"] = {"can_activate": True}
+                    data["freshness"]["artifacts"][0].update(
+                        status="source_changed_and_output_edited", output_modified=True)
+                    report = verifier.verify(data)
+                    self.assertEqual(report["generation_only_workflow_failures"], [key])
+                    self.assertEqual(report["artifacts"][0]["provenance"],
+                                     "platform_generated_but_edited")
+                    self.assertFalse(report["can_report_requested_generation_complete"])
+                    self.assertEqual(report["readiness"], "check_separately")
+
+    def test_protected_edit_without_links_or_during_retry_is_still_a_failure(self):
+        for patch in ({"generation_request_id": None, "generation_step_id": None},
+                      {"execution_status": "generating"},
+                      {"status": "current", "output_modified": True},
+                      {"status": "output_edited", "output_modified": False}):
+            with self.subTest(patch=patch):
+                data = self.protected_sample("roleplay", "evaluation_instructions")
+                data["freshness"]["artifacts"][0].update(
+                    status="source_changed_and_output_edited", output_modified=True)
+                data["freshness"]["artifacts"][0].update(patch)
+                report = verifier.verify(data)
+                self.assertEqual(report["generation_only_workflow_failures"],
+                                 ["evaluation_instructions"])
+                self.assertFalse(report["can_report_requested_generation_complete"])
+
+    def test_source_change_requires_generation_without_inventing_manual_edit(self):
+        data = self.protected_sample("roleplay", "evaluation_instructions")
+        data["freshness"]["artifacts"][0]["status"] = "source_changed"
+        report = verifier.verify(data)
+        self.assertEqual(report["generation_only_workflow_failures"], [])
+        self.assertEqual(report["artifacts"][0]["workflow_status"], "regeneration_required")
+        self.assertEqual(report["artifacts"][0]["provenance"], "platform_generated")
+        self.assertFalse(report["can_report_requested_generation_complete"])
+
+    def test_verified_generation_resolves_protected_output_failure(self):
+        data = self.protected_sample("roleplay", "evaluation_instructions")
+        data["root"]["status"] = "draft"
+        report = verifier.verify(data)
+        self.assertEqual(report["generation_only_workflow_failures"], [])
+        self.assertEqual(report["artifacts"][0]["workflow_status"],
+                         "verified_generation_metadata")
+        self.assertTrue(report["can_report_requested_generation_complete"])
+
+    def test_editable_output_edit_does_not_become_generation_only_failure(self):
+        data = sample()
+        data["freshness"]["artifacts"][0].update(status="output_edited", output_modified=True)
+        report = verifier.verify(data)
+        self.assertEqual(report["generation_only_workflow_failures"], [])
+        self.assertEqual(report["artifacts"][0]["workflow_status"], "not_generation_only")
+        self.assertFalse(report["can_report_requested_generation_complete"])
+
     def test_completed_bound_steps_verify_each_requested_artifact(self):
         report = verifier.verify(sample())
         self.assertTrue(report["can_report_requested_generation_complete"])
@@ -196,3 +264,145 @@ class GenerationEvidenceTests(unittest.TestCase):
                                 capture_output=True, text=True, check=True)
         self.assertTrue(json.loads(result.stdout)["can_report_requested_generation_complete"])
         self.assertNotIn("SYNTHETIC_PRIVATE_CONTENT", result.stdout)
+
+
+class CoachingInputRegenerationTests(unittest.TestCase):
+    def sample(self):
+        data = sample()
+        data["root"]["content_type"] = "coaching_session"
+        data["freshness"]["root"]["content_type"] = "coaching_session"
+        data["coaching_inputs_changed"] = True
+        data["coaching_regeneration_request_ids"] = [10]
+        data["requested_artifacts"] = ["agent_prompt", "evaluation_instructions"]
+        for row, key in zip(data["freshness"]["artifacts"],
+                            ["agent_prompt", "evaluation_instructions", "description"]):
+            row["key"] = key
+        return data
+
+    def test_both_new_outputs_complete_coaching_input_update(self):
+        report = verifier.verify(self.sample())
+        self.assertTrue(report["coaching_input_regeneration_complete"])
+        self.assertTrue(report["can_report_requested_generation_complete"])
+
+    def test_requesting_only_one_output_cannot_omit_the_other(self):
+        data = self.sample()
+        data["requested_artifacts"] = ["agent_prompt"]
+        data["freshness"]["artifacts"] = data["freshness"]["artifacts"][:1]
+        report = verifier.verify(data)
+        self.assertEqual([row["key"] for row in report["artifacts"]],
+                         ["agent_prompt", "evaluation_instructions"])
+        self.assertFalse(report["coaching_input_regeneration_complete"])
+        self.assertFalse(report["can_report_requested_generation_complete"])
+
+    def test_current_old_outputs_do_not_replace_new_generation(self):
+        for request_ids in ([], [11]):
+            with self.subTest(request_ids=request_ids):
+                data = self.sample()
+                data["coaching_regeneration_request_ids"] = request_ids
+                report = verifier.verify(data)
+                self.assertTrue(all(row["freshness"] == "current" for row in report["artifacts"]))
+                self.assertFalse(report["coaching_input_regeneration_complete"])
+                self.assertFalse(report["can_report_requested_generation_complete"])
+
+    def test_only_one_new_instruction_cannot_complete_the_pair(self):
+        for old_index in (0, 1):
+            with self.subTest(old_index=old_index):
+                data = self.sample()
+                data["requests"].append({"id": 9, "status": "completed", "target_object_id": 1,
+                                         "step_count": 1})
+                data["step_results"].append({"request_id": 9, "steps": [{"id": 9, "status": "completed"}]})
+                data["freshness"]["artifacts"][old_index].update(
+                    generation_request_id=9, generation_step_id=9)
+                self.assertFalse(verifier.verify(data)["coaching_input_regeneration_complete"])
+
+    def test_partial_failed_or_skipped_step_leaves_coaching_incomplete(self):
+        for status in ("failed", "running", "skipped"):
+            with self.subTest(status=status):
+                data = self.sample()
+                data["step_results"][0]["steps"][1]["status"] = status
+                self.assertFalse(verifier.verify(data)["coaching_input_regeneration_complete"])
+
+    def test_coaching_context_is_explicit_and_validated(self):
+        for patch in ({"coaching_inputs_changed": "true"},
+                      {"coaching_regeneration_request_ids": [True]},
+                      {"coaching_regeneration_request_ids": [10, 10]}):
+            data = self.sample()
+            data.update(patch)
+            with self.subTest(patch=patch), self.assertRaises(ValueError):
+                verifier.verify(data)
+        self.assertIsNone(verifier.verify(sample())["coaching_input_regeneration_complete"])
+
+
+class ManualWriteGuardTests(unittest.TestCase):
+    def test_confirmations_cannot_authorize_protected_output_writes(self):
+        for content_type, field in (("roleplay", "evaluation_instructions"),
+                                    ("coaching_session", "evaluation_instructions"),
+                                    ("coaching_session", "agent_prompt"),
+                                    ("challenge", "evaluation_prompt")):
+            for status in ("active", "draft"):
+                for value in ("Manually rewritten instruction", "", None):
+                    with self.subTest(content_type=content_type, status=status, value=value):
+                        proposed = {
+                            "content_type": content_type, "object_id": 1,
+                            "expected_revision": "synthetic-revision",
+                            "confirm_active_edit": True,
+                            "confirm_generated_output_override": True,
+                            "fields": {field: value},
+                        }
+                        # Status and intent are hostile extra context, not MCP authority.
+                        proposed["status"] = status
+                        proposed["user_requested_manual_edit"] = True
+                        report = verifier.check_manual_write(proposed)
+                        self.assertFalse(report["passes_generation_only_guard"])
+                        self.assertEqual(report["blocked_fields"], [field])
+                        self.assertEqual(report["next_action"],
+                                         "use_platform_generation_or_report_blocker")
+
+    def test_protected_field_cannot_hide_in_mixed_payload_or_child_type(self):
+        for content_type in ("roleplay", "roleplay_customer", "episode"):
+            report = verifier.check_manual_write({
+                "content_type": content_type,
+                "fields": {"description": "Synthetic description",
+                           "evaluation_instructions": "Synthetic override"},
+            })
+            self.assertFalse(report["passes_generation_only_guard"])
+            self.assertEqual(report["blocked_fields"], ["evaluation_instructions"])
+
+    def test_source_and_normally_editable_fields_pass_only_field_policy(self):
+        for content_type, fields in (
+                ("roleplay", {"success_behaviours": "Ask about the customer's goal"}),
+                ("roleplay_customer", {"personality_description": "Hesitant"}),
+                ("roleplay_evaluation_criterion", {"max_points": 5}),
+                ("coaching_session", {"coaching_context": "Practice planning"}),
+                ("episode", {"description": "A synthetic summary"})):
+            with self.subTest(content_type=content_type):
+                report = verifier.check_manual_write({"content_type": content_type, "fields": fields})
+                self.assertTrue(report["passes_generation_only_guard"])
+                self.assertEqual(report["next_action"], "apply_normal_authorization_and_schema_checks")
+
+    def test_invalid_write_input_fails_closed(self):
+        for arguments in ({}, {"content_type": "unknown", "fields": {"name": "x"}},
+                          {"content_type": "roleplay", "fields": {}},
+                          {"content_type": "roleplay", "fields": []}):
+            with self.subTest(arguments=arguments), self.assertRaises(ValueError):
+                verifier.check_manual_write(arguments)
+
+    def test_cli_blocks_manual_request_without_echoing_output_text(self):
+        result = subprocess.run(
+            [sys.executable, str(SCRIPT), "--check-manual-write"],
+            input=json.dumps({"content_type": "roleplay",
+                              "confirm_generated_output_override": True,
+                              "fields": {"evaluation_instructions": "SYNTHETIC_PRIVATE_CONTENT"}}),
+            capture_output=True, text=True)
+        self.assertEqual(result.returncode, 3)
+        self.assertFalse(json.loads(result.stdout)["passes_generation_only_guard"])
+        self.assertNotIn("SYNTHETIC_PRIVATE_CONTENT", result.stdout + result.stderr)
+
+    def test_cli_permitted_field_and_invalid_input_exit_codes(self):
+        for payload, code in ((json.dumps({"content_type": "episode", "fields": {"description": "x"}}), 0),
+                              ('{"private":"SYNTHETIC_SECRET",', 2)):
+            with self.subTest(code=code):
+                result = subprocess.run([sys.executable, str(SCRIPT), "--check-manual-write"],
+                                        input=payload, capture_output=True, text=True)
+                self.assertEqual(result.returncode, code)
+                self.assertNotIn("SYNTHETIC_SECRET", result.stdout + result.stderr)

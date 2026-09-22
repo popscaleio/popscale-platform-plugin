@@ -43,8 +43,13 @@ the workflow below; confirmation booleans alone do not approve effects.
    when status or server guidance indicates reconciliation is appropriate.
 10. When the user asks to publish, call `journey_activation_readiness`. Activate
     each ready draft child through `content_activate` only after a specific
-    confirmation. Refresh readiness, present the final journey target, ask for a
-    new publication confirmation, then call `journey_activate`.
+    confirmation. Before child or Journey activation, read current child detail
+    and freshness for all generation-only outputs, including on reused active
+    roots. Stop if any is edited or that check is unavailable. Refresh readiness,
+    and require both newly generated instruction outputs after Coaching input
+    changes, as defined in the shared generation verification workflow. Then
+    present the final journey target, ask for a new publication confirmation,
+    then call `journey_activate`.
 11. Before reporting generated content, follow the shared
     [generation verification](../safe-content-administration/references/generation-verification.md)
     for every requested item/root, including reused content. Read child request
@@ -74,6 +79,11 @@ the workflow below; confirmation booleans alone do not approve effects.
   work around Popscale's authorization or validation layer.
 - Never activate the journey until `journey_activation_readiness` confirms that
   execution finished and every linked content item is active.
+- Child-content corrections follow `safe-content-administration` and its
+  generation-only field policy. Never repair protected evaluation outputs or
+  Coaching `agent_prompt` manually. An edited generation-only artifact is a
+  blocker for affected child/Journey activation, even when readiness is green;
+  report it and use only authorized platform regeneration to resolve it.
 
 ## Failure Handling
 

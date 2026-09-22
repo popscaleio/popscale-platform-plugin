@@ -29,6 +29,10 @@ the workflow below; confirmation booleans alone do not approve effects.
 4. Before changing an object, record the root `revision`, status, editable
    fields, component type, and exact requested delta. Prefer one focused root or
    component mutation over replacing a collection or unrelated fields.
+   Apply the generation-only field rule below before any root write. When local
+   Python is available, check proposed `content_update` arguments with the
+   packaged checker's `--check-manual-write` mode; otherwise apply the same field
+   exclusion directly. Editable fields and override flags do not waive it.
 5. Pass the latest root `revision` as `expected_revision` for every protected
    mutation. Refresh after each successful mutation because root revision
    changes. On conflict, re-read and reconcile the user's requested delta; never
@@ -37,7 +41,9 @@ the workflow below; confirmation booleans alone do not approve effects.
    `confirm_active_edit`, present the learner-visible consequence and obtain
    immediate explicit approval before setting `confirm_active_edit=true`.
    Editing approval does not authorize deletion, reordering, archiving,
-   regeneration, reassignment, or publication.
+   unrelated regeneration, reassignment, or publication. For Coaching input
+   changes, include mandatory regeneration of both instruction outputs in the
+   operation from the start; reuse authorization that already covers it.
 7. Before deleting, reordering, replacing department assignments, or archiving,
    inspect `get_content_usage`. Use the dedicated confirmation required by the
    tool and describe any learner or journey impact. If usage details are
@@ -49,9 +55,24 @@ the workflow below; confirmation booleans alone do not approve effects.
    returned format/subpart contract. Generation is draft-only, asynchronous,
    and idempotent. Poll the returned request with `generation_request_detail`
    and `generation_request_steps`; do not claim completion early.
-9. Before publication, call `content_activation_readiness`, present every failed
-   or warning check, and call `content_activate` only after immediate explicit
-   confirmation with `confirm_publish=true`.
+   After changing a dependency of a generation-only output, refresh detail and
+   freshness, read generation capabilities, and follow the dependency decision
+   flow in [tool-workflow.md](references/tool-workflow.md). Queue the supported
+   subpart when authorized, or report the status/tool/scope/approval blocker.
+   Source edits alone must not be reported as synchronized generated output.
+   **Coaching exception to selective regeneration:** whenever Coaching inputs
+   change, always regenerate BOTH `agent_prompt` (agent instructions) and
+   `evaluation_instructions` through the platform after the source edits. Do
+   not select only the output marked stale or reuse an older completed run.
+   Verify both new saved outputs before completion or activation. If the pair
+   cannot be generated, report the update as blocked/incomplete, never repair
+   either instruction manually.
+9. Before publication, read current detail and freshness for every generation-only
+   output on the root, even if the earlier edit/report concerned another field.
+   Stop on an edited protected output; do not rely on readiness to detect it.
+   Call `content_activation_readiness`, present every failed or warning check,
+   and call `content_activate` only after immediate explicit confirmation with
+   `confirm_publish=true` and no unresolved generation-only workflow failure.
 10. Report server-returned IDs, revisions, status, change history/freshness,
     generation state, and remaining warnings. Before any generation claim, follow
     [generation-verification.md](references/generation-verification.md): verify
@@ -67,6 +88,18 @@ the workflow below; confirmation booleans alone do not approve effects.
 - Treat every result as private to the company returned by `current_user`.
 - Never send customer content, generated artifacts, identifiers, or OAuth
   material to `popscale-docs`.
+- Never write, patch, translate, clear, or manually repair generation-only
+  outputs: Roleplay `evaluation_instructions`; Coaching session
+  `evaluation_instructions` and `agent_prompt`; Challenge `evaluation_prompt`.
+  Never include these in `content_update` or a root create payload, or use
+  `confirm_generated_output_override` for them. Generate them through the
+  platform even when `editable_fields` or the schema permits direct writes.
+  An explicit manual-rewrite request must be routed to platform generation;
+  an unavailable generation path is a blocker, not a manual-text fallback.
+- An edited generation-only output, including
+  `source_changed_and_output_edited`, is a workflow failure. Report it and stop
+  synchronization/publication claims and activation until platform regeneration
+  and saved-output verification resolve it. Green readiness cannot clear it.
 - Use `content:read` for inspection; focused mutations additionally require
   `content:write`. Supported generation workflows also require
   `generation:read` for voice discovery and asynchronous status/step reads;
@@ -82,6 +115,8 @@ the workflow below; confirmation booleans alone do not approve effects.
 - Treat `allowed_fields`, component types, generation capabilities, readiness,
   and validation errors returned by the server as authoritative. Never work
   around them through generic REST calls or guessed fields.
+  Server editability is a technical constraint, not permission to override the
+  stricter generation-only workflow.
 - Do not expose or reconstruct bounded, masked, omitted, or cross-company data.
 - `delete_content_component` requires a specific delete confirmation.
   `reorder_content_components` replaces one complete bounded ordering scope;
