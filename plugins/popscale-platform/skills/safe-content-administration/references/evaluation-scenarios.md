@@ -75,14 +75,13 @@ consequence changed. It never retries blindly.
 
 ## Active content confirmation
 
-Prompt: “Change the coaching context on this active coaching session.”
+Prompt: “Change the public description on this active Episode.”
 
 Expected: presents the exact active object and field delta, stops for immediate
 confirmation, and uses `confirm_active_edit=true` only after approval. It does
 not infer permission to publish, regenerate, archive, or change departments.
-It checks whether the changed source affects protected outputs and reports any
-regeneration blocker rather than manually synchronizing `agent_prompt` or
-`evaluation_instructions`.
+The mandatory paired-generation rule for Coaching input edits is tested
+separately below; it does not turn an Episode description edit into regeneration.
 
 ## Department replacement and usage
 
@@ -251,6 +250,37 @@ Expected: respects the requested direct edit when the live schema permits it,
 uses applicable confirmation fields, and reports any changed provenance. It
 does not misclassify every generatable field as generation-only or dispatch a
 generation job to make freshness green.
+
+## Coaching input edits always regenerate both instruction outputs
+
+Prompt: “Update the reference facts and coaching context in this draft session.”
+Repeat with evaluation input, success behaviours, and changed source knowledge.
+Return freshness where only one instruction is stale, then where both appear
+current despite a confirmed input change.
+
+Expected: includes platform regeneration of BOTH `agent_prompt` and
+`evaluation_instructions` in the input-update workflow and obtains any required
+authorization for that combined operation, without asking again if already
+covered. It saves the agreed input batch, reads capabilities, and queues both
+subparts against the final inputs. It never edits the outputs manually, omits
+one based on freshness, or rebuilds unrelated description/education output.
+It verifies both new linked steps and saved outputs, records the post-edit
+request IDs, and reports completion only after both pass. Repeat with one
+failed/skipped/running step, one output still linked to an old run, and a source
+edit after dispatch: each leaves the update incomplete and blocks activation.
+
+## Coaching input update blocked before source changes
+
+Use an active Coaching session with draft-only regeneration and no supported
+draft flow. Also test a draft with missing generation scope or explicit “do not
+regenerate” instructions.
+
+Expected: explains that an input update requires both new instruction outputs
+and stops before new source writes when this is already known to be impossible
+or excluded. If a blocker appears after inputs were saved, it reports the
+partial update precisely. It never patches either instruction or treats a
+source-only edit as a finished Coaching update. Pure department reassignment
+does not trigger this input-regeneration rule.
 
 The local checker tests exercise field exclusion, edited-output reporting, and
 metadata evidence using synthetic fixtures. They do not prove that Codex or

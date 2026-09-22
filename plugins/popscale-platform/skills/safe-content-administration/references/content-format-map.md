@@ -50,7 +50,24 @@ text as a workaround. See the dependency decision flow in
 - Generated customers are append-only when the live capabilities say
   `add_generated_customers`; do not interpret regeneration as replacement.
 
-### Coaching sessions and challenges
+### Coaching sessions
+
+- A change to any Coaching generation input always requires a new platform
+  generation of BOTH `agent_prompt` and `evaluation_instructions`. Examples
+  include coaching context, situation, reference facts/points, evaluation input,
+  success behaviours, critical missteps, and source knowledge. This is a coupled
+  refresh, even if freshness marks only one output stale or both still current.
+- Save the agreed input changes first, then request
+  `subparts: ["agent_prompt", "evaluation_instructions"]` through
+  `content_regenerate_subparts` using the supported live schema. One request
+  after a batch of source edits is enough; changes after dispatch require a new
+  pair based on the final inputs. Never adjust either output manually.
+- Verify the new generation steps and saved outputs for both. An old successful
+  run or only one newly generated instruction cannot complete the input update.
+- Administrative changes that do not alter generation inputs, such as department
+  assignment, do not by themselves require instruction regeneration.
+
+### Coaching sessions and challenges: root editing
 
 - These formats expose focused root fields rather than nested component CRUD.
 - Change only fields returned as editable. Model, voice, and department IDs

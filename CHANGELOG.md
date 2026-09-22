@@ -6,6 +6,9 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ### Fixed
 
+- Coaching input updates always regenerate both agent and evaluation
+  instructions through the platform, regardless of per-output freshness.
+  Completion requires both outputs to link to new post-edit generation requests.
 - Classify Roleplay/Coaching evaluation instructions, Coaching agent prompts,
   and Challenge evaluation prompts as generation-only outputs. Technical
   editability and override flags no longer authorize manual plugin writes.

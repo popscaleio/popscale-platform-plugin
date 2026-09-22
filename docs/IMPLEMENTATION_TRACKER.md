@@ -4,6 +4,10 @@ Last updated: 2026-09-22
 
 ## Generation-only evaluation outputs — unreleased fix
 
+- [x] Coaching input updates require new platform generation of both instruction
+  outputs after the final source edits, even if only one or neither appears
+  stale. Known blockers stop new input edits; incomplete pairs block completion
+  and activation. The offline checker requires the pair and post-edit request IDs.
 - [x] Exclude Roleplay/Coaching `evaluation_instructions`, Coaching `agent_prompt`,
   and Challenge `evaluation_prompt` from manual plugin writes, including explicit
   rewrite requests and schema-provided override confirmation.
@@ -15,7 +19,7 @@ Last updated: 2026-09-22
 - [x] Add synthetic regressions and host scenarios for active and draft content,
   manual rewrite requests, green readiness after editing, and ordinary manual
   fields. No customer data or incident identifiers enter the public package.
-- [x] Local validation passes: 58 unit tests (including 11 new behavioral
+- [x] Local validation passes: 64 unit tests (including 17 new behavioral
   regressions), `scripts/validate_release.py`, `quick_validate.py` for both
   changed skills, and `git diff --check`. Review includes pre-activation checks
   for protected outputs outside a prior report's scope.

@@ -82,6 +82,18 @@ def verify(evidence):
         raise ValueError("List every requested artifact, including unavailable ones.")
     if len(set(keys)) != len(keys):
         raise ValueError("Requested artifacts must be unique.")
+    coaching_changed = evidence.get("coaching_inputs_changed", False)
+    if type(coaching_changed) is not bool:
+        raise ValueError("Coaching input-change context must be boolean.")
+    coaching_requests = evidence.get("coaching_regeneration_request_ids", [])
+    if (not isinstance(coaching_requests, list)
+            or any(type(request_id) is not int or request_id <= 0 for request_id in coaching_requests)
+            or len(set(coaching_requests)) != len(coaching_requests)):
+        raise ValueError("Expected unique server request IDs.")
+    if coaching_changed:
+        if root["content_type"] != "coaching_session":
+            raise ValueError("Coaching input-change context requires a Coaching root.")
+        keys = list(dict.fromkeys(keys + ["agent_prompt", "evaluation_instructions"]))
     artifacts = _index(freshness.get("artifacts"), "key")
     requests = _index(evidence.get("requests", []), "id")
     step_results = _index(evidence.get("step_results", []), "request_id")
@@ -145,6 +157,13 @@ def verify(evidence):
         and row["request_status"] == "completed"
         for row in rows
     )
+    coaching_complete = None
+    if coaching_changed:
+        coaching_complete = complete and all(
+            row["generation_request_id"] in coaching_requests
+            for row in rows if row["key"] in GENERATION_ONLY_OUTPUTS["coaching_session"]
+        )
+        complete = complete and coaching_complete
     return {
         "root": {key: root[key] for key in ("content_type", "object_id")},
         "artifacts": rows,
@@ -152,6 +171,7 @@ def verify(evidence):
             row["key"] for row in rows if row["workflow_status"] == "workflow_failure"
         ],
         "can_report_requested_generation_complete": complete,
+        "coaching_input_regeneration_complete": coaching_complete,
         "readiness": "check_separately",
     }
 

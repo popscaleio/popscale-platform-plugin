@@ -42,6 +42,8 @@ authenticated company, server validation, and human approval authoritative.
     confirmation. Before child or Journey activation, read current child detail
     and freshness for all generation-only outputs, including on reused active
     roots. Stop if any is edited or that check is unavailable. Refresh readiness,
+    and require both newly generated instruction outputs after Coaching input
+    changes, as defined in the shared generation verification workflow. Then
     present the final journey target, ask for a new publication confirmation,
     then call `journey_activate`.
 11. Before reporting generated content, follow the shared

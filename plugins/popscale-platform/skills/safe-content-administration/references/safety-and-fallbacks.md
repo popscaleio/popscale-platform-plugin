@@ -46,6 +46,13 @@ not use `confirm_generated_output_override`, demote the root, or manually repair
 the instructions to work around the restriction. Report any source changes
 already saved and that the generated output remains unsynchronized.
 
+For Coaching input changes, both `agent_prompt` and `evaluation_instructions`
+must be regenerated through the platform. Include this required pair in the
+operation up front. If a known status/scope/tool restriction prevents it, stop
+before new input edits; if discovered after saving inputs, report the update as
+incomplete. Never skip one output because freshness appears current, or manually
+patch either output after a partial or failed generation.
+
 Before delete, reorder, reassignment, or archive, inspect bounded usage. If
 usage is truncated, do not infer that unseen dependencies are absent. Retry
 once with `limit` equal to the larger returned Journey/department count, capped

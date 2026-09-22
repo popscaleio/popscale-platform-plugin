@@ -110,6 +110,12 @@ The input is a local envelope, not an MCP request:
   baselines and all requests in the current operation for this root.
 - `step_results`: matching data objects from `generation_request_steps`, each
   containing its original `request_id` and complete `steps` list.
+- For a Coaching input update, `coaching_inputs_changed: true` and
+  `coaching_regeneration_request_ids`: the server-returned IDs of regeneration
+  requests started after the final input edits. These are local workflow context,
+  not MCP fields. The checker includes both instruction artifacts in scope and
+  requires both to link to these new requests. Empty IDs mean regeneration is
+  pending/blocked, not permission to reuse old successful evidence.
 
 Copy evidence without inventing or changing values. Keep root/availability,
 artifact status/IDs/timestamp/modified flag, request ID/status/target_object_id/
@@ -123,6 +129,10 @@ supports linked registered artifacts; native rows without linkage stay
 unverified. Exit zero means a report was produced, not that verification passed.
 Read `can_report_requested_generation_complete` and every artifact row. A true
 value covers only the supplied scope, not a whole Journey or publication.
+For a Coaching input update, also require
+`coaching_input_regeneration_complete=true`; neither an old successful pair nor
+only one regenerated instruction completes the workflow. Verify saved text with
+the product reads even when the checker confirms the metadata.
 For generation-only outputs, also read `generation_only_workflow_failures` and
 each row's `workflow_status`. An edited output stays a failure despite green
 readiness. Those rows and failures cover only `requested_artifacts`; before

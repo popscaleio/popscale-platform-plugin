@@ -37,7 +37,9 @@ confirmation boundaries authoritative.
    `confirm_active_edit`, present the learner-visible consequence and obtain
    immediate explicit approval before setting `confirm_active_edit=true`.
    Editing approval does not authorize deletion, reordering, archiving,
-   regeneration, reassignment, or publication.
+   unrelated regeneration, reassignment, or publication. For Coaching input
+   changes, include mandatory regeneration of both instruction outputs in the
+   operation from the start; reuse authorization that already covers it.
 7. Before deleting, reordering, replacing department assignments, or archiving,
    inspect `get_content_usage`. Use the dedicated confirmation required by the
    tool and describe any learner or journey impact. If usage details are
@@ -54,6 +56,13 @@ confirmation boundaries authoritative.
    flow in [tool-workflow.md](references/tool-workflow.md). Queue the supported
    subpart when authorized, or report the status/tool/scope/approval blocker.
    Source edits alone must not be reported as synchronized generated output.
+   **Coaching exception to selective regeneration:** whenever Coaching inputs
+   change, always regenerate BOTH `agent_prompt` (agent instructions) and
+   `evaluation_instructions` through the platform after the source edits. Do
+   not select only the output marked stale or reuse an older completed run.
+   Verify both new saved outputs before completion or activation. If the pair
+   cannot be generated, report the update as blocked/incomplete, never repair
+   either instruction manually.
 9. Before publication, read current detail and freshness for every generation-only
    output on the root, even if the earlier edit/report concerned another field.
    Stop on an edited protected output; do not rely on readiness to detect it.

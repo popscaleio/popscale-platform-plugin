@@ -60,6 +60,16 @@ available before `content_update`; a failed guard prevents the call.
 
 ## Dependency changes and generation-only outputs
 
+For Coaching input changes, the required output scope is always BOTH
+`agent_prompt` and `evaluation_instructions`, regardless of per-artifact freshness
+or dependency hints. Include the pair in the input-update operation and its
+required authorization from the outset; do not ask again when already covered.
+If the user explicitly forbids regeneration, explain the conflict and stop
+before making a new input edit rather than completing a source-only update.
+If generation is already known to be unavailable for the target, resolve the
+draft/capability blocker before starting new Coaching input edits. Report any
+inputs already saved as an incomplete update.
+
 1. Identify whether the requested source/component changes affect a protected
    output using current detail, freshness, dependency hints, and capabilities.
    Examples include customer, criteria/points, goals, or coaching-source edits.
@@ -71,8 +81,10 @@ available before `content_update`; a failed guard prevents the call.
 3. If generation is supported for the current status and authorized, queue
    `content_regenerate_subparts` for the affected outputs. If authorization or
    the required monitoring/write scopes are missing, report that specific
-   blocker before dispatch. A source-only edit or “keep everything else” request
-   does not silently authorize extra generation.
+   blocker before dispatch. For other formats, a source-only edit or “keep
+   everything else” request does not silently authorize extra generation.
+   Coaching input updates always include the required pair; preserve unrelated
+   fields and do not expand the refresh to description or education text.
 4. If generation requires a draft, use only a documented draft workflow exposed
    by the available product tools and authorized for this target. If none is
    available, stop and explain that a draft workflow or additional platform
@@ -82,6 +94,11 @@ available before `content_update`; a failed guard prevents the call.
    `generation_request_steps`. Verify each affected artifact against its linked
    completed step and actual saved result, then read freshness again. If source
    or output changed in the meantime, reconcile rather than claiming success.
+   For Coaching, bind BOTH outputs to the regeneration request(s) started after
+   the final input edits. Do not substitute a pre-edit successful request or
+   accept only one completed instruction. Record `coaching_inputs_changed=true`
+   and `coaching_regeneration_request_ids` in the local checker envelope, keeping
+   these host-side fields out of MCP arguments.
 6. Report source changes actually saved, generation completed/pending/blocked,
    and readiness, freshness, and provenance separately. Stop activation and
    synchronized-output claims on an edited generation-only artifact even if
@@ -127,6 +144,8 @@ Read current detail and freshness for all generation-only outputs on the target
 before activation, including outputs outside the earlier edit/report scope.
 An edited protected artifact blocks activation even when server readiness is
 green. A scoped evidence report does not establish readiness for the whole root.
+After Coaching input changes, pending or unverified regeneration of either
+instruction also blocks activation, even if neither output is marked edited.
 If the required freshness read is unavailable, report the verification blocker
 rather than assuming there is no failure.
 

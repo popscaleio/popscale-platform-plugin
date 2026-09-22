@@ -266,6 +266,73 @@ class GenerationEvidenceTests(unittest.TestCase):
         self.assertNotIn("SYNTHETIC_PRIVATE_CONTENT", result.stdout)
 
 
+class CoachingInputRegenerationTests(unittest.TestCase):
+    def sample(self):
+        data = sample()
+        data["root"]["content_type"] = "coaching_session"
+        data["freshness"]["root"]["content_type"] = "coaching_session"
+        data["coaching_inputs_changed"] = True
+        data["coaching_regeneration_request_ids"] = [10]
+        data["requested_artifacts"] = ["agent_prompt", "evaluation_instructions"]
+        for row, key in zip(data["freshness"]["artifacts"],
+                            ["agent_prompt", "evaluation_instructions", "description"]):
+            row["key"] = key
+        return data
+
+    def test_both_new_outputs_complete_coaching_input_update(self):
+        report = verifier.verify(self.sample())
+        self.assertTrue(report["coaching_input_regeneration_complete"])
+        self.assertTrue(report["can_report_requested_generation_complete"])
+
+    def test_requesting_only_one_output_cannot_omit_the_other(self):
+        data = self.sample()
+        data["requested_artifacts"] = ["agent_prompt"]
+        data["freshness"]["artifacts"] = data["freshness"]["artifacts"][:1]
+        report = verifier.verify(data)
+        self.assertEqual([row["key"] for row in report["artifacts"]],
+                         ["agent_prompt", "evaluation_instructions"])
+        self.assertFalse(report["coaching_input_regeneration_complete"])
+        self.assertFalse(report["can_report_requested_generation_complete"])
+
+    def test_current_old_outputs_do_not_replace_new_generation(self):
+        for request_ids in ([], [11]):
+            with self.subTest(request_ids=request_ids):
+                data = self.sample()
+                data["coaching_regeneration_request_ids"] = request_ids
+                report = verifier.verify(data)
+                self.assertTrue(all(row["freshness"] == "current" for row in report["artifacts"]))
+                self.assertFalse(report["coaching_input_regeneration_complete"])
+                self.assertFalse(report["can_report_requested_generation_complete"])
+
+    def test_only_one_new_instruction_cannot_complete_the_pair(self):
+        for old_index in (0, 1):
+            with self.subTest(old_index=old_index):
+                data = self.sample()
+                data["requests"].append({"id": 9, "status": "completed", "target_object_id": 1,
+                                         "step_count": 1})
+                data["step_results"].append({"request_id": 9, "steps": [{"id": 9, "status": "completed"}]})
+                data["freshness"]["artifacts"][old_index].update(
+                    generation_request_id=9, generation_step_id=9)
+                self.assertFalse(verifier.verify(data)["coaching_input_regeneration_complete"])
+
+    def test_partial_failed_or_skipped_step_leaves_coaching_incomplete(self):
+        for status in ("failed", "running", "skipped"):
+            with self.subTest(status=status):
+                data = self.sample()
+                data["step_results"][0]["steps"][1]["status"] = status
+                self.assertFalse(verifier.verify(data)["coaching_input_regeneration_complete"])
+
+    def test_coaching_context_is_explicit_and_validated(self):
+        for patch in ({"coaching_inputs_changed": "true"},
+                      {"coaching_regeneration_request_ids": [True]},
+                      {"coaching_regeneration_request_ids": [10, 10]}):
+            data = self.sample()
+            data.update(patch)
+            with self.subTest(patch=patch), self.assertRaises(ValueError):
+                verifier.verify(data)
+        self.assertIsNone(verifier.verify(sample())["coaching_input_regeneration_complete"])
+
+
 class ManualWriteGuardTests(unittest.TestCase):
     def test_confirmations_cannot_authorize_protected_output_writes(self):
         for content_type, field in (("roleplay", "evaluation_instructions"),
