@@ -20,10 +20,14 @@ the workflow below; confirmation booleans alone do not approve effects.
    Inspecting or activating child content also requires `content:read`; activation
    additionally requires `content:write` and `publish:write`. Do not accept a
    company identifier from the prompt as an authorization input.
-3. Inspect `knowledge_agent_context_manifest`, then use `knowledge_assets_list`
-   and `knowledge_generation_context` for the approved, generation-eligible
-   knowledge selected for this journey. If the stored manifest or selected
-   context is missing or stale, explain the gap before generating.
+3. Establish the selected format mix, then complete the shared
+   [company asset preflight](../safe-content-administration/references/company-asset-preflight.md)
+   before generating an overview, item inputs or child exercises. It requires
+   `content:read` for company assets/configuration and `knowledge:read` for
+   approved, active, generation-eligible Knowledge. Verify substantive source
+   content, saved revisions and inclusion in the actual generation context;
+   missing or unverifiable required inputs stop generation. Knowledge context
+   reads may diagnose gaps but do not replace this gate.
 4. Create or inspect a generation request, start it when requested, and poll
    `generation_request_detail` until it reaches a terminal or reviewable state.
    Do not invent successful completion while work is still queued or running.
@@ -31,6 +35,10 @@ the workflow below; confirmation booleans alone do not approve effects.
    `journey_plan_update_item_input` for specific edits and
    `journey_plan_update_overview` only after the user explicitly confirms the
    overview change.
+   Check material use of the verified company sources. If format mix, sources,
+   revisions or configuration change, repeat the affected preflight before
+   generating item inputs or executing the plan; an old snapshot is not refreshed
+   merely by re-reading current assets.
 6. Call `journey_plan_validate_item_input` for every item that will be executed. Resolve all
    validation errors; never bypass server validation.
 7. Call `render_journey_review` so App-capable hosts can show the interactive
@@ -59,6 +67,8 @@ the workflow below; confirmation booleans alone do not approve effects.
     Report draft/published status, each part's provenance and freshness, remaining
     warnings, and a concise audit-friendly summary. A partial result is not a
     completed Journey generation.
+    Repeat the preflight's source-use review on saved child exercises; a plausible
+    plan does not prove that child outputs used the selected company sources.
 
 ## Safety Rules
 

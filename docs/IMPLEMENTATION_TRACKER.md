@@ -2,6 +2,30 @@
 
 Last updated: 2026-09-22
 
+## Company asset preflight — unreleased guidance
+
+- [x] Journey and standalone generation share one preflight reference, with a
+  format requirements matrix, all nine Roleplay customer categories, substantive
+  completeness, paginated discovery and saved-value/revision verification.
+- [x] Require evidence of actual context inclusion before generation; distinguish
+  asset presence and Knowledge hashes from company-source binding. Missing tools,
+  material omissions/truncation and stale bindings are explicit blockers.
+- [x] Recheck after relevant changes and review source use in both plans and saved
+  outputs. Preserve approval/scope boundaries and mandatory paired Coaching
+  regeneration; read-only inspection and source preparation remain possible.
+- [x] Add shared host evaluation scenarios covering pagination, blank sources,
+  missing evidence, changed revisions/mix, conditional configuration, standalone
+  retries and actual output review. Public guidance contains no private data.
+- [x] All 76 package tests, release validation, both changed skills' frontmatter
+  validation, Markdown reference checks and the public Docs MCP smoke pass.
+  The shared reference and scenarios are included in the public skill bundle.
+- [ ] Run the documented Codex/Claude tool-trace scenarios. Package tests and
+  static reference validation do not establish host compliance.
+- [ ] Backend enforcement and a supported pre-generation context verification
+  surface remain separate implementation work. This guidance deliberately stops
+  when live tools cannot prove the required context; it adds no backend capability.
+- [ ] Publish separately; no manifest bump, tag or plugin release in this change.
+
 ## Live Docs smoke repair
 
 - [x] Replace the retired `/integrations/popscale-mcp/` fixture with the published

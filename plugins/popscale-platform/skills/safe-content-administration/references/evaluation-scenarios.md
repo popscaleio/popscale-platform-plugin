@@ -3,6 +3,9 @@
 Run these scenarios in one Codex plugin host and one Claude plugin host. Use a
 dedicated test company for mutations; all other scenarios are read-only.
 
+For all generation paths, also run the shared
+[company asset preflight scenarios](company-asset-preflight-scenarios.md).
+
 ## Filled ready fields with unknown origin
 
 Use synthetic Episode evidence with a completed script step, populated
