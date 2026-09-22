@@ -68,3 +68,61 @@ If a release package is incorrect, publish a corrected patch release and mark
 the faulty GitHub release as superseded. Do not repoint MCP URLs to staging and
 do not weaken OAuth or tenant boundaries as a rollback mechanism. Server-side
 incidents follow the owning service's deployment runbook, not this repository.
+
+## Public skill assets
+
+The `1.3.1` candidate adds `public-skills.json` and `public-skills.sha256` beside
+the existing archive. Build them from a clean, committed checkout with:
+
+```bash
+python3 scripts/build_public_skills.py --output-dir dist
+```
+
+The tag workflow runs the same builder after the unchanged validation gates.
+The CLI derives `skill_source_commit` from HEAD and reads public skill bytes from
+that commit's Git objects. It refuses dirty or untracked input and symlinks.
+Assets are deterministic for one commit: no timestamps, host paths, environment
+values or credentials are included. `dist/` is ignored and is never source.
+
+The JSON `schema_version` is `popscale.public_skills.v1`. It contains:
+
+- `plugin_version`, equal to the release tag without its `v` prefix;
+- the exact `skill_source_commit` and `tool_contract_version`;
+- `required_tools`, the supported Product MCP tool names referenced by the
+  bundled methods, including the shared product-action contract;
+- UTF-8 `files` with relative `skills/...` paths, SHA-256 and verbatim `content`;
+- `instruction_paths`, the five skill entrypoints in declared order followed by
+  their sorted recursive Markdown dependencies, and `required_reference_paths`;
+- `skill_bundle_sha256`, SHA-256 of the path-sorted `{path, sha256}` array encoded
+  as Python `json.dumps(..., sort_keys=True, separators=(',', ':'))` UTF-8.
+
+The companion asset is the SHA-256 of the exact JSON bytes followed by one LF.
+The bundle is at most 1 MiB, each file at most 256 KiB, and the compiled text
+joined by two newlines at most 200,000 characters. Markdown references are
+resolved relative to their source, including cross-skill references; missing,
+escaping or unsafe local dependencies fail the build. Only reachable SKILL and
+reference Markdown text is included. Local Python helpers remain optional
+plugin development/host assets and are never executed by the bundle consumer.
+
+`contracts/product-tools-v1.json` is a public name-only compatibility fixture
+reviewed against the Product MCP contract. When a skill starts requiring a new
+tool, update the fixture and its compatibility version when behavior changes.
+The bundle describes requirements, not authority: a consuming host independently
+restricts tools, authentication, company scope and approvals. Public Docs tools
+are separate from the Product MCP requirement list. Host-specific routing and
+private instructions belong to the consuming host, never to these assets.
+
+A runtime consumer may discover new published, stable compatible releases,
+verify both checksums and dependency closure, and cache them without deploying
+the backend. It must trust the fixed repository/release origin, reject
+incompatible contracts, retain its last verified compatible package on refresh
+failure, and keep accepted conversations pinned to their exact verified source.
+Checksums detect corruption; they do not replace trusted release ownership.
+Marking a release superseded alone does not revoke an already pinned runtime
+snapshot: consumers need an explicit version pin/blocklist for rollback.
+
+Publication remains a separate approval after merge. The `1.3.1` skill contract
+now requires the Product Actions v1 API; deploy that compatible backend before
+publishing this plugin candidate. Coordinate with backend PR #438's consumer,
+which can only fetch these assets after a separately authorized release. A
+private assistant prompt or runtime configuration must never be added here.
