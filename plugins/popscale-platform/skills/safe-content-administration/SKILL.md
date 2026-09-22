@@ -9,6 +9,10 @@ Administer existing company content through `popscale-platform` while keeping th
 OAuth-selected company, current server catalog, focused edits, and explicit
 confirmation boundaries authoritative.
 
+Read the shared [product action contract](../route-popscale-requests/references/product-actions.md) before any
+mutation. Stable command identity and server-side human approval apply alongside
+the workflow below; confirmation booleans alone do not approve effects.
+
 ## Required Workflow
 
 1. Call `current_user`, then `capabilities`. Require an active effective
