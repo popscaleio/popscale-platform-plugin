@@ -26,6 +26,11 @@ the workflow below; confirmation booleans alone do not approve effects.
    the narrowest mutation. Update Study metadata separately from draft content.
    Use the topic tools for one question, probe, must-cover point, or keyed
    extraction-field change instead of replacing unrelated content.
+   For new Studies or substantial redesigns, read
+   [study-design-quality.md](references/study-design-quality.md) and review
+   conditional probes, completion criteria, respondent choice, and extraction
+   needs before considering the design finished. Apply it only to the affected
+   topic for a focused edit; do not expand the user's requested scope.
 4. Pass the exact latest `updated_at` value as `expected_updated_at` whenever the
    tool requires it. After any topic or localization mutation, refresh Study
    detail before the next edit or publish attempt because child changes advance
@@ -37,6 +42,8 @@ the workflow below; confirmation booleans alone do not approve effects.
    Study, draft, changed sections, errors, and warnings. Call
    `publish_interview_study` only after immediate explicit confirmation and with
    `confirm_publish=true`.
+   Report publish readiness separately from design review and observed
+   conversation quality; readiness does not prove interviewer behavior.
 7. For invitations, list summaries before opening a specific invitation. Access
    respondent links or create, send, revoke, or expire invitations only when the
    `interview:distribute` capability is present. Ask for immediate confirmation
@@ -89,4 +96,4 @@ Read [tool-workflow.md](references/tool-workflow.md) for exact tool order and
 scope mapping. Read [safety-and-fallbacks.md](references/safety-and-fallbacks.md)
 for conflicts, PII, asynchronous work, and bounded-result handling. Read
 [evaluation-scenarios.md](references/evaluation-scenarios.md) when validating a
-host or changing the Product MCP catalog.
+host, changing the Product MCP catalog, or evaluating Study design guidance.

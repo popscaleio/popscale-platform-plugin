@@ -2,6 +2,19 @@
 
 All notable changes to the Popscale Platform plugin are documented here.
 
+## [Unreleased]
+
+### Changed
+
+- Add purpose-led Study design guidance for conditional probes, meaningful
+  completion criteria, respondent choice, focused extraction, and realistic
+  interview duration without fixed question quotas.
+- Separate design review, server publish readiness, and observed conversation
+  quality. Add authoring-host and respondent-conversation evaluation scenarios;
+  preserve narrow edits and existing product authorization boundaries.
+- This is a guidance update, not an interviewer runtime change or a new Study
+  setting. Live host and conversation evaluations remain separate release work.
+
 ## [1.3.1] - Unreleased
 
 ### Added
