@@ -36,10 +36,11 @@ retry or reconcile speculatively.
 ## Journey Review
 
 Apply the shared [Episode speaker policy](../../safe-content-administration/references/episode-speakers.md)
-to every Episode item before execution: no inferred host identities, voice
-codes only in dedicated configuration, and a supported check of scripts before
-audio. A valid plan or anonymous steering alone does not prove generated scripts
-will remain anonymous; report an unavailable pre-audio gate before execution.
+to every Episode item before execution: put anonymous-dialogue requirements in
+Script input (`model_steering`) and voice codes only in dedicated configuration.
+Platform execution generates scripts, translations and audio; the agent verifies
+saved results read-only and never edits scripts. A valid plan or anonymous
+steering alone does not prove that the generated result followed the inputs.
 
 1. `journey_plan_detail` returns the plan overview, items, readiness, and known
    validation state.

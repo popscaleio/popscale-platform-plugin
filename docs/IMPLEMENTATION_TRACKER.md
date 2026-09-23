@@ -2,6 +2,27 @@
 
 Last updated: 2026-09-23
 
+## Episode Script input correction — unreleased
+
+- [x] Map Script input to `model_steering`; source `script` and translated/source
+  `script_text` are generation-only regardless of exposed editability. Correct
+  the format map and both standalone/Journey authoring workflows.
+- [x] Extend the offline field guard to root/component create/update payloads
+  and report edited Episode scripts as workflow failures. Keep input edits and
+  unrelated allowed fields under their existing authorization rules.
+- [x] Remove the prior mandatory intermediate pre-audio review gate. Use supported
+  platform pipelines, including combined generation, and verify outputs read-only.
+- [x] Add positive Script input guidance with coherent, developed turns and
+  meaningful speaker changes. Keep technical boundaries in the agent workflow;
+  adapt examples, structure and pace to each company, purpose and supported
+  format. Cover varied briefs, explicit choices and platform-owned pacing fixes.
+- [x] Correct the shared speaker scenarios and add draft manual-repair, payload
+  bypass and edited-output cases. No backend implementation or customer mutation.
+- [x] All 80 package tests pass, including four new Episode policy/guard tests
+  plus expanded protected-field cases. Release and both skill validators pass;
+  public bundle dependency checks, `git diff --check` and live Docs smoke pass.
+- [ ] Live host tool traces and a separately authorized release remain pending.
+
 ## Anonymous Episode speakers — unreleased guidance
 
 - [x] Share anonymous-speaker defaults across standalone Episode and Journey
@@ -10,12 +31,13 @@ Last updated: 2026-09-23
 - [x] Limit named-host exceptions to explicit user-supplied identities. Review
   steering and complete source/translated scripts; distinguish whole-name
   matches from substrings and legitimate subject-matter mentions.
-- [x] Require staged script review or an equivalent exposed pre-audio validation
-  gate; unavailable support is a blocker. Preserve existing preflight/scopes.
-- [x] Stop active text edits without a supported way to replace affected scripts
+- [x] Superseded the initial intermediate review gate with the Script input
+  correction above: platform-owned generation and read-only output verification.
+  Preserve existing company preflight/scopes.
+- [x] Stop active input corrections without a supported way to regenerate scripts
   and audio together; separate script review, job success, media linkage and
   listening evidence. No customer incident data enters the public package.
-- [x] Add 14 synthetic host acceptance scenarios for defaults, identity leakage,
+- [x] Add shared synthetic host acceptance scenarios for defaults, identity leakage,
   translations, exceptions, missing gates and active/draft corrections.
 - [x] All 76 package tests, release validation, both changed skill validators,
   Markdown dependency checks and live public Docs MCP smoke pass. The shared

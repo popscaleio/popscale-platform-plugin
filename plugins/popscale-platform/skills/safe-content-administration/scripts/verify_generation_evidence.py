@@ -15,6 +15,8 @@ GENERATION_ONLY_OUTPUTS = {
     "roleplay": frozenset({"evaluation_instructions"}),
     "coaching_session": frozenset({"evaluation_instructions", "agent_prompt"}),
     "challenge": frozenset({"evaluation_prompt"}),
+    "episode": frozenset({"script"}),
+    "episode_script_variant": frozenset({"script_text"}),
 }
 MANUAL_WRITE_TYPES = frozenset({
     "roleplay", "coaching_session", "challenge", "episode", "flashcard_deck",
@@ -179,7 +181,7 @@ def verify(evidence):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check-manual-write", action="store_true",
-                        help="Reject protected fields in proposed content_update arguments.")
+                        help="Reject protected fields in proposed root/component create or update arguments.")
     args = parser.parse_args()
     try:
         payload = json.load(sys.stdin)
