@@ -77,6 +77,11 @@ text as a workaround. See the dependency decision flow in
 
 ### Episodes
 
+- Follow [speaker and voice rules](episode-speakers.md): anonymous dialogue by
+  default, structural speaker labels, separate TTS configuration, and no invented
+  host identities or recurring podcast profiles. Review scripts before audio.
+- Before active script edits, establish a supported way to replace all affected
+  language scripts and audio safely together; otherwise stop before saving.
 - Edit one language script through `episode_script_variant`. Treat
   `episode_media` rows as read-only evidence unless the user separately requests
   a supported upload-intent flow.

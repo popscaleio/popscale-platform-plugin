@@ -84,8 +84,12 @@ component reads. Report the narrow evidence: “The language generation step
 completed and the corresponding output was read back.” If the current file or
 translation cannot be bound to that generation, explicitly say its exact origin
 is not verified. Never claim it is unchanged or matches the current script
-without server evidence. Missing native provenance does not authorize a rebuild
-or prevent separately authorized publication that passes server readiness.
+without server evidence. Missing native provenance does not authorize a rebuild.
+For Episode identity corrections, the [speaker policy](episode-speakers.md)
+additionally requires verified replacement of affected scripts and audio before
+publication. For other work, missing native provenance alone does not prevent
+separately authorized publication that passes server readiness and applicable
+plugin checks. Script review is not a claim that the audio was listened to.
 
 ## Local evidence check
 

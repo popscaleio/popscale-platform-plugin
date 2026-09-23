@@ -1,6 +1,29 @@
 # V1 implementation tracker
 
-Last updated: 2026-09-22
+Last updated: 2026-09-23
+
+## Anonymous Episode speakers — unreleased guidance
+
+- [x] Share anonymous-speaker defaults across standalone Episode and Journey
+  workflows. Use natural topic-led openings, structural speaker labels and
+  separate TTS configuration; no invented or persistent podcast identities.
+- [x] Limit named-host exceptions to explicit user-supplied identities. Review
+  steering and complete source/translated scripts; distinguish whole-name
+  matches from substrings and legitimate subject-matter mentions.
+- [x] Require staged script review or an equivalent exposed pre-audio validation
+  gate; unavailable support is a blocker. Preserve existing preflight/scopes.
+- [x] Stop active text edits without a supported way to replace affected scripts
+  and audio together; separate script review, job success, media linkage and
+  listening evidence. No customer incident data enters the public package.
+- [x] Add 14 synthetic host acceptance scenarios for defaults, identity leakage,
+  translations, exceptions, missing gates and active/draft corrections.
+- [x] All 76 package tests, release validation, both changed skill validators,
+  Markdown dependency checks and live public Docs MCP smoke pass. The shared
+  policy and scenarios are included in the public skill bundle.
+- [ ] Run live Codex/Claude tool-trace scenarios; package checks do not establish
+  model behavior or audio quality.
+- [ ] Backend support remains separate reported work. No backend code, customer
+  mutation, profile feature, manifest bump or plugin release is included.
 
 ## Company asset preflight — unreleased guidance
 

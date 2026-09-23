@@ -6,6 +6,8 @@ implementation tracker.
 
 For overview, item-input and child generation, also run the shared
 [company asset preflight scenarios](../../safe-content-administration/references/company-asset-preflight-scenarios.md).
+For Episode items, also run the shared
+[anonymous speaker scenarios](../../safe-content-administration/references/episode-speaker-scenarios.md).
 
 ## Happy Path With App
 

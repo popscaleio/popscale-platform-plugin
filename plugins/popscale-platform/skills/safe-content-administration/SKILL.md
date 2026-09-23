@@ -74,6 +74,11 @@ the workflow below; confirmation booleans alone do not approve effects.
    Verify both new saved outputs before completion or activation. If the pair
    cannot be generated, report the update as blocked/incomplete, never repair
    either instruction manually.
+   For Episodes, read [speaker and voice rules](references/episode-speakers.md)
+   before authoring, generation or script correction. Default to anonymous
+   topic-led dialogue; do not turn TTS selections into host identities. Verify
+   source/translated scripts before audio and stop active script edits when a
+   safe text-and-audio replacement workflow is unavailable.
 9. Before publication, read current detail and freshness for every generation-only
    output on the root, even if the earlier edit/report concerned another field.
    Stop on an edited protected output; do not rely on readiness to detect it.

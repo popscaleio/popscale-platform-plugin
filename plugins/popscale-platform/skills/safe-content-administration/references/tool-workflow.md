@@ -113,6 +113,11 @@ generation is unavailable, fails, or the user explicitly asks for manual text.
 
 ## Generation
 
+For Episodes, apply [speaker and voice rules](episode-speakers.md) to steering,
+scripts and every language. Stage script/translation review before audio through
+supported tools, or require an equivalent exposed server validation gate. A
+combined generation call without either path is a blocker, not proof of review.
+
 Complete the shared [company asset preflight](company-asset-preflight.md) before
 any generation dispatch, including targeted regeneration, language/media work
 and retries. Verify bound source revisions again after relevant changes. Do not
