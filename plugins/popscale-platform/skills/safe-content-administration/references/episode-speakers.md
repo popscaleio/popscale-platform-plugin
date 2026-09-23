@@ -25,18 +25,12 @@ source script, translations and audio through its supported workflow.
 
 ## Anonymous conversation is the default
 
-Use anonymous conversational voices. Start with a welcome and the topic, then
-move into a natural exchange. Do not invent host names, job titles, biographies,
-personal histories or recurring podcast personas. Warmth, differing viewpoints
-and a conversational tone do not require personal identities.
-
-The platform-generated result should have this kind of opening; this is an
-illustration of tone, not text for the agent to write into a script field:
-
-> Speaker 1: Hej och välkomna! I dag ska vi prata om hur man ställer bra frågor.
->
-> Speaker 2: Ja! Det är intressant, för en liten förändring i frågan kan ge ett
-> mycket tydligare svar.
+Use anonymous voices by default. For a conversational Episode without a more
+specific opening brief, start with a welcome and the topic, then move into a
+natural exchange. Adapt the structure to the requested purpose and supported
+format. Do not invent host names, job titles, biographies, personal histories
+or recurring podcast personas. Warmth, differing viewpoints and a conversational
+tone do not require personal identities.
 
 `Speaker 1` and `Speaker 2` are structural turn labels for the two-speaker
 format, not spoken introductions. Do not write “I am Speaker 1”, “I'm your
@@ -75,36 +69,41 @@ that narrow exception from the user's request, not from the generated output.
 
 ## Write positive Script input instructions
 
-Describe the desired conversation: its opening, subject, development, pacing,
-tone and ending. Keep the technical voice/output boundaries in this agent
-workflow; the generative input should express what the conversation should do.
-Use this Swedish example as adaptable Script input guidance, in the configured
-source language and with the requested topic, audience, learning goals, examples
-and duration. Preserve existing relevant instructions and explicit user choices.
-This is a generation brief, not a replacement transcript.
+Use general principles that work across companies, subjects and Episode
+purposes. Adapt them to the supplied brief, approved content, audience, source
+language, company Tone of Voice, duration and supported format. Keep specific
+industries, customer situations, learning promises and calls to action tied to
+the actual request and sources. Preserve existing relevant instructions and
+explicit user choices; apply defaults only where the brief leaves room.
 
-> Skapa ett naturligt samtal mellan två anonyma röster med fokus på avsnittets ämne.
->
-> Inled med en kort välkomsthälsning och berätta vad lyssnaren kommer att få lära
-> sig, exempelvis: ”Hej och välkommen! I dag ska vi prata om [ämnet].”
->
-> Låt den andra rösten bygga vidare på ämnet genom att lyfta varför det är
-> relevant, ställa en konkret fråga eller introducera en vardaglig situation.
->
-> För samtalet framåt genom frågor, förklaringar, exempel och reflektioner.
-> Ge varje röst utrymme att utveckla en tanke i sammanhängande repliker.
-> Låt den andra rösten ta vid när den tillför en ny fråga, ett perspektiv eller
-> en fördjupning. Anpassa replikernas längd efter innehållet och håll ett lugnt,
-> naturligt samtalsflöde.
->
-> Anpassa språk och ton till företagets Tone of Voice och den avsedda målgruppen.
->
-> Avsluta med en kort sammanfattning och något konkret som lyssnaren kan ta med sig.
+Describe the desired result in positive language. Keep technical voice/output
+boundaries in this agent workflow. The following Swedish guidance illustrates
+an adaptable Script input brief, not a fixed script or mandatory structure;
+write the actual brief in the configured source language:
 
-Aim for developed thoughts and meaningful speaker changes. Let content determine
-turn length and frequency rather than imposing a sentence quota or a switch
-after each point. A brief welcome or closing describes that passage's length,
-not the pacing of the whole dialogue.
+> Utforma avsnittet utifrån dess syfte, innehåll och målgrupp. Anpassa språk,
+> ton, struktur och tempo till företagets Tone of Voice och avsnittets sammanhang.
+>
+> Använd anonyma röster och låt innehållet stå i centrum. Ge lyssnaren en tydlig
+> ingång till ämnet med en inledning som passar avsnittets syfte och format.
+>
+> Ge tankar och resonemang utrymme att utvecklas sammanhängande. I samtal,
+> låt rösterna komplettera varandra och ta vid när de tillför något relevant,
+> till exempel en fråga, ett perspektiv eller en fördjupning. Anpassa replikernas
+> längd och talarbyten efter innehållet och det önskade tempot.
+>
+> Avrunda på ett sätt som passar avsnittets syfte och ger en naturlig avslutning.
+
+For a conversational opening, “Hej och välkommen! I dag ska vi prata om
+[ämnet]” is one possible illustration, not required wording. A summary,
+reflection or practical next step can suit some endings; choose one only when
+it serves the brief. Questions, examples and everyday situations are optional
+ways to develop the subject, not required ingredients in every Episode.
+
+Apply speaker-change guidance within the supported format actually selected;
+it does not introduce a new speaker-count option. Aim for developed thoughts
+and meaningful speaker changes without imposing a sentence quota, a switch
+after each point, or the same calm or energetic pace on every Episode.
 
 ## Generate and verify without editing outputs
 

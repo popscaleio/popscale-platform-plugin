@@ -14,7 +14,8 @@ Last updated: 2026-09-23
   platform pipelines, including combined generation, and verify outputs read-only.
 - [x] Add positive Script input guidance with coherent, developed turns and
   meaningful speaker changes. Keep technical boundaries in the agent workflow;
-  add scenarios for positive briefs, fewer turns and platform-owned pacing fixes.
+  adapt examples, structure and pace to each company, purpose and supported
+  format. Cover varied briefs, explicit choices and platform-owned pacing fixes.
 - [x] Correct the shared speaker scenarios and add draft manual-repair, payload
   bypass and edited-output cases. No backend implementation or customer mutation.
 - [x] All 80 package tests pass, including four new Episode policy/guard tests
