@@ -445,6 +445,8 @@ class PluginPackageContractTests(unittest.TestCase):
             "legacy product context",
             "selected company",
             "bound generation request snapshot",
+            "approved, active, generation-eligible Knowledge",
+            "has not been archived",
         ):
             self.assertIn(required, preflight)
         self.assertIn("content_activation_readiness.checks", workflow)

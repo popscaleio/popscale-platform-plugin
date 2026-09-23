@@ -24,7 +24,7 @@ to assume that no format-specific assets are needed.
 
 | Format | Required inputs |
 | --- | --- |
-| All learning formats | Company Overview, configured source and requested target languages, supported selected generation models, and relevant Knowledge verified for the intended context |
+| All learning formats | Company Overview, configured source and requested target languages, supported selected generation models, and relevant approved, active, generation-eligible Knowledge. An existing Roleplay may instead use its approved pinned product version while the asset has a newer draft; see the source check below. |
 | Episode | All common inputs plus Tone of Voice; supported TTS voices when the requested operation generates audio |
 | Coaching Session | All common inputs plus Tone of Voice, and relevant Customer Assets when the exercise uses a customer situation |
 | Roleplay | All common inputs plus relevant product facts from the roleplay's saved Products & Campaigns or pinned Knowledge source, Tone of Voice, relevant Customer Assets covering every category below, and at least one suitable Personality |
@@ -84,9 +84,11 @@ Roleplay without a saved source still needs the legacy product preflight.
 For each Knowledge selection, call read-only `knowledge_asset_version_detail`
 with the exact `id` and `version` from `fields.product_context`, using
 `knowledge:read`. Verify `review_status=approved`, matching `content_hash`,
-and substantive product facts in `body_md` under the selected company. The
-current asset detail or `knowledge_generation_context` may reflect a newer draft and cannot
-replace the pinned version read. Check the bound generation request snapshot
+and substantive product facts in `body_md` under the selected company. Use
+`knowledge_asset_detail` to confirm that the asset has not been archived, but
+do not substitute its possibly newer body for the pinned version. Likewise,
+`knowledge_generation_context` may reflect a newer draft and cannot replace
+the pinned version read. Check the bound generation request snapshot
 and omissions separately; the source projection proves saved selection, not
 that a generation attempt consumed it. If either source projection or exact
 version read is absent in the live contract, report the evidence gap and stop
