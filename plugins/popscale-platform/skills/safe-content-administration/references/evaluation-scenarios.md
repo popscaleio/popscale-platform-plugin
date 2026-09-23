@@ -5,6 +5,8 @@ dedicated test company for mutations; all other scenarios are read-only.
 
 For all generation paths, also run the shared
 [company asset preflight scenarios](company-asset-preflight-scenarios.md).
+For Episodes, also run the shared
+[anonymous speaker scenarios](episode-speaker-scenarios.md).
 
 ## Filled ready fields with unknown origin
 

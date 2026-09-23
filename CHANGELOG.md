@@ -6,6 +6,10 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ### Fixed
 
+- Default Episodes to anonymous, topic-led conversations without invented host
+  names, biographies or recurring podcast personas. Keep TTS choices separate
+  from content; review source and translated scripts before audio, and stop
+  active script corrections without a supported safe text/audio replacement flow.
 - Require a shared company-asset preflight for Journey and standalone learning
   generation: substantive format-specific inputs, paginated discovery, exact
   read-back and evidence that verified sources reach the generation context.

@@ -28,6 +28,12 @@ the workflow below; confirmation booleans alone do not approve effects.
    content, saved revisions and inclusion in the actual generation context;
    missing or unverifiable required inputs stop generation. Knowledge context
    reads may diagnose gaps but do not replace this gate.
+   For Episode items, apply the shared
+   [speaker and voice rules](../safe-content-administration/references/episode-speakers.md)
+   to planning, item inputs and execution. Default to anonymous, topic-led
+   dialogue; TTS names are configuration, never inferred host identities.
+   Do not invent recurring podcast profiles. Require a supported script review
+   or equivalent validation gate before audio generation, including translations.
 4. Create or inspect a generation request, start it when requested, and poll
    `generation_request_detail` until it reaches a terminal or reviewable state.
    Do not invent successful completion while work is still queued or running.
