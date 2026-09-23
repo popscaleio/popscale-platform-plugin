@@ -4,6 +4,13 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- Verify an existing Roleplay's saved product source before generation. Knowledge-source
+  roleplays use exact pinned approved versions and hashes instead of duplicate
+  Products & Campaigns, while legacy roleplays keep their existing product checks.
+- Surface stale product-context cutover or rollback artifacts before activation.
+
 ### Fixed
 
 - Default Episodes to anonymous, topic-led conversations without invented host

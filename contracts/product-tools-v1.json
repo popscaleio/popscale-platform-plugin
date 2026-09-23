@@ -1,6 +1,6 @@
 {
   "tool_contract_version": "popscale.product.actions.v1",
-  "source_commit": "9fe2305837c26164b3df220813c31152457f6909",
+  "source_commit": "286ced3eb70c24267f262a7c8ab720c36206878c",
   "product_tools": [
     "admin_credits_operation_get",
     "admin_credits_rate_card",
@@ -68,6 +68,7 @@
     "knowledge_asset_archive",
     "knowledge_asset_create",
     "knowledge_asset_detail",
+    "knowledge_asset_version_detail",
     "knowledge_asset_submit_review",
     "knowledge_asset_update",
     "knowledge_assets_list",

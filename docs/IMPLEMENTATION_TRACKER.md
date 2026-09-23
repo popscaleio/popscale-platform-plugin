@@ -2,6 +2,20 @@
 
 Last updated: 2026-09-23
 
+## Roleplay product context migration — unreleased guidance
+
+- [x] Resolve an existing Roleplay's active product source from Product MCP
+  `content_detail`; prepared Knowledge does not change a legacy Roleplay.
+- [x] Verify each Knowledge-source roleplay's exact pinned approved version,
+  hash and facts with `knowledge_asset_version_detail`, including when a newer
+  draft exists. Continue checking generation binding and other format inputs.
+- [x] Surface `product_context_cutover` readiness failures and require review
+  of generated artifacts and customer dialogue for cutover and rollback.
+- [x] Add synthetic source-mode scenarios, public tool metadata and bundle
+  contract checks. Backend contract: sales-coach-backend PR #443.
+- [ ] Run live read-only MCP and Codex/Claude traces after backend deployment;
+  do not publish this guidance before the backend tool is available.
+
 ## Anonymous Episode speakers — unreleased guidance
 
 - [x] Share anonymous-speaker defaults across standalone Episode and Journey

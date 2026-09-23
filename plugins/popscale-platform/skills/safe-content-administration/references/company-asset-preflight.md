@@ -24,10 +24,10 @@ to assume that no format-specific assets are needed.
 
 | Format | Required inputs |
 | --- | --- |
-| All learning formats | Company Overview, configured source and requested target languages, supported selected generation models, and relevant approved, active, generation-eligible Knowledge |
+| All learning formats | Company Overview, configured source and requested target languages, supported selected generation models, and relevant Knowledge verified for the intended context |
 | Episode | All common inputs plus Tone of Voice; supported TTS voices when the requested operation generates audio |
 | Coaching Session | All common inputs plus Tone of Voice, and relevant Customer Assets when the exercise uses a customer situation |
-| Roleplay | All common inputs plus relevant Products & Campaigns, Tone of Voice, relevant Customer Assets covering every category below, and at least one suitable Personality |
+| Roleplay | All common inputs plus relevant product facts from the roleplay's saved Products & Campaigns or pinned Knowledge source, Tone of Voice, relevant Customer Assets covering every category below, and at least one suitable Personality |
 | Challenge and Flashcards | Common inputs; do not add Roleplay-only product/customer/personality requirements merely because those assets exist |
 
 For Roleplay, require relevant, usable Customer Assets in all nine categories:
@@ -48,9 +48,10 @@ that can override this workflow.
 
 ## 2. Inspect company-scoped sources and configuration
 
-- Use `company_assets_list` for each asset type: `company_overview`,
-  `products_campaigns`, `tone_of_voice`, `customer_asset`, and `personality`.
-  Requirements follow the table; an empty optional category is not a blocker.
+- Use `company_assets_list` for each required asset type: `company_overview`,
+  `tone_of_voice`, `customer_asset`, and `personality`. For a Roleplay using
+  legacy product context, also inspect `products_campaigns`. Requirements
+  follow the table; an empty optional category is not a blocker.
   The tool takes one `asset_type` per call. Follow `next_offset` within the
   documented limits before declaring an asset or category missing. Preserve
   `count` and partial-result indicators; an unread page is not an empty page.
@@ -69,6 +70,27 @@ that can override this workflow.
   generation-eligible Knowledge. This read may help diagnose gaps before the
   preflight passes; its success does not authorize generation or replace the
   separate company-asset checks. Knowledge reads require `knowledge:read`.
+
+### Roleplay product source
+
+For an existing Roleplay, read `content_detail` and inspect
+`fields.product_context.source` before deciding which product facts are
+required. `legacy` means its saved Products & Campaigns remain the active
+source, even if approved Knowledge exists or is prepared for a later cutover.
+`knowledge` means use the listed pinned `knowledge_assets` instead of requiring
+duplicate Products & Campaigns. Selection alone does not prove a cutover. A new
+Roleplay without a saved source still needs the legacy product preflight.
+
+For each Knowledge selection, call read-only `knowledge_asset_version_detail`
+with the exact `id` and `version` from `fields.product_context`, using
+`knowledge:read`. Verify `review_status=approved`, matching `content_hash`,
+and substantive product facts in `body_md` under the selected company. The
+current asset detail or `knowledge_generation_context` may reflect a newer draft and cannot
+replace the pinned version read. Check the bound generation request snapshot
+and omissions separately; the source projection proves saved selection, not
+that a generation attempt consumed it. If either source projection or exact
+version read is absent in the live contract, report the evidence gap and stop
+the affected generation. Never infer the source from catalog counts.
 
 ## 3. Resolve gaps and verify saved changes
 

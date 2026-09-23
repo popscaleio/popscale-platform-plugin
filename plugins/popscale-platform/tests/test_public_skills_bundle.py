@@ -48,6 +48,7 @@ class PublicSkillsBundleTests(unittest.TestCase):
         self.assertTrue(set(body["required_reference_paths"]).issubset(body["instruction_paths"]))
         for tool in ("current_user", "product_action_prepare", "product_action_get", "product_action_execute", "request_company_switch"):
             self.assertIn(tool, body["required_tools"])
+        self.assertIn("knowledge_asset_version_detail", body["required_tools"])
         for docs_tool in ("get_docs_overview", "search_docs", "get_pages"):
             self.assertNotIn(docs_tool, body["required_tools"])
 

@@ -429,6 +429,28 @@ class PluginPackageContractTests(unittest.TestCase):
         self.assertIn("retries once with a sufficient `limit` capped at 100", evaluations)
         self.assertIn("exposes no such inputs", evaluations)
 
+    def test_roleplay_product_source_contract_is_pinned_and_company_scoped(self):
+        contract = load_json(REPO_ROOT / "contracts" / "product-tools-v1.json")
+        self.assertIn("knowledge_asset_version_detail", contract["product_tools"])
+
+        references = PLUGIN_ROOT / "skills" / "safe-content-administration" / "references"
+        preflight = (references / "company-asset-preflight.md").read_text(encoding="utf-8")
+        workflow = (references / "tool-workflow.md").read_text(encoding="utf-8")
+        scenarios = (references / "company-asset-preflight-scenarios.md").read_text(encoding="utf-8")
+        for required in (
+            "fields.product_context.source",
+            "knowledge_asset_version_detail",
+            "review_status=approved",
+            "content_hash",
+            "legacy product context",
+            "selected company",
+            "bound generation request snapshot",
+        ):
+            self.assertIn(required, preflight)
+        self.assertIn("content_activation_readiness.checks", workflow)
+        for case in ("Knowledge-source Roleplay", "Legacy Roleplay", "newer draft", "rollback"):
+            self.assertIn(case, scenarios)
+
     def test_manifest_advertises_company_content_administration(self):
         codex = load_json(PLUGIN_ROOT / ".codex-plugin" / "plugin.json")
         claude = load_json(PLUGIN_ROOT / ".claude-plugin" / "plugin.json")

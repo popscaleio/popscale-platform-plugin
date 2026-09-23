@@ -157,6 +157,14 @@ Existing Journey publication remains in `safe-journey-creation` through
 
 Read current detail and freshness for all generation-only outputs on the target
 before activation, including outputs outside the earlier edit/report scope.
+For a Roleplay with `fields.product_context.source=knowledge`, inspect the
+`product_context_cutover` entry in `content_activation_readiness.checks`. If
+it fails, regenerate and review the named stale product-dependent artifacts
+before activation.
+Check customer dialogue and instructions for contradictions with the pinned
+Knowledge facts; freshness metadata does not establish semantic consistency.
+Apply the same readiness check while rolling a Knowledge-sourced Roleplay back
+to legacy, because prior generated instructions can still contain Knowledge facts.
 An edited protected artifact blocks activation even when server readiness is
 green. A scoped evidence report does not establish readiness for the whole root.
 After Coaching input changes, pending or unverified regeneration of either
