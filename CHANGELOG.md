@@ -6,6 +6,11 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ### Fixed
 
+- Correct Episode authoring to use Script input (`model_steering`) exclusively
+  for speaker/style rules. Source and translated scripts are generation-only;
+  block manual root/component script writes and route corrections through
+  platform regeneration. Remove the agent-imposed intermediate audio review
+  gate; verify saved outputs read-only after supported platform generation.
 - Default Episodes to anonymous, topic-led conversations without invented host
   names, biographies or recurring podcast personas. Keep TTS choices separate
   from content; review source and translated scripts before audio, and stop

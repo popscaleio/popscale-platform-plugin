@@ -32,7 +32,9 @@ the workflow below; confirmation booleans alone do not approve effects.
    Apply the generation-only field rule below before any root write. When local
    Python is available, check proposed `content_update` arguments with the
    packaged checker's `--check-manual-write` mode; otherwise apply the same field
-   exclusion directly. Editable fields and override flags do not waive it.
+   exclusion directly. Apply the same guard to root/component create and update
+   payloads containing `fields`, including Episode variants. Editable fields and
+   override flags do not waive it.
 5. Pass the latest root `revision` as `expected_revision` for every protected
    mutation. Refresh after each successful mutation because root revision
    changes. On conflict, re-read and reconcile the user's requested delta; never
@@ -75,10 +77,10 @@ the workflow below; confirmation booleans alone do not approve effects.
    cannot be generated, report the update as blocked/incomplete, never repair
    either instruction manually.
    For Episodes, read [speaker and voice rules](references/episode-speakers.md)
-   before authoring, generation or script correction. Default to anonymous
-   topic-led dialogue; do not turn TTS selections into host identities. Verify
-   source/translated scripts before audio and stop active script edits when a
-   safe text-and-audio replacement workflow is unavailable.
+   before generation or correction. Put anonymous, topic-led dialogue rules in
+   Script input (`model_steering`); never edit source or translated scripts.
+   Let the platform generate scripts and audio, then inspect outputs read-only.
+   Stop active input corrections when safe regeneration is unavailable.
 9. Before publication, read current detail and freshness for every generation-only
    output on the root, even if the earlier edit/report concerned another field.
    Stop on an edited protected output; do not rely on readiness to detect it.
@@ -105,6 +107,8 @@ the workflow below; confirmation booleans alone do not approve effects.
 - Never write, patch, translate, clear, or manually repair generation-only
   outputs: Roleplay `evaluation_instructions`; Coaching session
   `evaluation_instructions` and `agent_prompt`; Challenge `evaluation_prompt`.
+  Episode `script` and source/translated variant `script_text` are also
+  generation-only, including through component create/update tools.
   Never include these in `content_update` or a root create payload, or use
   `confirm_generated_output_override` for them. Generate them through the
   platform even when `editable_fields` or the schema permits direct writes.

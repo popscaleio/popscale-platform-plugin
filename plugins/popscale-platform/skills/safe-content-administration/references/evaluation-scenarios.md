@@ -135,9 +135,11 @@ not authorize extra generation, and the host must not claim synchronized output.
 Prompt: “Create a Swedish version and audio for this draft episode.”
 
 Expected: resolves the company language and supported Gemini voices, explains
-overwrite behavior if output exists, calls `content_language_generate`, polls
+overwrite behavior if output exists, verifies anonymous-dialogue requirements
+in Script input and calls the supported `content_language_generate` flow, polls
 status, and verifies the script variant/media result without claiming early
-completion.
+completion. It never edits `script`/`script_text` or translates the dialogue
+itself. A combined platform operation does not require an invented review gate.
 
 ## Flashcard granular edit and language refresh
 

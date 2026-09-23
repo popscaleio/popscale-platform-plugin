@@ -32,8 +32,10 @@ the workflow below; confirmation booleans alone do not approve effects.
    [speaker and voice rules](../safe-content-administration/references/episode-speakers.md)
    to planning, item inputs and execution. Default to anonymous, topic-led
    dialogue; TTS names are configuration, never inferred host identities.
-   Do not invent recurring podcast profiles. Require a supported script review
-   or equivalent validation gate before audio generation, including translations.
+   Do not invent recurring podcast profiles. Put the rules in the item's
+   supported Script input (`model_steering`) and let platform generation produce
+   scripts, translations and audio. Read outputs for verification; never edit
+   generated Episode scripts or require an unsupported intermediate review gate.
 4. Create or inspect a generation request, start it when requested, and poll
    `generation_request_detail` until it reaches a terminal or reviewable state.
    Do not invent successful completion while work is still queued or running.
@@ -97,7 +99,9 @@ the workflow below; confirmation booleans alone do not approve effects.
   execution finished and every linked content item is active.
 - Child-content corrections follow `safe-content-administration` and its
   generation-only field policy. Never repair protected evaluation outputs or
-  Coaching `agent_prompt` manually. An edited generation-only artifact is a
+  Coaching `agent_prompt`, or Episode source/translated scripts manually.
+  Episode corrections go through Script input and platform regeneration.
+  An edited generation-only artifact is a
   blocker for affected child/Journey activation, even when readiness is green;
   report it and use only authorized platform regeneration to resolve it.
 

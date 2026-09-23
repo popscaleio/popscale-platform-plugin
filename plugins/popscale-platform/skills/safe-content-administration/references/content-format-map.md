@@ -11,6 +11,7 @@ it does not authorize unsupported fields or operations.
 | `roleplay` | `evaluation_instructions` |
 | `coaching_session` | `evaluation_instructions`, `agent_prompt` |
 | `challenge` | `evaluation_prompt` |
+| `episode` | `script`; source and translated `episode_script_variant.script_text` |
 
 This classification takes precedence over `editable_fields`, `allowed_fields`,
 active-edit confirmation, and `confirm_generated_output_override`. Never author
@@ -31,7 +32,7 @@ text as a workaround. See the dependency decision flow in
 | `roleplay` | customers; customer questions, objections, and decision rules; evaluation criteria | `setup`, `customers`, `description`, `education_text`, `coaching_focus`, `evaluation_criteria`, `evaluation_instructions` |
 | `coaching_session` | Root fields only | `description`, `education_text`, `agent_prompt`, `evaluation_instructions` |
 | `challenge` | Root fields only | `description`, `education_text`, `evaluation_prompt` |
-| `episode` | Script variants; media rows are readable but not component-editable | `script`, `source_script_variant`, `description`, `education_text`, `source_audio` |
+| `episode` | Script variants and media rows are read-only evidence under plugin policy | `script`, `source_script_variant`, `description`, `education_text`, `source_audio` |
 | `flashcard_deck` | Cards, translations, and deck languages | `cards`, `description` |
 | `journey` | Sections and items | No targeted content regeneration; use Journey planning/generation tools for a new plan |
 
@@ -79,10 +80,16 @@ text as a workaround. See the dependency decision flow in
 
 - Follow [speaker and voice rules](episode-speakers.md): anonymous dialogue by
   default, structural speaker labels, separate TTS configuration, and no invented
-  host identities or recurring podcast profiles. Review scripts before audio.
-- Before active script edits, establish a supported way to replace all affected
-  language scripts and audio safely together; otherwise stop before saving.
-- Edit one language script through `episode_script_variant`. Treat
+  host identities or recurring podcast profiles. Put these requirements in
+  **Script input** (`model_steering` in the current contract), then use platform
+  generation. Do not invent a `script_input` API field.
+- Never author, patch, clear or translate `script` or `script_text` manually,
+  including via root create/update or `episode_script_variant` component writes.
+  Read variants as evidence; technical editability does not waive this rule.
+- Before changing active generation inputs for a correction, establish a
+  supported regeneration/publication path for affected scripts and audio;
+  otherwise stop before saving the input change.
+- Treat
   `episode_media` rows as read-only evidence unless the user separately requests
   a supported upload-intent flow.
 - Regenerating `script` also synchronizes the source script variant.

@@ -51,9 +51,12 @@ field, after the user approves the exact edit. Deletion requires
 `confirm_learner_impact=true` after a separate learner-impact confirmation.
 
 Use component CRUD for a single roleplay customer/question/objection/decision
-rule/criterion, episode script variant, flashcard/card translation, or journey
+rule/criterion, flashcard/card translation, or journey
 section/item. Use `content_update` for scalar root edits and directly addressable
 child edits when no collection operation is needed.
+Episode script variants are read-only to the agent even when component CRUD
+exposes writable fields. Change Script input (`model_steering`) and use platform
+generation for source scripts and translations; never patch generated text.
 Exclude all generation-only outputs in [content-format-map.md](content-format-map.md)
 from manual payloads, including creation. Use the local `--check-manual-write`
 guard described in [generation-verification.md](generation-verification.md) when
@@ -113,10 +116,11 @@ generation is unavailable, fails, or the user explicitly asks for manual text.
 
 ## Generation
 
-For Episodes, apply [speaker and voice rules](episode-speakers.md) to steering,
-scripts and every language. Stage script/translation review before audio through
-supported tools, or require an equivalent exposed server validation gate. A
-combined generation call without either path is a blocker, not proof of review.
+For Episodes, apply [speaker and voice rules](episode-speakers.md) in Script input
+before dispatch. Platform generation owns scripts, translations and audio. Use
+the supported pipeline, including combined operations; inspect saved outputs
+read-only afterward. Do not require an invented intermediate review gate or
+repair a generated script manually.
 
 Complete the shared [company asset preflight](company-asset-preflight.md) before
 any generation dispatch, including targeted regeneration, language/media work

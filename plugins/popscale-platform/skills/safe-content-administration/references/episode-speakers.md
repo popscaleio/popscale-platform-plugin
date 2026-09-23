@@ -5,6 +5,24 @@ source inputs, scripts, translations, audio generation and corrections. Keep the
 [company asset preflight](company-asset-preflight.md) and live authorization
 contract in force; this policy does not add a tool or permission.
 
+## Author inputs; the platform owns scripts
+
+**Never manually author, patch, clear or translate generated Episode scripts.**
+This includes root `script` and source/translated variant `script_text`, through
+root creation, `content_update`, component creation/update or any other route.
+The rule applies to drafts and active content even when a tool exposes writable
+fields or the user asks for a small textual correction. Read scripts for
+verification; corrections belong in inputs followed by platform regeneration.
+
+The UI's **Script input** maps to `model_steering` in the current contract. Set
+speaker anonymity, conversational style, opening/ending and pacing there. Use
+`content` for the subject matter when that change is requested. Preserve unrelated
+inputs and resolve exact fields through the live contract; do not invent a
+`script_input` API parameter or hide a replacement transcript in an input field.
+For Journey items, set the corresponding supported Episode input before execution.
+Read saved inputs back after authorized edits, then let the platform generate
+source script, translations and audio through its supported workflow.
+
 ## Anonymous conversation is the default
 
 Use anonymous conversational voices. Start with a welcome and the topic, then
@@ -12,7 +30,8 @@ move into a natural exchange. Do not invent host names, job titles, biographies,
 personal histories or recurring podcast personas. Warmth, differing viewpoints
 and a conversational tone do not require personal identities.
 
-For example, a Swedish opening may be:
+The platform-generated result should have this kind of opening; this is an
+illustration of tone, not text for the agent to write into a script field:
 
 > Speaker 1: Hej och välkomna! I dag ska vi prata om hur man ställer bra frågor.
 >
@@ -47,7 +66,7 @@ removing an accidental host identity does not require changing the voices.
 Never transfer those names into `model_steering`, Journey item instructions,
 dialogue, titles, descriptions or education text as speaker identities. Even a
 negative instruction quoting the voice codes can contaminate content prompts;
-use a generic anonymity instruction instead. For example:
+use a generic anonymity instruction in Script input instead. For example:
 
 > Write a natural dialogue between two anonymous voices. Open with a welcome
 > and the topic. Do not give the speakers names, biographies, job titles or
@@ -55,59 +74,56 @@ use a generic anonymity instruction instead. For example:
 > spoken. TTS voice choices do not define who is speaking.
 
 When the user explicitly supplies host identities, keep that intent separate
-from voice selection in supported content fields. Do not invent a host-profile
+from voice selection in Script input. Do not invent a host-profile
 field or API. A user-supplied host name may happen to match a voice name; record
 that narrow exception from the user's request, not from the generated output.
 
-## Review before dispatch and after generation
+## Generate and verify without editing outputs
 
-1. Before script generation or Journey item execution, inspect steering and
-   Episode inputs. Remove unintended identity instructions through an authorized,
-   supported edit and read them back. Do not send technical voice names into
-   content steering to assign personalities.
-2. Read the actual saved source script and each target-language script. Review
-   the full text for host introductions, invented attributes and cross-episode
-   continuity, not just occurrences of the selected voice names. Translation
-   must preserve anonymity and structural labels without introducing identities.
-3. Before each audio job, inspect the exact script/language revision it will
-   consume. Check selected voice codes and display names using Unicode-aware,
-   case-insensitive whole-name matching with punctuation/word boundaries, not
-   naive substrings. For example, `Kore` inside Swedish `koreanska` is not a
-   host-name match. Inspect context: a legitimate subject-matter mention is not
-   an introduction. Ambiguous full-name matches remain a blocker until resolved;
-   a user-authorized host-name exception applies only to that intended identity.
-4. Keep source and translation checks ahead of audio dispatch. When a tool can
-   generate translation and audio together, use a supported staged flow to read
-   back the translated script before its audio job. For any automatic pipeline,
-   proceed only if the live contract provides an equivalent pre-audio validation
-   gate. If neither path exists, report the capability blocker before dispatch;
-   do not launch a combined job and claim that a prompt instruction guarantees
-   validation. Never guess a pause, review flag or audio-only endpoint.
-5. After generation, read back saved scripts and media, and follow
-   [generation verification](generation-verification.md). Verify every requested
-   language and the audio job's actual input binding where exposed. Distinguish
-   script review, successful job execution, script-to-audio linkage and listening
-   to the audio. Text inspection alone does not prove what was heard.
+1. Inspect the current Script input and selected TTS configuration. Put the
+   anonymity requirements in `model_steering` through an authorized input edit,
+   preserving other instructions. Remove accidental voice-as-person directives
+   from that input and read the saved value back before regeneration.
+2. Use the supported platform pipeline for script generation, translation and
+   audio. Combined operations are allowed by this policy; do not require a new
+   pause/review endpoint or an intermediate manual script-edit step. Existing
+   company-asset preflight, generation capability and authorization gates still
+   apply. Passing Script input rules is not proof that the model followed them.
+3. Read actual saved source and target-language scripts without changing them.
+   Review full text for invented host introductions, attributes and continuity,
+   not just selected TTS names. Structural speaker labels and legitimate names
+   in the subject matter are not host identities. If checking voice-name matches,
+   use Unicode-aware case-insensitive whole-name matching, not substrings such
+   as `Kore` inside `koreanska`. Resolve ambiguous matches in context.
+4. If output violates the input, report the mismatch and adjust Script input
+   when appropriate, then use authorized platform regeneration for affected
+   scripts/translations/audio. Do not replace introductions by hand, translate
+   output yourself, or repeatedly retry without a bounded supported recovery.
+   If a separate audio job has not started and its script is known to be faulty,
+   resolve the generation failure before dispatching that job.
+5. Follow [generation verification](generation-verification.md) for every
+   requested language. Distinguish input read-back, generated script review,
+   successful audio jobs, script-to-audio linkage and actual listening. Do not
+   claim audio was heard or matched the current script based only on text reads.
 
-A confirmed unintended host identity blocks the affected generation/publication
-until corrected and verified. This is a plugin review rule, not a claim that the
-backend already enforces it. Do not report a completed or synchronized Episode
-while translations or audio still represent the old script.
+An unintended host identity or a manually changed script remains an unresolved
+output issue. Do not claim the requested correction complete or activate the
+corrected Episode/Journey while it persists. If generation or verification is
+unavailable, report the blocker; it never authorizes direct script edits.
+Read-only inspection does not authorize regeneration or publication.
 
-## Correct existing Episodes without splitting script and audio
+## Correct existing Episodes through inputs and regeneration
 
-Before saving an active Episode's script or translation correction, verify that
-the live tools provide a supported, authorized way to update the affected text,
-regenerate its audio in every affected language, verify the results and publish
-the replacement together. If generation is draft-only and no safe version/draft
-flow is exposed, stop before the active text edit and present the proposed delta
-and blocker. Do not invent `ensure_content_draft`, demote the Episode, clone or
-reassign Journey links, replace media manually, or leave new text paired with
-old audio as a workaround.
+Before changing an active Episode's inputs for a correction, establish a
+supported, authorized regeneration/publication workflow that keeps affected
+scripts, translations and audio consistent. If generation is draft-only and no
+safe version/draft flow is exposed, stop before the input change and present the
+proposed Script input delta and blocker. Never invent `ensure_content_draft`,
+demote the Episode, clone/reassign Journey links or replace media manually.
 
-For an authorized draft correction, preserve unrelated content and voice choices,
-read back steering and scripts, check translations again, and regenerate the
-affected audio through supported operations. Apply the revision checks again if
-text changes during the workflow. Do not activate the corrected Episode or its
-Journey until the affected text/audio revisions are verified together. A repair
-proposal does not authorize live changes to a reported customer incident.
+For an authorized draft correction, change only the necessary inputs, preserve
+voice choices and unrelated settings, then let the platform regenerate affected
+outputs. Do not promise unchanged wording in generated scripts: an input change
+can cause the platform to rewrite more than the unwanted introduction. Recheck
+saved results and their revisions, and do not publish a replacement with old or
+unverified audio. A repair proposal does not authorize live customer changes.
