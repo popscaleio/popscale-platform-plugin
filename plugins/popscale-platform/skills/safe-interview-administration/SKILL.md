@@ -13,6 +13,10 @@ Read the shared [product action contract](../route-popscale-requests/references/
 mutation. Stable command identity and server-side human approval apply alongside
 the workflow below; confirmation booleans alone do not approve effects.
 
+Use current app-visible names for exercises, Journeys and Studies in user-facing
+answers, lists and confirmations. Apply the shared [content naming rules](../route-popscale-requests/references/content-names.md)
+for Journey context, duplicate names and internal identifiers.
+
 ## Required Workflow
 
 1. Call `current_user`, then `capabilities`. Confirm the authenticated company is
@@ -53,7 +57,7 @@ the workflow below; confirmation booleans alone do not approve effects.
    preserve truncation indicators, distinguish stored evidence from inference,
    and never attempt to reconstruct hidden identity, metadata filters, or
    omitted provenance.
-9. Summarize server-returned IDs, outcomes, remaining warnings, truncation, and
+9. Summarize Study names, outcomes, remaining warnings, truncation, and
    the next safe action. Do not invent URLs, completion, or publication state.
 
 ## Scope Boundaries
