@@ -66,17 +66,45 @@ removing an accidental host identity does not require changing the voices.
 Never transfer those names into `model_steering`, Journey item instructions,
 dialogue, titles, descriptions or education text as speaker identities. Even a
 negative instruction quoting the voice codes can contaminate content prompts;
-use a generic anonymity instruction in Script input instead. For example:
-
-> Write a natural dialogue between two anonymous voices. Open with a welcome
-> and the topic. Do not give the speakers names, biographies, job titles or
-> recurring host identities. Speaker labels are structural and must not be
-> spoken. TTS voice choices do not define who is speaking.
+use the positive conversation guidance below in Script input.
 
 When the user explicitly supplies host identities, keep that intent separate
 from voice selection in Script input. Do not invent a host-profile
 field or API. A user-supplied host name may happen to match a voice name; record
 that narrow exception from the user's request, not from the generated output.
+
+## Write positive Script input instructions
+
+Describe the desired conversation: its opening, subject, development, pacing,
+tone and ending. Keep the technical voice/output boundaries in this agent
+workflow; the generative input should express what the conversation should do.
+Use this Swedish example as adaptable Script input guidance, in the configured
+source language and with the requested topic, audience, learning goals, examples
+and duration. Preserve existing relevant instructions and explicit user choices.
+This is a generation brief, not a replacement transcript.
+
+> Skapa ett naturligt samtal mellan två anonyma röster med fokus på avsnittets ämne.
+>
+> Inled med en kort välkomsthälsning och berätta vad lyssnaren kommer att få lära
+> sig, exempelvis: ”Hej och välkommen! I dag ska vi prata om [ämnet].”
+>
+> Låt den andra rösten bygga vidare på ämnet genom att lyfta varför det är
+> relevant, ställa en konkret fråga eller introducera en vardaglig situation.
+>
+> För samtalet framåt genom frågor, förklaringar, exempel och reflektioner.
+> Ge varje röst utrymme att utveckla en tanke i sammanhängande repliker.
+> Låt den andra rösten ta vid när den tillför en ny fråga, ett perspektiv eller
+> en fördjupning. Anpassa replikernas längd efter innehållet och håll ett lugnt,
+> naturligt samtalsflöde.
+>
+> Anpassa språk och ton till företagets Tone of Voice och den avsedda målgruppen.
+>
+> Avsluta med en kort sammanfattning och något konkret som lyssnaren kan ta med sig.
+
+Aim for developed thoughts and meaningful speaker changes. Let content determine
+turn length and frequency rather than imposing a sentence quota or a switch
+after each point. A brief welcome or closing describes that passage's length,
+not the pacing of the whole dialogue.
 
 ## Generate and verify without editing outputs
 
@@ -95,6 +123,8 @@ that narrow exception from the user's request, not from the generated output.
    in the subject matter are not host identities. If checking voice-name matches,
    use Unicode-aware case-insensitive whole-name matching, not substrings such
    as `Kore` inside `koreanska`. Resolve ambiguous matches in context.
+   Check that turns develop thoughts and speaker changes add substance, following
+   the requested pacing. Route any needed correction through inputs and generation.
 4. If output violates the input, report the mismatch and adjust Script input
    when appropriate, then use authorized platform regeneration for affected
    scripts/translations/audio. Do not replace introductions by hand, translate

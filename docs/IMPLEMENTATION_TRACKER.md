@@ -12,6 +12,9 @@ Last updated: 2026-09-23
   unrelated allowed fields under their existing authorization rules.
 - [x] Remove the prior mandatory intermediate pre-audio review gate. Use supported
   platform pipelines, including combined generation, and verify outputs read-only.
+- [x] Add positive Script input guidance with coherent, developed turns and
+  meaningful speaker changes. Keep technical boundaries in the agent workflow;
+  add scenarios for positive briefs, fewer turns and platform-owned pacing fixes.
 - [x] Correct the shared speaker scenarios and add draft manual-repair, payload
   bypass and edited-output cases. No backend implementation or customer mutation.
 - [x] All 80 package tests pass, including four new Episode policy/guard tests

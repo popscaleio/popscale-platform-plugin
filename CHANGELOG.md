@@ -11,6 +11,9 @@ All notable changes to the Popscale Platform plugin are documented here.
   block manual root/component script writes and route corrections through
   platform regeneration. Remove the agent-imposed intermediate audio review
   gate; verify saved outputs read-only after supported platform generation.
+- Use positive Episode Script input guidance for topic-led openings, developed
+  thoughts, meaningful speaker changes, company tone and practical closings.
+  Let content determine turn length rather than encouraging rapid alternation.
 - Default Episodes to anonymous, topic-led conversations without invented host
   names, biographies or recurring podcast personas. Keep TTS choices separate
   from content; review source and translated scripts before audio, and stop
