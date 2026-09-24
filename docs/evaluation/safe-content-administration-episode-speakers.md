@@ -1,7 +1,7 @@
 # Episode Speaker Evaluation Scenarios
 
 Use synthetic fixtures in Codex and Claude for both standalone Episodes and
-Journey Episode items. Apply [speaker and voice rules](episode-speakers.md).
+Journey Episode items. Apply [speaker and voice rules](../../plugins/popscale-platform/skills/safe-content-administration/references/episode-speakers.md).
 Record tool traces and saved-output evidence; these are acceptance scenarios,
 not claims that live tests passed. Live mutations require an authorized test
 company; never use a customer incident as a test fixture in the public package.

@@ -126,5 +126,5 @@ do not request or paste a bearer token.
 Read [tool-workflow.md](references/tool-workflow.md) for exact tool order and
 scope mapping. Read [safety-and-fallbacks.md](references/safety-and-fallbacks.md)
 for conflicts, PII, asynchronous work, and bounded-result handling. Read
-[evaluation-scenarios.md](references/evaluation-scenarios.md) when validating a
+the host evaluation scenarios in the repository's `docs/evaluation/` directory when validating a
 host, changing the Product MCP catalog, or evaluating Study design guidance.

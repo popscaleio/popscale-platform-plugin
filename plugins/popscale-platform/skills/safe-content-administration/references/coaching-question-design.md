@@ -81,5 +81,5 @@ Do not claim the server itself enforces this semantic review. Route any mismatch
 through authorized input correction and platform regeneration, preserving
 unrelated content and existing publication approvals.
 
-Read [coaching-question-scenarios.md](coaching-question-scenarios.md) when
+Read the coaching-question evaluation scenarios in the repository's `docs/evaluation/` directory when
 evaluating this guidance in a host.
