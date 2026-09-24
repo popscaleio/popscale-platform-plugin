@@ -6,6 +6,14 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ### Changed
 
+- Interview skill: `available: false` in `capabilities` means not callable
+  (one check, then say what is missing); the server-owned values for
+  `interview_category`, `default_respondent_type`, `report_language` and
+  `target_insight_areas`; `must_include` for generated Studies with read-back
+  of the normalized input; `expected_updated_at` is the topic's own timestamp;
+  mutations are reported only after read-back. Study design: one thought per
+  main question, and do not ask for what the invitation already carries.
+
 - Teach the Journey skill the plan contract shipped on 2026-09-06: scenario
   reuse (`reuse_scenario`, `reuse_from_client_id`, `customer_seed`), execution
   item statuses, shared-scenario activation order, server-computed passing
