@@ -29,6 +29,11 @@ the workflow below; confirmation booleans alone do not approve effects.
    For Coaching input authoring or review, apply
    [question design](references/coaching-question-design.md): one primary goal,
    type-appropriate progression, aligned answers and preserved total score.
+   Before authoring new or rewritten input, fetch the matching writing guide
+   from `popscale-docs` as described in the routing skill's "Before authoring"
+   step (`/content/writing-good-input/` and the format-specific guides) and ask
+   for what it says is missing. The guide shapes the input; the platform owns
+   the generation.
 4. Before changing an object, record the root `revision`, status, editable
    fields, component type, and exact requested delta. Prefer one focused root or
    component mutation over replacing a collection or unrelated fields.

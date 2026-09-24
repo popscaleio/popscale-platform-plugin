@@ -6,6 +6,12 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ### Changed
 
+- Fetch the matching writing guide from public Docs before authoring input for
+  an exercise, Knowledge document, Journey brief or Study, and ask for what the
+  guide says is missing. Add discovery and polling discipline: short keyword or
+  tag searches, one retry, `available: false` means not callable, growing poll
+  intervals with change-only reporting.
+
 - Choose regeneration subparts from the user's intent. Add an intent table:
   evaluation rules map to `evaluation_instructions`, criteria to
   `evaluation_criteria` (which replaces the list), a reworked situation to
