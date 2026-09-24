@@ -41,12 +41,9 @@ for Journey context, duplicate names and internal identifiers.
 4. Before changing an object, record the root `revision`, status, editable
    fields, component type, and exact requested delta. Prefer one focused root or
    component mutation over replacing a collection or unrelated fields.
-   Apply the generation-only field rule below before any root write. When local
-   Python is available, check proposed `content_update` arguments with the
-   packaged checker's `--check-manual-write` mode; otherwise apply the same field
-   exclusion directly. Apply the same guard to root/component create and update
-   payloads containing `fields`, including Episode variants. Editable fields and
-   override flags do not waive it.
+   Exclude the generation-only outputs (Safety Rules) from every create and
+   update payload, including component payloads; use the packaged checker's
+   `--check-manual-write` mode when local Python is available.
 5. Pass the latest root `revision` as `expected_revision` for every protected
    mutation. Refresh after each successful mutation because root revision
    changes. On conflict, re-read and reconcile the user's requested delta; never
@@ -88,27 +85,22 @@ for Journey context, duplicate names and internal identifiers.
    queue several subparts "to be safe". Report the status/tool/scope/approval
    blocker when the chosen subpart cannot run.
    Source edits alone must not be reported as synchronized generated output.
-   **Coaching exception to selective regeneration:** whenever Coaching inputs
-   change, always regenerate BOTH `agent_prompt` (agent instructions) and
-   `evaluation_instructions` through the platform after the source edits. Do
-   not select only the output marked stale or reuse an older completed run.
-   Verify both new saved outputs before completion or activation. If the pair
-   cannot be generated, report the update as blocked/incomplete, never repair
-   either instruction manually.
+   **Coaching exception:** any Coaching input change regenerates BOTH
+   `agent_prompt` and `evaluation_instructions` afterwards, never only the one
+   marked stale and never an older run. If the pair cannot be generated, report
+   the update as incomplete.
    For Episodes, read [speaker and voice rules](references/episode-speakers.md)
    before generation or correction. Put anonymous, topic-led dialogue rules in
-   Script input (`model_steering`); never edit source or translated scripts.
-   Include tailored listening-experience guidance and review saved scripts for
+   Script input (`model_steering`). Include tailored listening-experience guidance and review saved scripts for
    conversational quality. Prefer script review before audio when the actual
    operation supports staging; otherwise use supported combined generation and
    inspect outputs afterwards, as defined by the shared rules.
    Stop active input corrections when safe regeneration is unavailable.
-9. Before publication, read current detail and freshness for every generation-only
-   output on the root, even if the earlier edit/report concerned another field.
-   Stop on an edited protected output; do not rely on readiness to detect it.
+9. Before publication, read detail and freshness for every generation-only
+   output on the root; an edited one blocks activation regardless of readiness.
    Call `content_activation_readiness`, present every failed or warning check,
    and call `content_activate` only after immediate explicit confirmation with
-   `confirm_publish=true` and no unresolved generation-only workflow failure.
+   `confirm_publish=true`.
 10. Report content names, status, change history/freshness,
     generation state, and remaining warnings. Before any generation claim, follow
     [generation-verification.md](references/generation-verification.md): verify
@@ -126,20 +118,16 @@ for Journey context, duplicate names and internal identifiers.
 - Treat every result as private to the company returned by `current_user`.
 - Never send customer content, generated artifacts, identifiers, or OAuth
   material to `popscale-docs`.
-- Never write, patch, translate, clear, or manually repair generation-only
-  outputs: Roleplay `evaluation_instructions`; Coaching session
-  `evaluation_instructions` and `agent_prompt`; Challenge `evaluation_prompt`.
-  Episode `script` and source/translated variant `script_text` are also
-  generation-only, including through component create/update tools.
-  Never include these in `content_update` or a root create payload, or use
-  `confirm_generated_output_override` for them. Generate them through the
-  platform even when `editable_fields` or the schema permits direct writes.
-  An explicit manual-rewrite request must be routed to platform generation;
-  an unavailable generation path is a blocker, not a manual-text fallback.
-- An edited generation-only output, including
-  `source_changed_and_output_edited`, is a workflow failure. Report it and stop
-  synchronization/publication claims and activation until platform regeneration
-  and saved-output verification resolve it. Green readiness cannot clear it.
+- **Generation-only outputs** are Roleplay `evaluation_instructions`; Coaching
+  `evaluation_instructions` and `agent_prompt`; Challenge `evaluation_prompt`;
+  Episode `script` and variant `script_text`. Never write, patch, translate,
+  clear or repair them through any tool, payload or override flag, even when
+  the schema permits it or the user asks for manual text; route the change
+  through source inputs and platform generation, and treat an unavailable
+  generation path as a blocker. An edited one (freshness `output_edited` or
+  `source_changed_and_output_edited`) is a workflow failure that stops
+  synchronization claims and activation until regeneration and saved-output
+  verification resolve it; green readiness cannot clear it.
 - Use `content:read` for inspection; focused mutations additionally require
   `content:write`. Supported generation workflows also require
   `generation:read` for voice discovery and asynchronous status/step reads;
@@ -155,8 +143,6 @@ for Journey context, duplicate names and internal identifiers.
 - Treat `allowed_fields`, component types, generation capabilities, readiness,
   and validation errors returned by the server as authoritative. Never work
   around them through generic REST calls or guessed fields.
-  Server editability is a technical constraint, not permission to override the
-  stricter generation-only workflow.
 - Do not expose or reconstruct bounded, masked, omitted, or cross-company data.
 - `delete_content_component` requires a specific delete confirmation.
   `reorder_content_components` replaces one complete bounded ordering scope;
