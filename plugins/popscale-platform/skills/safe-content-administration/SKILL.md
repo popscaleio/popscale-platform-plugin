@@ -26,6 +26,9 @@ the workflow below; confirmation booleans alone do not approve effects.
 3. Read current state with `content_detail`. For nested content, call
    `list_content_components` and then `get_content_component` for the specific
    stable-ID row. Preserve pagination and truncation indicators.
+   For Coaching input authoring or review, apply
+   [question design](references/coaching-question-design.md): one primary goal,
+   type-appropriate progression, aligned answers and preserved total score.
 4. Before changing an object, record the root `revision`, status, editable
    fields, component type, and exact requested delta. Prefer one focused root or
    component mutation over replacing a collection or unrelated fields.

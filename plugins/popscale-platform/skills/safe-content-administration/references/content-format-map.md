@@ -53,6 +53,9 @@ text as a workaround. See the dependency decision flow in
 
 ### Coaching sessions
 
+- Follow [question design](coaching-question-design.md) for participant-facing
+  wording, progression, reference-answer alignment and score-preserving splits.
+
 - A change to any Coaching generation input always requires a new platform
   generation of BOTH `agent_prompt` and `evaluation_instructions`. Examples
   include coaching context, situation, reference facts/points, evaluation input,
