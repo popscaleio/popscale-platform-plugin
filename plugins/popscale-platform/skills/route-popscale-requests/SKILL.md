@@ -36,12 +36,36 @@ the workflow below; confirmation booleans alone do not approve effects.
    activation workflows. Use `company-usage-insights` for company-scoped
    Journey participation, completion, mastery, content outcomes, and bounded
    member or attempt drilldown.
-5. For a mixed request, answer the public portion from `popscale-docs`, clearly
+5. Before authoring new or rewritten input for an exercise, a Knowledge
+   document, a Journey brief or a Study, fetch the matching writing guide from
+   `popscale-docs` with `get_pages` and shape the input by it:
+   `/content/writing-good-input/` for any exercise,
+   `/content/questions-that-work/` for questions and reference answers,
+   `/content/what-can-be-assessed/` for evaluation criteria,
+   `/content/one-situation-many-customers/` for Roleplays,
+   `/knowledge/write-a-knowledge-document/` for Knowledge,
+   `/journeys/plan/` for a Journey brief, `/studies/` for a Study. The guides
+   describe what good input contains, not how the platform processes it. Ask
+   the user for what the guide says is missing before creating anything. Never
+   put company facts into the docs query; fetch the guide, then author on the
+   product side.
+6. For a mixed request, answer the public portion from `popscale-docs`, clearly
    separate it from the authenticated portion, and obtain product state only
    from `popscale-platform`.
-6. If `current_user` returns a different company than the user intended, stop
+7. If `current_user` returns a different company than the user intended, stop
    product reads and writes and follow the company-switch boundary below. Do not
    route the mismatch through public Docs or treat reconnect as the default.
+
+## Discovery and Polling Discipline
+
+- Search content with a short keyword or a tag, not the full title. If nothing
+  matches, try one variant, then list with a status or type filter. Do not
+  repeat the same search.
+- A tool that `capabilities` marks `available: false` is not callable. Say
+  which feature or scope is missing, once. Do not search for the tool again,
+  substitute a generic tool, or drive a browser to work around it.
+- While a generation request is running, poll with a growing interval and
+  report only when the status changes. Do not narrate every read.
 
 ## Company Switch Boundary
 

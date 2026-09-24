@@ -187,6 +187,9 @@ class PluginPackageContractTests(unittest.TestCase):
             "review",
             "Never send customer",
             "Never use `popscale-docs` for a write",
+            "/content/writing-good-input/",
+            "/journeys/plan/",
+            "`available: false`",
             "safe-journey-creation",
             "safe-interview-administration",
             "safe-content-administration",
@@ -389,6 +392,7 @@ class PluginPackageContractTests(unittest.TestCase):
             "generation:write",
             "publish:write",
             "Never send customer content",
+            "/content/writing-good-input/",
             "never from what is available",
             "which replaces the whole criteria list",
         ):

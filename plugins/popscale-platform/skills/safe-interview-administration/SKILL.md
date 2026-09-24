@@ -26,7 +26,8 @@ the workflow below; confirmation booleans alone do not approve effects.
    the narrowest mutation. Update Study metadata separately from draft content.
    Use the topic tools for one question, probe, must-cover point, or keyed
    extraction-field change instead of replacing unrelated content.
-   For new Studies or substantial redesigns, read
+   For new Studies or substantial redesigns, fetch `/studies/` from
+   `popscale-docs` for what a good Study contains, read
    [study-design-quality.md](references/study-design-quality.md) and review
    conditional probes, completion criteria, respondent choice, and extraction
    needs before considering the design finished. Apply it only to the affected
