@@ -101,10 +101,17 @@ class GenerationEvidenceTests(unittest.TestCase):
 
     def test_editable_output_edit_does_not_become_generation_only_failure(self):
         data = sample()
-        data["freshness"]["artifacts"][0].update(status="output_edited", output_modified=True)
+        data["freshness"]["artifacts"][1].update(status="output_edited", output_modified=True)
         report = verifier.verify(data)
         self.assertEqual(report["generation_only_workflow_failures"], [])
-        self.assertEqual(report["artifacts"][0]["workflow_status"], "not_generation_only")
+        self.assertEqual(report["artifacts"][1]["workflow_status"], "not_generation_only")
+        self.assertFalse(report["can_report_requested_generation_complete"])
+
+    def test_manually_edited_episode_script_is_a_workflow_failure(self):
+        data = sample()
+        data["freshness"]["artifacts"][0].update(status="output_edited", output_modified=True)
+        report = verifier.verify(data)
+        self.assertEqual(report["generation_only_workflow_failures"], ["script"])
         self.assertFalse(report["can_report_requested_generation_complete"])
 
     def test_completed_bound_steps_verify_each_requested_artifact(self):
@@ -338,7 +345,9 @@ class ManualWriteGuardTests(unittest.TestCase):
         for content_type, field in (("roleplay", "evaluation_instructions"),
                                     ("coaching_session", "evaluation_instructions"),
                                     ("coaching_session", "agent_prompt"),
-                                    ("challenge", "evaluation_prompt")):
+                                    ("challenge", "evaluation_prompt"),
+                                    ("episode", "script"),
+                                    ("episode_script_variant", "script_text")):
             for status in ("active", "draft"):
                 for value in ("Manually rewritten instruction", "", None):
                     with self.subTest(content_type=content_type, status=status, value=value):
@@ -379,6 +388,32 @@ class ManualWriteGuardTests(unittest.TestCase):
                 report = verifier.check_manual_write({"content_type": content_type, "fields": fields})
                 self.assertTrue(report["passes_generation_only_guard"])
                 self.assertEqual(report["next_action"], "apply_normal_authorization_and_schema_checks")
+
+    def test_episode_script_input_is_allowed_but_mixed_script_write_is_blocked(self):
+        args = {"content_type": "episode", "fields": {
+            "content": "Question techniques", "model_steering": "Use anonymous voices."}}
+        self.assertTrue(verifier.check_manual_write(args)["passes_generation_only_guard"])
+        args["fields"]["script"] = "Speaker 1: Synthetic replacement"
+        report = verifier.check_manual_write(args)
+        self.assertFalse(report["passes_generation_only_guard"])
+        self.assertEqual(report["blocked_fields"], ["script"])
+
+    def test_episode_root_and_component_create_update_payloads_cannot_write_script(self):
+        for field, extra in (("script", {}), ("script_text", {"component_type": "episode_script_variant"})):
+            for value in (None, "", "Speaker 1: Synthetic output"):
+                for ids in ({}, {"object_id": 1, "component_id": 2, "expected_revision": "r1"}):
+                    args = {"content_type": "episode", "fields": {field: value}, **extra, **ids}
+                    with self.subTest(args=args):
+                        self.assertFalse(verifier.check_manual_write(args)["passes_generation_only_guard"])
+
+    def test_cli_blocks_episode_component_script_without_echoing_content(self):
+        args = {"content_type": "episode", "component_type": "episode_script_variant",
+                "fields": {"script_text": "SYNTHETIC_PRIVATE_SCRIPT"}}
+        result = subprocess.run([sys.executable, str(SCRIPT), "--check-manual-write"],
+                                input=json.dumps(args), capture_output=True, text=True)
+        self.assertEqual(result.returncode, 3)
+        self.assertEqual(json.loads(result.stdout)["blocked_fields"], ["script_text"])
+        self.assertNotIn("SYNTHETIC_PRIVATE_SCRIPT", result.stdout + result.stderr)
 
     def test_invalid_write_input_fails_closed(self):
         for arguments in ({}, {"content_type": "unknown", "fields": {"name": "x"}},

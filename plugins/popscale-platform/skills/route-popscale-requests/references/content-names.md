@@ -39,5 +39,5 @@ For example, a verified result can be summarized as:
 Övningen är fortfarande ett utkast.” Preserve any generation or publication
 warnings that apply to the operation.
 
-Read [content-names-scenarios.md](content-names-scenarios.md) when validating
+Read the content-name evaluation scenarios in the repository's `docs/evaluation/` directory when validating
 these rules in a host.

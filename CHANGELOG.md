@@ -4,8 +4,75 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-09-24
+
+### Changed
+
+- Move host evaluation scenarios out of the runtime package into
+  `docs/evaluation/`; skills no longer link them, so the published bundle and
+  what an agent reads shrink by about 7,700 words. Add a bundle word cap.
+  README: the bundle is consumed by Popscale's built-in assistant (host-neutral
+  policy only), the superadmin plugin is retired, and generation prerequisites
+  are split into server requirements and recommended inputs. CONTRIBUTING:
+  staging testing note.
+
+- Interview skill: `available: false` in `capabilities` means not callable
+  (one check, then say what is missing); the server-owned values for
+  `interview_category`, `default_respondent_type`, `report_language` and
+  `target_insight_areas`; `must_include` for generated Studies with read-back
+  of the normalized input; `expected_updated_at` is the topic's own timestamp;
+  mutations are reported only after read-back. Study design: one thought per
+  main question, and do not ask for what the invitation already carries.
+
+- Teach the Journey skill the plan contract shipped on 2026-09-06: scenario
+  reuse (`reuse_scenario`, `reuse_from_client_id`, `customer_seed`), execution
+  item statuses, shared-scenario activation order, server-computed passing
+  scores, `generation_notes` and `format_mix` drift. Content skill: Roleplay
+  customers one at a time with an explicit `number_of_customers`, and no
+  answers in learner-visible fields of an `assessment` Coaching session.
+
+- Fetch the matching writing guide from public Docs before authoring input for
+  an exercise, Knowledge document, Journey brief or Study, and ask for what the
+  guide says is missing. Add discovery and polling discipline: short keyword or
+  tag searches, one retry, `available: false` means not callable, growing poll
+  intervals with change-only reporting.
+
+- Choose regeneration subparts from the user's intent. Add an intent table:
+  evaluation rules map to `evaluation_instructions`, criteria to
+  `evaluation_criteria` (which replaces the list), a reworked situation to
+  `setup`, more customers to `customers` (which appends). On an existing
+  Roleplay, `setup`, `evaluation_criteria` and `customers` require a described,
+  confirmed change; never queue several subparts to be safe.
+
+- Make the company-asset preflight proportional. Only server requirements stop
+  generation: configured models and voice, a Company Overview for Roleplays, and
+  selected generation-eligible Knowledge for Journey plans. Recommended inputs
+  produce a warning and an offer to fill them; the user decides whether to
+  generate anyway. The preflight applies to new exercises and Journey plans, not
+  to targeted regeneration or language generation. Context-inclusion evidence is
+  read from the plan snapshot where it exists; standalone generation is reviewed
+  against the sources afterwards instead of being stopped for lack of a preview.
+
 ### Fixed
 
+- Tailor conversational Episode Script input to listener relevance, complementary
+  anonymous voices, meaningful variation and grounded development. Review saved
+  scripts semantically and prefer review before audio where the actual operation
+  supports staging; retain combined generation and bounded platform corrections.
+
+- Review Coaching questions for one primary goal, concise necessary context and
+  natural participant-facing wording. Adapt progression to the selected type,
+  align reference answers, preserve total points when splitting questions and
+  verify both regenerated instructions against the final saved inputs.
+
+- Correct Episode authoring to use Script input (`model_steering`) exclusively
+  for speaker/style rules. Source and translated scripts are generation-only;
+  block manual root/component script writes and route corrections through
+  platform regeneration. Remove the agent-imposed intermediate audio review
+  gate; verify saved outputs read-only after supported platform generation.
+- Use positive Episode Script input guidance adaptable to each company, purpose,
+  audience and supported format. Keep openings and endings flexible, develop
+  coherent thoughts and use meaningful speaker changes at the requested pace.
 - Default Episodes to anonymous, topic-led conversations without invented host
   names, biographies or recurring podcast personas. Keep TTS choices separate
   from content; review source and translated scripts before audio, and stop
@@ -47,7 +114,7 @@ All notable changes to the Popscale Platform plugin are documented here.
 - This is a guidance update, not an interviewer runtime change or a new Study
   setting. Live host and conversation evaluations remain separate release work.
 
-## [1.3.1] - Unreleased
+## [1.3.1] - 2026-09-22
 
 ### Added
 

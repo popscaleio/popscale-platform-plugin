@@ -51,9 +51,12 @@ field, after the user approves the exact edit. Deletion requires
 `confirm_learner_impact=true` after a separate learner-impact confirmation.
 
 Use component CRUD for a single roleplay customer/question/objection/decision
-rule/criterion, episode script variant, flashcard/card translation, or journey
+rule/criterion, flashcard/card translation, or journey
 section/item. Use `content_update` for scalar root edits and directly addressable
 child edits when no collection operation is needed.
+Episode script variants are read-only to the agent even when component CRUD
+exposes writable fields. Change Script input (`model_steering`) and use platform
+generation for source scripts and translations; never patch generated text.
 Exclude all generation-only outputs in [content-format-map.md](content-format-map.md)
 from manual payloads, including creation. Use the local `--check-manual-write`
 guard described in [generation-verification.md](generation-verification.md) when
@@ -70,9 +73,26 @@ before making a new input edit rather than completing a source-only update.
 If generation is already known to be unavailable for the target, resolve the
 draft/capability blocker before starting new Coaching input edits. Report any
 inputs already saved as an incomplete update.
-This includes missing company inputs or context evidence under the shared
-[company asset preflight](company-asset-preflight.md). Do not save new Coaching
-inputs while the mandatory pair is known to be blocked by that gate.
+A known regeneration blocker (for example an active session) counts here; do
+not save new Coaching inputs while the mandatory pair cannot follow.
+
+Pick the subpart from the intent. The table is the contract for existing roots;
+the live capabilities decide whether the subpart is supported for the current
+status.
+
+| The user wants to | Subpart | Effect on saved content | On an existing Roleplay |
+| --- | --- | --- | --- |
+| Change how a Roleplay is judged (weighting, tone of feedback, a rule) | `evaluation_instructions` | Rewrites the instruction only | Run after the source edit; no extra confirmation |
+| Change Coaching inputs of any kind | `agent_prompt` + `evaluation_instructions` | Rewrites both instructions | Always the pair; see the Coaching rule above |
+| Change the scoring criteria themselves | `evaluation_criteria` | Deletes every criterion and creates a new list; totals change | Describe the replacement and obtain a yes first |
+| Change the situation, goal or setting of a Roleplay | `setup` | Rewrites scenario fields the user did not name | Describe what is rewritten and obtain a yes first |
+| Add customers to a Roleplay | `customers` | Appends; existing customers and Journey links remain | State how many are added and obtain a yes first |
+| Refresh learner-facing text after a source change | `description`, `education_text` | Rewrites those texts only | No extra confirmation |
+| Change an Episode's content or speaker rules | `script` (then audio) | Regenerates script, marks translations stale | Edit `content` / `model_steering` first |
+
+Never queue several subparts because you are unsure which one applies; ask.
+`evaluation_criteria` and `setup` are the two that discard work the admin may
+have done by hand, which is why they require a described, confirmed change.
 
 1. Identify whether the requested source/component changes affect a protected
    output using current detail, freshness, dependency hints, and capabilities.
@@ -113,16 +133,16 @@ generation is unavailable, fails, or the user explicitly asks for manual text.
 
 ## Generation
 
-For Episodes, apply [speaker and voice rules](episode-speakers.md) to steering,
-scripts and every language. Stage script/translation review before audio through
-supported tools, or require an equivalent exposed server validation gate. A
-combined generation call without either path is a blocker, not proof of review.
+For Episodes, apply [speaker and voice rules](episode-speakers.md) in Script input
+before dispatch. Platform generation owns scripts, translations and audio. Use
+the supported pipeline, including combined operations; inspect saved outputs
+read-only afterward. Do not require an invented intermediate review gate or
+repair a generated script manually.
 
-Complete the shared [company asset preflight](company-asset-preflight.md) before
-any generation dispatch, including targeted regeneration, language/media work
-and retries. Verify bound source revisions again after relevant changes. Do not
-confuse asset existence or a successful Knowledge context read with proof of
-the actual company context consumed by the operation.
+The [company asset preflight](company-asset-preflight.md) applies when a new
+exercise is created, not to targeted regeneration, language/media work or
+retries on an existing root. For those, check the dependencies of the selected
+subpart and verify the saved output afterwards.
 
 1. Call `content_generation_capabilities` with `content:read` immediately before
    choosing a format, subpart, or granular generation operation.

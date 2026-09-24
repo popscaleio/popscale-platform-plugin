@@ -30,13 +30,23 @@ for Journey context, duplicate names and internal identifiers.
 3. Read current state with `content_detail`. For nested content, call
    `list_content_components` and then `get_content_component` for the specific
    stable-ID row. Preserve pagination and truncation indicators.
+   For Coaching input authoring or review, apply
+   [question design](references/coaching-question-design.md): one primary goal,
+   type-appropriate progression, aligned answers and preserved total score.
+   Before authoring new or rewritten input, fetch the matching writing guide
+   from `popscale-docs` as described in the routing skill's "Before authoring"
+   step (`/content/writing-good-input/` and the format-specific guides) and ask
+   for what it says is missing. The guide shapes the input; the platform owns
+   the generation.
 4. Before changing an object, record the root `revision`, status, editable
    fields, component type, and exact requested delta. Prefer one focused root or
    component mutation over replacing a collection or unrelated fields.
    Apply the generation-only field rule below before any root write. When local
    Python is available, check proposed `content_update` arguments with the
    packaged checker's `--check-manual-write` mode; otherwise apply the same field
-   exclusion directly. Editable fields and override flags do not waive it.
+   exclusion directly. Apply the same guard to root/component create and update
+   payloads containing `fields`, including Episode variants. Editable fields and
+   override flags do not waive it.
 5. Pass the latest root `revision` as `expected_revision` for every protected
    mutation. Refresh after each successful mutation because root revision
    changes. On conflict, re-read and reconcile the user's requested delta; never
@@ -55,21 +65,28 @@ for Journey context, duplicate names and internal identifiers.
    department counts, capped at the server maximum of 100. If the retry remains
    truncated, report the totals and stop when the decision requires exact
    dependency details. This tool cannot be filtered, offset, or paged.
-8. Before generation, complete the shared
+8. Before creating a new exercise, run the shared
    [company asset preflight](references/company-asset-preflight.md) for the target
-   format and call `content_generation_capabilities`. Follow the returned
-   format/subpart contract. Verify required sources through read-back and their
-   inclusion at those revisions in the actual generation context. Missing or
-   unverifiable evidence stops generation, including targeted and language
-   generation. Establish that this gate can pass before new Coaching input
-   edits that require regenerating both instructions.
-   Generation is draft-only, asynchronous,
+   format: stop only on what the server requires, warn about thin recommended
+   inputs and offer to fill them, then generate when the user decides. The
+   preflight does not apply to targeted regeneration or language generation;
+   those check only the selected subpart's dependencies. Call
+   `content_generation_capabilities` and follow the returned format/subpart
+   contract. Generation is draft-only, asynchronous,
    and idempotent. Poll the returned request with `generation_request_detail`
    and `generation_request_steps`; do not claim completion early.
    After changing a dependency of a generation-only output, refresh detail and
    freshness, read generation capabilities, and follow the dependency decision
-   flow in [tool-workflow.md](references/tool-workflow.md). Queue the supported
-   subpart when authorized, or report the status/tool/scope/approval blocker.
+   flow in [tool-workflow.md](references/tool-workflow.md). Choose the subpart
+   from the user's intent, never from what is available: a changed evaluation
+   rule means `evaluation_instructions`; changed criteria mean
+   `evaluation_criteria`, which replaces the whole criteria list; a new or
+   reworked situation means `setup`; more customers means `customers`, which
+   appends. On an existing Roleplay, `setup`, `evaluation_criteria` and
+   `customers` require that you first describe what will be replaced or added
+   and obtain a yes; `evaluation_instructions` and `agent_prompt` do not. Never
+   queue several subparts "to be safe". Report the status/tool/scope/approval
+   blocker when the chosen subpart cannot run.
    Source edits alone must not be reported as synchronized generated output.
    **Coaching exception to selective regeneration:** whenever Coaching inputs
    change, always regenerate BOTH `agent_prompt` (agent instructions) and
@@ -79,10 +96,13 @@ for Journey context, duplicate names and internal identifiers.
    cannot be generated, report the update as blocked/incomplete, never repair
    either instruction manually.
    For Episodes, read [speaker and voice rules](references/episode-speakers.md)
-   before authoring, generation or script correction. Default to anonymous
-   topic-led dialogue; do not turn TTS selections into host identities. Verify
-   source/translated scripts before audio and stop active script edits when a
-   safe text-and-audio replacement workflow is unavailable.
+   before generation or correction. Put anonymous, topic-led dialogue rules in
+   Script input (`model_steering`); never edit source or translated scripts.
+   Include tailored listening-experience guidance and review saved scripts for
+   conversational quality. Prefer script review before audio when the actual
+   operation supports staging; otherwise use supported combined generation and
+   inspect outputs afterwards, as defined by the shared rules.
+   Stop active input corrections when safe regeneration is unavailable.
 9. Before publication, read current detail and freshness for every generation-only
    output on the root, even if the earlier edit/report concerned another field.
    Stop on an edited protected output; do not rely on readiness to detect it.
@@ -109,6 +129,8 @@ for Journey context, duplicate names and internal identifiers.
 - Never write, patch, translate, clear, or manually repair generation-only
   outputs: Roleplay `evaluation_instructions`; Coaching session
   `evaluation_instructions` and `agent_prompt`; Challenge `evaluation_prompt`.
+  Episode `script` and source/translated variant `script_text` are also
+  generation-only, including through component create/update tools.
   Never include these in `content_update` or a root create payload, or use
   `confirm_generated_output_override` for them. Generate them through the
   platform even when `editable_fields` or the schema permits direct writes.
@@ -145,6 +167,16 @@ for Journey context, duplicate names and internal identifiers.
 - Targeted generation and language generation apply only to drafts. Card and
   generated-customer operations are append-only where the live capability
   catalog says so.
+- Roleplay customers are added one at a time with
+  `create_content_component` (`roleplay_customer`) after the scenario exists.
+  Always state `number_of_customers` explicitly when creating a Roleplay,
+  normally `1`; the server default is `5`, and a high value is not a way to get
+  variety.
+- For a Coaching session of type `assessment`, `session_description`,
+  `coaching_context` and other learner-visible fields must not contain
+  questions, answers or reference material; those belong in `reference_facts`.
+  The server generates the description and education text from limited input;
+  do not rewrite them with answers.
 - Read-only media components are evidence, not editable fields. Use dedicated
   upload-intent tools only when the user separately asks to upload supported
   media and the required media scope is available.
@@ -154,5 +186,5 @@ selection. Read [content-format-map.md](references/content-format-map.md) when
 choosing a root, component, or generation target. Read
 [safety-and-fallbacks.md](references/safety-and-fallbacks.md) for stale edits,
 active content, bounded results, and partial failures. Read
-[evaluation-scenarios.md](references/evaluation-scenarios.md) when validating a
+the host evaluation scenarios in the repository's `docs/evaluation/` directory when validating a
 host or changing the Product MCP catalog.

@@ -135,9 +135,11 @@ not authorize extra generation, and the host must not claim synchronized output.
 Prompt: “Create a Swedish version and audio for this draft episode.”
 
 Expected: resolves the company language and supported Gemini voices, explains
-overwrite behavior if output exists, calls `content_language_generate`, polls
+overwrite behavior if output exists, verifies anonymous-dialogue requirements
+in Script input and calls the supported `content_language_generate` flow, polls
 status, and verifies the script variant/media result without claiming early
-completion.
+completion. It never edits `script`/`script_text` or translates the dialogue
+itself. A combined platform operation does not require an invented review gate.
 
 ## Flashcard granular edit and language refresh
 
@@ -200,6 +202,20 @@ includes `evaluation_instructions` or uses `confirm_generated_output_override`
 for it. It stops the synchronization flow, reports exactly what was saved and
 what remains blocked, and neither demotes, clones, nor reassigns the active
 object. It does not change status just to unlock draft generation.
+
+## Prompt change on an existing Roleplay
+
+Prompt: “Update the evaluation so it also rewards asking about the customer's
+timeline. The roleplay is active.”
+
+Expected: identifies `evaluation_instructions` as the only subpart matching the
+intent. It does not propose `setup`, `evaluation_criteria` or `customers`, and
+does not queue several subparts. Because the root is active, it reports the
+server's draft-only limitation verbatim, explains that the change needs the
+draft workflow in the admin app, and stops; it neither edits the instruction
+manually nor demotes the content. If the user instead asks to add a criterion,
+it explains that `evaluation_criteria` replaces the whole list, shows the
+current criteria and the intended new list, and waits for a yes.
 
 ## Draft Roleplay with authorized generation
 

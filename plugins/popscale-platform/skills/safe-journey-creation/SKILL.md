@@ -28,16 +28,35 @@ for Journey context, duplicate names and internal identifiers.
    [company asset preflight](../safe-content-administration/references/company-asset-preflight.md)
    before generating an overview, item inputs or child exercises. It requires
    `content:read` for company assets/configuration and `knowledge:read` for
-   approved, active, generation-eligible Knowledge. Verify substantive source
-   content, saved revisions and inclusion in the actual generation context;
-   missing or unverifiable required inputs stop generation. Knowledge context
-   reads may diagnose gaps but do not replace this gate.
+   approved, active, generation-eligible Knowledge. Stop only on server
+   requirements: configured models and voice, a Company Overview when the mix
+   includes Roleplays, and at least one selected generation-eligible Knowledge
+   asset. Thin recommended inputs are a warning with an offer to fill them; the
+   user decides whether to generate anyway. Read the plan's captured company
+   context at review and treat omitted or truncated required facts as blockers
+   for the affected items.
    For Episode items, apply the shared
    [speaker and voice rules](../safe-content-administration/references/episode-speakers.md)
    to planning, item inputs and execution. Default to anonymous, topic-led
    dialogue; TTS names are configuration, never inferred host identities.
-   Do not invent recurring podcast profiles. Require a supported script review
-   or equivalent validation gate before audio generation, including translations.
+   Do not invent recurring podcast profiles. Put the rules in the item's
+   supported Script input (`model_steering`) and let platform generation produce
+   scripts, translations and audio. Include tailored conversational-quality
+   guidance and review saved outputs. Prefer script review before audio only
+   when the actual Journey operation supports staging; otherwise review after
+   supported combined generation. Never edit generated Episode scripts or
+   require an unsupported intermediate review gate.
+   For Coaching items, apply shared
+   [question design](../safe-content-administration/references/coaching-question-design.md)
+   to the generation brief and review generated item inputs before execution.
+   Preserve the selected type, aligned answers and intended total score.
+   Before filling `journey_brief`, `learning_goals`, `desired_item_count`,
+   `difficulty` and `format_mix`, fetch the Journey planning guide
+   (`/journeys/plan/`) as described in the routing skill's "Before authoring"
+   step, and ask the user for whichever of its seven questions the request
+   leaves open (why now, for whom, what they should be able to do, duration and
+   cadence, level, mix, constraints). A brief written as topics produces a
+   list; a brief written as behaviors produces a program.
 4. Create or inspect a generation request, start it when requested, and poll
    `generation_request_detail` until it reaches a terminal or reviewable state.
    Do not invent successful completion while work is still queued or running.
@@ -45,6 +64,17 @@ for Journey context, duplicate names and internal identifiers.
    `journey_plan_update_item_input` for specific edits and
    `journey_plan_update_overview` only after the user explicitly confirms the
    overview change.
+   Present the plan's `generation_notes` verbatim; they are the generator's
+   channel for trade-offs and thin sources. Show the scenario/customer mapping
+   for every Roleplay item: `generate_new` creates a scenario, `link_existing`
+   reuses an existing scenario (with `customer_id` or a new `customer_seed`),
+   and `reuse_scenario` reuses the scenario of an earlier plan item named by
+   `reuse_from_client_id` with a new `customer_seed`. Several sections can share
+   one scenario with a different customer each; prefer that over near-identical
+   scenarios. A `reuse_from_client_id` must point at an earlier Roleplay item,
+   never forward or at itself. If the request set `format_mix`, check that the
+   plan kept to it; the server treats the mix as advice, so correct drift
+   through `journey_plan_update_overview` after confirmation.
    Check material use of the verified company sources. If format mix, sources,
    revisions or configuration change, repeat the affected preflight before
    generating item inputs or executing the plan; an old snapshot is not refreshed
@@ -59,9 +89,16 @@ for Journey context, duplicate names and internal identifiers.
 9. Only after confirmation, call `journey_plan_execute`. Poll the related request
    with `generation_request_detail` and use `journey_plan_reconcile` only
    when status or server guidance indicates reconciliation is appropriate.
+   Read item statuses literally: `waiting_for_scenario` and
+   `child_request_created` are not done; `linked` is done;
+   `dependency_failed`, `child_request_failed`, `link_failed` and
+   `invalid_input` are failures to report with the affected item. On a partial
+   result, reconcile and retry the existing step; never create a second plan.
 10. When the user asks to publish, call `journey_activation_readiness`. Activate
     each ready draft child through `content_activate` only after a specific
-    confirmation. Before child or Journey activation, read current child detail
+    confirmation. A scenario shared by several items is activated once, after
+    every customer generation that targets it has reached `linked`; a new
+    customer cannot be generated against an active scenario. Before child or Journey activation, read current child detail
     and freshness for all generation-only outputs, including on reused active
     roots. Stop if any is edited or that check is unavailable. Refresh readiness,
     and require both newly generated instruction outputs after Coaching input
@@ -99,9 +136,17 @@ for Journey context, duplicate names and internal identifiers.
   work around Popscale's authorization or validation layer.
 - Never activate the journey until `journey_activation_readiness` confirms that
   execution finished and every linked content item is active.
+- Never set an item's `passing_score` yourself. The server computes it (60 % of
+  the obtainable score by default) and rejects an impossible threshold with
+  `Passing score cannot exceed the content's maximum score.`; show that error
+  and let the admin choose a reachable value.
+- The plan does not support interview items; add them afterwards as
+  `interview_item` components through `safe-content-administration`.
 - Child-content corrections follow `safe-content-administration` and its
   generation-only field policy. Never repair protected evaluation outputs or
-  Coaching `agent_prompt` manually. An edited generation-only artifact is a
+  Coaching `agent_prompt`, or Episode source/translated scripts manually.
+  Episode corrections go through Script input and platform regeneration.
+  An edited generation-only artifact is a
   blocker for affected child/Journey activation, even when readiness is green;
   report it and use only authorized platform regeneration to resolve it.
 
