@@ -393,6 +393,8 @@ class PluginPackageContractTests(unittest.TestCase):
             "publish:write",
             "Never send customer content",
             "/content/writing-good-input/",
+            "`reference_facts`",
+            "`number_of_customers`",
             "never from what is available",
             "which replaces the whole criteria list",
         ):
@@ -574,6 +576,16 @@ class PluginPackageContractTests(unittest.TestCase):
         ).read_text(encoding="utf-8")
         self.assertNotIn("popscale-docs", safe_skill)
         self.assertNotIn("popscale-docs", safe_metadata)
+        for required in (
+            "`reuse_scenario`",
+            "`reuse_from_client_id`",
+            "`customer_seed`",
+            "`waiting_for_scenario`",
+            "`dependency_failed`",
+            "`passing_score`",
+            "`generation_notes`",
+        ):
+            self.assertIn(required, safe_skill)
         self.assertIn('value: "popscale-platform"', safe_metadata)
         self.assertIn("content:read", safe_skill)
         for required_scope in ("content:read", "content:write", "publish:write"):

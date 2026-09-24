@@ -6,6 +6,13 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ### Changed
 
+- Teach the Journey skill the plan contract shipped on 2026-09-06: scenario
+  reuse (`reuse_scenario`, `reuse_from_client_id`, `customer_seed`), execution
+  item statuses, shared-scenario activation order, server-computed passing
+  scores, `generation_notes` and `format_mix` drift. Content skill: Roleplay
+  customers one at a time with an explicit `number_of_customers`, and no
+  answers in learner-visible fields of an `assessment` Coaching session.
+
 - Fetch the matching writing guide from public Docs before authoring input for
   an exercise, Knowledge document, Journey brief or Study, and ask for what the
   guide says is missing. Add discovery and polling discipline: short keyword or

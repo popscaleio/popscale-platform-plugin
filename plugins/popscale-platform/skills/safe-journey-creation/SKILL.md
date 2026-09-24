@@ -60,6 +60,17 @@ the workflow below; confirmation booleans alone do not approve effects.
    `journey_plan_update_item_input` for specific edits and
    `journey_plan_update_overview` only after the user explicitly confirms the
    overview change.
+   Present the plan's `generation_notes` verbatim; they are the generator's
+   channel for trade-offs and thin sources. Show the scenario/customer mapping
+   for every Roleplay item: `generate_new` creates a scenario, `link_existing`
+   reuses an existing scenario (with `customer_id` or a new `customer_seed`),
+   and `reuse_scenario` reuses the scenario of an earlier plan item named by
+   `reuse_from_client_id` with a new `customer_seed`. Several sections can share
+   one scenario with a different customer each; prefer that over near-identical
+   scenarios. A `reuse_from_client_id` must point at an earlier Roleplay item,
+   never forward or at itself. If the request set `format_mix`, check that the
+   plan kept to it; the server treats the mix as advice, so correct drift
+   through `journey_plan_update_overview` after confirmation.
    Check material use of the verified company sources. If format mix, sources,
    revisions or configuration change, repeat the affected preflight before
    generating item inputs or executing the plan; an old snapshot is not refreshed
@@ -74,9 +85,16 @@ the workflow below; confirmation booleans alone do not approve effects.
 9. Only after confirmation, call `journey_plan_execute`. Poll the related request
    with `generation_request_detail` and use `journey_plan_reconcile` only
    when status or server guidance indicates reconciliation is appropriate.
+   Read item statuses literally: `waiting_for_scenario` and
+   `child_request_created` are not done; `linked` is done;
+   `dependency_failed`, `child_request_failed`, `link_failed` and
+   `invalid_input` are failures to report with the affected item. On a partial
+   result, reconcile and retry the existing step; never create a second plan.
 10. When the user asks to publish, call `journey_activation_readiness`. Activate
     each ready draft child through `content_activate` only after a specific
-    confirmation. Before child or Journey activation, read current child detail
+    confirmation. A scenario shared by several items is activated once, after
+    every customer generation that targets it has reached `linked`; a new
+    customer cannot be generated against an active scenario. Before child or Journey activation, read current child detail
     and freshness for all generation-only outputs, including on reused active
     roots. Stop if any is edited or that check is unavailable. Refresh readiness,
     and require both newly generated instruction outputs after Coaching input
@@ -114,6 +132,12 @@ the workflow below; confirmation booleans alone do not approve effects.
   work around Popscale's authorization or validation layer.
 - Never activate the journey until `journey_activation_readiness` confirms that
   execution finished and every linked content item is active.
+- Never set an item's `passing_score` yourself. The server computes it (60 % of
+  the obtainable score by default) and rejects an impossible threshold with
+  `Passing score cannot exceed the content's maximum score.`; show that error
+  and let the admin choose a reachable value.
+- The plan does not support interview items; add them afterwards as
+  `interview_item` components through `safe-content-administration`.
 - Child-content corrections follow `safe-content-administration` and its
   generation-only field policy. Never repair protected evaluation outputs or
   Coaching `agent_prompt`, or Episode source/translated scripts manually.
