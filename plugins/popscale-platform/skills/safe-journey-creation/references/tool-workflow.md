@@ -54,6 +54,14 @@ steering alone does not prove that the generated result followed the inputs.
 6. `journey_plan_execute` turns an entirely valid plan into downstream journey
    work. It requires an immediately preceding explicit user confirmation.
 
+Roleplay item selectors in the overview, mutually exclusive per item:
+
+| `mode` | Fields | Result |
+| --- | --- | --- |
+| `generate_new` | `input_payload` with `number_of_customers` (state it, normally 1) | New scenario and its customers |
+| `link_existing` | `linked_object_id` plus `customer_id` or `customer_seed` | Existing scenario; existing or newly generated customer |
+| `reuse_scenario` | `reuse_from_client_id` (an earlier Roleplay item) plus `customer_seed` | Scenario created by that item; one new customer |
+
 ## Publication
 
 1. Reconcile until the plan reports `journey_draft_ready`.
@@ -77,7 +85,10 @@ auditing, and error handling.
 ## Completion
 
 After execution, use the returned generation request or journey identifiers to
-poll status. Report server-returned IDs and status, not model-generated URLs or
+poll status. Item statuses: `waiting_for_scenario` and `child_request_created`
+are in progress; `linked` is complete; `dependency_failed`,
+`child_request_failed`, `link_failed`, `invalid_input` and
+`missing_child_request` are failures for that item. Report server-returned IDs and status, not model-generated URLs or
 guessed completion state. If the result is only a draft, say so plainly.
 
 Before claiming that child content is platform-generated, follow the shared

@@ -163,6 +163,16 @@ the workflow below; confirmation booleans alone do not approve effects.
 - Targeted generation and language generation apply only to drafts. Card and
   generated-customer operations are append-only where the live capability
   catalog says so.
+- Roleplay customers are added one at a time with
+  `create_content_component` (`roleplay_customer`) after the scenario exists.
+  Always state `number_of_customers` explicitly when creating a Roleplay,
+  normally `1`; the server default is `5`, and a high value is not a way to get
+  variety.
+- For a Coaching session of type `assessment`, `session_description`,
+  `coaching_context` and other learner-visible fields must not contain
+  questions, answers or reference material; those belong in `reference_facts`.
+  The server generates the description and education text from limited input;
+  do not rewrite them with answers.
 - Read-only media components are evidence, not editable fields. Use dedicated
   upload-intent tools only when the user separately asks to upload supported
   media and the required media scope is available.
