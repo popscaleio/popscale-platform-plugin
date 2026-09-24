@@ -55,6 +55,20 @@ Last updated: 2026-09-24
   public bundle dependency checks, `git diff --check` and live Docs smoke pass.
 - [ ] Live host tool traces and a separately authorized release remain pending.
 
+## User-facing content names — unreleased guidance
+
+- [x] Link all five skills to shared naming rules: current app-visible titles,
+  verified Journey context and visible distinctions for duplicate names.
+- [x] Replace instructions to report IDs in routine content, Study, Journey and
+  generation summaries. Keep exact IDs, revisions and provenance internally.
+- [x] Handle missing titles and discovery scopes without requiring users to find
+  hidden IDs; preserve authorization, ambiguity checks and privacy boundaries.
+- [x] Add twelve synthetic host acceptance scenarios. All 76 package tests,
+  release validation, five skill validators, public bundle dependency checks,
+  live Docs smoke and whitespace checks pass.
+- [ ] Live host behavior checks and a separately authorized release remain pending.
+  No backend change, customer mutation, version bump or release is included.
+
 ## Anonymous Episode speakers — unreleased guidance
 
 - [x] Share anonymous-speaker defaults across standalone Episode and Journey

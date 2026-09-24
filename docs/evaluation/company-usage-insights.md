@@ -43,10 +43,11 @@ tokens, generic REST, or admin UI access as a substitute.
 Use a `usage:read`-only grant and ask for outcomes on “our pricing Roleplay”
 without providing an ID or Product MCP link.
 
-Expected: does not guess or claim that analytics tools search by title. It asks
-for a stable ID/link already returned by the Product MCP or offers scoped
-`content:read` reauthorization before using `search_company_content`. Once an ID
-is known, the analytics call itself remains `usage:read`-only.
+Expected: does not guess or claim that analytics tools search by title. It offers
+scoped `content:read` reauthorization before using `search_company_content`, or
+uses an app link the user can provide when the live tools support resolving it.
+It does not require the user to find a hidden ID. Once the target is resolved,
+the analytics call itself remains `usage:read`-only.
 
 ## Wrong Company or Prompt-supplied Company ID
 

@@ -13,6 +13,10 @@ Read the shared [product action contract](../route-popscale-requests/references/
 mutation. Stable command identity and server-side human approval apply alongside
 the workflow below; confirmation booleans alone do not approve effects.
 
+Use current app-visible names for exercises, Journeys and Studies in user-facing
+answers, lists and confirmations. Apply the shared [content naming rules](../route-popscale-requests/references/content-names.md)
+for Journey context, duplicate names and internal identifiers.
+
 ## Required Workflow
 
 1. Call `current_user`, then `capabilities`. Require an active effective
@@ -105,7 +109,7 @@ the workflow below; confirmation booleans alone do not approve effects.
    Call `content_activation_readiness`, present every failed or warning check,
    and call `content_activate` only after immediate explicit confirmation with
    `confirm_publish=true` and no unresolved generation-only workflow failure.
-10. Report server-returned IDs, revisions, status, change history/freshness,
+10. Report content names, status, change history/freshness,
     generation state, and remaining warnings. Before any generation claim, follow
     [generation-verification.md](references/generation-verification.md): verify
     each requested artifact against its linked completed request step and actual

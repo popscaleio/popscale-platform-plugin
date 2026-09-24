@@ -177,9 +177,11 @@ the checker was not run. Missing evidence must still remain unverified.
 
 ## Final report
 
-Give one concise row per requested part: target/artifact/language, generation
-state, provenance, freshness, supporting request/step IDs where present, and
-missing evidence or next action. Keep readiness and draft/published status
-separate. For a Journey, include each item and reused root; a generated plan is
+Give one concise row per requested part: current content name, artifact/language,
+generation state, provenance, freshness, and missing evidence or next action.
+Add verified Journey context when useful. Keep supporting request/step IDs and
+revisions in the internal evidence; include technical identifiers in the answer
+only when the user explicitly requests them for diagnostics or an audit.
+Keep readiness and draft/published status separate. For a Journey, include each item and reused root; a generated plan is
 not proof that its child content was generated. Do not claim “everything is
 platform-generated” while any requested part is edited, stale or unverified.

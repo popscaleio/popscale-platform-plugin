@@ -100,6 +100,11 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ### Changed
 
+- Refer to exercises, Journeys and Studies by their current app-visible names
+  in answers, lists and confirmations. Add verified Journey context when useful,
+  resolve duplicate names with visible context, and retain IDs internally for
+  tool targeting and evidence.
+
 - Add purpose-led Study design guidance for conditional probes, meaningful
   completion criteria, respondent choice, focused extraction, and realistic
   interview duration without fixed question quotas.

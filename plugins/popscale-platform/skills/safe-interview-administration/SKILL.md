@@ -13,6 +13,10 @@ Read the shared [product action contract](../route-popscale-requests/references/
 mutation. Stable command identity and server-side human approval apply alongside
 the workflow below; confirmation booleans alone do not approve effects.
 
+Use current app-visible names for exercises, Journeys and Studies in user-facing
+answers, lists and confirmations. Apply the shared [content naming rules](../route-popscale-requests/references/content-names.md)
+for Journey context, duplicate names and internal identifiers.
+
 ## Required Workflow
 
 1. Call `current_user`, then `capabilities`. Confirm the authenticated company is
@@ -82,7 +86,7 @@ the workflow below; confirmation booleans alone do not approve effects.
    is not an error, read the object back, and confirm the change is present
    before saying it is done. Never report a batch as complete because the
    calls were sent, and never parse an unstructured error text as if it were
-   a result. Then summarize server-returned IDs, outcomes, remaining warnings,
+   a result. Then summarize Study names, outcomes, remaining warnings,
    truncation, and the next safe action. Do not invent URLs, completion, or
    publication state.
 

@@ -12,6 +12,10 @@ Read the shared [product action contract](../route-popscale-requests/references/
 mutation. Stable command identity and server-side human approval apply alongside
 the workflow below; confirmation booleans alone do not approve effects.
 
+Use current app-visible names for exercises, Journeys and Studies in user-facing
+answers, lists and confirmations. Apply the shared [content naming rules](../route-popscale-requests/references/content-names.md)
+for Journey context, duplicate names and internal identifiers.
+
 ## Required Workflow
 
 1. Call `current_user`, then `capabilities`.

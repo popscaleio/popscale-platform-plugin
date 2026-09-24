@@ -72,7 +72,8 @@ Roleplay item selectors in the overview, mutually exclusive per item:
    and `publish:write`; an older grant may need reauthorization.
 4. Refresh `journey_activation_readiness`. Do not continue while an item is
    missing, invalid, draft, inactive, or still generating.
-5. Present the exact journey ID/title and activation consequence. Ask for a new
+5. Present the current Journey title, enough verified context to identify it,
+   and the activation consequence. Ask for a new
    final confirmation, then call `journey_activate` with `confirm_publish=true`.
 
 Content activation and journey activation are separate safety boundaries. A user
@@ -88,8 +89,9 @@ After execution, use the returned generation request or journey identifiers to
 poll status. Item statuses: `waiting_for_scenario` and `child_request_created`
 are in progress; `linked` is complete; `dependency_failed`,
 `child_request_failed`, `link_failed`, `invalid_input` and
-`missing_child_request` are failures for that item. Report server-returned IDs and status, not model-generated URLs or
-guessed completion state. If the result is only a draft, say so plainly.
+`missing_child_request` are failures for that item. Report current content and
+Journey names and status. Use only server-returned URLs and verified completion
+state. If the result is only a draft, say so plainly.
 
 Before claiming that child content is platform-generated, follow the shared
 [generation verification](../../safe-content-administration/references/generation-verification.md).
