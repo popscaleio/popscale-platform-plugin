@@ -115,7 +115,7 @@ Before handing over a new or redesigned Study, report three separate states:
    on what version, and what the interviewer did; otherwise say not tested.
 
 Use the authoring-host and respondent-conversation scenarios in
-[evaluation-scenarios.md](evaluation-scenarios.md). A simulated transcript or
+the host evaluation scenarios in the repository's `docs/evaluation/` directory. A simulated transcript or
 offline design review must not be reported as a live product test. Keep live
 test setup and mutations within the authorized scope and use a dedicated test
 company. An observed failure despite clear design instructions is a product

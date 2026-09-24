@@ -2,7 +2,7 @@
 
 Use synthetic fixtures and inspect proposed inputs, tool traces and read-back.
 These are manual host scenarios, not claims of completed live tests. Apply
-[question design](coaching-question-design.md) to standalone and Journey work.
+[question design](../../plugins/popscale-platform/skills/safe-content-administration/references/coaching-question-design.md) to standalone and Journey work.
 
 | Scenario | Expected behavior |
 | --- | --- |

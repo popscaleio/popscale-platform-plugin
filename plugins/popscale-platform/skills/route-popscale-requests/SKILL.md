@@ -120,5 +120,5 @@ the workflow below; confirmation booleans alone do not approve effects.
   returned `/markdown/...` URL only for public reading. Do not fall back to the
   product MCP for public documentation search.
 
-Read [evaluation-scenarios.md](references/evaluation-scenarios.md) when
+Read the host evaluation scenarios in the repository's `docs/evaluation/` directory when
 validating routing behavior in a host.

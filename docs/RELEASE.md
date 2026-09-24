@@ -23,6 +23,10 @@ python3 scripts/live_docs_smoke.py
 git diff --check
 ```
 
+Host evaluation scenarios for each skill are in `docs/evaluation/`; they are
+acceptance criteria for the host runs below and are excluded from the runtime
+bundle on purpose.
+
 Then perform read-only OAuth smoke tests in clean Codex and Claude installations:
 
 - docs search and page retrieval without authentication;

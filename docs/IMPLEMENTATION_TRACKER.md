@@ -305,12 +305,12 @@ Last updated: 2026-09-24
 - [x] Clean Codex install from public GitHub marketplace verified.
 - [x] Clean Claude marketplace install from public GitHub repository verified.
 - [ ] `v1.0.1` logo patch and archive published.
-- [ ] `v1.1.0` Interview administration package reviewed, merged, tagged, and
+- [x] `v1.1.0` Interview administration package reviewed, merged, tagged, and
   published after the backend contract is deployed and host smoke tests pass.
-- [ ] `v1.2.0` granular company-content and usage-insights package reviewed,
+- [x] `v1.2.0` granular company-content and usage-insights package reviewed,
   merged, tagged, and published after production backend availability and clean
   host smoke tests.
-- [ ] `v1.3.0` company-switch package reviewed, merged, tagged, and published
+- [x] `v1.3.0` company-switch package reviewed, merged, tagged, and published
   after the production switch page is available and clean Codex/Claude host
   smoke tests pass.
 

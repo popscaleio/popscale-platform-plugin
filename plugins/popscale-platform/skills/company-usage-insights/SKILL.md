@@ -81,5 +81,5 @@ filters, or pagination. Read
 or format-specific outcomes. Read
 [privacy-and-limits.md](references/privacy-and-limits.md) for suppression, PII,
 historical, and bounded-result decisions. Read
-[evaluation-scenarios.md](references/evaluation-scenarios.md) when validating a
+the host evaluation scenarios in the repository's `docs/evaluation/` directory when validating a
 host or changing the Product MCP analytics catalog.

@@ -6,6 +6,14 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ### Changed
 
+- Move host evaluation scenarios out of the runtime package into
+  `docs/evaluation/`; skills no longer link them, so the published bundle and
+  what an agent reads shrink by about 7,700 words. Add a bundle word cap.
+  README: the bundle is consumed by Popscale's built-in assistant (host-neutral
+  policy only), the superadmin plugin is retired, and generation prerequisites
+  are split into server requirements and recommended inputs. CONTRIBUTING:
+  staging testing note.
+
 - Interview skill: `available: false` in `capabilities` means not callable
   (one check, then say what is missing); the server-owned values for
   `interview_category`, `default_respondent_type`, `report_language` and

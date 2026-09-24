@@ -2,7 +2,7 @@
 
 Evaluate both Journey creation and standalone content generation in Codex and
 Claude, using synthetic tool responses or an authorized dedicated test company.
-Read the [shared preflight](company-asset-preflight.md). Record actual tool traces
+Read the [shared preflight](../../plugins/popscale-platform/skills/safe-content-administration/references/company-asset-preflight.md). Record actual tool traces
 and distinguish offline package validation from host behavior; these scenarios
 are acceptance criteria, not a claim that live evaluations have passed.
 

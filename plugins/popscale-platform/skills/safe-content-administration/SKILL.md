@@ -182,5 +182,5 @@ selection. Read [content-format-map.md](references/content-format-map.md) when
 choosing a root, component, or generation target. Read
 [safety-and-fallbacks.md](references/safety-and-fallbacks.md) for stale edits,
 active content, bounded results, and partial failures. Read
-[evaluation-scenarios.md](references/evaluation-scenarios.md) when validating a
+the host evaluation scenarios in the repository's `docs/evaluation/` directory when validating a
 host or changing the Product MCP catalog.
