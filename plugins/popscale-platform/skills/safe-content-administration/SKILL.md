@@ -26,6 +26,9 @@ the workflow below; confirmation booleans alone do not approve effects.
 3. Read current state with `content_detail`. For nested content, call
    `list_content_components` and then `get_content_component` for the specific
    stable-ID row. Preserve pagination and truncation indicators.
+   For Coaching input authoring or review, apply
+   [question design](references/coaching-question-design.md): one primary goal,
+   type-appropriate progression, aligned answers and preserved total score.
 4. Before changing an object, record the root `revision`, status, editable
    fields, component type, and exact requested delta. Prefer one focused root or
    component mutation over replacing a collection or unrelated fields.
@@ -78,7 +81,10 @@ the workflow below; confirmation booleans alone do not approve effects.
    For Episodes, read [speaker and voice rules](references/episode-speakers.md)
    before generation or correction. Put anonymous, topic-led dialogue rules in
    Script input (`model_steering`); never edit source or translated scripts.
-   Let the platform generate scripts and audio, then inspect outputs read-only.
+   Include tailored listening-experience guidance and review saved scripts for
+   conversational quality. Prefer script review before audio when the actual
+   operation supports staging; otherwise use supported combined generation and
+   inspect outputs afterwards, as defined by the shared rules.
    Stop active input corrections when safe regeneration is unavailable.
 9. Before publication, read current detail and freshness for every generation-only
    output on the root, even if the earlier edit/report concerned another field.
