@@ -34,8 +34,11 @@ the workflow below; confirmation booleans alone do not approve effects.
    dialogue; TTS names are configuration, never inferred host identities.
    Do not invent recurring podcast profiles. Put the rules in the item's
    supported Script input (`model_steering`) and let platform generation produce
-   scripts, translations and audio. Read outputs for verification; never edit
-   generated Episode scripts or require an unsupported intermediate review gate.
+   scripts, translations and audio. Include tailored conversational-quality
+   guidance and review saved outputs. Prefer script review before audio only
+   when the actual Journey operation supports staging; otherwise review after
+   supported combined generation. Never edit generated Episode scripts or
+   require an unsupported intermediate review gate.
    For Coaching items, apply shared
    [question design](../safe-content-administration/references/coaching-question-design.md)
    to the generation brief and review generated item inputs before execution.

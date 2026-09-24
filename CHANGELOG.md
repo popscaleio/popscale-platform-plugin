@@ -6,6 +6,11 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ### Fixed
 
+- Tailor conversational Episode Script input to listener relevance, complementary
+  anonymous voices, meaningful variation and grounded development. Review saved
+  scripts semantically and prefer review before audio where the actual operation
+  supports staging; retain combined generation and bounded platform corrections.
+
 - Review Coaching questions for one primary goal, concise necessary context and
   natural participant-facing wording. Adapt progression to the selected type,
   align reference answers, preserve total points when splitting questions and

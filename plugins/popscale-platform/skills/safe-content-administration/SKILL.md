@@ -82,7 +82,10 @@ the workflow below; confirmation booleans alone do not approve effects.
    For Episodes, read [speaker and voice rules](references/episode-speakers.md)
    before generation or correction. Put anonymous, topic-led dialogue rules in
    Script input (`model_steering`); never edit source or translated scripts.
-   Let the platform generate scripts and audio, then inspect outputs read-only.
+   Include tailored listening-experience guidance and review saved scripts for
+   conversational quality. Prefer script review before audio when the actual
+   operation supports staging; otherwise use supported combined generation and
+   inspect outputs afterwards, as defined by the shared rules.
    Stop active input corrections when safe regeneration is unavailable.
 9. Before publication, read current detail and freshness for every generation-only
    output on the root, even if the earlier edit/report concerned another field.
