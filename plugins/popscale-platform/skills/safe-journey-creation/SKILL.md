@@ -47,9 +47,10 @@ the workflow below; confirmation booleans alone do not approve effects.
    to the generation brief and review generated item inputs before execution.
    Preserve the selected type, aligned answers and intended total score.
    Before filling `journey_brief`, `learning_goals`, `desired_item_count`,
-   `difficulty` and `format_mix`, fetch `/journeys/plan/` from `popscale-docs`
-   and ask the user for whichever of its seven questions the request leaves
-   open (why now, for whom, what they should be able to do, duration and
+   `difficulty` and `format_mix`, fetch the Journey planning guide
+   (`/journeys/plan/`) as described in the routing skill's "Before authoring"
+   step, and ask the user for whichever of its seven questions the request
+   leaves open (why now, for whom, what they should be able to do, duration and
    cadence, level, mix, constraints). A brief written as topics produces a
    list; a brief written as behaviors produces a program.
 4. Create or inspect a generation request, start it when requested, and poll
