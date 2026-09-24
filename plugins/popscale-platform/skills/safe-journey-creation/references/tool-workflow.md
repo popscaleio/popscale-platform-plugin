@@ -13,9 +13,10 @@
 | 7 | `knowledge_generation_context` | Read the approved Knowledge context; reading may diagnose gaps before generation is allowed | `knowledge:read` |
 
 If the required capability or scope is absent, stop before the affected action.
-Complete the shared [company asset preflight](../../safe-content-administration/references/company-asset-preflight.md),
-including actual context inclusion evidence, before generation. The reads above
-alone do not establish that the generator will consume the verified revisions.
+Run the shared [company asset preflight](../../safe-content-administration/references/company-asset-preflight.md)
+before generation: server requirements stop, recommended inputs warn. The
+plan's captured company context (`generation_metadata.company_context`) shows
+what the generator actually consumed; read it at plan review.
 
 ## Plan and Generation
 
@@ -25,9 +26,9 @@ exist. Use `generation_requests_list`, `generation_request_detail`, and
 starting or retrying it. `generation_request_start`, `generation_step_retry`,
 `generation_request_cancel`, and `journey_plan_reconcile` are explicit
 state-changing operations.
-The preflight gates request creation/start, item-input generation, execution and
-generation retries. Revalidate changed sources or formats against the bound
-request/plan context; unavailable preview/binding evidence is a blocker.
+The preflight runs before request creation and again when the format mix or
+sources change before item-input generation or execution. The plan keeps the
+snapshot captured at creation; changed assets need a new request.
 
 The workflow is asynchronous. Poll status at a reasonable cadence and stop when
 the request is completed, failed, canceled, or awaiting user action. Do not call

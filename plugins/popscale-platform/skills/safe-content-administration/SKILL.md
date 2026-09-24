@@ -53,15 +53,14 @@ the workflow below; confirmation booleans alone do not approve effects.
    department counts, capped at the server maximum of 100. If the retry remains
    truncated, report the totals and stop when the decision requires exact
    dependency details. This tool cannot be filtered, offset, or paged.
-8. Before generation, complete the shared
+8. Before creating a new exercise, run the shared
    [company asset preflight](references/company-asset-preflight.md) for the target
-   format and call `content_generation_capabilities`. Follow the returned
-   format/subpart contract. Verify required sources through read-back and their
-   inclusion at those revisions in the actual generation context. Missing or
-   unverifiable evidence stops generation, including targeted and language
-   generation. Establish that this gate can pass before new Coaching input
-   edits that require regenerating both instructions.
-   Generation is draft-only, asynchronous,
+   format: stop only on what the server requires, warn about thin recommended
+   inputs and offer to fill them, then generate when the user decides. The
+   preflight does not apply to targeted regeneration or language generation;
+   those check only the selected subpart's dependencies. Call
+   `content_generation_capabilities` and follow the returned format/subpart
+   contract. Generation is draft-only, asynchronous,
    and idempotent. Poll the returned request with `generation_request_detail`
    and `generation_request_steps`; do not claim completion early.
    After changing a dependency of a generation-only output, refresh detail and
