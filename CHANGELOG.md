@@ -4,6 +4,8 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-09-24
+
 ### Changed
 
 - Move host evaluation scenarios out of the runtime package into
@@ -107,7 +109,7 @@ All notable changes to the Popscale Platform plugin are documented here.
 - This is a guidance update, not an interviewer runtime change or a new Study
   setting. Live host and conversation evaluations remain separate release work.
 
-## [1.3.1] - Unreleased
+## [1.3.1] - 2026-09-22
 
 ### Added
 

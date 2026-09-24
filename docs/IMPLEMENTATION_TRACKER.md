@@ -213,7 +213,8 @@ Last updated: 2026-09-24
   and resource assertions were not reached. No Docs code changed here.
 - [ ] Clean Codex and Claude evaluations of the new scenarios and read-only
   OAuth smoke tests remain release checks; they were not run in this PR work.
-- [ ] Review, merge, tag and publish 1.3.1 separately. This candidate performs no
+- [x] 1.3.1 tagged 2026-09-22.
+- [ ] Review, merge, tag and publish 1.4.0 separately. This candidate performs no
   backend deployment, migration, maintenance-mode action or customer mutation.
 
 ## Complete
