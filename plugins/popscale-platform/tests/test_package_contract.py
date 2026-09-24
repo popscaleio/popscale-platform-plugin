@@ -389,6 +389,8 @@ class PluginPackageContractTests(unittest.TestCase):
             "generation:write",
             "publish:write",
             "Never send customer content",
+            "never from what is available",
+            "which replaces the whole criteria list",
         ):
             self.assertIn(required, skill)
         for required_tool in EXPECTED_CONTENT_TOOLS:

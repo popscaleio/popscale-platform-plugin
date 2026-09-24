@@ -6,6 +6,13 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ### Changed
 
+- Choose regeneration subparts from the user's intent. Add an intent table:
+  evaluation rules map to `evaluation_instructions`, criteria to
+  `evaluation_criteria` (which replaces the list), a reworked situation to
+  `setup`, more customers to `customers` (which appends). On an existing
+  Roleplay, `setup`, `evaluation_criteria` and `customers` require a described,
+  confirmed change; never queue several subparts to be safe.
+
 - Make the company-asset preflight proportional. Only server requirements stop
   generation: configured models and voice, a Company Overview for Roleplays, and
   selected generation-eligible Knowledge for Journey plans. Recommended inputs
