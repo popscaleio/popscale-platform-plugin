@@ -29,6 +29,9 @@ on as a valid reason to stop probing even when information remains missing.
 | Sensitive or emotional | Use restrained acknowledgment, offer the option not to elaborate, and avoid pressure or unnecessary personal details. |
 | Short or ambiguous | Ask for clarification or an example when useful and welcome; a refusal is not ambiguity to overcome. |
 
+Write one thought per main question; put the reason or the comparison in a
+probe. "Would you recommend joining?" is one question; "would you recommend
+it, do you know someone in a similar role, and why or why not" is three.
 Ask one question at a time. Do not prescribe a minimum probe count: a respondent
 may already have supplied the example, impact, and desired change in one answer.
 Acknowledgment should not impose an emotion, endorse an unsupported conclusion,
@@ -39,7 +42,9 @@ to add something before changing topic, unless the respondent already asked to
 move on or stop. Put that check-in inside the topic, before its completion;
 keep the final interview closing as a thank-you rather than another question.
 When an experience is relevant to a later topic, reuse what was already said
-and ask only about the new aspect.
+and ask only about the new aspect. Do not ask for what the invitation already
+carries: role or title, team or department, region or market and respondent
+type are invite fields and flow into the analysis as segments.
 
 ## Preserve respondent choice and research purpose
 

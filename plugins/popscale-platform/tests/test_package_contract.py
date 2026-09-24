@@ -476,6 +476,11 @@ class PluginPackageContractTests(unittest.TestCase):
             "publish:write",
             "500",
             "Never send Interview data",
+            "`available: false`",
+            "`employee_research`",
+            "`sv-SE`",
+            "`must_include`",
+            "topic's own",
         ):
             self.assertIn(required, skill)
         for required_tool in EXPECTED_INTERVIEW_TOOLS:

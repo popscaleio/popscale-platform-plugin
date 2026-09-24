@@ -19,6 +19,12 @@ the workflow below; confirmation booleans alone do not approve effects.
    the intended company, the user is an active `company_admin`, the `interviews`
    feature is available, and the required Interview scopes are granted. Never
    accept a company name or ID from the prompt as authorization.
+   `capabilities` lists every tool, including ones that cannot be called; the
+   `available` flag decides. `available: false` with a missing
+   `required_features` entry means Studies is not enabled for this company and
+   Popscale enables it; a missing `required_scopes` entry means the grant needs
+   widening. Say so once and stop; do not search for the tool again, use a
+   generic tool instead, or drive a browser around it.
 2. Read current state before changing it. Start with
    `list_interview_studies` or `get_interview_study`; use the returned current
    published snapshot, current editable draft, publish readiness, and edit token.
@@ -32,8 +38,26 @@ the workflow below; confirmation booleans alone do not approve effects.
    conditional probes, completion criteria, respondent choice, and extraction
    needs before considering the design finished. Apply it only to the affected
    topic for a focused edit; do not expand the user's requested scope.
+   The Study schema accepts free strings for four fields but the server owns
+   the values: `interview_category` is one of `customer_research`,
+   `employee_research` (use this for staff studies), `win_loss`,
+   `product_feedback`, `market_research`, `sales_discovery`, `other`;
+   `default_respondent_type` is `customer`, `prospect`, `employee`, `partner`
+   or `other`; `report_language` is `sv-SE`, `nb-NO`, `da-DK`, `fi-FI` or `en`
+   (never a bare `sv`); `target_insight_areas` are `research_summary`,
+   `sales_training`, `marketing_insights`, `product_feedback`,
+   `customer_experience`, `operations`, `coaching`. A wrong value returns a
+   generic `Invalid tool arguments.`; do not guess a second time.
+   When generating a Study through `generation_request_create` with
+   `request_type: interview_study`, the question requirements go in
+   `must_include` (at most 30 entries); the server silently drops unknown
+   fields such as `questions`. Read the request back with
+   `generation_request_detail` and show the normalized input before
+   `generation_request_start`.
 4. Pass the exact latest `updated_at` value as `expected_updated_at` whenever the
-   tool requires it. After any topic or localization mutation, refresh Study
+   tool requires it. For `update_interview_topic` that is the topic's own
+   `updated_at`, not the draft's; an `edit_conflict` returns
+   `current_updated_at`, which is the value to use next. After any topic or localization mutation, refresh Study
    detail before the next edit or publish attempt because child changes advance
    the draft edit token.
 5. Use localization tools only on the current draft. Treat generated respondent
@@ -54,8 +78,13 @@ the workflow below; confirmation booleans alone do not approve effects.
    preserve truncation indicators, distinguish stored evidence from inference,
    and never attempt to reconstruct hidden identity, metadata filters, or
    omitted provenance.
-9. Summarize server-returned IDs, outcomes, remaining warnings, truncation, and
-   the next safe action. Do not invent URLs, completion, or publication state.
+9. Report only what you verified. After every mutation, check that the result
+   is not an error, read the object back, and confirm the change is present
+   before saying it is done. Never report a batch as complete because the
+   calls were sent, and never parse an unstructured error text as if it were
+   a result. Then summarize server-returned IDs, outcomes, remaining warnings,
+   truncation, and the next safe action. Do not invent URLs, completion, or
+   publication state.
 
 ## Scope Boundaries
 
@@ -90,8 +119,9 @@ do not request or paste a bearer token.
   batches rather than bypassing validation.
 - Treat masked or omitted respondent data as intentionally unavailable. Never
   infer it from labels, evidence, or adjacent results.
-- If a tool is unavailable, report the missing capability or scope. Do not use a
-  generic REST request, public documentation, or another tenant as a fallback.
+- If a tool is unavailable (`available: false`), report the missing feature or
+  scope once. Do not search for it again, use a generic REST request, public
+  documentation, a browser, or another tenant as a fallback.
 
 Read [tool-workflow.md](references/tool-workflow.md) for exact tool order and
 scope mapping. Read [safety-and-fallbacks.md](references/safety-and-fallbacks.md)
