@@ -68,8 +68,16 @@ the workflow below; confirmation booleans alone do not approve effects.
    and `generation_request_steps`; do not claim completion early.
    After changing a dependency of a generation-only output, refresh detail and
    freshness, read generation capabilities, and follow the dependency decision
-   flow in [tool-workflow.md](references/tool-workflow.md). Queue the supported
-   subpart when authorized, or report the status/tool/scope/approval blocker.
+   flow in [tool-workflow.md](references/tool-workflow.md). Choose the subpart
+   from the user's intent, never from what is available: a changed evaluation
+   rule means `evaluation_instructions`; changed criteria mean
+   `evaluation_criteria`, which replaces the whole criteria list; a new or
+   reworked situation means `setup`; more customers means `customers`, which
+   appends. On an existing Roleplay, `setup`, `evaluation_criteria` and
+   `customers` require that you first describe what will be replaced or added
+   and obtain a yes; `evaluation_instructions` and `agent_prompt` do not. Never
+   queue several subparts "to be safe". Report the status/tool/scope/approval
+   blocker when the chosen subpart cannot run.
    Source edits alone must not be reported as synchronized generated output.
    **Coaching exception to selective regeneration:** whenever Coaching inputs
    change, always regenerate BOTH `agent_prompt` (agent instructions) and

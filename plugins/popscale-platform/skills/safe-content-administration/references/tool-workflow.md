@@ -76,6 +76,24 @@ inputs already saved as an incomplete update.
 A known regeneration blocker (for example an active session) counts here; do
 not save new Coaching inputs while the mandatory pair cannot follow.
 
+Pick the subpart from the intent. The table is the contract for existing roots;
+the live capabilities decide whether the subpart is supported for the current
+status.
+
+| The user wants to | Subpart | Effect on saved content | On an existing Roleplay |
+| --- | --- | --- | --- |
+| Change how a Roleplay is judged (weighting, tone of feedback, a rule) | `evaluation_instructions` | Rewrites the instruction only | Run after the source edit; no extra confirmation |
+| Change Coaching inputs of any kind | `agent_prompt` + `evaluation_instructions` | Rewrites both instructions | Always the pair; see the Coaching rule above |
+| Change the scoring criteria themselves | `evaluation_criteria` | Deletes every criterion and creates a new list; totals change | Describe the replacement and obtain a yes first |
+| Change the situation, goal or setting of a Roleplay | `setup` | Rewrites scenario fields the user did not name | Describe what is rewritten and obtain a yes first |
+| Add customers to a Roleplay | `customers` | Appends; existing customers and Journey links remain | State how many are added and obtain a yes first |
+| Refresh learner-facing text after a source change | `description`, `education_text` | Rewrites those texts only | No extra confirmation |
+| Change an Episode's content or speaker rules | `script` (then audio) | Regenerates script, marks translations stale | Edit `content` / `model_steering` first |
+
+Never queue several subparts because you are unsure which one applies; ask.
+`evaluation_criteria` and `setup` are the two that discard work the admin may
+have done by hand, which is why they require a described, confirmed change.
+
 1. Identify whether the requested source/component changes affect a protected
    output using current detail, freshness, dependency hints, and capabilities.
    Examples include customer, criteria/points, goals, or coaching-source edits.

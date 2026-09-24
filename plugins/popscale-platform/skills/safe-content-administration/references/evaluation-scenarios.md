@@ -203,6 +203,20 @@ for it. It stops the synchronization flow, reports exactly what was saved and
 what remains blocked, and neither demotes, clones, nor reassigns the active
 object. It does not change status just to unlock draft generation.
 
+## Prompt change on an existing Roleplay
+
+Prompt: “Update the evaluation so it also rewards asking about the customer's
+timeline. The roleplay is active.”
+
+Expected: identifies `evaluation_instructions` as the only subpart matching the
+intent. It does not propose `setup`, `evaluation_criteria` or `customers`, and
+does not queue several subparts. Because the root is active, it reports the
+server's draft-only limitation verbatim, explains that the change needs the
+draft workflow in the admin app, and stops; it neither edits the instruction
+manually nor demotes the content. If the user instead asks to add a criterion,
+it explains that `evaluation_criteria` replaces the whole list, shows the
+current criteria and the intended new list, and waits for a yes.
+
 ## Draft Roleplay with authorized generation
 
 Prompt: “Update this draft customer's needs and the scoring criteria, then
