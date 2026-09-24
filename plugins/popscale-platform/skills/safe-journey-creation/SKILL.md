@@ -94,7 +94,14 @@ for Journey context, duplicate names and internal identifiers.
    `dependency_failed`, `child_request_failed`, `link_failed` and
    `invalid_input` are failures to report with the affected item. On a partial
    result, reconcile and retry the existing step; never create a second plan.
-10. When the user asks to publish, call `journey_activation_readiness`. Activate
+10. When the user asks to publish, first review the whole Journey against the
+    public checklist (`/journeys/review-before-activation/`, fetched as the
+    routing skill describes): empty sections, placeholder text, unfinished
+    scored items, question counts, opening lines, section descriptions,
+    passing-score policy, attempt rules within a section, naming and mix.
+    Report findings in its three levels with a proposed value each; fix only
+    what the user approves, through the content workflow. Then call
+    `journey_activation_readiness`. Activate
     each ready draft child through `content_activate` only after a specific
     confirmation. A scenario shared by several items is activated once, after
     every customer generation that targets it has reached `linked`; a new

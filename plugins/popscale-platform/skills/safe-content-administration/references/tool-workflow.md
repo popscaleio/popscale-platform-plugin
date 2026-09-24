@@ -131,6 +131,15 @@ have done by hand, which is why they require a described, confirmed change.
 Never use `content_update` on the generation-only output itself, including when
 generation is unavailable, fails, or the user explicitly asks for manual text.
 
+## Review before activation
+
+The public checklist `/journeys/review-before-activation/` and the language
+guide `/content/language-in-exercises/` are the review criteria for
+learner-facing text and Journey structure. Server readiness checks structure
+and thresholds; the checklist covers what readiness cannot see (placeholder
+text, question counts, opening lines, dashes, jargon). Report, propose, wait
+for approval per finding, then edit through the focused tools.
+
 ## Generation
 
 For Episodes, apply [speaker and voice rules](episode-speakers.md) in Script input

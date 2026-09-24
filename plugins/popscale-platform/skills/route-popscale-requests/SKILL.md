@@ -48,7 +48,10 @@ for Journey context, duplicate names and internal identifiers.
    `/content/what-can-be-assessed/` for evaluation criteria,
    `/content/one-situation-many-customers/` for Roleplays,
    `/knowledge/write-a-knowledge-document/` for Knowledge,
-   `/journeys/plan/` for a Journey brief, `/studies/` for a Study. The guides
+   `/journeys/plan/` for a Journey brief, `/studies/` for a Study, and
+   `/content/language-in-exercises/` for the Swedish in every learner-facing
+   field. Before activating content or a Journey, fetch
+   `/journeys/review-before-activation/` and review against it. The guides
    describe what good input contains, not how the platform processes it. Ask
    the user for what the guide says is missing before creating anything. Never
    put company facts into the docs query; fetch the guide, then author on the
