@@ -4,6 +4,17 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+### Changed
+
+- Make the company-asset preflight proportional. Only server requirements stop
+  generation: configured models and voice, a Company Overview for Roleplays, and
+  selected generation-eligible Knowledge for Journey plans. Recommended inputs
+  produce a warning and an offer to fill them; the user decides whether to
+  generate anyway. The preflight applies to new exercises and Journey plans, not
+  to targeted regeneration or language generation. Context-inclusion evidence is
+  read from the plan snapshot where it exists; standalone generation is reviewed
+  against the sources afterwards instead of being stopped for lack of a preview.
+
 ### Fixed
 
 - Tailor conversational Episode Script input to listener relevance, complementary

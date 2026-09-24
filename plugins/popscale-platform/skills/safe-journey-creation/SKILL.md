@@ -24,10 +24,13 @@ the workflow below; confirmation booleans alone do not approve effects.
    [company asset preflight](../safe-content-administration/references/company-asset-preflight.md)
    before generating an overview, item inputs or child exercises. It requires
    `content:read` for company assets/configuration and `knowledge:read` for
-   approved, active, generation-eligible Knowledge. Verify substantive source
-   content, saved revisions and inclusion in the actual generation context;
-   missing or unverifiable required inputs stop generation. Knowledge context
-   reads may diagnose gaps but do not replace this gate.
+   approved, active, generation-eligible Knowledge. Stop only on server
+   requirements: configured models and voice, a Company Overview when the mix
+   includes Roleplays, and at least one selected generation-eligible Knowledge
+   asset. Thin recommended inputs are a warning with an offer to fill them; the
+   user decides whether to generate anyway. Read the plan's captured company
+   context at review and treat omitted or truncated required facts as blockers
+   for the affected items.
    For Episode items, apply the shared
    [speaker and voice rules](../safe-content-administration/references/episode-speakers.md)
    to planning, item inputs and execution. Default to anonymous, topic-led

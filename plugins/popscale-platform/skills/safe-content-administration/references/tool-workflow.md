@@ -73,9 +73,8 @@ before making a new input edit rather than completing a source-only update.
 If generation is already known to be unavailable for the target, resolve the
 draft/capability blocker before starting new Coaching input edits. Report any
 inputs already saved as an incomplete update.
-This includes missing company inputs or context evidence under the shared
-[company asset preflight](company-asset-preflight.md). Do not save new Coaching
-inputs while the mandatory pair is known to be blocked by that gate.
+A known regeneration blocker (for example an active session) counts here; do
+not save new Coaching inputs while the mandatory pair cannot follow.
 
 1. Identify whether the requested source/component changes affect a protected
    output using current detail, freshness, dependency hints, and capabilities.
@@ -122,11 +121,10 @@ the supported pipeline, including combined operations; inspect saved outputs
 read-only afterward. Do not require an invented intermediate review gate or
 repair a generated script manually.
 
-Complete the shared [company asset preflight](company-asset-preflight.md) before
-any generation dispatch, including targeted regeneration, language/media work
-and retries. Verify bound source revisions again after relevant changes. Do not
-confuse asset existence or a successful Knowledge context read with proof of
-the actual company context consumed by the operation.
+The [company asset preflight](company-asset-preflight.md) applies when a new
+exercise is created, not to targeted regeneration, language/media work or
+retries on an existing root. For those, check the dependencies of the selected
+subpart and verify the saved output afterwards.
 
 1. Call `content_generation_capabilities` with `content:read` immediately before
    choosing a format, subpart, or granular generation operation.
