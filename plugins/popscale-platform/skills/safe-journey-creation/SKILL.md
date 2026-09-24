@@ -36,6 +36,10 @@ the workflow below; confirmation booleans alone do not approve effects.
    supported Script input (`model_steering`) and let platform generation produce
    scripts, translations and audio. Read outputs for verification; never edit
    generated Episode scripts or require an unsupported intermediate review gate.
+   For Coaching items, apply shared
+   [question design](../safe-content-administration/references/coaching-question-design.md)
+   to the generation brief and review generated item inputs before execution.
+   Preserve the selected type, aligned answers and intended total score.
 4. Create or inspect a generation request, start it when requested, and poll
    `generation_request_detail` until it reaches a terminal or reviewable state.
    Do not invent successful completion while work is still queued or running.

@@ -1,6 +1,21 @@
 # V1 implementation tracker
 
-Last updated: 2026-09-23
+Last updated: 2026-09-24
+
+## Coaching question design — unreleased guidance
+
+- [x] Share purpose-led question design across standalone and Journey workflows:
+  one primary goal, necessary context, natural wording and aligned answers.
+- [x] Preserve selected Coaching types and coherent multipart questions. Use
+  review signals rather than automatic punctuation-based splitting or quotas.
+- [x] Preserve the intended score and verify saved question order and totals;
+  require both generated instructions to reflect the final inputs.
+- [x] Add synthetic host scenarios for varied purposes, score conflicts,
+  semantic alignment, paired regeneration and active-content blockers.
+- [x] All 80 package tests, release validation, both changed skill validators,
+  public bundle dependency checks, live Docs smoke and whitespace checks pass.
+- [ ] Live host evaluation and a separately authorized release remain pending.
+  No backend code or customer content changes are included.
 
 ## Episode Script input correction — unreleased
 
