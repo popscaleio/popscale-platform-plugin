@@ -5,7 +5,7 @@ from pathlib import Path
 
 PLUGIN_ROOT = Path(__file__).resolve().parents[1]
 REPO_ROOT = PLUGIN_ROOT.parents[1]
-EXPECTED_VERSION = "1.4.0"
+EXPECTED_VERSION = "1.4.1"
 EXPECTED_SERVERS = {
     "popscale-platform": {
         "type": "http",
@@ -189,6 +189,8 @@ class PluginPackageContractTests(unittest.TestCase):
             "Never use `popscale-docs` for a write",
             "/content/writing-good-input/",
             "/journeys/plan/",
+            "/journeys/review-before-activation/",
+            "/content/language-in-exercises/",
             "`available: false`",
             "safe-journey-creation",
             "safe-interview-administration",
@@ -385,6 +387,8 @@ class PluginPackageContractTests(unittest.TestCase):
             "publish:write",
             "Never send customer content",
             "/content/writing-good-input/",
+            "/journeys/review-before-activation/",
+            "/content/language-in-exercises/",
             "`reference_facts`",
             "`number_of_customers`",
             "never from what is available",

@@ -96,8 +96,15 @@ for Journey context, duplicate names and internal identifiers.
    operation supports staging; otherwise use supported combined generation and
    inspect outputs afterwards, as defined by the shared rules.
    Stop active input corrections when safe regeneration is unavailable.
-9. Before publication, read detail and freshness for every generation-only
-   output on the root; an edited one blocks activation regardless of readiness.
+9. Before publication, review the root against the public checklists: fetch
+   `/journeys/review-before-activation/` and `/content/language-in-exercises/`
+   from `popscale-docs` (see the routing skill's "Before authoring" step) and
+   read every learner-facing field with them. Report findings in the
+   checklist's three levels (stops activation, breaks a rule, cosmetic) with a
+   proposed value per finding; change nothing without a yes per finding, and
+   never touch generation-only outputs. Then read detail and freshness for
+   every generation-only output on the root; an edited one blocks activation
+   regardless of readiness.
    Call `content_activation_readiness`, present every failed or warning check,
    and call `content_activate` only after immediate explicit confirmation with
    `confirm_publish=true`.

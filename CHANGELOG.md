@@ -4,6 +4,18 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+## [1.4.1] - 2026-09-24
+
+### Added
+
+- Review before activation: fetch the public checklist
+  (`/journeys/review-before-activation/`) and the language guide
+  (`/content/language-in-exercises/`) and review every learner-facing field
+  and the Journey structure against them before `content_activate` or
+  `journey_activate`. Findings are reported in three levels with a proposed
+  value each and changed only per approved finding. The language guide also
+  applies when authoring.
+
 ## [1.4.0] - 2026-09-24
 
 ### Changed
