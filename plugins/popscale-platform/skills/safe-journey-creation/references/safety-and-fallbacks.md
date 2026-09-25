@@ -53,6 +53,19 @@ returns structured content but no view appears, summarize:
 Then continue with ordinary MCP tools. Do not ask the user to switch hosts merely
 to complete the core flow.
 
+## Invalid Scenario or Customer Selection
+
+A `reuse_from_client_id` that points forward, at itself, or at a non-Roleplay
+item, a `customer_id` from another scenario or company, or a new customer
+against an already active scenario is rejected by the server. Show the error
+and fix the selector in the overview; do not create a new plan.
+
+## Waiting Dependencies and Failed Sources
+
+`waiting_for_scenario` means the source item has not reached `linked`. If the
+source fails, dependent items become `dependency_failed`. Reconcile and retry
+the existing step; a second plan produces duplicates.
+
 ## Async and Partial Failure
 
 Queued or running work is not failure. Poll using the status tool. On a terminal

@@ -30,8 +30,16 @@ Use `create_interview_study` only for a new Study. Use
   respondent-intro generation.
 
 These mutations require `interview:read` and `interview:write`. Use the latest
-returned `updated_at` as `expected_updated_at` where required, and refresh Study
-detail after every child mutation.
+returned `updated_at` as `expected_updated_at` where required: for a topic, the
+topic's own timestamp. A successful topic edit also advances the draft token
+without returning it, so refresh Study detail after every child mutation.
+
+`generation_request_create` with `request_type: interview_study` takes `name`,
+`purpose`, `context` (required), `interview_category`,
+`default_respondent_type`, `report_language`, `desired_duration_minutes`
+(5–240) and `must_include` (up to 30 question requirements). Unknown fields are
+dropped without error. Verify the stored input with
+`generation_request_detail` before starting.
 
 ## Publication
 

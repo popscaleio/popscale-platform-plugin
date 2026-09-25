@@ -220,4 +220,4 @@ Navigation returns verified typed destinations. A capable host resolves them to
 trusted links; otherwise the assistant describes the page without claiming it
 opened. Host progress UI varies; a completed submission tool does not mean its
 background job is finished. Compatible backend discovery must precede publication
-of version 1.4.0; first-party sessions must be restarted to pick up new profiles.
+of version 1.5.0; first-party sessions must be restarted to pick up new profiles.

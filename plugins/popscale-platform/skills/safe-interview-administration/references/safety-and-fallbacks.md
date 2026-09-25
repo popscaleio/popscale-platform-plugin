@@ -20,11 +20,27 @@ If a capability is unavailable or a result supplies an
 explanation and ask the user to reconnect or reauthorize. Never ask for a raw
 access token or respondent link token.
 
+## Feature disabled for the company
+
+The `interviews` feature is off by default per company, and Interview scopes
+are granted only to company admins. When `capabilities` shows the Interview
+tools with `available: false`, say which feature or scope is missing and who
+enables it. One check is enough; repeated tool searches, generic tools and
+browser automation are not fallbacks.
+
+## Silently dropped generation fields
+
+The Study generation input drops unknown fields without error. A request
+created with `questions` instead of `must_include` succeeds with an empty
+requirement list. Read the request back and show the normalized input before
+starting; cancel and recreate if a requirement is missing.
+
 ## Optimistic concurrency
 
-Study, draft, and topic edits use server-returned timestamps as edit tokens. On
-an `edit_conflict`, refresh Study detail and compare the current focused field
-with the user's requested change. Do not replay an old full object or overwrite
+Study, draft, and topic edits use server-returned timestamps as edit tokens; a
+topic's token is its own `updated_at`, not the draft's. On an `edit_conflict`,
+use the returned `current_updated_at`, refresh Study detail and compare the
+current focused field with the user's requested change. Do not replay an old full object or overwrite
 unrelated concurrent edits. Ask for renewed confirmation if the refreshed state
 changes the consequence of the operation.
 

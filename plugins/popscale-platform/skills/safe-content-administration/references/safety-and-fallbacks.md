@@ -32,6 +32,13 @@ Never convert a focused edit into a broad replacement to avoid a conflict.
 
 ## Active content and destructive boundaries
 
+For an Episode identity/script correction, follow the shared
+[speaker policy](episode-speakers.md). Never edit generated source or translated
+scripts, even on drafts. Correct Script input (`model_steering`) and request
+platform regeneration. Stop before active input edits if that correction cannot
+be regenerated and published safely. Draft-only generation is not permission to
+demote, clone or reassign an active Episode. Present the input delta and blocker.
+
 Active edits can affect current learners. Show the exact active object and field
 delta before requesting `confirm_active_edit`, and send that flag only when the
 live tool schema exposes it. Delete, reorder, department replacement, archive,

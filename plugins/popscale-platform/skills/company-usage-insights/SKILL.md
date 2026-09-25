@@ -9,6 +9,10 @@ Answer learning-usage questions through `popscale-platform`. Keep the
 OAuth-selected company, live capability catalog, privacy metadata, metric
 definitions, and server bounds authoritative.
 
+Use current app-visible names for exercises, Journeys and Studies in user-facing
+answers, lists and confirmations. Apply the shared [content naming rules](../route-popscale-requests/references/content-names.md)
+for Journey context, duplicate names and internal identifiers.
+
 ## Required Workflow
 
 1. Call `current_user`, then `capabilities`. Require an active effective
@@ -16,11 +20,11 @@ definitions, and server bounds authoritative.
    A superuser acting for a company still needs that explicit company context;
    a company ID or name in the prompt is never authorization.
 2. Resolve the Journey or content object from authenticated product state. Use
-   a stable ID/link already returned in the current Product MCP context. For a
+   a server-returned ID/link already available in the current Product MCP context. For a
    title-only request, call `search_company_content` only when `content:read` is
-   granted; otherwise ask the user for a server-returned ID/link or offer scoped
-   reauthorization for name resolution. Never guess an ID or send the title,
-   identifier, or result to `popscale-docs`.
+   granted; otherwise offer scoped reauthorization for name resolution or use
+   an app link the user can provide if the live tools support resolving it.
+   Never guess an ID or send the title, identifier, or result to `popscale-docs`.
 3. Start with the smallest aggregate that answers the question:
    `get_journey_insights` for current Journey participation/completion/mastery,
    or `get_content_outcomes` for Roleplay, Coaching Session, Episode,
@@ -81,13 +85,5 @@ filters, or pagination. Read
 or format-specific outcomes. Read
 [privacy-and-limits.md](references/privacy-and-limits.md) for suppression, PII,
 historical, and bounded-result decisions. Read
-[evaluation-scenarios.md](references/evaluation-scenarios.md) when validating a
+the host evaluation scenarios in the repository's `docs/evaluation/` directory when validating a
 host or changing the Product MCP analytics catalog.
-
-## Product feedback and navigation
-
-When the user wants to report a product problem or idea, use
-[safe-product-feedback](../safe-product-feedback/SKILL.md) without copying private
-content into a report implicitly. For a requested page destination, follow
-[navigation and activity](../route-popscale-requests/references/navigation-and-activity.md).
-A navigation proposal does not approve any content change or publication.

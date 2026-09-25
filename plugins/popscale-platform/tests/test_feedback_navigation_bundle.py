@@ -23,7 +23,7 @@ class FeedbackNavigationBundleTests(unittest.TestCase):
         self.contract = json.loads((ROOT / "contracts/product-tools-v1.json").read_text())
 
     def bundle(self):
-        return json.loads(builder.build_bundle(self.sources, "1.4.0", "a" * 40, self.contract))
+        return json.loads(builder.build_bundle(self.sources, "1.5.0", "a" * 40, self.contract))
 
     def test_all_new_tools_reach_consumer_requirements(self):
         body = self.bundle()
@@ -33,11 +33,12 @@ class FeedbackNavigationBundleTests(unittest.TestCase):
         # gated by the consumer checking every required tool.
         self.assertEqual(body["tool_contract_version"], "popscale.product.actions.v1")
 
-    def test_mode_references_and_evaluations_are_packaged(self):
+    def test_mode_references_are_packaged_and_evaluations_are_external(self):
         paths = self.bundle()["required_reference_paths"]
+        self.assertTrue((ROOT / "docs/evaluation/safe-product-feedback.md").is_file())
+        self.assertFalse(any("evaluation" in path for path in self.bundle()["instruction_paths"]))
         for path in (
             "skills/safe-product-feedback/references/platform-review.md",
-            "skills/safe-product-feedback/references/evaluation-scenarios.md",
             "skills/route-popscale-requests/references/navigation-and-activity.md",
             "skills/route-popscale-requests/references/product-actions.md",
         ):
@@ -47,8 +48,8 @@ class FeedbackNavigationBundleTests(unittest.TestCase):
                 self.bundle()
             self.sources[path] = original
 
-    def test_each_workflow_reaches_feedback_and_navigation_without_host_metadata(self):
-        for name in builder.SKILLS:
+    def test_relevant_workflows_reach_feedback_and_navigation_without_host_metadata(self):
+        for name in ("route-popscale-requests", "safe-product-feedback"):
             visited, _ = builder.dependency_closure(self.sources, [f"skills/{name}/SKILL.md"])
             self.assertIn("skills/safe-product-feedback/SKILL.md", visited)
             self.assertIn("skills/route-popscale-requests/references/navigation-and-activity.md", visited)

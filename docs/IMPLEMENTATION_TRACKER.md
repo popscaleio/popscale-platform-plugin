@@ -1,6 +1,121 @@
 # V1 implementation tracker
 
-Last updated: 2026-09-22
+Last updated: 2026-09-24
+
+## Conversational Episode quality — unreleased guidance
+
+- [x] Extend positive Script input guidance with relevant openings, complementary
+  voice contributions, coherent development and content-led variation. Preserve
+  company tone, explicit style choices and space for developed turns.
+- [x] Review actual saved scripts for engagement, repetition, grounding and
+  anonymity without equating text review with audio listening or job completion.
+- [x] Prefer review before audio/languages only where the actual operation and
+  target support staging. Preserve combined-only creation/Journey/language flows
+  and speed preferences; never invent pause endpoints or manually edit scripts.
+- [x] Bind review to the current source and bound authorized quality corrections.
+  Add synthetic scenarios covering adaptation, granular/combined flows and retries.
+- [x] All 80 package tests, release and both skill validators, public bundle
+  dependency checks, live Docs smoke and whitespace checks pass.
+- [ ] Live host and listening evaluations, and a separately authorized release,
+  remain pending. No backend change or customer mutation is included.
+
+## Coaching question design — unreleased guidance
+
+- [x] Share purpose-led question design across standalone and Journey workflows:
+  one primary goal, necessary context, natural wording and aligned answers.
+- [x] Preserve selected Coaching types and coherent multipart questions. Use
+  review signals rather than automatic punctuation-based splitting or quotas.
+- [x] Preserve the intended score and verify saved question order and totals;
+  require both generated instructions to reflect the final inputs.
+- [x] Add synthetic host scenarios for varied purposes, score conflicts,
+  semantic alignment, paired regeneration and active-content blockers.
+- [x] All 80 package tests, release validation, both changed skill validators,
+  public bundle dependency checks, live Docs smoke and whitespace checks pass.
+- [ ] Live host evaluation and a separately authorized release remain pending.
+  No backend code or customer content changes are included.
+
+## Episode Script input correction — unreleased
+
+- [x] Map Script input to `model_steering`; source `script` and translated/source
+  `script_text` are generation-only regardless of exposed editability. Correct
+  the format map and both standalone/Journey authoring workflows.
+- [x] Extend the offline field guard to root/component create/update payloads
+  and report edited Episode scripts as workflow failures. Keep input edits and
+  unrelated allowed fields under their existing authorization rules.
+- [x] Remove the prior mandatory intermediate pre-audio review gate. Use supported
+  platform pipelines, including combined generation, and verify outputs read-only.
+- [x] Add positive Script input guidance with coherent, developed turns and
+  meaningful speaker changes. Keep technical boundaries in the agent workflow;
+  adapt examples, structure and pace to each company, purpose and supported
+  format. Cover varied briefs, explicit choices and platform-owned pacing fixes.
+- [x] Correct the shared speaker scenarios and add draft manual-repair, payload
+  bypass and edited-output cases. No backend implementation or customer mutation.
+- [x] All 80 package tests pass, including four new Episode policy/guard tests
+  plus expanded protected-field cases. Release and both skill validators pass;
+  public bundle dependency checks, `git diff --check` and live Docs smoke pass.
+- [ ] Live host tool traces and a separately authorized release remain pending.
+
+## User-facing content names — unreleased guidance
+
+- [x] Link all five skills to shared naming rules: current app-visible titles,
+  verified Journey context and visible distinctions for duplicate names.
+- [x] Replace instructions to report IDs in routine content, Study, Journey and
+  generation summaries. Keep exact IDs, revisions and provenance internally.
+- [x] Handle missing titles and discovery scopes without requiring users to find
+  hidden IDs; preserve authorization, ambiguity checks and privacy boundaries.
+- [x] Add twelve synthetic host acceptance scenarios. All 76 package tests,
+  release validation, five skill validators, public bundle dependency checks,
+  live Docs smoke and whitespace checks pass.
+- [ ] Live host behavior checks and a separately authorized release remain pending.
+  No backend change, customer mutation, version bump or release is included.
+
+## Anonymous Episode speakers — unreleased guidance
+
+- [x] Share anonymous-speaker defaults across standalone Episode and Journey
+  workflows. Use natural topic-led openings, structural speaker labels and
+  separate TTS configuration; no invented or persistent podcast identities.
+- [x] Limit named-host exceptions to explicit user-supplied identities. Review
+  steering and complete source/translated scripts; distinguish whole-name
+  matches from substrings and legitimate subject-matter mentions.
+- [x] Superseded the initial intermediate review gate with the Script input
+  correction above: platform-owned generation and read-only output verification.
+  Preserve existing company preflight/scopes.
+- [x] Stop active input corrections without a supported way to regenerate scripts
+  and audio together; separate script review, job success, media linkage and
+  listening evidence. No customer incident data enters the public package.
+- [x] Add shared synthetic host acceptance scenarios for defaults, identity leakage,
+  translations, exceptions, missing gates and active/draft corrections.
+- [x] All 76 package tests, release validation, both changed skill validators,
+  Markdown dependency checks and live public Docs MCP smoke pass. The shared
+  policy and scenarios are included in the public skill bundle.
+- [ ] Run live Codex/Claude tool-trace scenarios; package checks do not establish
+  model behavior or audio quality.
+- [ ] Backend support remains separate reported work. No backend code, customer
+  mutation, profile feature, manifest bump or plugin release is included.
+
+## Company asset preflight — unreleased guidance
+
+- [x] Journey and standalone generation share one preflight reference, with a
+  format requirements matrix, all nine Roleplay customer categories, substantive
+  completeness, paginated discovery and saved-value/revision verification.
+- [x] Require evidence of actual context inclusion before generation; distinguish
+  asset presence and Knowledge hashes from company-source binding. Missing tools,
+  material omissions/truncation and stale bindings are explicit blockers.
+- [x] Recheck after relevant changes and review source use in both plans and saved
+  outputs. Preserve approval/scope boundaries and mandatory paired Coaching
+  regeneration; read-only inspection and source preparation remain possible.
+- [x] Add shared host evaluation scenarios covering pagination, blank sources,
+  missing evidence, changed revisions/mix, conditional configuration, standalone
+  retries and actual output review. Public guidance contains no private data.
+- [x] All 76 package tests, release validation, both changed skills' frontmatter
+  validation, Markdown reference checks and the public Docs MCP smoke pass.
+  The shared reference and scenarios are included in the public skill bundle.
+- [ ] Run the documented Codex/Claude tool-trace scenarios. Package tests and
+  static reference validation do not establish host compliance.
+- [ ] Backend enforcement and a supported pre-generation context verification
+  surface remain separate implementation work. This guidance deliberately stops
+  when live tools cannot prove the required context; it adds no backend capability.
+- [ ] Publish separately; no manifest bump, tag or plugin release in this change.
 
 ## Live Docs smoke repair
 
@@ -112,7 +227,8 @@ Last updated: 2026-09-22
   and resource assertions were not reached. No Docs code changed here.
 - [ ] Clean Codex and Claude evaluations of the new scenarios and read-only
   OAuth smoke tests remain release checks; they were not run in this PR work.
-- [ ] Review, merge, tag and publish 1.3.1 separately. This candidate performs no
+- [x] 1.3.1 tagged 2026-09-22.
+- [ ] Review, merge, tag and publish 1.4.0 separately. This candidate performs no
   backend deployment, migration, maintenance-mode action or customer mutation.
 
 ## Complete
@@ -204,12 +320,12 @@ Last updated: 2026-09-22
 - [x] Clean Codex install from public GitHub marketplace verified.
 - [x] Clean Claude marketplace install from public GitHub repository verified.
 - [ ] `v1.0.1` logo patch and archive published.
-- [ ] `v1.1.0` Interview administration package reviewed, merged, tagged, and
+- [x] `v1.1.0` Interview administration package reviewed, merged, tagged, and
   published after the backend contract is deployed and host smoke tests pass.
-- [ ] `v1.2.0` granular company-content and usage-insights package reviewed,
+- [x] `v1.2.0` granular company-content and usage-insights package reviewed,
   merged, tagged, and published after production backend availability and clean
   host smoke tests.
-- [ ] `v1.3.0` company-switch package reviewed, merged, tagged, and published
+- [x] `v1.3.0` company-switch package reviewed, merged, tagged, and published
   after the production switch page is available and clean Codex/Claude host
   smoke tests pass.
 
@@ -225,20 +341,21 @@ Last updated: 2026-09-22
 
 Directory gates are intentionally separate from the public GitHub V1 release.
 
-## Feedback, navigation and activity — 1.4.0 candidate
+## Feedback, navigation and activity — 1.5.0 candidate
 
 - [x] Reviewed implementation handover and exact public tool schemas at backend
   source commit `6873727260192ebe956bac0b8925a04d8324a62c` (2026-09-22).
 - [x] Added feedback submission and authorized-review workflow; added typed
-  navigation and actual activity guidance, with shared handoffs from other skills.
+  navigation and actual activity guidance, with routing from the existing route skill.
 - [x] Preserved Product Actions v1 envelope and public bundle schema; extended
   required tool inventory and six-skill dependency closure.
-- [x] Prepared host metadata at 1.4.0 and synthetic host evaluation scenarios.
-- [x] Local validation: 80 unit/contract/package tests, release validator, skill
+- [x] Prepared host metadata at 1.5.0 and synthetic host evaluation scenarios.
+- [x] Local validation: 85 unit/contract/package tests, release validator, skill
   and plugin validators, live Docs MCP smoke, and git diff --check passed.
   Committed public asset/archive hashes and build evidence are recorded in the
   plugin PR rather than embedded in the source used to derive their hashes.
-- [ ] Verify compatible deployed backend discovery before publication.
+- [x] Production discovery exposes feedback, ProductAction and navigation tools
+  after the 2026-09-25 backend deploy; optional feedback tools remain grant-scoped.
 - [ ] Clean Codex/Claude OAuth and behavioral checks; separately authorized writes
   only in a dedicated test company. No live write verification claimed here.
 - [ ] Review, merge, tag and publish separately; frontend interaction is owned by

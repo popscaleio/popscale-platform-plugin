@@ -11,6 +11,7 @@ it does not authorize unsupported fields or operations.
 | `roleplay` | `evaluation_instructions` |
 | `coaching_session` | `evaluation_instructions`, `agent_prompt` |
 | `challenge` | `evaluation_prompt` |
+| `episode` | `script`; source and translated `episode_script_variant.script_text` |
 
 This classification takes precedence over `editable_fields`, `allowed_fields`,
 active-edit confirmation, and `confirm_generated_output_override`. Never author
@@ -31,7 +32,7 @@ text as a workaround. See the dependency decision flow in
 | `roleplay` | customers; customer questions, objections, and decision rules; evaluation criteria | `setup`, `customers`, `description`, `education_text`, `coaching_focus`, `evaluation_criteria`, `evaluation_instructions` |
 | `coaching_session` | Root fields only | `description`, `education_text`, `agent_prompt`, `evaluation_instructions` |
 | `challenge` | Root fields only | `description`, `education_text`, `evaluation_prompt` |
-| `episode` | Script variants; media rows are readable but not component-editable | `script`, `source_script_variant`, `description`, `education_text`, `source_audio` |
+| `episode` | Script variants and media rows are read-only evidence under plugin policy | `script`, `source_script_variant`, `description`, `education_text`, `source_audio` |
 | `flashcard_deck` | Cards, translations, and deck languages | `cards`, `description` |
 | `journey` | Sections and items | No targeted content regeneration; use Journey planning/generation tools for a new plan |
 
@@ -49,8 +50,15 @@ text as a workaround. See the dependency decision flow in
   refresh the root revision before the next call.
 - Generated customers are append-only when the live capabilities say
   `add_generated_customers`; do not interpret regeneration as replacement.
+- `evaluation_criteria` regeneration replaces the whole criteria list and
+  `setup` rewrites scenario fields; both need a described, confirmed change on
+  an existing Roleplay. See the intent table in
+  [tool-workflow.md](tool-workflow.md).
 
 ### Coaching sessions
+
+- Follow [question design](coaching-question-design.md) for participant-facing
+  wording, progression, reference-answer alignment and score-preserving splits.
 
 - A change to any Coaching generation input always requires a new platform
   generation of BOTH `agent_prompt` and `evaluation_instructions`. Examples
@@ -77,7 +85,18 @@ text as a workaround. See the dependency decision flow in
 
 ### Episodes
 
-- Edit one language script through `episode_script_variant`. Treat
+- Follow [speaker and voice rules](episode-speakers.md): anonymous dialogue by
+  default, structural speaker labels, separate TTS configuration, and no invented
+  host identities or recurring podcast profiles. Put these requirements in
+  **Script input** (`model_steering` in the current contract), then use platform
+  generation. Do not invent a `script_input` API field.
+- Never author, patch, clear or translate `script` or `script_text` manually,
+  including via root create/update or `episode_script_variant` component writes.
+  Read variants as evidence; technical editability does not waive this rule.
+- Before changing active generation inputs for a correction, establish a
+  supported regeneration/publication path for affected scripts and audio;
+  otherwise stop before saving the input change.
+- Treat
   `episode_media` rows as read-only evidence unless the user separately requests
   a supported upload-intent flow.
 - Regenerating `script` also synchronizes the source script variant.

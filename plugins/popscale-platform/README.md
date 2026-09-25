@@ -54,6 +54,15 @@ separately before claiming the dual-server workflow.
 The MCP servers and MCP App are hosted by Popscale. This package contains no
 customer credential, token, tenant identifier, or embedded API implementation.
 
+The skill text is also consumed by Popscale's built-in admin assistant through
+the published skill bundle, so everything under `skills/` is host-neutral
+public policy; host-specific and private instructions belong to the consuming
+host, never to this package. Host evaluation scenarios live in
+`docs/evaluation/` and are not part of the bundle.
+
+This package replaces the earlier `popscale-superadmin` plugin, which is
+retired and must not be used against production.
+
 ## Routing and trust boundary
 
 - Send general product, setup, and public documentation questions to
@@ -104,6 +113,13 @@ and one or more dedicated scopes: `interview:read`, `interview:write`, and
 Existing grants are not widened automatically; reconnect and review the new
 consent scopes before using these tools.
 
+Generation itself requires only what the server enforces: dialog and
+evaluation models with a compatible TTS voice configured for the company, a
+Company Overview for Roleplays, and selected generation-eligible Knowledge for
+Journey plans. Other company assets (products, tone of voice, customer assets,
+personalities) improve results and are recommended, not required; the skills
+warn and offer to fill them.
+
 Company-content inspection requires `content:read`; focused edits additionally
 require `content:write`. Supported generation also requires `generation:read`
 for voice/status reads and `generation:write` to queue work; activation
@@ -151,4 +167,4 @@ Navigation returns verified typed destinations. A capable host resolves them to
 trusted links; otherwise the assistant describes the page without claiming it
 opened. Host progress UI varies; a completed submission tool does not mean its
 background job is finished. Compatible backend discovery must precede publication
-of version 1.4.0; first-party sessions must be restarted to pick up new profiles.
+of version 1.5.0; first-party sessions must be restarted to pick up new profiles.

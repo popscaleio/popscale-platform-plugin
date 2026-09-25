@@ -55,7 +55,8 @@ missing generation IDs do not establish that origin.
 Manual override applies only to fields explicitly editable under both the live
 contract and the plugin's [format policy](content-format-map.md). It never
 applies to Roleplay or Coaching `evaluation_instructions`, Coaching
-`agent_prompt`, or Challenge `evaluation_prompt`, even on an explicit request
+`agent_prompt`, Challenge `evaluation_prompt`, or Episode `script` and source/
+translated variant `script_text`, even on an explicit request
 to rewrite, correct, translate, or clear them. These are generation-only outputs.
 For other permitted, explicitly requested manual edits, explain the provenance
 consequence, use only confirmation fields exposed by the live schema, and read
@@ -84,8 +85,13 @@ component reads. Report the narrow evidence: “The language generation step
 completed and the corresponding output was read back.” If the current file or
 translation cannot be bound to that generation, explicitly say its exact origin
 is not verified. Never claim it is unchanged or matches the current script
-without server evidence. Missing native provenance does not authorize a rebuild
-or prevent separately authorized publication that passes server readiness.
+without server evidence. Missing native provenance does not authorize a rebuild.
+For Episode identity corrections, the [speaker policy](episode-speakers.md)
+requires Script input edits and platform regeneration, with verification of
+affected scripts and audio before
+publication. For other work, missing native provenance alone does not prevent
+separately authorized publication that passes server readiness and applicable
+plugin checks. Script review is not a claim that the audio was listened to.
 
 ## Local evidence check
 
@@ -143,7 +149,8 @@ output and verifying its linkage remains required in the tool workflow.
 
 ### Guard a proposed manual write
 
-Before `content_update`, hosts with local Python must run:
+Before root or component create/update calls containing `fields`, hosts with
+local Python must run:
 
 ```text
 python3 <skill-directory>/scripts/verify_generation_evidence.py --check-manual-write < proposed-arguments.json
@@ -157,17 +164,24 @@ request succeeded. Exit 2 means invalid input. Exit 0 only means this field guar
 passed; it does not grant authorization, establish editability, or bypass other
 checks. Confirmations, active/draft status, and manual-edit requests cannot
 override the exclusion. Without local Python, apply the identical field check
-before calling a write tool. Creation and other write routes obey the same
-generation-only rule even though this CLI mode checks `content_update` arguments.
+before calling a write tool. Episode root `script` and component/direct-child
+`script_text` are rejected even with empty/null values or in mixed payloads;
+`model_steering` (Script input) remains subject to normal input-edit checks.
+The helper checks field names, not all tool schemas or nested payloads. Other
+write routes obey the same generation-only rule; never bury generated script
+text in another field as a workaround. Native variant verification still uses
+actual product reads; the checker cannot invent missing freshness/linkage.
 
 Without local execution, apply the same rules to tool results and disclose that
 the checker was not run. Missing evidence must still remain unverified.
 
 ## Final report
 
-Give one concise row per requested part: target/artifact/language, generation
-state, provenance, freshness, supporting request/step IDs where present, and
-missing evidence or next action. Keep readiness and draft/published status
-separate. For a Journey, include each item and reused root; a generated plan is
+Give one concise row per requested part: current content name, artifact/language,
+generation state, provenance, freshness, and missing evidence or next action.
+Add verified Journey context when useful. Keep supporting request/step IDs and
+revisions in the internal evidence; include technical identifiers in the answer
+only when the user explicitly requests them for diagnostics or an audit.
+Keep readiness and draft/published status separate. For a Journey, include each item and reused root; a generated plan is
 not proof that its child content was generated. Do not claim “everything is
 platform-generated” while any requested part is edited, stale or unverified.

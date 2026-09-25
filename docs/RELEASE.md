@@ -23,6 +23,10 @@ python3 scripts/live_docs_smoke.py
 git diff --check
 ```
 
+Host evaluation scenarios for each skill are in `docs/evaluation/`; they are
+acceptance criteria for the host runs below and are excluded from the runtime
+bundle on purpose.
+
 Then perform read-only OAuth smoke tests in clean Codex and Claude installations:
 
 - docs search and page retrieval without authentication;
@@ -127,7 +131,7 @@ publishing this plugin candidate. Coordinate with backend PR #438's consumer,
 which can only fetch these assets after a separately authorized release. A
 private assistant prompt or runtime configuration must never be added here.
 
-## Feedback and navigation candidate — 1.4.0
+## Feedback and navigation candidate — 1.5.0
 
 Before publication, deploy compatible feedback/navigation tools, permissions and
 schema, then verify target-environment discovery. The Product Actions v1 envelope

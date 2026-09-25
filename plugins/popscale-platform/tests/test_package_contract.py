@@ -5,7 +5,7 @@ from pathlib import Path
 
 PLUGIN_ROOT = Path(__file__).resolve().parents[1]
 REPO_ROOT = PLUGIN_ROOT.parents[1]
-EXPECTED_VERSION = "1.4.0"
+EXPECTED_VERSION = "1.5.0"
 EXPECTED_SERVERS = {
     "popscale-platform": {
         "type": "http",
@@ -187,6 +187,11 @@ class PluginPackageContractTests(unittest.TestCase):
             "review",
             "Never send customer",
             "Never use `popscale-docs` for a write",
+            "/content/writing-good-input/",
+            "/journeys/plan/",
+            "/journeys/review-before-activation/",
+            "/content/language-in-exercises/",
+            "`available: false`",
             "safe-journey-creation",
             "safe-interview-administration",
             "safe-content-administration",
@@ -250,16 +255,8 @@ class PluginPackageContractTests(unittest.TestCase):
         evaluations = "\n".join(
             path.read_text(encoding="utf-8")
             for path in (
-                PLUGIN_ROOT
-                / "skills"
-                / "route-popscale-requests"
-                / "references"
-                / "evaluation-scenarios.md",
-                PLUGIN_ROOT
-                / "skills"
-                / "safe-journey-creation"
-                / "references"
-                / "evaluation-scenarios.md",
+                REPO_ROOT / "docs" / "evaluation" / "route-popscale-requests.md",
+                REPO_ROOT / "docs" / "evaluation" / "safe-journey-creation.md",
             )
         )
         for required in (
@@ -289,7 +286,7 @@ class PluginPackageContractTests(unittest.TestCase):
             encoding="utf-8"
         )
         evaluations = (
-            skill_root / "references" / "evaluation-scenarios.md"
+            REPO_ROOT / "docs" / "evaluation" / (skill_root.name + ".md")
         ).read_text(encoding="utf-8")
 
         for required in (
@@ -374,7 +371,7 @@ class PluginPackageContractTests(unittest.TestCase):
             encoding="utf-8"
         )
         evaluations = (
-            skill_root / "references" / "evaluation-scenarios.md"
+            REPO_ROOT / "docs" / "evaluation" / (skill_root.name + ".md")
         ).read_text(encoding="utf-8")
 
         for required in (
@@ -389,6 +386,13 @@ class PluginPackageContractTests(unittest.TestCase):
             "generation:write",
             "publish:write",
             "Never send customer content",
+            "/content/writing-good-input/",
+            "/journeys/review-before-activation/",
+            "/content/language-in-exercises/",
+            "`reference_facts`",
+            "`number_of_customers`",
+            "never from what is available",
+            "which replaces the whole criteria list",
         ):
             self.assertIn(required, skill)
         for required_tool in EXPECTED_CONTENT_TOOLS:
@@ -453,7 +457,7 @@ class PluginPackageContractTests(unittest.TestCase):
             encoding="utf-8"
         )
         evaluations = (
-            skill_root / "references" / "evaluation-scenarios.md"
+            REPO_ROOT / "docs" / "evaluation" / (skill_root.name + ".md")
         ).read_text(encoding="utf-8")
 
         for required in (
@@ -468,6 +472,11 @@ class PluginPackageContractTests(unittest.TestCase):
             "publish:write",
             "500",
             "Never send Interview data",
+            "`available: false`",
+            "`employee_research`",
+            "`sv-SE`",
+            "`must_include`",
+            "topic's own",
         ):
             self.assertIn(required, skill)
         for required_tool in EXPECTED_INTERVIEW_TOOLS:
@@ -564,10 +573,20 @@ class PluginPackageContractTests(unittest.TestCase):
             encoding="utf-8"
         )
         evaluations = (
-            safe_root / "references" / "evaluation-scenarios.md"
+            REPO_ROOT / "docs" / "evaluation" / (safe_root.name + ".md")
         ).read_text(encoding="utf-8")
         self.assertNotIn("popscale-docs", safe_skill)
         self.assertNotIn("popscale-docs", safe_metadata)
+        for required in (
+            "`reuse_scenario`",
+            "`reuse_from_client_id`",
+            "`customer_seed`",
+            "`waiting_for_scenario`",
+            "`dependency_failed`",
+            "`passing_score`",
+            "`generation_notes`",
+        ):
+            self.assertIn(required, safe_skill)
         self.assertIn('value: "popscale-platform"', safe_metadata)
         self.assertIn("content:read", safe_skill)
         for required_scope in ("content:read", "content:write", "publish:write"):
@@ -594,6 +613,20 @@ class PluginPackageContractTests(unittest.TestCase):
         lowered_docs = docs.lower()
         self.assertIn("maintenance mode", lowered_docs)
         self.assertIn("no database", lowered_docs)
+
+    def test_evaluation_scenarios_live_outside_the_runtime_package(self):
+        skills_root = PLUGIN_ROOT / "skills"
+        self.assertEqual([], [p for p in skills_root.rglob("*scenarios*.md")])
+        for skill_md in skills_root.glob("*/SKILL.md"):
+            self.assertNotIn("evaluation-scenarios", skill_md.read_text(encoding="utf-8"))
+        for expected in (
+            "route-popscale-requests.md",
+            "safe-journey-creation.md",
+            "safe-content-administration.md",
+            "safe-interview-administration.md",
+            "company-usage-insights.md",
+        ):
+            self.assertTrue((REPO_ROOT / "docs" / "evaluation" / expected).exists())
 
     def test_release_workflow_binds_tag_to_manifest_version(self):
         workflow = (REPO_ROOT / ".github" / "workflows" / "release.yml").read_text(

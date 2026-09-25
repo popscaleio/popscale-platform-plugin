@@ -6,6 +6,8 @@
    distribution changes.
 4. Run all commands in `AGENTS.md`.
 5. Open a pull request and wait for required checks and review.
+6. To test against staging, point your own host's MCP configuration at
+   `https://staging.popscale.io/mcp/`; never change the packaged `.mcp.json`.
 
 Do not include backend code, internal runbooks, environment values, secrets,
 tokens, customer information, or unreleased product details. Changes to either
