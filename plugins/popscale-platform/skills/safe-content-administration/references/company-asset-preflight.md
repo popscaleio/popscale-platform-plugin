@@ -65,6 +65,12 @@ shape the situation matter, and a coherent customer beats complete coverage.
 - Inspect `knowledge_agent_context_manifest` and `knowledge_assets_list`; use
   `knowledge_generation_context` only with approved, active, generation-eligible
   Knowledge. These reads need `knowledge:read`.
+- A Roleplay can combine Best practices, Products and campaigns, pinned Knowledge
+  Library assets, and Other knowledge. Read its saved `knowledge_context` and
+  `product_context` in `content_detail`; do not infer an exclusive source mode.
+  For each pinned asset, use `knowledge_asset_version_detail` with the saved ID
+  and version to verify approval and content hash. A newer draft version does
+  not refresh an existing pin. Missing access means the pin is unverified.
 
 ## 4. Fill gaps when the user wants to
 
@@ -93,7 +99,7 @@ review the saved output against them in step 6.
 
 ## 6. Review the result against the sources
 
-After generation, read the saved exercise and check that the selected sources
+After generation, read visible saved exercise fields and check that the selected sources
 are recognizable: relevant products, customer behavior consistent with the
 Customer Assets and Personality, language following Tone of Voice, criteria
 matching the learning goal. Flag volatile facts such as prices and campaign
@@ -102,9 +108,8 @@ gaps. This review complements, and never replaces,
 [generation verification](generation-verification.md).
 
 Coaching input changes still require new platform generation of BOTH
-`agent_prompt` and `evaluation_instructions`; if that pair cannot be generated
-(for example because the session is active), report the update as incomplete
-and never repair either instruction manually.
+`agent_prompt` and `evaluation_instructions`; if the live catalog blocks that
+pair, report the update as incomplete and never repair either manually.
 
 Report preflight findings separately from generated, reviewed and published
 status. A passed preflight authorizes nothing by itself: execution, spending

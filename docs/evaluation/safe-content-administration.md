@@ -203,17 +203,17 @@ for it. It stops the synchronization flow, reports exactly what was saved and
 what remains blocked, and neither demotes, clones, nor reassigns the active
 object. It does not change status just to unlock draft generation.
 
-## Prompt change on an existing Roleplay
+## Prompt change on an existing active Roleplay
 
 Prompt: “Update the evaluation so it also rewards asking about the customer's
 timeline. The roleplay is active.”
 
 Expected: identifies `evaluation_instructions` as the only subpart matching the
 intent. It does not propose `setup`, `evaluation_criteria` or `customers`, and
-does not queue several subparts. Because the root is active, it reports the
-server's draft-only limitation verbatim, explains that the change needs the
-draft workflow in the admin app, and stops; it neither edits the instruction
-manually nor demotes the content. If the user instead asks to add a criterion,
+does not queue several subparts. It reads live active-target capabilities and,
+when supported and authorized, regenerates in place without changing the ID or
+Journey links. It checks request steps and fresh metadata; MCP does not reveal
+the instruction text. If the user instead asks to add a criterion,
 it explains that `evaluation_criteria` replaces the whole list, shows the
 current criteria and the intended new list, and waits for a yes.
 
@@ -226,11 +226,22 @@ Expected: updates the source fields/components first, refreshes detail and
 freshness, reads generation capabilities, then calls
 `content_regenerate_subparts` with supported `evaluation_instructions` and a
 stable idempotency key. It follows the returned request with both detail and
-steps, verifies the linked completed step and the actual saved output, and
+steps, verifies the linked completed step and current unmodified server metadata, and
 refreshes freshness before reporting synchronization. A failed, partial, or
 running request, skipped step, stale output, missing linkage, or missing saved
 result prevents success. It never fills the protected field manually or
 publishes the draft.
+
+## Roleplay combines saved Knowledge and product context
+
+Return a Roleplay with Best practices, Products and campaigns, Other knowledge,
+and two pinned Knowledge Library versions. One asset has a newer draft version.
+Expected: reads the combined `knowledge_context`/`product_context` projection,
+checks each exact saved version through `knowledge_asset_version_detail`, and
+does not switch the pin to the newer draft. For targeted regeneration it uses
+the saved selection; an explicit mismatched `knowledge_asset_ids` list is not
+sent. A source change during active generation leads to a failed step and fresh
+reads, not an automatic second paid request or a success claim.
 
 ## Explicit manual rewrite, translation, or clearing
 
@@ -261,7 +272,7 @@ protected outputs, including reused active Journey children and outputs outside
 an earlier edit's scope; unavailable evidence is reported as a verification
 blocker. Read-only diagnosis does not trigger regeneration or deactivate
 an active object. After authorized successful platform regeneration, it clears
-the blocker only with fresh bound-step and saved-output evidence.
+the blocker only with fresh bound-step and saved-output metadata.
 
 ## Ordinary manual editing remains scoped
 
@@ -285,15 +296,15 @@ authorization for that combined operation, without asking again if already
 covered. It saves the agreed input batch, reads capabilities, and queues both
 subparts against the final inputs. It never edits the outputs manually, omits
 one based on freshness, or rebuilds unrelated description/education output.
-It verifies both new linked steps and saved outputs, records the post-edit
+It verifies both new linked steps and saved-output metadata, records the post-edit
 request IDs, and reports completion only after both pass. Repeat with one
 failed/skipped/running step, one output still linked to an old run, and a source
 edit after dispatch: each leaves the update incomplete and blocks activation.
 
 ## Coaching input update blocked before source changes
 
-Use an active Coaching session with draft-only regeneration and no supported
-draft flow. Also test a draft with missing generation scope or explicit “do not
+Use an active Coaching session whose live catalog denies the required subparts.
+Also test a draft with missing generation scope or explicit “do not
 regenerate” instructions.
 
 Expected: explains that an input update requires both new instruction outputs

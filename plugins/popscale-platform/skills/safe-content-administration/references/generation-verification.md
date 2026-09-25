@@ -11,17 +11,23 @@ a new MCP tool or authority to regenerate, overwrite, or publish.
    Record every requested root, artifact and language before checking results;
    do not shrink the scope to only the rows that succeeded. Treat tool errors,
    `isError`, missing scopes and incomplete reads as unverified work.
-2. Read `content_detail` and the relevant components after the operation. Check
-   the returned root, revision, actual saved fields, language and stable IDs.
-   Do not treat an accepted request or populated field as proof of generation.
+2. Read `content_detail` and relevant components after the operation. Check the
+   root, revision, visible saved fields, language and stable IDs. Product MCP
+   omits Roleplay `evaluation_instructions` and Coaching `agent_prompt` and
+   `evaluation_instructions`, including nested request/error projections. Do not
+   fetch their text through another route. Assess their saved state through
+   server metadata only.
 3. Read `get_content_freshness` for that same root. Preserve `available`, each
    artifact's server-returned `key`, status and execution overlay. An empty or
    unavailable artifact list means no evidence, not that everything is current.
 4. For every registered artifact, read the linked request with
    `generation_request_detail` and its complete `generation_request_steps`.
    Verify `generation_request_id`, `generation_step_id`, `generated_at`, the
-   request's target, and the exact step ID with `status=completed`. A skipped
-   step does not prove generation. Use the server's links, not name similarity:
+   request's target, and the exact step ID with `status=completed`. For the
+   three redacted instructions, also require `status=current`,
+   `output_modified=false` and no execution overlay; this verifies saved-output
+   metadata, not hidden text quality. A skipped step does not prove generation.
+   Use the server's links, not name similarity:
    an artifact named `cards` can link to a step named `initial_cards`.
 5. Also check every request started for the current operation, even if freshness
    still references an older successful request. Show overall request status
@@ -143,9 +149,10 @@ For generation-only outputs, also read `generation_only_workflow_failures` and
 each row's `workflow_status`. An edited output stays a failure despite green
 readiness. Those rows and failures cover only `requested_artifacts`; before
 activation, inspect every protected output on each affected root, including
-ones outside a prior report's scope. The checker evaluates supplied metadata;
-reading the actual saved
-output and verifying its linkage remains required in the tool workflow.
+ones outside a prior report's scope. The checker evaluates supplied metadata.
+Read visible saved output and its linkage where MCP exposes it; never require
+text readback for the three redacted instructions. Report metadata verification
+without claiming to have reviewed their text.
 
 ### Guard a proposed manual write
 

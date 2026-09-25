@@ -78,7 +78,11 @@ for Journey context, duplicate names and internal identifiers.
    Check material use of the verified company sources. If format mix, sources,
    revisions or configuration change, repeat the affected preflight before
    generating item inputs or executing the plan; an old snapshot is not refreshed
-   merely by re-reading current assets.
+   merely by re-reading current assets. The parent Knowledge snapshot informs
+   planning; each new Roleplay item's `source_knowledge_asset_ids` selects its
+   child subset (empty means the full parent selection). Inspect that subset
+   before execution. An existing or reused Roleplay keeps its own saved pins;
+   do not silently replace them with the plan's assets.
 6. Call `journey_plan_validate_item_input` for every item that will be executed. Resolve all
    validation errors; never bypass server validation.
 7. Call `render_journey_review` so App-capable hosts can show the interactive
@@ -115,7 +119,8 @@ for Journey context, duplicate names and internal identifiers.
 11. Before reporting generated content, follow the shared
     [generation verification](../safe-content-administration/references/generation-verification.md)
     for every requested item/root, including reused content. Read child request
-    steps, saved output and freshness; a completed plan or green Journey
+    steps, visible saved output and freshness; protected Roleplay/Coaching
+    instructions have metadata only. A completed plan or green Journey
     readiness does not prove child artifact provenance. Use the packaged local
     checker when available, or the same evidence rules without local execution.
     Report draft/published status, each part's provenance and freshness, remaining

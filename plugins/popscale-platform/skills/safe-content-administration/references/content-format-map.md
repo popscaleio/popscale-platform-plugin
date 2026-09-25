@@ -70,7 +70,7 @@ text as a workaround. See the dependency decision flow in
   `content_regenerate_subparts` using the supported live schema. One request
   after a batch of source edits is enough; changes after dispatch require a new
   pair based on the final inputs. Never adjust either output manually.
-- Verify the new generation steps and saved outputs for both. An old successful
+- Verify new linked steps and saved-output metadata for both. An old successful
   run or only one newly generated instruction cannot complete the input update.
 - Administrative changes that do not alter generation inputs, such as department
   assignment, do not by themselves require instruction regeneration.

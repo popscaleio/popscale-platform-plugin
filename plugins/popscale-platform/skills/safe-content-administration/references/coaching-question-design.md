@@ -71,15 +71,13 @@ as defined in [generation verification](generation-verification.md). Never edit
 either output manually. Establish a supported, authorized regeneration path
 before changing inputs, including for active content.
 
-Read both newly saved outputs and their linked completed request steps. Verify
-that the agent instructions reflect the revised question order and the selected
-type, and that evaluation follows the corresponding answers and point totals.
-Evaluation need not repeat the question set verbatim. Keep the update incomplete
-and stop plugin activation when either output is missing, stale, edited,
-unverified or still follows the old inputs, even if server readiness is green.
-Do not claim the server itself enforces this semantic review. Route any mismatch
-through authorized input correction and platform regeneration, preserving
-unrelated content and existing publication approvals.
+Read both outputs' fresh metadata and linked completed request steps. MCP hides
+the instruction text, so do not claim semantic review of it. Verify the visible
+question order, selected type, answers and point totals; require both hidden
+outputs to link to the post-edit request with current, unmodified metadata.
+Keep the update incomplete if either is missing, stale, edited or unverified,
+even if readiness is green. Route visible input mismatches through focused
+correction and authorized regeneration.
 
 Read the coaching-question evaluation scenarios in the repository's `docs/evaluation/` directory when
 evaluating this guidance in a host.

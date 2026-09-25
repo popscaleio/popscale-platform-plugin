@@ -26,7 +26,7 @@ def contract():
 
 class PublicSkillsBundleTests(unittest.TestCase):
     def build(self, content=None):
-        return builder.build_bundle(content if content is not None else sources(), "1.5.0", "a" * 40, contract())
+        return builder.build_bundle(content if content is not None else sources(), "1.5.1", "a" * 40, contract())
 
     def test_real_bundle_is_deterministic_text_only_and_self_consistent(self):
         original = sources()
@@ -49,7 +49,7 @@ class PublicSkillsBundleTests(unittest.TestCase):
         total_words = sum(len(f["content"].split()) for f in body["files"])
         self.assertLessEqual(total_words, 21_000, f"runtime skill text is {total_words} words")
         self.assertTrue(set(body["required_reference_paths"]).issubset(body["instruction_paths"]))
-        for tool in ("current_user", "product_action_prepare", "product_action_get", "product_action_execute", "request_company_switch"):
+        for tool in ("current_user", "product_action_prepare", "product_action_get", "product_action_execute", "request_company_switch", "knowledge_asset_version_detail"):
             self.assertIn(tool, body["required_tools"])
         for docs_tool in ("get_docs_overview", "search_docs", "get_pages"):
             self.assertNotIn(docs_tool, body["required_tools"])
@@ -96,7 +96,7 @@ class PublicSkillsBundleTests(unittest.TestCase):
 
     def test_bounds_and_bad_provenance_fail(self):
         with self.assertRaisesRegex(ValueError, "full Git commit"):
-            builder.build_bundle(sources(), "1.5.0", "latest", contract())
+            builder.build_bundle(sources(), "1.5.1", "latest", contract())
         for limit in ("MAX_FILE_BYTES", "MAX_BUNDLE_BYTES", "MAX_INSTRUCTION_CHARS"):
             with patch.object(builder, limit, 10), self.assertRaises(ValueError):
                 self.build()
