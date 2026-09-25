@@ -109,15 +109,20 @@ have done by hand, which is why they require a described, confirmed change.
    everything else” request does not silently authorize extra generation.
    Coaching input updates always include the required pair; preserve unrelated
    fields and do not expand the refresh to description or education text.
-4. If generation requires a draft, use only a documented draft workflow exposed
-   by the available product tools and authorized for this target. If none is
-   available, stop and explain that a draft workflow or additional platform
-   support is required. Do not invent a draft endpoint, demote active content,
-   clone/reassign it, or use an override as a substitute.
+4. Draft and active roots can regenerate in place when the selected subpart is
+   supported. A live `available: false` result still blocks the call; do not
+   demote, clone or reassign content to work around it. For Roleplays, read the
+   saved combined Knowledge selection before regeneration. Explicit
+   `knowledge_asset_ids` must match those saved IDs; the server freezes their
+   approved pinned versions, even if a newer draft version exists. Change the
+   saved selection separately, with revision and active-edit checks, if that is
+   the user's intent. Do not substitute all assets from a Journey plan.
 5. Follow the returned request with `generation_request_detail` and
    `generation_request_steps`. Verify each affected artifact against its linked
-   completed step and actual saved result, then read freshness again. If source
-   or output changed in the meantime, reconcile rather than claiming success.
+   completed step, then read freshness again. Read visible saved results, but
+   use metadata only for redacted Roleplay/Coaching instruction outputs. If a
+   source changes during active generation, the stale step fails without saving
+   it; refresh and reconcile before a separately authorized retry.
    For Coaching, bind BOTH outputs to the regeneration request(s) started after
    the final input edits. Do not substitute a pre-edit successful request or
    accept only one completed instruction. Record `coaching_inputs_changed=true`
@@ -155,7 +160,9 @@ subpart and verify the saved output afterwards.
 
 1. Call `content_generation_capabilities` with `content:read` immediately before
    choosing a format, subpart, or granular generation operation.
-2. Confirm the target is a draft and present the exact generated subparts.
+2. Confirm the current draft/active status and supported subparts. Present the
+   active learner impact, Roleplay Knowledge binding when relevant, and exact
+   generated subparts.
 3. For targeted regeneration, call `content_regenerate_subparts` with a stable
    idempotency key. It requires `content:write` and `generation:write`.
 4. For Episode or Flashcard language generation, resolve the language through
@@ -169,8 +176,9 @@ subpart and verify the saved output afterwards.
 6. Refresh `content_detail`, `list_content_components`, and
    `get_content_freshness` after completion. Follow
    [generation-verification.md](generation-verification.md) before reporting:
-   check each requested artifact, linked completed step, saved output and any
-   current failed/running attempt. Readiness does not prove generator origin.
+   check each requested artifact, linked completed step, readable saved output
+   and any current failed/running attempt. Protected instruction text is omitted
+   by MCP; use its server metadata. Readiness does not prove generator origin.
 
 An idempotency key replay is safe only for identical input. A conflict means the
 key was already used for different work; create a new key rather than mutating

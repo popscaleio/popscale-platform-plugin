@@ -23,7 +23,7 @@ class FeedbackNavigationBundleTests(unittest.TestCase):
         self.contract = json.loads((ROOT / "contracts/product-tools-v1.json").read_text())
 
     def bundle(self):
-        return json.loads(builder.build_bundle(self.sources, "1.5.0", "a" * 40, self.contract))
+        return json.loads(builder.build_bundle(self.sources, "1.5.1", "a" * 40, self.contract))
 
     def test_all_new_tools_reach_consumer_requirements(self):
         body = self.bundle()

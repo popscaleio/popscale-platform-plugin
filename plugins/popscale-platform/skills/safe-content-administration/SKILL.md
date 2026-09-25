@@ -69,8 +69,9 @@ for Journey context, duplicate names and internal identifiers.
    preflight does not apply to targeted regeneration or language generation;
    those check only the selected subpart's dependencies. Call
    `content_generation_capabilities` and follow the returned format/subpart
-   contract. Generation is draft-only, asynchronous,
-   and idempotent. Poll the returned request with `generation_request_detail`
+   contract. Targeted regeneration supports draft and active roots when the live
+   capability allows it; it preserves the object ID and Journey links. It is
+   asynchronous and idempotent. Poll with `generation_request_detail`
    and `generation_request_steps`; do not claim completion early.
    After changing a dependency of a generation-only output, refresh detail and
    freshness, read generation capabilities, and follow the dependency decision
@@ -111,14 +112,17 @@ for Journey context, duplicate names and internal identifiers.
 10. Report content names, status, change history/freshness,
     generation state, and remaining warnings. Before any generation claim, follow
     [generation-verification.md](references/generation-verification.md): verify
-    each requested artifact against its linked completed request step and actual
-    saved output. Separate readiness, freshness and provenance; `legacy_unknown`
+    each requested artifact against its linked completed request step and fresh
+    server metadata. Read back visible saved output where MCP permits it; the
+    server omits Roleplay `evaluation_instructions` and Coaching `agent_prompt`
+    and `evaluation_instructions`, so never seek their text through another route.
+    Separate readiness, freshness and provenance; `legacy_unknown`
     never proves generation, and `output_edited` must be reported separately.
     Use the packaged evidence checker when local Python is available, otherwise
     apply the same checks to tool results. Never invent a URL, field,
     component, completion state, or permission.
-    Review material use of the verified company sources in actual saved outputs
-    as specified by the preflight; request completion alone does not prove it.
+    Review material use of verified company sources in visible saved outputs as
+    specified by the preflight; do not claim to inspect redacted instructions.
 
 ## Safety Rules
 
@@ -157,9 +161,10 @@ for Journey context, duplicate names and internal identifiers.
 - `set_content_departments` replaces the complete assignment set. Resolve every
   department through the company-scoped reference tool and show the before/after
   set first.
-- Targeted generation and language generation apply only to drafts. Card and
-  generated-customer operations are append-only where the live capability
-  catalog says so.
+- Targeted regeneration and language generation can update active content when
+  the live catalog permits it. Check each requested subpart and status; active
+  multi-step work can show intermediate output. Card and generated-customer
+  operations are append-only where the live catalog says so.
 - Roleplay customers are added one at a time with
   `create_content_component` (`roleplay_customer`) after the scenario exists.
   Always state `number_of_customers` explicitly when creating a Roleplay,

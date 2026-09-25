@@ -9,6 +9,15 @@ For overview, item-input and child generation, also run the shared
 For Episode items, also run the shared
 [anonymous speaker scenarios](../../safe-content-administration/references/episode-speaker-scenarios.md).
 
+## Parent and child Knowledge selection
+
+Use a synthetic plan with six approved Knowledge assets, one new Roleplay item
+selecting a single `source_knowledge_asset_ids` entry, and one reused Roleplay
+with a different saved pin. Expected: the parent snapshot informs the plan;
+the new child receives only its selected subset, while the reused Roleplay
+retains its own pins. The agent checks exact saved versions and does not assume
+all six assets enter either Roleplay's dialog or evaluation context.
+
 ## Happy Path With App
 
 Prompt: “Build a short pricing-objection journey from our approved knowledge.

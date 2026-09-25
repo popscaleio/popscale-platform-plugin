@@ -106,50 +106,19 @@ write the actual brief in the configured source language:
 > Avrunda med en insikt, reflektion eller tillämpning som passar avsnittets syfte
 > och ger lyssnaren något värdefullt att ta med sig.
 
-For a conversational opening, “Hej och välkommen! I dag ska vi prata om
-[ämnet]” is one possible welcome, not required wording or a complete opening
-brief: connect it to why this subject matters to the listener. A summary,
-reflection or practical next step can suit some endings; choose one only when
-it serves the brief. Questions, examples and everyday situations are optional
-ways to develop the subject, not required ingredients in every Episode.
-
-Apply speaker-change guidance within the supported format actually selected;
-it does not introduce a new speaker-count option. Aim for developed thoughts
-and meaningful speaker changes without imposing a sentence quota, a switch
-after each point, or the same calm or energetic pace on every Episode.
+The sample is optional. Match opening, ending, examples and speaker changes to
+the brief and supported format; impose no turn quota or fixed pace.
 
 ## Conversational Episode quality
 
-For a two-speaker conversational Episode, tailor Script input to the intended
-listening experience, not only topic and tone. Words such as “warm, clear and
-calm” need concrete guidance on the opening, voice contributions and development.
-Apply these principles to the brief without requiring one dramaturgy:
-
-- Give the opening relevance or curiosity through an appropriate observation,
-  question or situation. A restrained factual introduction can serve a policy
-  update; engagement does not require a dramatic hook or a customer case.
-- Give the anonymous voices complementary conversational functions: asking,
-  testing an idea, explaining, qualifying or applying it. Functions may alternate;
-  they are not host identities, invented expertise or permanent personality roles.
-  Different contributions do not require fabricated disagreement.
-- Let each contribution develop the subject, connect ideas or clarify why a fact
-  matters. Choose examples, reflection or application where they help. A factual
-  list can be useful, but should serve understanding rather than substitute for
-  the requested conversation.
-- Use natural reactions and varied turn lengths while giving thoughts room to
-  develop. Meaningful speaker changes matter more than frequency. Respect a
-  request for fewer changes, a calm reflection or a concise formal style.
-- Make transitions and endings add a connection, synthesis or useful perspective.
-  Repeated agreement fillers or recaps are review signals when they dominate;
-  an occasional “exactly” or a useful summary is not a defect.
-- Match energy to the audience and Tone of Voice. Ground claims in approved
-  sources and bound facts that vary with time, location or agreement. Illustrative
-  situations must remain clearly hypothetical, without invented company claims.
-
-Keep these as positive instructions in the actual Script input. Preserve explicit
-style choices and supported formats; do not impose rapid short turns, a fixed
-questioner/expert pairing, high energy, a sales scenario or a recap on all Episodes.
-For other supported formats, apply only the relevant principles.
+For two-speaker conversation, make Script input concrete about the opening,
+complementary anonymous contributions, development and pace. Each voice may ask,
+explain, test or qualify; functions can change without inventing host identities
+or disagreement. Give thoughts room to develop, vary turn lengths meaningfully
+and make reactions advance the topic. Match energy and ending to the brief;
+ground claims in approved sources and bound variable facts. A restrained policy
+explanation needs no dramatic hook or customer case. Preserve explicit style
+choices and apply only relevant principles to other formats.
 
 ### Review the saved script
 
@@ -228,12 +197,12 @@ Read-only inspection does not authorize regeneration or publication.
 
 ## Correct existing Episodes through inputs and regeneration
 
-Before changing an active Episode's inputs for a correction, establish a
-supported, authorized regeneration/publication workflow that keeps affected
-scripts, translations and audio consistent. If generation is draft-only and no
-safe version/draft flow is exposed, stop before the input change and present the
-proposed Script input delta and blocker. Never invent `ensure_content_draft`,
-demote the Episode, clone/reassign Journey links or replace media manually.
+Before changing an active Episode's inputs for a correction, check that its
+supported, authorized regeneration workflow can keep affected scripts,
+translations and audio consistent. Targeted regeneration and language work can
+run in place when the live catalog permits them. Stop before the input change
+if a required step is unavailable; present the proposed Script input delta and
+blocker. Never demote, clone/reassign Journey links or replace media manually.
 
 For an authorized draft correction, change only the necessary inputs, preserve
 voice choices and unrelated settings, then let the platform regenerate affected

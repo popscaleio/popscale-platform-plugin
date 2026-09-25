@@ -4,7 +4,16 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
-## [1.5.0] - Unreleased
+## [1.5.1] - Unreleased
+
+- Align active-content regeneration with the production MCP contract while
+  retaining learner-impact approval and asynchronous verification.
+- Verify Roleplay's combined Knowledge selection and exact pinned versions;
+  keep Journey parent sources separate from each child's saved subset.
+- Treat redacted Roleplay/Coaching instruction text as metadata-only evidence.
+  Add synthetic acceptance cases and refresh the backend tool fixture.
+
+## [1.5.0] - 2026-09-25
 
 - Add product feedback submission, actor-private reads and explicitly authorized
   platform review, with context consent and ProductAction approval boundaries.

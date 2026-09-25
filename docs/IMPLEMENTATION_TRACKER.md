@@ -1,6 +1,37 @@
 # V1 implementation tracker
 
-Last updated: 2026-09-24
+Last updated: 2026-09-25
+
+## Backend PR compatibility audit — 1.5.1
+
+The ten most recently merged backend PRs at review time were #447–#456. The
+production promotion is #456; the others landed on staging. Public plugin
+impact was checked against the production MCP contract and release boundaries:
+
+| Backend PR | Plugin impact |
+| --- | --- |
+| #447 Journey Company Admin auto-enrollment | REST/Journey Deployment behavior; no Product MCP mutation tool for this setting. Do not claim the plugin can toggle it. |
+| #448 Active content and protected outputs | Update active regeneration guidance and verify three redacted instruction outputs from server metadata. |
+| #449, #450, #451 Staging test repairs | No new product tool or workflow contract. |
+| #452 Combined Roleplay Knowledge | Verify parallel sources and exact saved pins; keep plan and child selections distinct. |
+| #453 Native generation retries | No new plugin tool; retain accepted operation, status polling and one-charge reporting. |
+| #454 Saved Knowledge regeneration binding | Explicit Knowledge IDs must match the Roleplay's saved selection. |
+| #455 Migration review | No new plugin behavior. |
+| #456 Production promotion | Confirms compatible backend release; plugin publication remains separate. |
+
+- [x] Update skills, synthetic scenarios and name-only tool fixture for the
+  changed MCP behavior. No new OAuth scope, endpoint or product write is added.
+- [x] All 85 package tests, release validator, two skill validators, public
+  Docs MCP smoke and whitespace check passed. Production capability reads show
+  draft/active generation and the exact-version Knowledge read are available.
+- [ ] Run clean host behavior checks, merge, tag and publish 1.5.1.
+- [ ] Run clean Codex/Claude read-only OAuth checks and separately authorized
+  test-company write checks; package tests alone do not prove host behavior.
+
+None of these PRs introduces a new price or debit path. #453 preserves the
+existing accepted operation and single settlement on retry; #448 and #454
+reuse existing generation billing. Possible adoption or retention benefits from
+#447/#448 are hypotheses, not measured revenue.
 
 ## Conversational Episode quality — unreleased guidance
 
@@ -341,7 +372,7 @@ Last updated: 2026-09-24
 
 Directory gates are intentionally separate from the public GitHub V1 release.
 
-## Feedback, navigation and activity — 1.5.0 candidate
+## Feedback, navigation and activity — 1.5.0 released
 
 - [x] Reviewed implementation handover and exact public tool schemas at backend
   source commit `6873727260192ebe956bac0b8925a04d8324a62c` (2026-09-22).
@@ -358,5 +389,5 @@ Directory gates are intentionally separate from the public GitHub V1 release.
   after the 2026-09-25 backend deploy; optional feedback tools remain grant-scoped.
 - [ ] Clean Codex/Claude OAuth and behavioral checks; separately authorized writes
   only in a dedicated test company. No live write verification claimed here.
-- [ ] Review, merge, tag and publish separately; frontend interaction is owned by
-  its release. Existing first-party sessions keep immutable profile snapshots.
+- [x] Merged, tagged and published 1.5.0 separately from the backend and
+  frontend deploys. Existing first-party sessions keep immutable snapshots.
