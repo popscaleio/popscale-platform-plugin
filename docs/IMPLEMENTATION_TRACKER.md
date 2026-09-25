@@ -24,9 +24,20 @@ impact was checked against the production MCP contract and release boundaries:
 - [x] All 85 package tests, release validator, two skill validators, public
   Docs MCP smoke and whitespace check passed. Production capability reads show
   draft/active generation and the exact-version Knowledge read are available.
-- [ ] Run clean host behavior checks, merge, tag and publish 1.5.1.
-- [ ] Run clean Codex/Claude read-only OAuth checks and separately authorized
-  test-company write checks; package tests alone do not prove host behavior.
+- [x] Merged as plugin PR #29. Claude Product MCP OAuth was verified against
+  Popscale after backend OAuth discovery fixes #460 and #461 reached production:
+  `current_user`, `capabilities`, bounded Journey search, `content_detail`, and
+  department-grouped `get_journey_insights` succeeded without writes. A small
+  department cohort remained suppressed.
+- [x] Codex was switched to the intended Popscale company with its existing
+  grant, then passed the same five read-only Product MCP checks. Claude passed
+  a fresh `current_user` after page reload with no new OAuth authorization.
+- [x] Re-ran all 85 package tests, release validation, and live public Docs MCP
+  smoke before publication.
+- [x] Release readiness verified for 1.5.1. The tag workflow builds the Claude
+  archive and public skill assets; public installation is checked after tagging.
+- [ ] Run separately authorized test-company write checks; no live write
+  verification is claimed for this release.
 
 None of these PRs introduces a new price or debit path. #453 preserves the
 existing accepted operation and single settlement on retry; #448 and #454
