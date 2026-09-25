@@ -4,7 +4,7 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
-## [1.5.1] - Unreleased
+## [1.5.1] - 2026-09-25
 
 - Align active-content regeneration with the production MCP contract while
   retaining learner-impact approval and asynchronous verification.
