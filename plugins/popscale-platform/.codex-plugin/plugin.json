@@ -1,7 +1,7 @@
 {
   "name": "popscale-platform",
-  "version": "1.4.1",
-  "description": "Read public Popscale documentation and safely administer company-scoped interviews, learning content, journeys, and usage insights through separate remote MCP servers.",
+  "version": "1.5.0",
+  "description": "Read public Popscale documentation and safely manage company-scoped interviews, learning content, journeys, usage insights, product feedback and verified navigation through separate remote MCP servers.",
   "author": {
     "name": "Popscale",
     "url": "https://popscale.io/"
@@ -23,13 +23,15 @@
     "research",
     "documentation",
     "mcp",
-    "agent-skills"
+    "agent-skills",
+    "product-feedback",
+    "navigation"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Popscale Platform",
     "shortDescription": "Manage content and analyze company learning",
-    "longDescription": "Search the public, read-only Popscale Docs MCP or connect to the company-scoped Popscale Platform MCP to find, create, and granularly edit learning content; administer interview Studies; build validated journeys; or compare privacy-safe Journey participation and content outcomes with bounded member drilldown. Customer data stays inside the OAuth-selected company, while active edits, generation, distribution, and publication retain dedicated scopes and confirmation boundaries.",
+    "longDescription": "Search the public, read-only Popscale Docs MCP or connect to the company-scoped Popscale Platform MCP to find, create, and granularly edit learning content; administer interview Studies; build validated journeys; or compare privacy-safe Journey participation and content outcomes with bounded member drilldown. Customer data stays inside the OAuth-selected company, while active edits, generation, distribution, and publication retain dedicated scopes and confirmation boundaries. Submit product feedback with explicit context consent, review it with dedicated permission, and resolve verified page destinations supported by your host.",
     "developerName": "Popscale",
     "category": "Productivity",
     "capabilities": [

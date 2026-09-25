@@ -340,3 +340,23 @@ Last updated: 2026-09-24
 - [ ] Clean Claude directory install proves both required connections.
 
 Directory gates are intentionally separate from the public GitHub V1 release.
+
+## Feedback, navigation and activity — 1.5.0 candidate
+
+- [x] Reviewed implementation handover and exact public tool schemas at backend
+  source commit `6873727260192ebe956bac0b8925a04d8324a62c` (2026-09-22).
+- [x] Added feedback submission and authorized-review workflow; added typed
+  navigation and actual activity guidance, with routing from the existing route skill.
+- [x] Preserved Product Actions v1 envelope and public bundle schema; extended
+  required tool inventory and six-skill dependency closure.
+- [x] Prepared host metadata at 1.5.0 and synthetic host evaluation scenarios.
+- [x] Local validation: 85 unit/contract/package tests, release validator, skill
+  and plugin validators, live Docs MCP smoke, and git diff --check passed.
+  Committed public asset/archive hashes and build evidence are recorded in the
+  plugin PR rather than embedded in the source used to derive their hashes.
+- [x] Production discovery exposes feedback, ProductAction and navigation tools
+  after the 2026-09-25 backend deploy; optional feedback tools remain grant-scoped.
+- [ ] Clean Codex/Claude OAuth and behavioral checks; separately authorized writes
+  only in a dedicated test company. No live write verification claimed here.
+- [ ] Review, merge, tag and publish separately; frontend interaction is owned by
+  its release. Existing first-party sessions keep immutable profile snapshots.

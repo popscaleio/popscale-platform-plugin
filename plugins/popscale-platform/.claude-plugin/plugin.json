@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "popscale-platform",
-  "version": "1.4.1",
-  "description": "Read public Popscale documentation and safely administer company-scoped interviews, learning content, journeys, and usage insights through separate remote MCP servers.",
+  "version": "1.5.0",
+  "description": "Read public Popscale documentation and safely manage company-scoped interviews, learning content, journeys, usage insights, product feedback and verified navigation through separate remote MCP servers.",
   "author": {
     "name": "Popscale",
     "url": "https://popscale.io/"
@@ -24,6 +24,8 @@
     "research",
     "documentation",
     "mcp",
-    "agent-skills"
+    "agent-skills",
+    "product-feedback",
+    "navigation"
   ]
 }

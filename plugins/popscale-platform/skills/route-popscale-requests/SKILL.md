@@ -1,6 +1,6 @@
 ---
 name: route-popscale-requests
-description: Route Popscale questions to the public read-only documentation MCP or the authenticated company-scoped product MCP without crossing their security boundary. Use when a user asks how Popscale works, requests public setup or product guidance, mixes documentation questions with customer data or actions, or is ambiguous about whether they want general information versus an authenticated Popscale operation.
+description: Route Popscale questions to the public read-only documentation MCP or the authenticated company-scoped product MCP without crossing their security boundary. Use when a user asks how Popscale works, requests public setup or product guidance, mixes documentation questions with customer data or actions, asks to navigate to a Popscale page, or is ambiguous about whether they want general information versus an authenticated Popscale operation.
 ---
 
 # Route Popscale Requests
@@ -39,7 +39,10 @@ for Journey context, duplicate names and internal identifiers.
    Journey sections/items, and for their supported regeneration, language, or
    activation workflows. Use `company-usage-insights` for company-scoped
    Journey participation, completion, mastery, content outcomes, and bounded
-   member or attempt drilldown.
+   member or attempt drilldown. Use
+   [safe-product-feedback](../safe-product-feedback/SKILL.md) for reports and
+   authorized review. For destinations/progress, read
+   [navigation and activity](references/navigation-and-activity.md).
 5. Before authoring new or rewritten input for an exercise, a Knowledge
    document, a Journey brief or a Study, fetch the matching writing guide from
    `popscale-docs` with `get_pages` and shape the input by it:

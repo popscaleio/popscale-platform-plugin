@@ -1,0 +1,13 @@
+interface:
+  display_name: "Popscale Product Feedback"
+  short_description: "Submit feedback and review it with permission"
+  default_prompt: "Use $safe-product-feedback to report a Popscale bug with only the context I agree to share."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "popscale-platform"
+      description: "Authenticated product feedback and authorized review"
+      transport: "streamable_http"
+      url: "https://app.popscale.io/mcp/"
+policy:
+  allow_implicit_invocation: true

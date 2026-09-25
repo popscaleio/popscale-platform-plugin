@@ -26,7 +26,7 @@ def contract():
 
 class PublicSkillsBundleTests(unittest.TestCase):
     def build(self, content=None):
-        return builder.build_bundle(content if content is not None else sources(), "1.3.1", "a" * 40, contract())
+        return builder.build_bundle(content if content is not None else sources(), "1.5.0", "a" * 40, contract())
 
     def test_real_bundle_is_deterministic_text_only_and_self_consistent(self):
         original = sources()
@@ -96,7 +96,7 @@ class PublicSkillsBundleTests(unittest.TestCase):
 
     def test_bounds_and_bad_provenance_fail(self):
         with self.assertRaisesRegex(ValueError, "full Git commit"):
-            builder.build_bundle(sources(), "1.3.1", "latest", contract())
+            builder.build_bundle(sources(), "1.5.0", "latest", contract())
         for limit in ("MAX_FILE_BYTES", "MAX_BUNDLE_BYTES", "MAX_INSTRUCTION_CHARS"):
             with patch.object(builder, limit, 10), self.assertRaises(ValueError):
                 self.build()
