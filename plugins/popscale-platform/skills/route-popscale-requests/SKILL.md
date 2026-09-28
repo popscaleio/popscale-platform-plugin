@@ -71,7 +71,11 @@ for Journey context, duplicate names and internal identifiers.
 
 - Search content with a short keyword or a tag, not the full title. If nothing
   matches, try one variant, then list with a status or type filter. Do not
-  repeat the same search.
+  repeat the same search. For Journey Knowledge preflight, the filtered
+  `knowledge_assets_list` read is required after empty topic searches: a search
+  miss means no matching title/text, not that the company has no approved,
+  active, generation-eligible source. Inspect eligibility in the list before
+  claiming that no source exists; report relevant-source gaps separately.
 - A tool that `capabilities` marks `available: false` is not callable. Say
   which feature or scope is missing, once. Do not search for the tool again,
   substitute a generic tool, or drive a browser to work around it.

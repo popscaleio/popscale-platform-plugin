@@ -40,6 +40,19 @@ Readiness measures publicability; freshness measures changes relative to a
 baseline; provenance measures origin. **Never infer platform generation from
 green readiness, a filled field, `current`, or a timestamp alone.**
 
+When a Roleplay reports "Update required" immediately after completed steps,
+read every returned freshness row and its changed dependencies. Count rows with
+`source_changed` or `source_changed_and_output_edited` as stale, and count
+`output_edited` separately as edited; name the exact keys in each count. Do not
+count a changed source field such as public description as a stale generated
+artifact unless it has its own stale artifact row. A completed generation step
+establishes historical provenance only; it does not prove the saved artifact is
+current. If a dependency changed during the same operation without an agent
+write, report a possible server ordering/freshness issue for investigation.
+Read and preserve manually curated visible fields; do not overwrite or
+regenerate them merely to clear a warning. Report review/publication readiness
+only after separate checks and explicit confirmation for any mutation.
+
 ## Interpret each part
 
 | Evidence | Permitted report |

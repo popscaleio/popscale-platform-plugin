@@ -64,7 +64,15 @@ shape the situation matter, and a coherent customer beats complete coverage.
   generates audio, not for text-only planning.
 - Inspect `knowledge_agent_context_manifest` and `knowledge_assets_list`; use
   `knowledge_generation_context` only with approved, active, generation-eligible
-  Knowledge. These reads need `knowledge:read`.
+  Knowledge. These reads need `knowledge:read`. For a Journey, a topic search
+  with no matches must be followed by one variant and then a broad
+  `knowledge_assets_list` read with the live supported eligibility/status
+  filters (and further pages when exposed). Inspect the returned approval,
+  active and generation-eligibility state. Say "no topic match" separately
+  from "no generation-eligible Knowledge"; make the latter claim only after
+  the list is exhausted. If listing is unavailable or incomplete, say the
+  requirement is unverified, not absent. Select only relevant eligible IDs;
+  ask for direction if eligible sources exist but none fits the brief.
 - A Roleplay can combine Best practices, Products and campaigns, pinned Knowledge
   Library assets, and Other knowledge. Read its saved `knowledge_context` and
   `product_context` in `content_detail`; do not infer an exclusive source mode.
