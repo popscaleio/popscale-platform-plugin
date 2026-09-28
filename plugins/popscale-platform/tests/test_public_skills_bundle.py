@@ -47,9 +47,12 @@ class PublicSkillsBundleTests(unittest.TestCase):
         self.assertEqual(set(body["instruction_paths"]), {f["path"] for f in body["files"]})
         self.assertFalse([p for p in body["instruction_paths"] if "scenarios" in p])
         total_words = sum(len(f["content"].split()) for f in body["files"])
-        self.assertLessEqual(total_words, 21_000, f"runtime skill text is {total_words} words")
+        # Allow the bounded continuation and freshness guidance in the public bundle.
+        self.assertLessEqual(total_words, 21_600, f"runtime skill text is {total_words} words")
         self.assertTrue(set(body["required_reference_paths"]).issubset(body["instruction_paths"]))
         for tool in ("current_user", "product_action_prepare", "product_action_get", "product_action_execute", "request_company_switch", "knowledge_asset_version_detail"):
+            self.assertIn(tool, body["required_tools"])
+        for tool in ("journey_structure_get", "journey_structure_update"):
             self.assertIn(tool, body["required_tools"])
         for docs_tool in ("get_docs_overview", "search_docs", "get_pages"):
             self.assertNotIn(docs_tool, body["required_tools"])

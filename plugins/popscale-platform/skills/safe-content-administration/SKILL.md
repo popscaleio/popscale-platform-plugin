@@ -29,7 +29,8 @@ for Journey context, duplicate names and internal identifiers.
    models, voices, or tags instead of guessing identifiers.
 3. Read current state with `content_detail`. For nested content, call
    `list_content_components` and then `get_content_component` for the specific
-   stable-ID row. Preserve pagination and truncation indicators.
+   stable-ID row. Preserve pagination and truncation indicators. For enrolled
+   Journeys, read the complete structure with `journey_structure_get`.
    For Coaching input authoring or review, apply
    [question design](references/coaching-question-design.md): one primary goal,
    type-appropriate progression, aligned answers and preserved total score.
@@ -46,8 +47,10 @@ for Journey context, duplicate names and internal identifiers.
    `--check-manual-write` mode when local Python is available.
 5. Pass the latest root `revision` as `expected_revision` for every protected
    mutation. Refresh after each successful mutation because root revision
-   changes. On conflict, re-read and reconcile the user's requested delta; never
-   retry blindly.
+   changes. For enrolled Journey sections/items, follow
+   [content-format-map.md](references/content-format-map.md). On conflict,
+   re-read and reconcile the
+   user's requested delta; never retry blindly.
 6. For an active-content edit through a tool whose live schema exposes
    `confirm_active_edit`, present the learner-visible consequence and obtain
    immediate explicit approval before setting `confirm_active_edit=true`.
@@ -86,6 +89,8 @@ for Journey context, duplicate names and internal identifiers.
    queue several subparts "to be safe". Report the status/tool/scope/approval
    blocker when the chosen subpart cannot run.
    Source edits alone must not be reported as synchronized generated output.
+   For Roleplay `description`/`education_text`, resolve the company language
+   and pass `source_language_id`; prompt text alone does not select it.
    **Coaching exception:** any Coaching input change regenerates BOTH
    `agent_prompt` and `evaluation_instructions` afterwards, never only the one
    marked stale and never an older run. If the pair cannot be generated, report

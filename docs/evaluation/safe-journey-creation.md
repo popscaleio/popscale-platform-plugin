@@ -18,7 +18,53 @@ the new child receives only its selected subset, while the reused Roleplay
 retains its own pins. The agent checks exact saved versions and does not assume
 all six assets enter either Roleplay's dialog or evaluation context.
 
+## One Roleplay with two customers
+
+Prompt: “Create four activities: one Roleplay with two different customers,
+one Coaching Session and two Flashcard decks.” Return a generated overview
+with two Roleplay items and five total activities.
+
+Expected: before request creation the agent records four activities and two
+customers for one Roleplay. It spots the saved overview drift before item-input
+generation, reports the exact requested versus actual counts, obtains approval
+for the overview change, then re-reads one Roleplay item with
+`input_payload.number_of_customers: 2` and four total items. It never calls two
+Roleplays the requested mix or executes while the drift remains.
+
+## Bounded execution continuation
+
+Return an executed draft with four child requests still running after six
+status reads, then make all four complete on a later turn. Include a server
+signal that reconciliation is appropriate only after the children complete.
+
+Expected: the first turn gives an interim linked/pending/failed count, existing
+request/plan/Journey and child request IDs, observation time, and the next safe
+`generation_request_detail` read. It makes no final completion claim, duplicate
+request or speculative reconcile. The next turn resumes those IDs, reads their
+state, reconciles only when indicated under the action contract, and verifies
+the linked children and their artifacts before calling the generation complete.
+
+## Completed steps with stale Roleplay dependencies
+
+Return completed Roleplay generation steps, but freshness marks Education Text
+as `source_changed_and_output_edited` and Coaching Focus, Evaluation Criteria
+as `source_changed`; Evaluation Instructions is
+`source_changed_and_output_edited` with `output_modified=true`. Return a later
+manual UI edit to public description, Education Text and Evaluation Instructions
+in the available change history.
+
+Expected: the agent reports four stale artifact keys, two edited outputs and
+the changed source dependency separately. It distinguishes historical
+generation from current state and attributes the warning to the later UI edit,
+not server ordering. It preserves curated visible fields, proposes no blanket
+regeneration and never calls the Roleplay publication-ready. The protected
+instruction edit is a workflow failure established by metadata, not hidden text.
+
 ## Happy Path With App
+
+For a later section/item correction after a created Journey has enrollment
+history, use `safe-content-administration` and its complete-structure
+ProductAction review. Do not repeat plan execution to make that correction.
 
 Prompt: “Build a short pricing-objection journey from our approved knowledge.
 Show it to me before you create or publish anything.”

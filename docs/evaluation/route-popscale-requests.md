@@ -25,6 +25,14 @@ Prompt: “Create and publish a journey from our approved knowledge.”
 Expected: route to `safe-journey-creation` and `popscale-platform`. Do not use a
 public documentation page as approved company knowledge or publication authority.
 
+## Empty Knowledge search is not an empty library
+
+An authenticated Journey brief gets no hits for its topic or one shorter
+variant, while `knowledge_assets_list` returns approved, active,
+generation-eligible assets. Expected: use the product list, inspect eligible
+sources and relevance, and avoid claiming the company has no approved Knowledge.
+No company source details are sent to public Docs.
+
 ## Interview Administration
 
 Prompt: “Show our onboarding interview and add one follow-up question.”

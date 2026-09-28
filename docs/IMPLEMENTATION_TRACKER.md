@@ -1,6 +1,23 @@
 # V1 implementation tracker
 
-Last updated: 2026-09-25
+Last updated: 2026-09-28
+
+## Enrolled Journey structure and Roleplay text language — 1.6.0
+
+- [x] Route edits to an existing enrolled Journey through
+  `journey_structure_get` and one `journey_structure_update` ProductAction,
+  preserving stable IDs and requiring UI approval before execution.
+- [x] Require a resolved company `source_language_id` for intentional Roleplay
+  description/education text regeneration, and verify the accepted language and
+  saved outputs. Add synthetic host scenarios and package contracts.
+- [x] Backend PR #477 and follow-up fixes were promoted by the successful
+  controlled production release #481. A read-only Product MCP capability read
+  confirmed `journey_structure_get` and `journey_structure_update` available.
+- [x] Bump both plugin manifests, the Claude marketplace, package expectations
+  and changelog to 1.6.0. Add both Journey structure tools to the public bundle
+  contract fixture. No OAuth scope or server URL changes are included.
+- [ ] Clean Codex and Claude host evaluations are deferred for this release at
+  the user's request. No live product write test is claimed.
 
 ## Backend PR compatibility audit — 1.5.1
 

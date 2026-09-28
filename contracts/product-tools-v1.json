@@ -1,6 +1,6 @@
 {
   "tool_contract_version": "popscale.product.actions.v1",
-  "source_commit": "e36cb19b19befea605419b08bbf221020f479d19",
+  "source_commit": "43b1b17406edebb62baa9e3695c21738aed2b35e",
   "product_tools": [
     "admin_credits_operation_get",
     "admin_credits_rate_card",
@@ -63,6 +63,8 @@
     "journey_plan_update_item_input",
     "journey_plan_update_overview",
     "journey_plan_validate_item_input",
+    "journey_structure_get",
+    "journey_structure_update",
     "knowledge_agent_context_manifest",
     "knowledge_agent_context_manifest_regenerate",
     "knowledge_asset_activate",
