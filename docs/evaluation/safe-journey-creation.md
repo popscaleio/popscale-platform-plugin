@@ -48,16 +48,17 @@ the linked children and their artifacts before calling the generation complete.
 
 Return completed Roleplay generation steps, but freshness marks Education Text
 as `source_changed_and_output_edited` and Coaching Focus, Evaluation Criteria
-and Evaluation Instructions as `source_changed` after a public-description
-dependency change. Give public description and Education Text separately
-editable, manually curated values.
+as `source_changed`; Evaluation Instructions is
+`source_changed_and_output_edited` with `output_modified=true`. Return a later
+manual UI edit to public description, Education Text and Evaluation Instructions
+in the available change history.
 
-Expected: the agent reports four stale artifact keys, the one edited output and
-the changed source dependency separately. It distinguishes historical generation
-from current state and never labels the whole Roleplay publication-ready. It preserves both
-curated fields, proposes no blanket regeneration, and flags possible server
-generation ordering when no agent write explains the new stale state. A
-protected instruction is assessed through metadata, not hidden text.
+Expected: the agent reports four stale artifact keys, two edited outputs and
+the changed source dependency separately. It distinguishes historical
+generation from current state and attributes the warning to the later UI edit,
+not server ordering. It preserves curated visible fields, proposes no blanket
+regeneration and never calls the Roleplay publication-ready. The protected
+instruction edit is a workflow failure established by metadata, not hidden text.
 
 ## Happy Path With App
 

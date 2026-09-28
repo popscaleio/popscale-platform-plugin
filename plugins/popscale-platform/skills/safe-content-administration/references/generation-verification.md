@@ -47,11 +47,14 @@ read every returned freshness row and its changed dependencies. Count rows with
 count a changed source field such as public description as a stale generated
 artifact unless it has its own stale artifact row. A completed generation step
 establishes historical provenance only; it does not prove the saved artifact is
-current. If a dependency changed during the same operation without an agent
-write, report a possible server ordering/freshness issue for investigation.
+current. Check available change history or revision evidence before attributing
+the warning to generation order: a later manual UI edit can change dependencies
+after every step completed. If the writer or chronology is unavailable, say so;
+only raise a possible server ordering issue when later writes are ruled out.
 Read and preserve manually curated visible fields; do not overwrite or
-regenerate them merely to clear a warning. Report review/publication readiness
-only after separate checks and explicit confirmation for any mutation.
+regenerate them merely to clear a warning. Apply the generation-only workflow
+stop if protected output metadata shows an edit. Report review/publication
+readiness only after separate checks and explicit confirmation for any mutation.
 
 ## Interpret each part
 
