@@ -4,11 +4,20 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-09-28
+
 - Route enrolled Journey section/item changes through the new complete-structure
   MCP read and human-reviewed ProductAction flow. Keep granular edits for unused
   Journeys and preserve existing placement IDs and enrollment history.
 - Select a company-owned language explicitly when regenerating Roleplay
   descriptions or education text; add synthetic host scenarios for both flows.
+- Resolve Journey source discovery and requested item counts before generation;
+  verify the saved plan mix and continue long-running work from existing request
+  IDs without duplicating plans or child jobs.
+- Ground Roleplay freshness reports in saved change history and linked generation
+  evidence, and distinguish pending regeneration from verified fresh outputs.
+- Include the new Journey structure tools in the public skill bundle's Product
+  MCP requirements.
 
 ## [1.5.1] - 2026-09-25
 
