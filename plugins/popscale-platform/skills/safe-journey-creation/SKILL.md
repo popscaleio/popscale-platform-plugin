@@ -104,7 +104,9 @@ for Journey context, duplicate names and internal identifiers.
     scored items, question counts, opening lines, section descriptions,
     passing-score policy, attempt rules within a section, naming and mix.
     Report findings in its three levels with a proposed value each; fix only
-    what the user approves, through the content workflow. Then call
+    what the user approves, through the content workflow. A created Journey
+    with enrollment history needs that workflow's complete-structure
+    ProductAction review for section/item changes. Then call
     `journey_activation_readiness`. Activate
     each ready draft child through `content_activate` only after a specific
     confirmation. A scenario shared by several items is activated once, after

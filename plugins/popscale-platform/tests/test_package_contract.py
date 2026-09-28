@@ -71,6 +71,9 @@ EXPECTED_CONTENT_TOOLS = (
     "content_regenerate_subparts",
     "content_activation_readiness",
     "content_activate",
+    "journey_structure_get",
+    "journey_structure_update",
+    "product_action_execute",
 )
 EXPECTED_USAGE_TOOLS = (
     "get_journey_insights",
@@ -418,6 +421,8 @@ class PluginPackageContractTests(unittest.TestCase):
             "Truncated Dependency Usage",
             "Episode language and audio",
             "Existing Journey item",
+            "Existing Journey with enrollment history",
+            "Swedish Roleplay text regeneration",
             "Wrong company and superuser acting context",
             "Publication boundary",
         ):

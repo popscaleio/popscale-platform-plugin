@@ -4,6 +4,12 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+- Route enrolled Journey section/item changes through the new complete-structure
+  MCP read and human-reviewed ProductAction flow. Keep granular edits for unused
+  Journeys and preserve existing placement IDs and enrollment history.
+- Select a company-owned language explicitly when regenerating Roleplay
+  descriptions or education text; add synthetic host scenarios for both flows.
+
 ## [1.5.1] - 2026-09-25
 
 - Align active-content regeneration with the production MCP contract while

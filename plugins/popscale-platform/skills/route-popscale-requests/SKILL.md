@@ -36,8 +36,9 @@ for Journey context, duplicate names and internal identifiers.
    question edits, invitations, respondent links, run review, or analysis. Use
    `safe-content-administration` to find, create, inspect, or granularly edit
    existing roleplays, coaching sessions, challenges, episodes, flashcards, or
-   Journey sections/items, and for their supported regeneration, language, or
-   activation workflows. Use `company-usage-insights` for company-scoped
+   Journey sections/items, including complete structure changes on an enrolled
+   Journey, and for supported regeneration, language, or activation workflows.
+   Use `company-usage-insights` for company-scoped
    Journey participation, completion, mastery, content outcomes, and bounded
    member or attempt drilldown. Use
    [safe-product-feedback](../safe-product-feedback/SKILL.md) for reports and
@@ -113,8 +114,8 @@ for Journey context, duplicate names and internal identifiers.
   analyses to the public documentation server.
 - Keep `safe-content-administration` authoritative for company content
   authoring. Use `safe-journey-creation` for a new Journey plan or its
-  execution/publication, but use the content workflow for a focused edit to an
-  already created Journey section or item.
+  execution/publication, but use the content workflow for edits to an already
+  created Journey structure.
 - Questions about whether an artifact was generated, edited or is current are
   private product-state reads. Route them to `safe-content-administration` and
   its generation-verification workflow; public docs are not provenance evidence.

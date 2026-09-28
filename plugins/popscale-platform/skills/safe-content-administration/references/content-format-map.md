@@ -13,19 +13,12 @@ it does not authorize unsupported fields or operations.
 | `challenge` | `evaluation_prompt` |
 | `episode` | `script`; source and translated `episode_script_variant.script_text` |
 
-This classification takes precedence over `editable_fields`, `allowed_fields`,
-active-edit confirmation, and `confirm_generated_output_override`. Never author
-these outputs in `content_update`, root creation, a component call, or another
-manual-write route, even for a requested correction or translation. Edit the
-appropriate source inputs and use the supported platform generation subpart.
-Other editable fields retain their normal scoped editing workflow; listing a
-field as a generation subpart does not by itself make it generation-only.
+The generation-only rule overrides technical editability and confirmation
+flags. Edit source inputs and generate these outputs through the platform;
+other editable fields keep their normal workflow.
 
-If the target is active and generation requires a draft, use only a documented,
-supported draft workflow with the required authorization, or stop and report
-the limitation. Do not demote active content, clone/reassign it, or write output
-text as a workaround. See the dependency decision flow in
-[tool-workflow.md](tool-workflow.md).
+If active generation is unsupported, stop; never demote, clone or manually
+write the output. See [tool-workflow.md](tool-workflow.md).
 
 | Root type | Granular components | Targeted generation subparts |
 | --- | --- | --- |
@@ -60,16 +53,11 @@ text as a workaround. See the dependency decision flow in
 - Follow [question design](coaching-question-design.md) for participant-facing
   wording, progression, reference-answer alignment and score-preserving splits.
 
-- A change to any Coaching generation input always requires a new platform
-  generation of BOTH `agent_prompt` and `evaluation_instructions`. Examples
-  include coaching context, situation, reference facts/points, evaluation input,
-  success behaviours, critical missteps, and source knowledge. This is a coupled
-  refresh, even if freshness marks only one output stale or both still current.
-- Save the agreed input changes first, then request
+- Any Coaching generation input change requires BOTH `agent_prompt` and
+  `evaluation_instructions`, regardless of freshness.
+- After saving the final inputs, request
   `subparts: ["agent_prompt", "evaluation_instructions"]` through
-  `content_regenerate_subparts` using the supported live schema. One request
-  after a batch of source edits is enough; changes after dispatch require a new
-  pair based on the final inputs. Never adjust either output manually.
+  `content_regenerate_subparts`. Later input edits require a new pair.
 - Verify new linked steps and saved-output metadata for both. An old successful
   run or only one newly generated instruction cannot complete the input update.
 - Administrative changes that do not alter generation inputs, such as department
@@ -117,8 +105,16 @@ text as a workaround. See the dependency decision flow in
 ### Existing journeys
 
 - Use `journey_section` and `journey_item` to make granular edits to an already
-  created Journey. Reordering replaces the complete section or item ordering
-  within the selected bounded parent scope.
+  created Journey without enrollment history. Reordering replaces the complete
+  section or item ordering within the selected bounded parent scope.
+- With enrollment history or `STRUCTURE_PREVIEW_REQUIRED`, read
+  `journey_structure_get` and change its complete structure, preserving
+  unchanged IDs. New rows need unique `client_id` values; list removed IDs
+  explicitly. Submit `journey_structure_update` with `journey_id`, current
+  revision and stable UUID `command_id`. Review its enrollment impact, obtain
+  Popscale UI approval, then call `product_action_execute`. Expired or
+  superseded actions need a fresh read and proposal. This requires the company
+  `interviews` feature. Never retry a granular edit with a confirmation flag.
 - Use `safe-journey-creation` for creating, validating, executing, or publishing
   a Journey plan. Existing-Journey component editing does not bypass that
   workflow's publication boundary.

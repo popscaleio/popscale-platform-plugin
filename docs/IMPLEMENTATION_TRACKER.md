@@ -1,6 +1,19 @@
 # V1 implementation tracker
 
-Last updated: 2026-09-25
+Last updated: 2026-09-28
+
+## Enrolled Journey structure and Roleplay text language — unreleased
+
+- [x] Route edits to an existing enrolled Journey through
+  `journey_structure_get` and one `journey_structure_update` ProductAction,
+  preserving stable IDs and requiring UI approval before execution.
+- [x] Require a resolved company `source_language_id` for intentional Roleplay
+  description/education text regeneration, and verify the accepted language and
+  saved outputs. Add synthetic host scenarios and package contracts.
+- [ ] Publish only after the corresponding backend tools and language behavior
+  are deployed to production and a compatible Product MCP capability read is
+  verified. This plugin branch changes no OAuth scope, server URL, or manifest
+  version; release versioning and host smoke remain separate release steps.
 
 ## Backend PR compatibility audit — 1.5.1
 

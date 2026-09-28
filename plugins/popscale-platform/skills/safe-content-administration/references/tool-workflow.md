@@ -51,8 +51,12 @@ field, after the user approves the exact edit. Deletion requires
 `confirm_learner_impact=true` after a separate learner-impact confirmation.
 
 Use component CRUD for a single roleplay customer/question/objection/decision
-rule/criterion, flashcard/card translation, or journey
-section/item. Use `content_update` for scalar root edits and directly addressable
+rule/criterion, flashcard/card translation, or unused Journey section/item.
+For enrolled Journeys, `journey_structure_get` (`journey:read`) precedes
+`journey_structure_update` (`journey:read`, `journey:write`); execute only an
+approved action with `product_action_execute`. See
+[content-format-map.md](content-format-map.md).
+Use `content_update` for scalar root edits and directly addressable
 child edits when no collection operation is needed.
 Episode script variants are read-only to the agent even when component CRUD
 exposes writable fields. Change Script input (`model_steering`) and use platform
@@ -164,7 +168,9 @@ subpart and verify the saved output afterwards.
    active learner impact, Roleplay Knowledge binding when relevant, and exact
    generated subparts.
 3. For targeted regeneration, call `content_regenerate_subparts` with a stable
-   idempotency key. It requires `content:write` and `generation:write`.
+   idempotency key. It requires `content:write` and `generation:write`. For
+   Roleplay `description`/`education_text`, resolve the company language and
+   pass `source_language_id`; replay retains it.
 4. For Episode or Flashcard language generation, resolve the language through
    `list_company_content_references`, then call `content_language_generate` with
    `content:read`, `content:write`, and `generation:write`. Use

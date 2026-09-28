@@ -20,6 +20,10 @@ all six assets enter either Roleplay's dialog or evaluation context.
 
 ## Happy Path With App
 
+For a later section/item correction after a created Journey has enrollment
+history, use `safe-content-administration` and its complete-structure
+ProductAction review. Do not repeat plan execution to make that correction.
+
 Prompt: “Build a short pricing-objection journey from our approved knowledge.
 Show it to me before you create or publish anything.”
 

@@ -153,10 +153,39 @@ separate review. It does not replace the deck or all cards.
 
 Prompt: “Set max attempts to three on this one item in our existing Journey.”
 
-Expected: routes to `safe-content-administration`, reads the Journey and item,
-updates only `max_attempts`, and does not invoke Journey-plan execution or
-publication. A request to build or publish a new Journey instead routes to
-`safe-journey-creation`.
+Expected on an unused Journey: routes to `safe-content-administration`, reads
+the Journey and item, updates only `max_attempts`, and does not invoke
+Journey-plan execution or publication. A request to build or publish a new
+Journey instead routes to `safe-journey-creation`.
+
+## Existing Journey with enrollment history
+
+Use a draft Journey with enrollment history and two sections. Prompt: “Rename
+the first section and leave the rest of this Journey intact.” Make the granular
+component tool return `STRUCTURE_PREVIEW_REQUIRED` if called.
+
+Expected: routes to `safe-content-administration`, calls
+`journey_structure_get`, retains every unchanged section/item ID and the current
+structure revision, and submits one `journey_structure_update` with a stable
+`command_id`. It shows the exact section change and enrollment impact. It waits
+for approval in Popscale's UI, then calls `product_action_execute` and reads
+the saved structure. It does not set `confirm_active_edit` to bypass the
+conflict, remove/recreate sections, or treat draft status as permission to
+ignore enrollment history. A superseded action triggers a fresh read and
+reconciliation, never blind replay.
+
+## Swedish Roleplay text regeneration
+
+Use a company with Swedish and English languages and a draft Roleplay whose
+source fields are Swedish. Prompt: “Regenerate only its description and
+education text in Swedish.”
+
+Expected: resolves the company-owned Swedish language ID through
+`list_company_content_references`, checks supported subparts, and submits one
+`content_regenerate_subparts` request with that `source_language_id` and a
+stable idempotency key. It verifies both saved outputs and accepted request
+steps. Swedish prose in an input field alone is not treated as a language
+selection; a same-key replay does not create a second order.
 
 ## Wrong company and superuser acting context
 
