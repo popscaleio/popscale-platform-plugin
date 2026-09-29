@@ -30,11 +30,16 @@ queued or running. Never retry speculatively.
 ## Journey Review
 
 Apply the shared [Episode speaker policy](../../safe-content-administration/references/episode-speakers.md)
-to every Episode item before execution: put anonymous-dialogue requirements in
-Script input (`model_steering`) and voice codes only in dedicated configuration.
+to every Episode item before execution: put format-appropriate anonymous speaker
+requirements in Script input (`model_steering`) and voice codes only in dedicated
+configuration.
 Platform execution generates scripts, translations and audio; the agent verifies
 saved results read-only and never edits scripts. A valid plan or anonymous
 steering alone does not prove that the generated result followed the inputs.
+For a plan that may produce audio Episodes with Next Generation enabled, include the structured
+plan brief and locales. After `journey_plan_get_item_inputs`, inspect each
+Episode's distinct brief, then propose and, after approval, validate corrections before
+execution. Explicit Original or video uses Original; no manual Episode drafts.
 
 1. Read `journey_plan_detail`; show the proposal immediately, then wait. Count
    one item per customer encounter and show scenario → item → selected customer;

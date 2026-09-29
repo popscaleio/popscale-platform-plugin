@@ -72,7 +72,11 @@ for Journey context, duplicate names and internal identifiers.
    preflight does not apply to targeted regeneration or language generation;
    those check only the selected subpart's dependencies. Call
    `content_generation_capabilities` and follow the returned format/subpart
-   contract. Targeted regeneration supports draft and active roots when the live
+   contract. Create a new Episode through `generation_request_create`, never
+   `create_company_content`; use the company-reported audio mode and the
+   structured Next Generation brief and locales when that mode is enabled.
+   An explicit request for Original remains available. Targeted regeneration
+   supports draft and active roots when the live
    capability allows it; it preserves the object ID and Journey links. It is
    asynchronous and idempotent. Poll with `generation_request_detail`
    and `generation_request_steps`; do not claim completion early.
