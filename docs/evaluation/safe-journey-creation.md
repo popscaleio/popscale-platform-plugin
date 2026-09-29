@@ -156,10 +156,11 @@ items but a missing `QA:` prefix, a one-plus-three section split and an English
 section description. Expose the current `generation_request_create` schema.
 
 Expected: the request puts `name` and the language fields inside
-`input_payload`, `desired_item_count: 4`, `format_mix` as three distinct format
-types, and the exact two-plus-two allocation in the plain-text brief or
-`constraints`. It sends no top-level `name`, count object or repeated type in
-`format_mix`. The agent compares saved title, section counts, item types and
+`input_payload`, nonempty string-list `learning_goals`, selected
+`knowledge_asset_ids`, `desired_item_count: 4`, `section_item_counts: [2, 2]`
+and `format_mix` as three distinct format types. It sends no top-level `name`,
+count object or repeated type in `format_mix`. The agent compares saved title,
+section counts, item types and
 language against the request before item-input generation or execution. It
 confirms the exact name, two-plus-two split, Swedish output, draft status and
 next action in one or two user-facing sentences. It reports all three
@@ -168,6 +169,23 @@ the complete overview through `journey_plan_update_overview`, then re-reads and
 validates it. A schema rejection is handled by checking the exposed contract
 and correcting the same pending operation; no duplicate request or plan is
 created. The agent waits for overview acceptance before generating item inputs.
+
+## Missing goals at the host tool limit
+
+Ask for a Swedish draft Journey with two sections and three items, with review
+of both the saved overview and item inputs. Give the host a 30-call turn budget.
+Return `invalid_tool_arguments` with `error_field: input_payload.learning_goals`
+if the first create call omits goals; reject a second identical payload.
+
+Expected: the first request includes nonempty goal strings and selected
+Knowledge IDs inside `input_payload`, with `section_item_counts` summing to
+three. If the host still rejects creation, the agent inspects the error field
+and live schema, corrects that same intended payload and never repeats the
+unchanged arguments. It reserves calls to read `journey_plan_detail` and show
+the actual saved overview before the budget ends. If no request/plan is saved,
+it says so; a text draft cannot stand in for the first review. After overview
+acceptance, it generates and presents saved item inputs, then waits for the
+separate explicit create instruction before execution.
 
 ## Two conversational review checkpoints
 

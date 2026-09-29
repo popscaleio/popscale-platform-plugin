@@ -28,12 +28,14 @@ for Journey context, duplicate names and internal identifiers.
    counts and Roleplay customer count. Confirm the name, split, language,
    draft intent and next action briefly. For
    `generation_request_create(request_type=journey_plan)`, put
-   `name`, `desired_item_count`, `format_mix`, `journey_brief`, `constraints`,
+   `name`, `journey_brief`, nonempty `learning_goals` (a list of goal strings),
+   nonempty `knowledge_asset_ids`, `desired_item_count`,
+   `section_item_counts` when specified, `format_mix`, `constraints`,
    `output_language` and company `source_language` ID inside `input_payload`.
-   `format_mix` lists unique types; `constraints` is plain text.
-   Put counts and section allocation in the brief or constraints.
-   Count each Roleplay customer encounter as an item; clarify conflicting totals
-   or mix. Complete the shared
+   Section counts sum to the item total. `format_mix` lists unique types;
+   `constraints` is prose.
+   Count each Roleplay customer encounter; clarify conflicting totals. Complete
+   the shared
    [company asset preflight](../safe-content-administration/references/company-asset-preflight.md)
    before generation. It distinguishes blocking server requirements from thin
    recommended inputs the user may accept. At review, inspect captured company
@@ -59,16 +61,16 @@ for Journey context, duplicate names and internal identifiers.
    Before filling planning fields, fetch `/journeys/plan/` as the routing skill
    describes. Ask about missing purpose, audience, behavior, cadence, level,
    mix or constraints; write the brief as outcomes, not just topics.
-4. Reuse the existing request; create or start one only when requested. Reuse
-   fresh preflight results and batch independent reads when supported. Poll
-   `generation_request_detail` with growing intervals; read steps when the
-   phase is unclear or failed, rather than on every poll. Reserve calls to
-   read and present a saved overview; without an active item-input step it
-   awaits review (`overview_review` where available). Continue authorized
-   reads within the host budget, stopping at both reviews. Update the user in
+4. Reuse the request and fresh preflight; start only when requested. Batch
+   independent reads. On rejected creation, inspect `error_field` and schema;
+   correct the payload before retrying, never repeat unchanged arguments. Poll
+   `generation_request_detail` with growing intervals; read steps only for
+   unclear or failed phases. Reserve calls for the saved overview. Without an
+   active item-input step, it awaits review (`overview_review` where available).
+   Stop at both reviews within the host budget. Update the user in
    their language only when state changes or input is needed. Do not repeat the
    host receipt, narrate polls, expose tool names or claim private thinking.
-5. Read `journey_plan_detail` when the overview is saved; show its title,
+5. Read `journey_plan_detail` when the overview is saved; only then show its title,
    goals, language, ordered sections/items, counts/formats, short purposes and
    `generation_notes`. Call it a proposal; no Journey or child content exists.
    Lead with names; keep type codes and IDs in technical detail. Map each
@@ -172,10 +174,10 @@ for Journey context, duplicate names and internal identifiers.
 
 Budget calls for preflight and both reviews; poll with growing intervals
 (normally at most six reads per turn). UI status snapshots do not resume an
-agent turn or renew its tool budget. At cutoff, only an actual host continuation
-may resume authorized reads, never cross a human review. Otherwise hand off
-observed linked/pending/failed counts, time, existing request/plan/Journey/child
-IDs and the next read. No new consent is needed merely to inspect the same job.
+agent turn or renew its tool budget. Before cutoff, hand off a brief checkpoint:
+observed linked/pending/failed counts, time, saved request/plan/Journey/child
+IDs and the next safe read. Only an actual host continuation may resume reads;
+never cross a human review. Inspecting the same job needs no new consent.
 Resume with `generation_request_detail`, then only needed plan or child reads;
 refresh before repeating counts. Reconcile only on server guidance or observed
 inconsistency. Never recreate work because of cutoff; keep artifact
