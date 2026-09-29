@@ -63,11 +63,11 @@ for Journey context, duplicate names and internal identifiers.
 4. Reuse the existing request; create or start one only when requested. Reuse
    fresh preflight results and batch independent reads when supported. Poll
    `generation_request_detail` with growing intervals; read steps when the
-   phase is unclear or failed, rather than on every poll. A saved overview
-   without an active item-input step awaits review (`overview_review` where
-   available). Continue authorized read-only work across host turns when
-   supported, stopping at both human reviews. Write agent progress in the
-   user's language; output language does not control host UI labels.
+   phase is unclear or failed, rather than on every poll. Reserve calls to
+   read and present a saved overview; without an active item-input step it
+   awaits review (`overview_review` where available). Continue authorized
+   reads within the host budget, stopping at both human reviews. Write agent
+   progress in the user's language; output language does not control UI labels.
 5. Read `journey_plan_detail` when the overview is saved; show it immediately
    without asking: title, goals, language, ordered sections/items,
    counts/formats, short item purposes and
@@ -169,15 +169,16 @@ for Journey context, duplicate names and internal identifiers.
 
 ## Bounded continuation handoff
 
-Poll with growing intervals (normally at most six reads per turn). At a host
-cutoff, use automatic continuation when available for authorized reads and
-polling, never to cross an overview or item-input review. Otherwise give a
-truthful handoff with observation time, linked/pending/failed counts, existing
-request/plan/Journey/child IDs and the next read. Do not ask for fresh consent
-to inspect the same job. Resume with `generation_request_detail`, then only
-the plan or child reads needed; refresh before repeating counts. Reconcile only
-on server guidance or observed inconsistency. Never recreate work because of
-a cutoff; leave artifact verification pending until evidence reads finish.
+Budget calls for preflight and both reviews; poll with growing intervals
+(normally at most six reads per turn). UI status snapshots do not resume an
+agent turn or renew its tool budget. At cutoff, only an actual host continuation
+may resume authorized reads, never cross a human review. Otherwise hand off
+observed linked/pending/failed counts, time, existing request/plan/Journey/child
+IDs and the next read. No new consent is needed merely to inspect the same job.
+Resume with `generation_request_detail`, then only needed plan or child reads;
+refresh before repeating counts. Reconcile only on server guidance or observed
+inconsistency. Never recreate work because of cutoff; keep artifact
+verification pending until evidence reads finish.
 
 ## Safety Rules
 

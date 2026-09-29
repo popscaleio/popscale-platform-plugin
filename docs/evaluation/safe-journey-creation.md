@@ -138,13 +138,14 @@ cutoff while child generation runs after execution confirmation.
 
 Expected: independent preflight reads are batched where supported, fresh
 results are reused, and polling favors request detail over repeated full
-preflight or step reads. Supported host continuation resumes the same request
-without a manual “continue” from the user, then stops at the saved overview
-and item-input reviews. If the host cannot continue automatically, the agent
-gives a precise handoff and states that limitation; it never claims the job
-will resume by itself. The later turn reads the same request before taking
-action, creates no duplicate, and does not turn a status poll into permission
-to generate item inputs or execute the Journey.
+preflight or step reads. The agent reserves enough calls to show a saved
+overview instead of exhausting the turn on status checks. A UI snapshot poll
+does not create a new agent turn. Only an actual host continuation can resume
+the same request automatically, and it stops at the saved overview and
+item-input reviews. Otherwise the agent gives a precise handoff, states the
+limitation and never claims the job will resume by itself. The later turn
+reads the same request, creates no duplicate and does not treat a status poll
+as permission to generate inputs or execute the Journey.
 
 ## Exact name, allocation and language before execution
 
