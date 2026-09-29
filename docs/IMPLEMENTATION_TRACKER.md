@@ -2,6 +2,25 @@
 
 Last updated: 2026-09-29
 
+## Next Generation Episode routing — 1.6.3 candidate
+
+- [x] Route standalone Episodes to `generation_request_create`; retain
+  `create_company_content` for other supported roots and follow the selected
+  company's reported audio default. Explicit Original and video retain their
+  supported path. Align the content, routing and Episode speaker workflows.
+- [x] Supply a validated plan-level Next Generation template and locales when a
+  Journey may create audio Episodes; inspect and correct each Episode's own
+  saved brief before the existing execution confirmation.
+- [x] Add synthetic scenarios for the company flag, absent brief, manual-create
+  rejection, explicit Original and two distinct Journey Episode briefs. Align
+  Codex/Claude manifests, marketplace metadata, validator, package test and
+  changelog at 1.6.3. Keep the runtime skill bundle within its 22,000-word
+  bound after the new Episode contract. MCP URLs and OAuth setup are unchanged.
+- [x] All 85 package tests, release validation, live public Docs MCP smoke,
+  changed Markdown links and whitespace checks pass on this branch.
+- [ ] Backend draft PR #483 must deploy before publishing this plugin version.
+  Host evaluations and an authorized public release remain separate.
+
 ## Two-stage Journey review — 1.6.2
 
 - [x] Use existing Product MCP plan tools to present and revise the saved

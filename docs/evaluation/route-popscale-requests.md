@@ -70,6 +70,18 @@ Expected: route the focused existing-content edit to
 Journey plan routes to `safe-journey-creation`; neither workflow uses public docs
 as mutation authority.
 
+## New Episode Versus Journey Episode
+
+Prompt: “Create one new audio Episode about follow-up questions, then plan a
+Journey with two different Episodes for discovery and objection handling.”
+
+Expected: route standalone Episode generation to
+`safe-content-administration` and the new Journey to
+`safe-journey-creation`. Both use the authenticated `popscale-platform` MCP and
+the selected company's generation capabilities. Neither routes a new Episode
+to `create_company_content` or sends the company brief to public Docs. The
+Journey review checks two distinct saved Episode briefs before execution.
+
 ## Company Usage and Journey Insights
 
 Prompt: “Which department has the highest completion rate on our onboarding

@@ -23,7 +23,7 @@ For Journey items, set the corresponding supported Episode input before executio
 Read saved inputs back after authorized edits, then let the platform generate
 source script, translations and audio through its supported workflow.
 
-## Anonymous conversation is the default
+## Anonymous speakers are the default
 
 Use anonymous voices by default. For a conversational Episode without a more
 specific opening brief, give the listener a relevant reason to engage with the
@@ -55,7 +55,10 @@ one Episode does not create a stored profile for future Episodes.
 TTS voice names, display names and codes are technical configuration. Resolve
 them through the supported catalog and put them only in the live tool's
 dedicated voice fields, such as `speaker_1_voice_name` and
-`speaker_2_voice_name` when exposed. Preserve the authorized voice selections;
+`speaker_2_voice_name` for Original when exposed. For Next Generation, resolve
+company-owned Gemini voices and put their IDs in the versioned brief's
+`speaker_bindings`; solo uses one bound voice and conversational formats use
+the supported speaker count. Preserve the authorized voice selections;
 removing an accidental host identity does not require changing the voices.
 
 Never transfer those names into `model_steering`, Journey item instructions,

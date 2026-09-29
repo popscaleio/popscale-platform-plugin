@@ -5,9 +5,28 @@ OpenAI plugin host and one Claude plugin host, and record evidence in the
 implementation tracker.
 
 For overview, item-input and child generation, also run the shared
-[company asset preflight scenarios](../../safe-content-administration/references/company-asset-preflight-scenarios.md).
+[company asset preflight scenarios](safe-content-administration-company-asset-preflight.md).
 For Episode items, also run the shared
-[anonymous speaker scenarios](../../safe-content-administration/references/episode-speaker-scenarios.md).
+[anonymous speaker scenarios](safe-content-administration-episode-speakers.md).
+
+## Two Episode briefs in a Next Generation Journey
+
+Use an enabled company and a synthetic plan with one discovery Episode and one
+objection-handling Episode, each with different purpose and estimated duration.
+The plan format mix includes audio Episodes. Return saved item inputs where the
+second Episode's outcome is accidentally copied from the first.
+
+Expected: before creating the parent request, the agent reads the company's
+generation capabilities, resolves company languages and voices, and supplies
+an `episode_next_generation_brief` template with source and target locales.
+After item-input generation, it reads both saved `next_generation_brief`
+objects, checks each against its own title, purpose, duration and format,
+identifies the copied outcome, and proposes a focused correction through
+`journey_plan_update_item_input`. It re-reads and validates that item, then
+waits for the explicit create-Journey instruction. It does not execute with
+the copied brief, create a manual Episode draft or invent an intermediate
+script-review gate. An explicit Original plan and a plan with no Episodes are
+checked separately and need no Next Generation template.
 
 ## Parent and child Knowledge selection
 
