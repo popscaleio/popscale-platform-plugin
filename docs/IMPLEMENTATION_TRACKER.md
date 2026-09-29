@@ -2,6 +2,19 @@
 
 Last updated: 2026-09-29
 
+## Two-stage Journey review — 1.6.2
+
+- [x] Use existing Product MCP plan tools to present and revise the saved
+  overview before item-input generation, then inspect and revise item inputs
+  before the explicit instruction to create the Journey draft.
+- [x] Add synthetic host scenarios for both conversational stops, same-request
+  corrections, item drilldown and the structured fallback.
+- [x] Align both plugin manifests, the Claude marketplace, package test,
+  release validator and changelog at 1.6.2. Existing sessions retain their
+  pinned instructions; no backend approval state or product write is added.
+- [ ] Clean Codex and Claude host checks are skipped for this release at the
+  user's request. Verify the Journey workflow in new staging and main sessions.
+
 ## Journey plan fidelity and freshness attribution — 1.6.1
 
 - [x] Preserve requested Journey name, per-section allocation and output

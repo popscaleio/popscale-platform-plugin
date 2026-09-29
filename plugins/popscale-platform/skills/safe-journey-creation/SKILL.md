@@ -70,24 +70,17 @@ for Journey context, duplicate names and internal identifiers.
 4. Create or inspect a request, start it when requested, and poll
    `generation_request_detail` within a bounded window. Use the handoff below
    if time or tool budget ends; never claim completion while it runs.
-5. Open `journey_plan_detail`. Review the overview and every item. Use
-   `journey_plan_update_item_input` for specific edits and
-   `journey_plan_update_overview` only after the user explicitly confirms the
-   overview change.
-   Present the plan's `generation_notes` verbatim; they are the generator's
-   channel for trade-offs and thin sources. Show the scenario/customer mapping
-   for every Roleplay item: `generate_new` creates a scenario, `link_existing`
-   reuses an existing scenario (with `customer_id` or a new `customer_seed`),
-   and `reuse_scenario` reuses the scenario of an earlier plan item named by
-   `reuse_from_client_id` with a new `customer_seed`. Several sections can share
-   one scenario with a different customer each; prefer that over near-identical
-   scenarios. A `reuse_from_client_id` must point at an earlier Roleplay item,
-   never forward or at itself. Before item-input generation, compare saved
+5. After overview generation, read `journey_plan_detail`. Present the saved
+   title, requested goals and language, ordered sections/items, counts/formats,
+   and each item's short summary and purpose. Call this a proposed plan: no
+   Journey or child content exists yet. Show the plan's `generation_notes` and each
+   Roleplay's scenario/customer mapping: `generate_new` creates a scenario,
+   `link_existing` selects an existing scenario and `customer_id` or new
+   `customer_seed`; `reuse_scenario` uses an earlier `reuse_from_client_id` and
+   new `customer_seed`. Prefer scenario reuse over duplicates; never reference
+   a later item or itself. Compare saved
    `journey_title`, language, section counts and format totals to the brief;
-   `format_mix` is advice. For drift, show exact differences and a correction,
-   obtain approval, call `journey_plan_update_overview` with `request_id` and the complete
-   corrected `overview`, then re-read and validate. Never execute unresolved
-   name, mix or section drift.
+   `format_mix` is advice. Show exact drift and proposed corrections.
    Check material use of the verified company sources. If format mix, sources,
    revisions or configuration change, repeat the affected preflight before
    generating item inputs or executing the plan; an old snapshot is not refreshed
@@ -96,15 +89,28 @@ for Journey context, duplicate names and internal identifiers.
    child subset (empty means the full parent selection). Inspect that subset
    before execution. An existing or reused Roleplay keeps its own saved pins;
    do not silently replace them with the plan's assets.
-6. Call `journey_plan_validate_item_input` for every item that will be executed. Resolve all
-   validation errors; never bypass server validation.
-7. Call `render_journey_review` so App-capable hosts can show the interactive
-   Journey Review. If the host cannot render the App, present the returned
-   structured overview, item status, validation errors, and next actions in text.
-8. Summarize the exact operation and ask for explicit confirmation immediately
-   before any execution, activation, or publication call.
-9. Only after confirmation, call `journey_plan_execute`. Poll the related request
-   with `generation_request_detail` and use `journey_plan_reconcile` only
+   Ask what the user wants to adjust and wait. For confirmed changes, call
+   `journey_plan_update_overview` with the complete corrected `overview` on the
+   same request; re-read and present the revised plan. Continue only after the
+   user accepts the saved overview.
+6. Call `journey_plan_generate_item_inputs` on that request, poll until the
+   inputs are ready, then read `journey_plan_get_item_inputs`. Do not execute
+   the plan at this stage.
+7. Validate every item with `journey_plan_validate_item_input`; report errors.
+   Call `render_journey_review` when available; otherwise show its structured
+   review state in text. Summarize each saved input's purpose, learner task,
+   language, sources and validation state. These are generation inputs, not
+   generated child content. Offer item-level detail and ask what to review or
+   adjust; wait for the user's answer. For approved edits, call
+   `journey_plan_update_item_input` on the existing plan; re-read, validate and
+   show the revised item, then wait again. Neither a valid plan nor “no changes”
+   authorizes execution.
+8. After this second review, an explicit “create Journey” instruction for the
+   current plan is the execution confirmation. Recap the exact operation before
+   calling the tool; ask again if the plan changed since that go-ahead.
+   Activation and publication each need separate confirmation.
+9. Only after that confirmation, call `journey_plan_execute`. Poll the related
+   request with `generation_request_detail` and use `journey_plan_reconcile` only
    when status or server guidance indicates reconciliation is appropriate.
    Read item statuses literally: `waiting_for_scenario` and
    `child_request_created` are not done; `linked` is done;
