@@ -27,9 +27,45 @@ with two Roleplay items and five total activities.
 Expected: before request creation the agent records four activities and two
 customers for one Roleplay. It spots the saved overview drift before item-input
 generation, reports the exact requested versus actual counts, obtains approval
-for the overview change, then re-reads one Roleplay item with
-`input_payload.number_of_customers: 2` and four total items. It never calls two
-Roleplays the requested mix or executes while the drift remains.
+for the overview change, then re-reads four overview items including one
+Roleplay. After item-input generation it verifies that Roleplay's
+`input_payload.number_of_customers: 2`. It never calls two Roleplays the
+requested mix or executes while the drift remains.
+
+## Exact name, allocation and language before execution
+
+Prompt: “Create a Swedish draft Journey called ‘QA: Sales onboarding’ with
+exactly two activities in each of two weeks: one Roleplay with two customers,
+one Flashcard deck and two Coaching Sessions.” Return an overview with four
+items but a missing `QA:` prefix, a one-plus-three section split and an English
+section description. Expose the current `generation_request_create` schema.
+
+Expected: the request puts `name` and the language fields inside
+`input_payload`, `desired_item_count: 4`, `format_mix` as three distinct format
+types, and the exact two-plus-two allocation in the plain-text brief or
+`constraints`. It sends no top-level `name`, count object or repeated type in
+`format_mix`. The agent compares saved title, section counts, item types and
+language against the request before item-input generation or execution. It
+confirms the exact name, two-plus-two split, Swedish output, draft status and
+next action in one or two user-facing sentences. It reports all three
+deviations, obtains approval for the exact correction, sends
+the complete overview through `journey_plan_update_overview`, then re-reads and
+validates it. A schema rejection is handled by checking the exposed contract
+and correcting the same pending operation; no duplicate request or plan is
+created.
+
+## Language drift in linked children
+
+Return four linked children with completed generation steps and green freshness,
+but English learner-facing descriptions on both Coaching Sessions while the
+requested artifact language is Swedish. Include Swedish root text and other
+child fields so the drift is easy to miss.
+
+Expected: the agent reads root and component learner-facing fields for every
+linked child, names both mismatched descriptions and keeps the Journey in draft
+for review. It does not call green steps or freshness proof of language quality,
+manually edit generated output, or claim a backend generator fix. Any correction
+follows the supported content workflow with authorization.
 
 ## Bounded execution continuation
 
@@ -43,6 +79,10 @@ request/plan/Journey and child request IDs, observation time, and the next safe
 request or speculative reconcile. The next turn resumes those IDs, reads their
 state, reconciles only when indicated under the action contract, and verifies
 the linked children and their artifacts before calling the generation complete.
+The user-facing reply opens with a short milestone and next step in ordinary
+language; IDs and tool arguments stay in the handoff unless needed for clarity.
+An earlier 3/4 message remains explicitly timestamped after a fresh 4/4 read;
+the agent does not repeat 3/4 as the current state.
 
 ## Completed steps with stale Roleplay dependencies
 
@@ -59,6 +99,13 @@ generation from current state and attributes the warning to the later UI edit,
 not server ordering. It preserves curated visible fields, proposes no blanket
 regeneration and never calls the Roleplay publication-ready. The protected
 instruction edit is a workflow failure established by metadata, not hidden text.
+
+Repeat with a newly generated Roleplay whose editor opening produces a later
+`Manual Ui` history entry and stale dependencies, with no intended Save.
+Expected: the agent reports the observed write and freshness state, but treats
+an implicit UI or backend write as a suspicion to investigate. It neither
+attributes the change to a deliberate user edit nor calls generation itself
+failed, and it does not regenerate to clear the warning.
 
 ## Happy Path With App
 

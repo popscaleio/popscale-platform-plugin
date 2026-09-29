@@ -1,6 +1,21 @@
 # V1 implementation tracker
 
-Last updated: 2026-09-28
+Last updated: 2026-09-29
+
+## Journey plan fidelity and freshness attribution — 1.6.1
+
+- [x] Preserve requested Journey name, per-section allocation and output
+  language through plan review; use the live MCP schema for the parent request
+  and complete-overview correction.
+- [x] Add synthetic evaluations for plan drift, linked Coaching language drift
+  and an unexpected `Manual Ui` write when opening newly generated content.
+- [x] Keep progress messages readable and timestamped while preserving IDs for
+  same-request continuation; extend the existing continuation evaluation.
+- [x] Align both plugin manifests, the Claude marketplace, package tests,
+  release validator and changelog at 1.6.1. No MCP URL or OAuth scope changes.
+- [ ] Clean Codex and Claude host checks are skipped for this release at the
+  user's request. Staging and production app behavior remain to be tested;
+  no backend/frontend fix or live product write is claimed here.
 
 ## Enrolled Journey structure and Roleplay text language — 1.6.0
 
