@@ -46,12 +46,13 @@ returns structured content but no view appears, summarize:
 
 - request and plan status;
 - overview;
-- every item title/type/status;
+- item title/purpose/status and Roleplay scenario → item → selected customer;
 - readiness and validation errors;
 - the exact next safe actions.
 
-Then continue with ordinary MCP tools. Do not ask the user to switch hosts merely
-to complete the core flow.
+Label this a plan until execution creates a draft Journey. Lead with names and
+short content, not raw type codes or IDs. Continue with ordinary MCP tools; do
+not ask the user to switch hosts.
 
 ## Invalid Scenario or Customer Selection
 
@@ -59,6 +60,8 @@ A `reuse_from_client_id` that points forward, at itself, or at a non-Roleplay
 item, a `customer_id` from another scenario or company, or a new customer
 against an already active scenario is rejected by the server. Show the error
 and fix the selector in the overview; do not create a new plan.
+If two items reuse one scenario but select the same customer, show the mismatch
+and stop before claiming that two distinct encounters were created.
 
 ## Waiting Dependencies and Failed Sources
 

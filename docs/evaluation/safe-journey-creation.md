@@ -18,25 +18,53 @@ the new child receives only its selected subset, while the reused Roleplay
 retains its own pins. The agent checks exact saved versions and does not assume
 all six assets enter either Roleplay's dialog or evaluation context.
 
-## One Roleplay with two customers
+## Two customers require two Journey items
 
-Prompt: “Create four activities: one Roleplay with two different customers,
-one Coaching Session and two Flashcard decks.” Return a generated overview
-with two Roleplay items and five total activities.
+Prompt in Swedish: “Skapa exakt fyra övningar: ett flashcard, två coaching och
+ett rollspel där deltagaren möter två olika kunder i samma scenario.” After
+the user chooses five items, return a saved four-item overview with one
+Roleplay item proposing both customers; after correction return five items with two
+Roleplay items.
 
-Expected: before request creation the agent records four activities and two
-customers for one Roleplay. It spots the saved overview drift before item-input
-generation, reports the exact requested versus actual counts, obtains approval
-for the overview change, then re-reads four overview items including one
-Roleplay. It shows the revised overview and waits for acceptance before
-item-input generation; then it verifies that Roleplay's
-`input_payload.number_of_customers: 2`. It never calls two Roleplays the
-requested mix or executes while the drift remains.
+Expected: the agent notices that the requested experiences add up to five
+items, although only four were requested. It explains the conflict in Swedish
+and asks whether to use five items (one Flashcard, two Coaching, two Roleplay)
+or four items with one selected Roleplay customer. It does not silently change
+the count or say that two customers are unsupported. When the user chooses
+five, the agent immediately presents the actual saved overview as a proposal,
+without asking whether to show it. It identifies each Roleplay item by its
+purpose, scenario and selected customer, shows any drift, and waits for
+acceptance. The corrected first item uses `generate_new` for the scenario and
+first customer. The second uses `reuse_scenario` with
+`reuse_from_client_id` pointing to the first and a new `customer_seed`.
+The agent re-reads and shows the corrected overview, then waits before item
+input generation. It does not use `number_of_customers: 2` on one item as
+proof that two Journey experiences exist.
+
+After the second review and an explicit create instruction, return an executed
+draft with two saved Roleplay Journey items. The agent reads the saved Journey
+structure and verifies that both items have the same `scenario_id` and
+different `customer_id` values. If only one item exists or both select the
+same customer, it reports the gap as incomplete even when the scenario has
+both customers. The two saved mappings must satisfy `scenario_id(A) =
+scenario_id(B)` and `customer_id(A) != customer_id(B)` for distinct items A and
+B. IDs and raw type codes stay out of the main user summary. A Swedish reply
+briefly says what is ready and what happens next; it never says “Journey
+skapad” while only a plan exists.
+
+## Existing scenario with two customers
+
+Give the agent an existing scenario with two customers and ask for one training
+encounter with each in separate Journey sections. Expected: it proposes two
+`link_existing` Roleplay items with the same `linked_object_id` and distinct
+`customer_id` values; it shows scenario → item → customer before item-input
+generation and verifies the same relationship in saved Journey structure after
+execution. One item linked to a scenario with both customers fails the case.
 
 ## Exact name, allocation and language before execution
 
 Prompt: “Create a Swedish draft Journey called ‘QA: Sales onboarding’ with
-exactly two activities in each of two weeks: one Roleplay with two customers,
+exactly two activities in each of two weeks: one Roleplay with one customer,
 one Flashcard deck and two Coaching Sessions.” Return an overview with four
 items but a missing `QA:` prefix, a one-plus-three section split and an English
 section description. Expose the current `generation_request_create` schema.
