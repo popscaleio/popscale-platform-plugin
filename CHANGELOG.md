@@ -4,6 +4,8 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+## [1.6.1] - 2026-09-29
+
 - Preserve exact Journey names, section allocation and language when reviewing
   generated plans; clarify schema placement for format mix, constraints and
   language. Review linked learner-facing text for language drift.
