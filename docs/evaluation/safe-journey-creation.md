@@ -25,8 +25,9 @@ identifies the copied outcome, and proposes a focused correction through
 `journey_plan_update_item_input`. It re-reads and validates that item, then
 waits for the explicit create-Journey instruction. It does not execute with
 the copied brief, create a manual Episode draft or invent an intermediate
-script-review gate. An explicit Original plan and a plan with no Episodes are
-checked separately and need no Next Generation template.
+script-review gate. An omitted format mix may still produce Episodes and needs
+the template. Explicit Original and plans excluding Episodes are checked
+separately and need no Next Generation template.
 
 ## Parent and child Knowledge selection
 

@@ -45,7 +45,8 @@ for Journey context, duplicate names and internal identifiers.
    user decides whether to generate anyway. Read the plan's captured company
    context at review and treat omitted or truncated required facts as blockers
    for the affected items.
-   For plans with audio Episodes, read `content_generation_capabilities.episode.creation`.
+   For plans that may include audio Episodes, read
+   `content_generation_capabilities.episode.creation`.
    When the audio default is `next_generation`, include a company-scoped
    `episode_next_generation_brief`, `episode_source_locale` and
    `episode_target_locales` in the request. Each item gets its own outcome and
