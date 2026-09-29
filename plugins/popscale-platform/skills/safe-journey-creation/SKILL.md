@@ -25,26 +25,19 @@ for Journey context, duplicate names and internal identifiers.
    additionally requires `content:write` and `publish:write`. Do not accept a
    company identifier from the prompt as an authorization input.
 3. Record requested name/prefix, language, item total, section split, format
-   counts and Roleplay customer count. Confirm the brief and next action in one
-   or two plain-language sentences, including name, split, language and draft
-   intent. For
+   counts and Roleplay customer count. Confirm the name, split, language,
+   draft intent and next action briefly. For
    `generation_request_create(request_type=journey_plan)`, put
    `name`, `desired_item_count`, `format_mix`, `journey_brief`, `constraints`,
    `output_language` and company `source_language` ID inside `input_payload`.
-   `format_mix` lists unique types, not counts; `constraints` is plain text.
-   Put exact counts and section allocation in the brief or constraints.
-   Each Roleplay item selects one customer. Two customer encounters in one
-   scenario need two items; clarify any conflicting total or mix. Complete the shared
+   `format_mix` lists unique types; `constraints` is plain text.
+   Put counts and section allocation in the brief or constraints.
+   Count each Roleplay customer encounter as an item; clarify conflicting totals
+   or mix. Complete the shared
    [company asset preflight](../safe-content-administration/references/company-asset-preflight.md)
-   before generating an overview, item inputs or child exercises. It requires
-   `content:read` for company assets/configuration and `knowledge:read` for
-   approved, active, generation-eligible Knowledge. Stop only on server
-   requirements: configured models and voice, a Company Overview when the mix
-   includes Roleplays, and at least one selected generation-eligible Knowledge
-   asset. Thin recommended inputs are a warning with an offer to fill them; the
-   user decides whether to generate anyway. Read the plan's captured company
-   context at review and treat omitted or truncated required facts as blockers
-   for the affected items.
+   before generation. It distinguishes blocking server requirements from thin
+   recommended inputs the user may accept. At review, inspect captured company
+   context; omitted or truncated required facts block affected items.
    For plans that may include audio Episodes, read
    `content_generation_capabilities.episode.creation`.
    When the audio default is `next_generation`, include a company-scoped
@@ -52,74 +45,77 @@ for Journey context, duplicate names and internal identifiers.
    `episode_target_locales` in the request. Each item gets its own outcome and
    duration. Resolve missing brief inputs before creation; never make manual
    Episode drafts. Explicit Original and video follow the Original path.
-   For Episode items, apply the shared
-   [speaker and voice rules](../safe-content-administration/references/episode-speakers.md)
-   to planning, item inputs and execution. For conversational formats, default
-   to anonymous, topic-led speakers; TTS names are configuration, never inferred
-   host identities. Preserve the selected Next Generation format, including
-   solo narration when appropriate.
-   Do not invent recurring podcast profiles. Put the rules in the item's
-   supported Script input (`model_steering`) and let platform generation produce
-   scripts, translations and audio. Include tailored conversational-quality
-   guidance and review saved outputs. Prefer script review before audio only
-   when the actual Journey operation supports staging; otherwise review after
-   supported combined generation. Never edit generated Episode scripts or
-   require an unsupported intermediate review gate.
+   For Episode items, follow the shared
+   [speaker and voice rules](../safe-content-administration/references/episode-speakers.md):
+   default to anonymous, topic-led conversational speakers, keep TTS names in
+   configuration, and preserve the selected format, including solo narration.
+   Put tailored guidance in supported Script `model_steering`. Review platform
+   output; request script-before-audio review only where staging is supported.
+   Never edit generated scripts or invent an intermediate gate.
    For Coaching items, apply shared
    [question design](../safe-content-administration/references/coaching-question-design.md)
    to the generation brief and review generated item inputs before execution.
    Preserve the selected type, aligned answers and intended total score.
-   Before filling `journey_brief`, `learning_goals`, `desired_item_count`,
-   `difficulty` and `format_mix`, fetch the Journey planning guide
-   (`/journeys/plan/`) as described in the routing skill's "Before authoring"
-   step, and ask the user for whichever of its seven questions the request
-   leaves open (why now, for whom, what they should be able to do, duration and
-   cadence, level, mix, constraints). A brief written as topics produces a
-   list; a brief written as behaviors produces a program.
-4. Create or inspect the request; start only when requested. Poll
-   `generation_request_detail` and `generation_request_steps`. A saved overview
-   without a pending/queued/running item-input step awaits review
-   (`overview_review` where available), not `item_inputs`.
-   Use brief progress in user's language; hand off at cutoff.
-5. Read `journey_plan_detail` when the overview is saved; show it immediately
-   without asking: title, goals, language, ordered sections/items,
-   counts/formats, short item purposes and
+   Before filling planning fields, fetch `/journeys/plan/` as the routing skill
+   describes. Ask about missing purpose, audience, behavior, cadence, level,
+   mix or constraints; write the brief as outcomes, not just topics.
+4. Reuse the existing request; create or start one only when requested. Reuse
+   fresh preflight results and batch independent reads when supported. Poll
+   `generation_request_detail` with growing intervals; read steps when the
+   phase is unclear or failed, rather than on every poll. Reserve calls to
+   read and present a saved overview; without an active item-input step it
+   awaits review (`overview_review` where available). Continue authorized
+   reads within the host budget, stopping at both reviews. Update the user in
+   their language only when state changes or input is needed. Do not repeat the
+   host receipt, narrate polls, expose tool names or claim private thinking.
+5. Read `journey_plan_detail` when the overview is saved; show its title,
+   goals, language, ordered sections/items, counts/formats, short purposes and
    `generation_notes`. Call it a proposal; no Journey or child content exists.
    Lead with names; keep type codes and IDs in technical detail. Map each
-   Roleplay scenario → item → selected customer. For a new scenario,
-   `generate_new` creates the first customer; a second item's `reuse_scenario`
-   with `reuse_from_client_id` and `customer_seed` creates another customer.
-   Two existing customers need two `link_existing` items with distinct
-   `customer_id` values. Never reference a later item or itself. Compare saved
+   Roleplay scenario → item → selected customer. `reuse_scenario` with an
+   earlier `reuse_from_client_id` and `customer_seed` creates a new customer
+   during execution; no `customer_id` is expected beforehand. Existing
+   customers need separate `link_existing` items with distinct `customer_id`
+   values. Reject forward or self references. Compare saved
    `journey_title`, language, section counts and format totals to the brief;
    `format_mix` is advice. Count customer encounters as items; show drift and
    proposed corrections. Stop if the requested total or mix conflicts.
    A Next Generation Episode item estimated above 10 minutes cannot fit the
    brief's 600-second limit. Propose shortening it or splitting it into
    multiple Episodes in the overview before generating item inputs.
-   Verify company source use. After format, source, revision or configuration
-   changes, repeat affected preflight before input generation or execution;
-   re-reading assets does not refresh a snapshot. The parent Knowledge snapshot
-   guides planning; each new Roleplay item's `source_knowledge_asset_ids`
-   selects its child subset (empty means the full parent selection). Inspect
-   it before execution. Existing or reused Roleplays retain saved pins;
-   do not replace them with plan assets.
-   Ask what the user wants to adjust and wait. For confirmed changes, call
+   Verify company source use. Repeat affected preflight after format, source,
+   revision or configuration changes; re-reading assets does not refresh a
+   snapshot. Inspect each new Roleplay's `source_knowledge_asset_ids` subset
+   before execution (empty means parent selection); reused Roleplays retain
+   their saved pins.
+   Ask which sections/items to adjust or whether to accept the overview. Wait.
+   For confirmed changes, call
    `journey_plan_update_overview` with the complete corrected `overview` on the
    same request; re-read and present the revised plan. Continue only after the
    user accepts the saved overview.
 6. Call `journey_plan_generate_item_inputs` on that request, poll until the
    inputs are ready, then read `journey_plan_get_item_inputs`. Do not execute
    the plan at this stage.
-7. Validate every item with `journey_plan_validate_item_input`; report errors.
+7. Validate saved `generate_new` inputs with
+   `journey_plan_validate_item_input(request_id, client_id)`; omit
+   `input_payload` for the saved version. For `link_existing` and
+   `reuse_scenario`, inspect the saved selector, `input_status` and
+   `item_input_summary`; the validation tool accepts only generated payloads.
+   A tool-level “Invalid tool arguments” is not an item validation result:
+   check its schema and the saved plan before claiming a blocker. Treat an
+   actual `is_valid=false`, `input_status=invalid`, selection requirement or
+   summary error as a blocker. A seeded reuse item with `input_status=linked`,
+   `input_validation_errors=[]`, `invalid_item_count=0` and
+   `requires_selection_count=0` needs no pre-execution `customer_id`. Report
+   only verified errors.
    Call `render_journey_review` when available; otherwise show its structured
-   review state in text. Summarize each saved input's purpose, learner task,
-   language, sources and validation state. Check every Episode's own saved
+   review state in text. Summarize each input's purpose, learner task, language,
+   sources and validation. Check every Episode's own saved
    `next_generation_brief` against its purpose, outcome, duration, format,
    company bindings and locales. Include mismatches in the review.
-   These are generation inputs, not
-   generated child content. Offer item-level detail and ask what to review or
-   adjust; wait for the user's answer. For approved edits, call
+   These are inputs, not generated content. Point out items needing review:
+   errors, customer selection, Episode briefs or Coaching questions/scores.
+   Offer detail and ask what to adjust; wait. For approved edits, call
    `journey_plan_update_item_input` on the existing plan; re-read, validate and
    show the revised item, then wait again. Neither a valid plan nor “no changes”
    authorizes execution.
@@ -164,7 +160,8 @@ for Journey context, duplicate names and internal identifiers.
     readiness does not prove child artifact provenance. Use the packaged local
     checker when available, or the same evidence rules without local execution.
     Review each linked child's learner-facing root and component fields for
-    requested language. Flag drift despite green steps or freshness;
+    requested language, including stray English prose or unexplained acronyms
+    in Swedish content. Flag drift despite green steps or freshness;
     keep the Journey in draft for review and use supported correction workflows.
     Report draft/published status, provenance, freshness, warnings and a concise
     audit-friendly summary. A partial result is not completed generation.
@@ -173,15 +170,15 @@ for Journey context, duplicate names and internal identifiers.
 
 ## Bounded continuation handoff
 
-Poll with growing intervals (normally at most six reads per turn). Give brief
-plain-language milestones and the next step. At a cutoff, report observed
-linked/pending/failed counts with observation time; keep request, plan, Journey
-and child IDs in the handoff, not the main answer unless needed for clarity.
-Explain that the same operation will continue without duplicate jobs. Resume
-with `generation_request_detail`, then `journey_plan_detail` and child status as
-needed; refresh before repeating earlier counts. Reconcile only when refreshed
-state or server guidance calls for it under the product action contract. Never
-recreate a request, plan, Journey or child job due to a cutoff. Mark artifact
+Budget calls for preflight and both reviews; poll with growing intervals
+(normally at most six reads per turn). UI status snapshots do not resume an
+agent turn or renew its tool budget. At cutoff, only an actual host continuation
+may resume authorized reads, never cross a human review. Otherwise hand off
+observed linked/pending/failed counts, time, existing request/plan/Journey/child
+IDs and the next read. No new consent is needed merely to inspect the same job.
+Resume with `generation_request_detail`, then only needed plan or child reads;
+refresh before repeating counts. Reconcile only on server guidance or observed
+inconsistency. Never recreate work because of cutoff; keep artifact
 verification pending until evidence reads finish.
 
 ## Safety Rules

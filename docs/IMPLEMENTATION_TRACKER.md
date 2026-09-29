@@ -2,6 +2,26 @@
 
 Last updated: 2026-09-29
 
+## Journey selector validation and continuation — 1.6.4
+
+- [x] Treat `reuse_scenario` plus an earlier item and `customer_seed` as a
+  linked selector before execution; its `customer_id` is assigned later.
+  Validate generated payloads with the item-input tool and inspect saved
+  selector status and summary errors for linked/reused items. Distinguish tool
+  argument failures from server content validation.
+- [x] Reuse preflight reads and request identity across host turns; retain the
+  overview and item-input review stops. Add synthetic cases for selector
+  readiness, tool-call recovery, turn cutoff and Swedish text versus UI labels.
+- [x] Keep Ask Popscale messages brief at verified transitions; summarize each
+  saved review, point to items needing attention and wait at both review gates.
+  Add a synthetic event and conversation case. Host receipt and localized
+  activity/job labels belong to the frontend.
+- [x] Align manifests, marketplace metadata, release validator and package
+  test at 1.6.4; retain the public 22,000-word bundle bound.
+- [ ] Run clean host evaluations on the updated skill. Automatic continuation
+  beyond a host tool limit and UI label localization require host/frontend
+  support; this plugin change cannot guarantee either.
+
 ## Next Generation Episode routing and Journey Roleplay mapping — 1.6.3
 
 - [x] Route standalone Episodes to `generation_request_create`; retain

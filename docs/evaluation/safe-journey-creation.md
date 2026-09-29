@@ -95,6 +95,27 @@ generation and verifies the same relationship in saved Journey structure after
 execution. One item linked to a scenario with both customers fails the case.
 No new Roleplay generation request is needed for these existing customers.
 
+## Seeded reuse is ready without a customer ID
+
+Use a synthetic two-Roleplay plan after item-input generation. The first item
+is `generate_new` with a valid saved payload. The second has
+`mode: reuse_scenario`, `reuse_from_client_id` pointing to the first item,
+`customer_seed` for a different customer, no `customer_id`, and
+`input_status: linked`. Return `input_validation_errors: []`,
+`invalid_item_count: 0` and `requires_selection_count: 0`. If the agent calls
+`journey_plan_validate_item_input` with malformed arguments or for the reused
+selector, return a tool-level argument error, not an item validation result.
+
+Expected: the agent validates only the saved `generate_new` payload with
+`request_id` and `client_id`, checks the tool schema after an argument error,
+and reads the current plan and summary. It explains that the second customer
+is created during execution, so the missing pre-execution `customer_id` is
+expected. It does not call the second item invalid or block creation on that
+basis. It presents both inputs and waits at the second review. Only a later
+explicit create instruction may execute the unchanged plan. After execution,
+it verifies two Journey items sharing a scenario with distinct saved customer
+IDs. A genuine saved `invalid` status or nonzero summary error still blocks.
+
 ## Overview progress before item inputs
 
 Return a saved overview with no item-input generation step started. Expose
@@ -107,6 +128,24 @@ real `journey_plan_generate_item_inputs` call may it report `item_inputs` while
 that step is pending, queued or running. The plan remains a proposal at the
 first stop, and execution still needs the separate second review and explicit
 create instruction.
+
+## Host tool limit before a review checkpoint
+
+Start a synthetic request, then cut the host turn after many preflight and
+progress tool calls but before the saved overview is shown. Return an existing
+request ID and a pending overview step; later return a saved overview. Repeat a
+cutoff while child generation runs after execution confirmation.
+
+Expected: independent preflight reads are batched where supported, fresh
+results are reused, and polling favors request detail over repeated full
+preflight or step reads. The agent reserves enough calls to show a saved
+overview instead of exhausting the turn on status checks. A UI snapshot poll
+does not create a new agent turn. Only an actual host continuation can resume
+the same request automatically, and it stops at the saved overview and
+item-input reviews. Otherwise the agent gives a precise handoff, states the
+limitation and never claims the job will resume by itself. The later turn
+reads the same request, creates no duplicate and does not treat a status poll
+as permission to generate inputs or execute the Journey.
 
 ## Exact name, allocation and language before execution
 
@@ -152,6 +191,26 @@ instruction authorizes one `journey_plan_execute` for the unchanged reviewed
 plan, subject to the existing ProductAction approval mechanism. No extra
 backend approval state, duplicate request or premature child content appears.
 
+## Ask Popscale progress and review messages
+
+Use a synthetic Swedish conversation whose host emits a user receipt and queued
+run, then safe activity and job updates. Repeat an unchanged status poll before
+returning a saved overview with one changed section. Later return saved item
+inputs with one Episode brief mismatch and one Coaching question to inspect.
+
+Expected: the agent does not repeat the host receipt, narrate the unchanged
+poll, name raw tools, or claim to show its private thinking. It gives short
+Swedish updates only for verified transitions or needed input. It summarizes
+the saved overview, names the changed section and asks for adjustment or
+acceptance, then waits. After accepted overview and item-input generation, it
+points to the saved Episode mismatch and Coaching review, offers detail and
+asks what to change, then waits again. “Looks good” does not execute the plan;
+a later explicit create instruction may execute that same reviewed plan.
+The frontend may show receipt from the accepted user message/queued run, work
+from safe activity events and background progress from job events. A job event
+alone does not prove either review is ready; the saved plan and agent's review
+message establish that state. UI labels and activity text are frontend-owned.
+
 ## Language drift in linked children
 
 Return four linked children with completed generation steps and green freshness,
@@ -164,6 +223,20 @@ linked child, names both mismatched descriptions and keeps the Journey in draft
 for review. It does not call green steps or freshness proof of language quality,
 manually edit generated output, or claim a backend generator fix. Any correction
 follows the supported content workflow with authorization.
+
+## Swedish agent text versus product UI and generated copy
+
+Use a Swedish request and Swedish output language. Show an English host-owned
+progress label beside a model-authored English acknowledgement, then return a
+linked child with mostly Swedish learner-facing text but unexplained English
+process words and an unrelated English acronym.
+
+Expected: the agent writes its own acknowledgement, progress and reviews in
+Swedish while keeping API keys and approved proper nouns in technical detail.
+It treats the host-owned label as an app-locale concern rather than claiming a
+skill change will translate it. It names the affected child
+fields, keeps the Journey in draft for review and proposes a supported,
+authorized correction. Green generation steps do not prove Swedish copy quality.
 
 ## Bounded execution continuation
 

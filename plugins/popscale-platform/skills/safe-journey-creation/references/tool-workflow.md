@@ -48,8 +48,10 @@ execution. Explicit Original or video uses Original; no manual Episode drafts.
    complete overview. Re-read and obtain acceptance on the same plan.
 2. Only then call `journey_plan_generate_item_inputs`. Poll, then read the
    results with `journey_plan_get_item_inputs`.
-3. Validate every item with `journey_plan_validate_item_input`; summarize the
-   inputs, offer item detail/edits and wait. Apply approved focused changes via
+3. Validate each saved `generate_new` payload with
+   `journey_plan_validate_item_input(request_id, client_id)`; inspect saved
+   selector statuses and summary errors for linked/reused items. Summarize,
+   offer detail/edits and wait. Apply approved input changes via
    `journey_plan_update_item_input`, re-read and revalidate.
 4. `render_journey_review` offers the App review; use structured text otherwise.
 5. Call `journey_plan_execute` only after the second review and an explicit
@@ -64,6 +66,11 @@ Journey items. Overview selectors are mutually exclusive:
 | `generate_new` | No overview selector; verify generated `input_payload.number_of_customers: 1` for this pattern | New scenario; first customer |
 | `link_existing` | `linked_object_id` plus `customer_id` or `customer_seed` | Existing scenario; existing/new customer |
 | `reuse_scenario` | `reuse_from_client_id` (an earlier Roleplay item) plus `customer_seed` | New customer in reused scenario |
+
+For seeded reuse, `customer_id` is assigned during execution. A linked
+pre-execution selector with no summary errors is ready for review. The item
+input validation tool rejects selectors because they have no generated payload;
+a tool argument error does not establish invalid content.
 
 ## Publication
 

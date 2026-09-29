@@ -34,10 +34,10 @@ proposed change materially changes after confirmation, ask again.
 
 ## Validation
 
-Show validation failures beside the affected journey item. Propose the smallest
-correction, obtain approval for a content-changing edit, apply it with the focused
-update tool, and validate again. Never mark an item valid in the conversation
-without a successful server result.
+Show saved validation failures beside the affected item. Validate generated
+payloads with the item-input tool; use saved selector status and summary for
+linked or reused items. A tool invocation error proves neither validity nor
+invalidity. Obtain approval for a focused edit, then re-read and revalidate.
 
 ## MCP App Capability
 

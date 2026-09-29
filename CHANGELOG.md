@@ -4,6 +4,18 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+## [1.6.4] - 2026-09-29
+
+- Treat seeded Journey Roleplay reuse as a valid linked selector before its
+  customer ID exists; distinguish tool argument errors from saved item input
+  validation, and preserve both human review checkpoints.
+- Reduce redundant Journey preflight and polling calls, resume the same request
+  across supported host continuations, and check Swedish agent text and linked
+  learner-facing content separately from product UI labels.
+- Keep Ask Popscale updates to verified transitions and both saved Journey
+  review points; avoid repeated receipt, polling narration and claims about
+  private reasoning.
+
 ## [1.6.3] - 2026-09-29
 
 - Route new Episodes through generation requests. When the selected company
