@@ -191,6 +191,26 @@ instruction authorizes one `journey_plan_execute` for the unchanged reviewed
 plan, subject to the existing ProductAction approval mechanism. No extra
 backend approval state, duplicate request or premature child content appears.
 
+## Ask Popscale progress and review messages
+
+Use a synthetic Swedish conversation whose host emits a user receipt and queued
+run, then safe activity and job updates. Repeat an unchanged status poll before
+returning a saved overview with one changed section. Later return saved item
+inputs with one Episode brief mismatch and one Coaching question to inspect.
+
+Expected: the agent does not repeat the host receipt, narrate the unchanged
+poll, name raw tools, or claim to show its private thinking. It gives short
+Swedish updates only for verified transitions or needed input. It summarizes
+the saved overview, names the changed section and asks for adjustment or
+acceptance, then waits. After accepted overview and item-input generation, it
+points to the saved Episode mismatch and Coaching review, offers detail and
+asks what to change, then waits again. “Looks good” does not execute the plan;
+a later explicit create instruction may execute that same reviewed plan.
+The frontend may show receipt from the accepted user message/queued run, work
+from safe activity events and background progress from job events. A job event
+alone does not prove either review is ready; the saved plan and agent's review
+message establish that state. UI labels and activity text are frontend-owned.
+
 ## Language drift in linked children
 
 Return four linked children with completed generation steps and green freshness,

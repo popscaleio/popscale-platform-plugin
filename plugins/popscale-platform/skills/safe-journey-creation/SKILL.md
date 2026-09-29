@@ -25,14 +25,13 @@ for Journey context, duplicate names and internal identifiers.
    additionally requires `content:write` and `publish:write`. Do not accept a
    company identifier from the prompt as an authorization input.
 3. Record requested name/prefix, language, item total, section split, format
-   counts and Roleplay customer count. Confirm the brief and next action in one
-   or two plain-language sentences, including name, split, language and draft
-   intent. For
+   counts and Roleplay customer count. Confirm the name, split, language,
+   draft intent and next action briefly. For
    `generation_request_create(request_type=journey_plan)`, put
    `name`, `desired_item_count`, `format_mix`, `journey_brief`, `constraints`,
    `output_language` and company `source_language` ID inside `input_payload`.
-   `format_mix` lists unique types, not counts; `constraints` is plain text.
-   Put exact counts and section allocation in the brief or constraints.
+   `format_mix` lists unique types; `constraints` is plain text.
+   Put counts and section allocation in the brief or constraints.
    Count each Roleplay customer encounter as an item; clarify conflicting totals
    or mix. Complete the shared
    [company asset preflight](../safe-content-administration/references/company-asset-preflight.md)
@@ -66,11 +65,11 @@ for Journey context, duplicate names and internal identifiers.
    phase is unclear or failed, rather than on every poll. Reserve calls to
    read and present a saved overview; without an active item-input step it
    awaits review (`overview_review` where available). Continue authorized
-   reads within the host budget, stopping at both human reviews. Write agent
-   progress in the user's language; output language does not control UI labels.
-5. Read `journey_plan_detail` when the overview is saved; show it immediately
-   without asking: title, goals, language, ordered sections/items,
-   counts/formats, short item purposes and
+   reads within the host budget, stopping at both reviews. Update the user in
+   their language only when state changes or input is needed. Do not repeat the
+   host receipt, narrate polls, expose tool names or claim private thinking.
+5. Read `journey_plan_detail` when the overview is saved; show its title,
+   goals, language, ordered sections/items, counts/formats, short purposes and
    `generation_notes`. Call it a proposal; no Journey or child content exists.
    Lead with names; keep type codes and IDs in technical detail. Map each
    Roleplay scenario → item → selected customer. `reuse_scenario` with an
@@ -89,7 +88,8 @@ for Journey context, duplicate names and internal identifiers.
    snapshot. Inspect each new Roleplay's `source_knowledge_asset_ids` subset
    before execution (empty means parent selection); reused Roleplays retain
    their saved pins.
-   Ask what the user wants to adjust and wait. For confirmed changes, call
+   Ask which sections/items to adjust or whether to accept the overview. Wait.
+   For confirmed changes, call
    `journey_plan_update_overview` with the complete corrected `overview` on the
    same request; re-read and present the revised plan. Continue only after the
    user accepts the saved overview.
@@ -109,12 +109,13 @@ for Journey context, duplicate names and internal identifiers.
    `requires_selection_count=0` needs no pre-execution `customer_id`. Report
    only verified errors.
    Call `render_journey_review` when available; otherwise show its structured
-   review state in text. Summarize each saved input's purpose, learner task,
-   language, sources and validation state. Check every Episode's own saved
+   review state in text. Summarize each input's purpose, learner task, language,
+   sources and validation. Check every Episode's own saved
    `next_generation_brief` against its purpose, outcome, duration, format,
    company bindings and locales. Include mismatches in the review.
-   These are inputs, not generated content. Offer item detail and ask what to
-   adjust; wait for the user's answer. For approved edits, call
+   These are inputs, not generated content. Point out items needing review:
+   errors, customer selection, Episode briefs or Coaching questions/scores.
+   Offer detail and ask what to adjust; wait. For approved edits, call
    `journey_plan_update_item_input` on the existing plan; re-read, validate and
    show the revised item, then wait again. Neither a valid plan nor “no changes”
    authorizes execution.
