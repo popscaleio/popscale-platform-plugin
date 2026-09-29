@@ -35,9 +35,12 @@ for Journey context, duplicate names and internal identifiers.
    `safe-interview-administration` for Interview Study authoring, precise
    question edits, invitations, respondent links, run review, or analysis. Use
    `safe-content-administration` to find, create, inspect, or granularly edit
-   existing roleplays, coaching sessions, challenges, episodes, flashcards, or
+   roleplays, coaching sessions, challenges, episodes, flashcards, or existing
    Journey sections/items, including complete structure changes on an enrolled
    Journey, and for supported regeneration, language, or activation workflows.
+   A new standalone Episode uses that skill's generation-request workflow;
+   `create_company_content` does not create Episode drafts. New Journey Episode
+   items belong to `safe-journey-creation` and its per-item brief review.
    Use `company-usage-insights` for company-scoped
    Journey participation, completion, mastery, content outcomes, and bounded
    member or attempt drilldown. Use

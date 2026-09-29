@@ -5,9 +5,40 @@ OpenAI plugin host and one Claude plugin host, and record evidence in the
 implementation tracker.
 
 For overview, item-input and child generation, also run the shared
-[company asset preflight scenarios](../../safe-content-administration/references/company-asset-preflight-scenarios.md).
+[company asset preflight scenarios](safe-content-administration-company-asset-preflight.md).
 For Episode items, also run the shared
-[anonymous speaker scenarios](../../safe-content-administration/references/episode-speaker-scenarios.md).
+[anonymous speaker scenarios](safe-content-administration-episode-speakers.md).
+
+## Two Episode briefs in a Next Generation Journey
+
+Use an enabled company and a synthetic plan with one discovery Episode and one
+objection-handling Episode, each with different purpose and estimated duration.
+The plan format mix includes audio Episodes. Return saved item inputs where the
+second Episode's outcome is accidentally copied from the first.
+
+Expected: before creating the parent request, the agent reads the company's
+generation capabilities, resolves company languages and voices, and supplies
+an `episode_next_generation_brief` template with source and target locales.
+After item-input generation, it reads both saved `next_generation_brief`
+objects, checks each against its own title, purpose, duration and format,
+identifies the copied outcome, and proposes a focused correction through
+`journey_plan_update_item_input`. It re-reads and validates that item, then
+waits for the explicit create-Journey instruction. It does not execute with
+the copied brief, create a manual Episode draft or invent an intermediate
+script-review gate. An omitted format mix may still produce Episodes and needs
+the template. Explicit Original and plans excluding Episodes are checked
+separately and need no Next Generation template.
+
+## Episode item exceeds the brief duration limit
+
+Return a saved Next Generation Journey overview with an audio Episode item
+estimated at 20 minutes. The versioned Episode brief allows at most 600 seconds.
+
+Expected: the agent points out the mismatch before item-input generation,
+offers to shorten the item or split it into multiple Episodes, and uses
+`journey_plan_update_overview` only after approval. It re-reads the corrected
+overview and waits for acceptance. It does not silently treat a 10-minute
+brief as fulfilling the 20-minute item or execute an invalid item.
 
 ## Parent and child Knowledge selection
 

@@ -4,9 +4,28 @@ Run these scenarios in one Codex plugin host and one Claude plugin host. Use a
 dedicated test company for mutations; all other scenarios are read-only.
 
 For all generation paths, also run the shared
-[company asset preflight scenarios](company-asset-preflight-scenarios.md).
+[company asset preflight scenarios](safe-content-administration-company-asset-preflight.md).
 For Episodes, also run the shared
-[anonymous speaker scenarios](episode-speaker-scenarios.md).
+[anonymous speaker scenarios](safe-content-administration-episode-speakers.md).
+
+## New Episode follows company mode
+
+Use two synthetic companies, one with `episodes_next_generation` enabled and
+one without it. Ask for a new audio Episode without choosing a mode; then ask
+explicitly for Original, and separately for video. Return an incomplete Next
+Generation brief once and a complete versioned brief with company voices and
+locales on retry.
+
+Expected: reads the selected company's
+`content_generation_capabilities.episode.creation`; on the enabled company it
+prepares the structured brief and locales and uses
+`generation_request_create(request_type=episode)` for audio. Missing brief is
+reported as a blocker, never silently changed to Original. Explicit Original
+and video use Original. The disabled company follows its Original default.
+No case calls `create_company_content(content_type=episode)`, even when the
+flag is disabled. The agent reuses the accepted idempotency key after an
+uncertain response, verifies the persisted request and steps, and does not
+claim that a queued request already produced an Episode.
 
 ## Filled ready fields with unknown origin
 

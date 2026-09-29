@@ -33,7 +33,8 @@ are required. Do not invent offset, cursor, or filter arguments.
 
 | Tool | Mutation boundary | Required scope |
 | --- | --- | --- |
-| `create_company_content` | Create one draft root using allowlisted fields | `content:read`, `content:write` |
+| `create_company_content` | Create one supported draft root using allowlisted fields; excludes Episodes | `content:read`, `content:write` |
+| `generation_request_create` | Create a new Episode generation request; no manual Episode draft route | `generation:read`, `generation:write` |
 | `content_update` | Update allowlisted fields on one root or directly addressable child | `content:read`, `content:write` |
 | `create_content_component` | Add one stable-ID component without replacing siblings | `content:read`, `content:write` |
 | `update_content_component` | Update one component | `content:read`, `content:write` |
@@ -156,6 +157,17 @@ before dispatch. Platform generation owns scripts, translations and audio. Use
 the supported pipeline, including combined operations; inspect saved outputs
 read-only afterward. Do not require an invented intermediate review gate or
 repair a generated script manually.
+
+For a new Episode, use `generation_request_create(request_type=episode)`;
+`create_company_content(content_type=episode)` is unavailable. Read the selected
+company's `content_generation_capabilities.episode.creation`. If its audio
+default is `next_generation`, supply a versioned `next_generation_brief`,
+`source_locale` and company-language `target_locales`; resolve voice and claim
+bindings from that company. The server applies this default when mode is omitted.
+Send explicit `generation_mode: "original"` only on request; video uses Original.
+Missing brief data blocks creation, without manual or Original fallback.
+Preserve the idempotency key across uncertain responses and verify the accepted
+request and steps; its mode survives later flag changes.
 
 The [company asset preflight](company-asset-preflight.md) applies when a new
 exercise is created, not to targeted regeneration, language/media work or

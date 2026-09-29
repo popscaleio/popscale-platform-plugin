@@ -45,10 +45,19 @@ for Journey context, duplicate names and internal identifiers.
    user decides whether to generate anyway. Read the plan's captured company
    context at review and treat omitted or truncated required facts as blockers
    for the affected items.
+   For plans that may include audio Episodes, read
+   `content_generation_capabilities.episode.creation`.
+   When the audio default is `next_generation`, include a company-scoped
+   `episode_next_generation_brief`, `episode_source_locale` and
+   `episode_target_locales` in the request. Each item gets its own outcome and
+   duration. Resolve missing brief inputs before creation; never make manual
+   Episode drafts. Explicit Original and video follow the Original path.
    For Episode items, apply the shared
    [speaker and voice rules](../safe-content-administration/references/episode-speakers.md)
-   to planning, item inputs and execution. Default to anonymous, topic-led
-   dialogue; TTS names are configuration, never inferred host identities.
+   to planning, item inputs and execution. For conversational formats, default
+   to anonymous, topic-led speakers; TTS names are configuration, never inferred
+   host identities. Preserve the selected Next Generation format, including
+   solo narration when appropriate.
    Do not invent recurring podcast profiles. Put the rules in the item's
    supported Script input (`model_steering`) and let platform generation produce
    scripts, translations and audio. Include tailored conversational-quality
@@ -81,6 +90,9 @@ for Journey context, duplicate names and internal identifiers.
    a later item or itself. Compare saved
    `journey_title`, language, section counts and format totals to the brief;
    `format_mix` is advice. Show exact drift and proposed corrections.
+   A Next Generation Episode item estimated above 10 minutes cannot fit the
+   brief's 600-second limit. Propose shortening it or splitting it into
+   multiple Episodes in the overview before generating item inputs.
    Check material use of the verified company sources. If format mix, sources,
    revisions or configuration change, repeat the affected preflight before
    generating item inputs or executing the plan; an old snapshot is not refreshed
@@ -99,7 +111,10 @@ for Journey context, duplicate names and internal identifiers.
 7. Validate every item with `journey_plan_validate_item_input`; report errors.
    Call `render_journey_review` when available; otherwise show its structured
    review state in text. Summarize each saved input's purpose, learner task,
-   language, sources and validation state. These are generation inputs, not
+   language, sources and validation state. Check every Episode's own saved
+   `next_generation_brief` against its purpose, outcome, duration, format,
+   company bindings and locales. Include mismatches in the review.
+   These are generation inputs, not
    generated child content. Offer item-level detail and ask what to review or
    adjust; wait for the user's answer. For approved edits, call
    `journey_plan_update_item_input` on the existing plan; re-read, validate and

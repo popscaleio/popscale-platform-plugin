@@ -4,6 +4,18 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+## [1.6.3] - 2026-09-29
+
+- Route new Episodes through generation requests. When the selected company
+  enables Next Generation, prepare a structured audio brief and locales; keep
+  explicit Original and video on their supported path and never use manual MCP
+  Episode creation.
+- Review a distinct saved Next Generation brief for every Episode in a Journey,
+  with focused corrections before the existing execution confirmation. Add
+  synthetic host scenarios for routing, creation and Journey review.
+- Flag Journey Episode items longer than the 600-second brief limit before
+  item-input generation; propose an overview correction or a split.
+
 ## [1.6.2] - 2026-09-29
 
 - Add two conversational Journey review checkpoints: show the saved overview
