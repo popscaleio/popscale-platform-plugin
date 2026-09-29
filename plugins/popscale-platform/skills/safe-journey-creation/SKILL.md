@@ -90,6 +90,9 @@ for Journey context, duplicate names and internal identifiers.
    a later item or itself. Compare saved
    `journey_title`, language, section counts and format totals to the brief;
    `format_mix` is advice. Show exact drift and proposed corrections.
+   A Next Generation Episode item estimated above 10 minutes cannot fit the
+   brief's 600-second limit. Propose shortening it or splitting it into
+   multiple Episodes in the overview before generating item inputs.
    Check material use of the verified company sources. If format mix, sources,
    revisions or configuration change, repeat the affected preflight before
    generating item inputs or executing the plan; an old snapshot is not refreshed

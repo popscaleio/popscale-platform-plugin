@@ -29,6 +29,17 @@ script-review gate. An omitted format mix may still produce Episodes and needs
 the template. Explicit Original and plans excluding Episodes are checked
 separately and need no Next Generation template.
 
+## Episode item exceeds the brief duration limit
+
+Return a saved Next Generation Journey overview with an audio Episode item
+estimated at 20 minutes. The versioned Episode brief allows at most 600 seconds.
+
+Expected: the agent points out the mismatch before item-input generation,
+offers to shorten the item or split it into multiple Episodes, and uses
+`journey_plan_update_overview` only after approval. It re-reads the corrected
+overview and waits for acceptance. It does not silently treat a 10-minute
+brief as fulfilling the 20-minute item or execute an invalid item.
+
 ## Parent and child Knowledge selection
 
 Use a synthetic plan with six approved Knowledge assets, one new Roleplay item

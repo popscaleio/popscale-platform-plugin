@@ -10,7 +10,8 @@ Last updated: 2026-09-29
   supported path. Align the content, routing and Episode speaker workflows.
 - [x] Supply a validated plan-level Next Generation template and locales when a
   Journey may create audio Episodes; inspect and correct each Episode's own
-  saved brief before the existing execution confirmation.
+  saved brief before the existing execution confirmation. Flag overview Episode
+  items above the 10-minute brief limit before item-input generation.
 - [x] Add synthetic scenarios for the company flag, absent brief, manual-create
   rejection, explicit Original and two distinct Journey Episode briefs. Align
   Codex/Claude manifests, marketplace metadata, validator, package test and

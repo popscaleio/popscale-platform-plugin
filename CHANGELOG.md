@@ -13,6 +13,8 @@ All notable changes to the Popscale Platform plugin are documented here.
 - Review a distinct saved Next Generation brief for every Episode in a Journey,
   with focused corrections before the existing execution confirmation. Add
   synthetic host scenarios for routing, creation and Journey review.
+- Flag Journey Episode items longer than the 600-second brief limit before
+  item-input generation; propose an overview correction or a split.
 
 ## [1.6.2] - 2026-09-29
 
