@@ -4,6 +4,8 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+## [1.6.5] - 2026-09-29
+
 - Include required Journey plan goals and Knowledge IDs in the generation
   payload, preserve exact section counts, and correct rejected create calls
   without repeating unchanged arguments or presenting an unsaved overview.
