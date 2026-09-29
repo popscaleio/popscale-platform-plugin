@@ -2,6 +2,20 @@
 
 Last updated: 2026-09-29
 
+## Journey selector validation and continuation — unreleased
+
+- [x] Treat `reuse_scenario` plus an earlier item and `customer_seed` as a
+  linked selector before execution; its `customer_id` is assigned later.
+  Validate generated payloads with the item-input tool and inspect saved
+  selector status and summary errors for linked/reused items. Distinguish tool
+  argument failures from server content validation.
+- [x] Reuse preflight reads and request identity across host turns; retain the
+  overview and item-input review stops. Add synthetic cases for selector
+  readiness, tool-call recovery, turn cutoff and Swedish text versus UI labels.
+- [ ] Run clean host evaluations on the updated skill. Automatic continuation
+  beyond a host tool limit and UI label localization require host/frontend
+  support; this plugin change cannot guarantee either.
+
 ## Next Generation Episode routing and Journey Roleplay mapping — 1.6.3
 
 - [x] Route standalone Episodes to `generation_request_create`; retain
