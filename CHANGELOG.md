@@ -15,6 +15,9 @@ All notable changes to the Popscale Platform plugin are documented here.
   synthetic host scenarios for routing, creation and Journey review.
 - Flag Journey Episode items longer than the 600-second brief limit before
   item-input generation; propose an overview correction or a split.
+- Count one Journey Roleplay item per selected customer encounter, reuse a
+  scenario across distinct items, and verify saved scenario/customer links.
+  Present a saved overview for review before reporting item-input generation.
 
 ## [1.6.2] - 2026-09-29
 

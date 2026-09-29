@@ -20,12 +20,12 @@ what the generator actually consumed; read it at plan review.
 
 ## Plan and Generation
 
-Discover existing work with `generation_requests_list`,
-`generation_request_detail` and `generation_request_steps`; reuse its request
-ID. Start, retry, cancel and reconcile are state-changing operations. Preflight
-before creation and again after source or mix changes. The plan retains its
-creation snapshot; changed assets need a new request. Poll until completion,
-failure or user review; never retry or reconcile speculatively.
+Reuse requests via `generation_requests_list`, `generation_request_detail` and
+`generation_request_steps`. Start, retry, cancel and reconcile change state.
+Preflight before creation and after source/mix changes; changed assets need a
+new request. Saved overview without an active item-input step means
+`overview_review` where available; `item_inputs` means its step is pending,
+queued or running. Never retry speculatively.
 
 ## Journey Review
 
@@ -41,8 +41,10 @@ plan brief and locales. After `journey_plan_get_item_inputs`, inspect each
 Episode's distinct brief, then propose and, after approval, validate corrections before
 execution. Explicit Original or video uses Original; no manual Episode drafts.
 
-1. Read the saved overview with `journey_plan_detail`; present it and wait for
-   feedback. For approved changes, `journey_plan_update_overview` replaces the
+1. Read `journey_plan_detail`; show the proposal immediately, then wait. Count
+   one item per customer encounter and show scenario → item → selected customer;
+   clarify conflicting totals or mix. For approved changes,
+   `journey_plan_update_overview` replaces the
    complete overview. Re-read and obtain acceptance on the same plan.
 2. Only then call `journey_plan_generate_item_inputs`. Poll, then read the
    results with `journey_plan_get_item_inputs`.
@@ -54,14 +56,14 @@ execution. Explicit Original or video uses Original; no manual Episode drafts.
    “create Journey” confirmation. These conversational stops add no backend
    approval state.
 
-Roleplay overview selectors are mutually exclusive. Verify customer count in
-the generated item input:
+Each Roleplay item selects one customer. Scenario customer count does not count
+Journey items. Overview selectors are mutually exclusive:
 
 | `mode` | Fields | Result |
 | --- | --- | --- |
-| `generate_new` | No overview selector; generated input has `number_of_customers` | New scenario and its customers |
-| `link_existing` | `linked_object_id` plus `customer_id` or `customer_seed` | Existing scenario; existing or newly generated customer |
-| `reuse_scenario` | `reuse_from_client_id` (an earlier Roleplay item) plus `customer_seed` | Scenario created by that item; one new customer |
+| `generate_new` | No overview selector; verify generated `input_payload.number_of_customers: 1` for this pattern | New scenario; first customer |
+| `link_existing` | `linked_object_id` plus `customer_id` or `customer_seed` | Existing scenario; existing/new customer |
+| `reuse_scenario` | `reuse_from_client_id` (an earlier Roleplay item) plus `customer_seed` | New customer in reused scenario |
 
 ## Publication
 
@@ -86,19 +88,18 @@ auditing, and error handling.
 
 ## Completion
 
-After execution, use the returned generation request or journey identifiers to
-poll status. Item statuses: `waiting_for_scenario` and `child_request_created`
-are in progress; `linked` is complete; `dependency_failed`,
-`child_request_failed`, `link_failed`, `invalid_input` and
-`missing_child_request` are failures for that item. Report current content and
-Journey names and status. Use only server-returned URLs and verified completion
-state. If the result is only a draft, say so plainly.
+Poll the returned request/Journey. `waiting_for_scenario` and
+`child_request_created` are pending; `linked` is complete;
+`dependency_failed`, `child_request_failed`, `link_failed`, `invalid_input` and
+`missing_child_request` are item failures. Report names and status using only
+verified server URLs. Call a draft a draft.
 
-Before claiming that child content is platform-generated, follow the shared
-[generation verification](../../safe-content-administration/references/generation-verification.md).
-Use execution mappings to find each child root and request, then inspect its
-saved content, linked steps and artifact freshness. Check reused content too;
-plan completion and publication readiness cannot substitute for these reads.
-Never treat Journey-level `available=false` freshness as proof of current child
-content. Keep successful, edited, unknown and failed parts visible in the final
-report; a partial child request must not disappear from the summary.
+Read `journey_structure_get` after execution. For shared Roleplay encounters,
+verify two saved items with the same `scenario_id` and different `customer_id`
+values; a scenario containing both customers alone does not meet the brief.
+
+Before claiming generated content, follow [generation verification](../../safe-content-administration/references/generation-verification.md):
+use execution mappings to inspect each child's saved content, request steps
+and freshness, including reused content. Plan completion, readiness and
+Journey-level `available=false` freshness prove none of these. Report
+successful, edited, unknown and failed parts, including partial requests.

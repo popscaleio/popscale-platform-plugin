@@ -33,8 +33,8 @@ for Journey context, duplicate names and internal identifiers.
    `output_language` and company `source_language` ID inside `input_payload`.
    `format_mix` lists unique types, not counts; `constraints` is plain text.
    Put exact counts and section allocation in the brief or constraints.
-   Two customers in one Roleplay count as one item; verify its generated
-   `input_payload.number_of_customers: 2` before execution. Then complete the shared
+   Each Roleplay item selects one customer. Two customer encounters in one
+   scenario need two items; clarify any conflicting total or mix. Complete the shared
    [company asset preflight](../safe-content-administration/references/company-asset-preflight.md)
    before generating an overview, item inputs or child exercises. It requires
    `content:read` for company assets/configuration and `knowledge:read` for
@@ -76,31 +76,34 @@ for Journey context, duplicate names and internal identifiers.
    leaves open (why now, for whom, what they should be able to do, duration and
    cadence, level, mix, constraints). A brief written as topics produces a
    list; a brief written as behaviors produces a program.
-4. Create or inspect a request, start it when requested, and poll
-   `generation_request_detail` within a bounded window. Use the handoff below
-   if time or tool budget ends; never claim completion while it runs.
-5. After overview generation, read `journey_plan_detail`. Present the saved
-   title, requested goals and language, ordered sections/items, counts/formats,
-   and each item's short summary and purpose. Call this a proposed plan: no
-   Journey or child content exists yet. Show the plan's `generation_notes` and each
-   Roleplay's scenario/customer mapping: `generate_new` creates a scenario,
-   `link_existing` selects an existing scenario and `customer_id` or new
-   `customer_seed`; `reuse_scenario` uses an earlier `reuse_from_client_id` and
-   new `customer_seed`. Prefer scenario reuse over duplicates; never reference
-   a later item or itself. Compare saved
+4. Create or inspect the request; start only when requested. Poll
+   `generation_request_detail` and `generation_request_steps`. A saved overview
+   without a pending/queued/running item-input step awaits review
+   (`overview_review` where available), not `item_inputs`.
+   Use brief progress in user's language; hand off at cutoff.
+5. Read `journey_plan_detail` when the overview is saved; show it immediately
+   without asking: title, goals, language, ordered sections/items,
+   counts/formats, short item purposes and
+   `generation_notes`. Call it a proposal; no Journey or child content exists.
+   Lead with names; keep type codes and IDs in technical detail. Map each
+   Roleplay scenario → item → selected customer. For a new scenario,
+   `generate_new` creates the first customer; a second item's `reuse_scenario`
+   with `reuse_from_client_id` and `customer_seed` creates another customer.
+   Two existing customers need two `link_existing` items with distinct
+   `customer_id` values. Never reference a later item or itself. Compare saved
    `journey_title`, language, section counts and format totals to the brief;
-   `format_mix` is advice. Show exact drift and proposed corrections.
+   `format_mix` is advice. Count customer encounters as items; show drift and
+   proposed corrections. Stop if the requested total or mix conflicts.
    A Next Generation Episode item estimated above 10 minutes cannot fit the
    brief's 600-second limit. Propose shortening it or splitting it into
    multiple Episodes in the overview before generating item inputs.
-   Check material use of the verified company sources. If format mix, sources,
-   revisions or configuration change, repeat the affected preflight before
-   generating item inputs or executing the plan; an old snapshot is not refreshed
-   merely by re-reading current assets. The parent Knowledge snapshot informs
-   planning; each new Roleplay item's `source_knowledge_asset_ids` selects its
-   child subset (empty means the full parent selection). Inspect that subset
-   before execution. An existing or reused Roleplay keeps its own saved pins;
-   do not silently replace them with the plan's assets.
+   Verify company source use. After format, source, revision or configuration
+   changes, repeat affected preflight before input generation or execution;
+   re-reading assets does not refresh a snapshot. The parent Knowledge snapshot
+   guides planning; each new Roleplay item's `source_knowledge_asset_ids`
+   selects its child subset (empty means the full parent selection). Inspect
+   it before execution. Existing or reused Roleplays retain saved pins;
+   do not replace them with plan assets.
    Ask what the user wants to adjust and wait. For confirmed changes, call
    `journey_plan_update_overview` with the complete corrected `overview` on the
    same request; re-read and present the revised plan. Continue only after the
@@ -124,16 +127,15 @@ for Journey context, duplicate names and internal identifiers.
    current plan is the execution confirmation. Recap the exact operation before
    calling the tool; ask again if the plan changed since that go-ahead.
    Activation and publication each need separate confirmation.
-9. Only after that confirmation, call `journey_plan_execute`. Poll the related
-   request with `generation_request_detail` and use `journey_plan_reconcile` only
-   when status or server guidance indicates reconciliation is appropriate.
-   Read item statuses literally: `waiting_for_scenario` and
-   `child_request_created` are not done; `linked` is done;
-   `dependency_failed`, `child_request_failed`, `link_failed` and
-   `invalid_input` are failures to report with the affected item. On a partial
-   result, reconcile only when status or server guidance calls for it; retry
-   only the supported existing step under the product action contract. Never
-   create a second plan or child request.
+9. Only after confirmation, call `journey_plan_execute`. Poll with
+   `generation_request_detail`; reconcile only when status or server says so.
+   `waiting_for_scenario` and `child_request_created` are pending; `linked` is
+   done. Report `dependency_failed`, `child_request_failed`, `link_failed` and
+   `invalid_input` per item. Retry only supported existing steps under the
+   product action contract; never duplicate plans or child requests. Before
+   claiming completion, inspect saved Journey structure: shared Roleplay items
+   must link the same scenario with different selected customers. Report any
+   mismatch as incomplete.
 10. When the user asks to publish, first review the whole Journey against the
     public checklist (`/journeys/review-before-activation/`, fetched as the
     routing skill describes): empty sections, placeholder text, unfinished

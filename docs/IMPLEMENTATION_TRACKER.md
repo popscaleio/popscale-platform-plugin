@@ -2,7 +2,7 @@
 
 Last updated: 2026-09-29
 
-## Next Generation Episode routing — 1.6.3 candidate
+## Next Generation Episode routing and Journey Roleplay mapping — 1.6.3
 
 - [x] Route standalone Episodes to `generation_request_create`; retain
   `create_company_content` for other supported roots and follow the selected
@@ -19,8 +19,14 @@ Last updated: 2026-09-29
   bound after the new Episode contract. MCP URLs and OAuth setup are unchanged.
 - [x] All 85 package tests, release validation, live public Docs MCP smoke,
   changed Markdown links and whitespace checks pass on this branch.
-- [ ] Backend draft PR #483 must deploy before publishing this plugin version.
-  Host evaluations and an authorized public release remain separate.
+- [x] Keep one selected customer per Roleplay Journey item: reuse a new scenario
+  with a second customer seed, or link the same existing scenario twice with
+  distinct customer IDs. Present a saved overview at the review step, and
+  verify the resulting scenario/customer links after execution. Add synthetic
+  regressions for both paths and conflicting item totals.
+- [x] Backend PRs #483 and #484 merged into staging. Confirm #483's staging
+  deploy succeeds before publishing the 1.6.3 tag. Clean Codex and Claude host
+  evaluations are omitted for this release as requested.
 
 ## Two-stage Journey review — 1.6.2
 
