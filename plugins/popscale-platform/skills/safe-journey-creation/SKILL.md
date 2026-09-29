@@ -67,20 +67,21 @@ for Journey context, duplicate names and internal identifiers.
    leaves open (why now, for whom, what they should be able to do, duration and
    cadence, level, mix, constraints). A brief written as topics produces a
    list; a brief written as behaviors produces a program.
-4. Create or inspect a request, start it when requested, and poll
-   `generation_request_detail` within a bounded window. Use the handoff below
-   if time or tool budget ends; never claim completion while it runs. Use the
-   user's language for brief progress updates.
-5. After overview generation, read `journey_plan_detail`. Present the saved
-   overview immediately, without another display prompt: title, goals, language,
-   ordered sections/items, counts/formats, short item purposes and
+4. Create or inspect the request; start only when requested. Poll
+   `generation_request_detail` and `generation_request_steps`. A saved overview
+   without a pending/queued/running item-input step awaits review
+   (`overview_review` where available), not `item_inputs`.
+   Use brief progress in user's language; hand off at cutoff.
+5. Read `journey_plan_detail` when the overview is saved; show it immediately
+   without asking: title, goals, language, ordered sections/items,
+   counts/formats, short item purposes and
    `generation_notes`. Call it a proposal; no Journey or child content exists.
    Lead with names; keep type codes and IDs in technical detail. Map each
-   Roleplay scenario → item → selected customer. Two new encounters use
-   `generate_new`, then `reuse_scenario` referencing it via
-   `reuse_from_client_id` with a new `customer_seed`. Two existing customers
-   need two `link_existing` items with distinct `customer_id` values. Never
-   reference a later item or itself. Compare saved
+   Roleplay scenario → item → selected customer. For a new scenario,
+   `generate_new` creates the first customer; a second item's `reuse_scenario`
+   with `reuse_from_client_id` and `customer_seed` creates another customer.
+   Two existing customers need two `link_existing` items with distinct
+   `customer_id` values. Never reference a later item or itself. Compare saved
    `journey_title`, language, section counts and format totals to the brief;
    `format_mix` is advice. Count customer encounters as items; show exact drift
    and stop for clarification if the requested total or mix conflicts.

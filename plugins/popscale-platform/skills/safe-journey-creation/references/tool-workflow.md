@@ -23,7 +23,9 @@ what the generator actually consumed; read it at plan review.
 Reuse requests via `generation_requests_list`, `generation_request_detail` and
 `generation_request_steps`. Start, retry, cancel and reconcile change state.
 Preflight before creation and after source/mix changes; changed assets need a
-new request. Poll until terminal status or review; never retry speculatively.
+new request. Saved overview without an active item-input step means
+`overview_review` where available; `item_inputs` means its step is pending,
+queued or running. Never retry speculatively.
 
 ## Journey Review
 
@@ -34,10 +36,10 @@ Platform execution generates scripts, translations and audio; the agent verifies
 saved results read-only and never edits scripts. A valid plan or anonymous
 steering alone does not prove that the generated result followed the inputs.
 
-1. Read the saved overview with `journey_plan_detail`; present it as a proposal
-   without a display prompt, then wait for feedback. Count one item per customer
-   encounter and show scenario → item → selected customer; clarify conflicting
-   totals or mix. For approved changes, `journey_plan_update_overview` replaces the
+1. Read `journey_plan_detail`; show the proposal immediately, then wait. Count
+   one item per customer encounter and show scenario → item → selected customer;
+   clarify conflicting totals or mix. For approved changes,
+   `journey_plan_update_overview` replaces the
    complete overview. Re-read and obtain acceptance on the same plan.
 2. Only then call `journey_plan_generate_item_inputs`. Poll, then read the
    results with `journey_plan_get_item_inputs`.
@@ -56,7 +58,7 @@ Journey items. Overview selectors are mutually exclusive:
 | --- | --- | --- |
 | `generate_new` | No overview selector; verify generated `input_payload.number_of_customers: 1` for this pattern | New scenario; first customer |
 | `link_existing` | `linked_object_id` plus `customer_id` or `customer_seed` | Existing scenario; existing/new customer |
-| `reuse_scenario` | `reuse_from_client_id` (an earlier Roleplay item) plus `customer_seed` | Scenario created by that item; one new customer |
+| `reuse_scenario` | `reuse_from_client_id` (an earlier Roleplay item) plus `customer_seed` | New customer in reused scenario |
 
 ## Publication
 
