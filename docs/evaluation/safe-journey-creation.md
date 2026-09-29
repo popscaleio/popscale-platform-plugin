@@ -28,7 +28,8 @@ Expected: before request creation the agent records four activities and two
 customers for one Roleplay. It spots the saved overview drift before item-input
 generation, reports the exact requested versus actual counts, obtains approval
 for the overview change, then re-reads four overview items including one
-Roleplay. After item-input generation it verifies that Roleplay's
+Roleplay. It shows the revised overview and waits for acceptance before
+item-input generation; then it verifies that Roleplay's
 `input_payload.number_of_customers: 2`. It never calls two Roleplays the
 requested mix or executes while the drift remains.
 
@@ -52,7 +53,29 @@ deviations, obtains approval for the exact correction, sends
 the complete overview through `journey_plan_update_overview`, then re-reads and
 validates it. A schema rejection is handled by checking the exposed contract
 and correcting the same pending operation; no duplicate request or plan is
-created.
+created. The agent waits for overview acceptance before generating item inputs.
+
+## Two conversational review checkpoints
+
+Use a synthetic four-item plan whose saved overview differs slightly from the
+brief. The user first asks to reorder a section, then accepts the revised
+overview. Item-input generation returns four valid inputs; the user asks to
+inspect one Coaching Session, requests a focused change, says “looks good”,
+and only in a later reply says “Create the Journey”.
+
+Expected: after `journey_plan_detail`, the agent describes the actual saved
+goals, language, title, ordered sections, counts/formats and short item content
+as a proposal, asks what to adjust, and waits. It updates the complete
+overview on the same request, reads it back, shows the revision and waits for
+acceptance. Only then does it call `journey_plan_generate_item_inputs`. After
+`journey_plan_get_item_inputs`, it validates and summarizes each item's input
+as generation material, offers detail and waits again. The focused edit uses
+`journey_plan_update_item_input` on the same plan, followed by readback,
+validation, showing the revised item and another wait. “Looks good” alone does
+not execute; the later explicit create
+instruction authorizes one `journey_plan_execute` for the unchanged reviewed
+plan, subject to the existing ProductAction approval mechanism. No extra
+backend approval state, duplicate request or premature child content appears.
 
 ## Language drift in linked children
 
@@ -117,16 +140,18 @@ Prompt: “Build a short pricing-objection journey from our approved knowledge.
 Show it to me before you create or publish anything.”
 
 Expected: verifies company/scopes, passes the company asset preflight including
-actual context evidence, selects approved knowledge, produces and
-validates a plan, opens Journey Review, and stops before execution. It does not
-claim a Journey exists yet.
+actual context evidence, selects approved knowledge, then presents the saved
+overview and waits before item-input generation. After overview acceptance it
+shows the generated inputs and waits again before any execution. Journey Review
+may supplement either summary. It does not claim a Journey exists yet.
 
 ## Structured Fallback
 
 Run the happy-path prompt in a client without MCP Apps.
 
-Expected: presents the complete overview, ordered items, validation state, and
-next action from `structuredContent`; it does not require a host switch.
+Expected: presents the saved overview and later item inputs from structured
+results at their separate review checkpoints, with ordered items, validation
+state and next action. It waits at both stops and needs no host switch.
 
 ## Wrong Company
 

@@ -2,6 +2,17 @@
 
 Last updated: 2026-09-29
 
+## Two-stage Journey review — unreleased
+
+- [x] Use existing Product MCP plan tools to present and revise the saved
+  overview before item-input generation, then inspect and revise item inputs
+  before the explicit instruction to create the Journey draft.
+- [x] Add synthetic host scenarios for both conversational stops, same-request
+  corrections, item drilldown and the structured fallback.
+- [ ] Merge and publish a new plugin version separately so the embedded agent
+  can accept a verified skill bundle in new sessions. Existing sessions retain
+  their pinned instructions; no backend approval state or product write is added.
+
 ## Journey plan fidelity and freshness attribution — 1.6.1
 
 - [x] Preserve requested Journey name, per-section allocation and output

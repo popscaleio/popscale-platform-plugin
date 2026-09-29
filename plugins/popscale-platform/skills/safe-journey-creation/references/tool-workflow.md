@@ -20,19 +20,12 @@ what the generator actually consumed; read it at plan review.
 
 ## Plan and Generation
 
-Use `generation_request_create` only when a suitable request does not already
-exist. Use `generation_requests_list`, `generation_request_detail`, and
-`generation_request_steps` to discover and understand existing work before
-starting or retrying it. `generation_request_start`, `generation_step_retry`,
-`generation_request_cancel`, and `journey_plan_reconcile` are explicit
-state-changing operations.
-The preflight runs before request creation and again when the format mix or
-sources change before item-input generation or execution. The plan keeps the
-snapshot captured at creation; changed assets need a new request.
-
-The workflow is asynchronous. Poll status at a reasonable cadence and stop when
-the request is completed, failed, canceled, or awaiting user action. Do not call
-retry or reconcile speculatively.
+Discover existing work with `generation_requests_list`,
+`generation_request_detail` and `generation_request_steps`; reuse its request
+ID. Start, retry, cancel and reconcile are state-changing operations. Preflight
+before creation and again after source or mix changes. The plan retains its
+creation snapshot; changed assets need a new request. Poll until completion,
+failure or user review; never retry or reconcile speculatively.
 
 ## Journey Review
 
@@ -43,22 +36,25 @@ Platform execution generates scripts, translations and audio; the agent verifies
 saved results read-only and never edits scripts. A valid plan or anonymous
 steering alone does not prove that the generated result followed the inputs.
 
-1. `journey_plan_detail` returns the plan overview, items, readiness, and known
-   validation state.
-2. `journey_plan_update_overview` changes the plan-level overview. Confirm the
-   proposed replacement before calling it.
-3. `journey_plan_update_item_input` applies one focused item input change.
-4. `journey_plan_validate_item_input` validates one item against Popscale's server contract.
-5. `render_journey_review` returns the same review state and links the standard
-   Journey Review MCP App through resource metadata.
-6. `journey_plan_execute` turns an entirely valid plan into downstream journey
-   work. It requires an immediately preceding explicit user confirmation.
+1. Read the saved overview with `journey_plan_detail`; present it and wait for
+   feedback. For approved changes, `journey_plan_update_overview` replaces the
+   complete overview. Re-read and obtain acceptance on the same plan.
+2. Only then call `journey_plan_generate_item_inputs`. Poll, then read the
+   results with `journey_plan_get_item_inputs`.
+3. Validate every item with `journey_plan_validate_item_input`; summarize the
+   inputs, offer item detail/edits and wait. Apply approved focused changes via
+   `journey_plan_update_item_input`, re-read and revalidate.
+4. `render_journey_review` offers the App review; use structured text otherwise.
+5. Call `journey_plan_execute` only after the second review and an explicit
+   “create Journey” confirmation. These conversational stops add no backend
+   approval state.
 
-Roleplay item selectors in the overview, mutually exclusive per item:
+Roleplay overview selectors are mutually exclusive. Verify customer count in
+the generated item input:
 
 | `mode` | Fields | Result |
 | --- | --- | --- |
-| `generate_new` | `input_payload` with `number_of_customers` (state it, normally 1) | New scenario and its customers |
+| `generate_new` | No overview selector; generated input has `number_of_customers` | New scenario and its customers |
 | `link_existing` | `linked_object_id` plus `customer_id` or `customer_seed` | Existing scenario; existing or newly generated customer |
 | `reuse_scenario` | `reuse_from_client_id` (an earlier Roleplay item) plus `customer_seed` | Scenario created by that item; one new customer |
 

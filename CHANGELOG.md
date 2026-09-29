@@ -4,6 +4,10 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+- Add two conversational Journey review checkpoints: show the saved overview
+  before item-input generation, then show and refine item inputs before the
+  user's explicit instruction to create the Journey draft.
+
 ## [1.6.1] - 2026-09-29
 
 - Preserve exact Journey names, section allocation and language when reviewing
