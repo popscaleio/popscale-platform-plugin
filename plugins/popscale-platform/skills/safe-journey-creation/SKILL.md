@@ -24,11 +24,17 @@ for Journey context, duplicate names and internal identifiers.
    Inspecting or activating child content also requires `content:read`; activation
    additionally requires `content:write` and `publish:write`. Do not accept a
    company identifier from the prompt as an authorization input.
-3. Establish the selected format mix and activity count before request creation.
-   One Roleplay with two customers is one Journey item, not two. Carry the item
-   count in `desired_item_count` and `format_mix`, and the customer count in
-   `journey_brief`; set `input_payload.number_of_customers: 2` only on that
-   Roleplay overview item under the live schema. Then complete the shared
+3. Record requested name/prefix, language, item total, section split, format
+   counts and Roleplay customer count. Confirm the brief and next action in one
+   or two plain-language sentences, including name, split, language and draft
+   intent. For
+   `generation_request_create(request_type=journey_plan)`, put
+   `name`, `desired_item_count`, `format_mix`, `journey_brief`, `constraints`,
+   `output_language` and company `source_language` ID inside `input_payload`.
+   `format_mix` lists unique types, not counts; `constraints` is plain text.
+   Put exact counts and section allocation in the brief or constraints.
+   Two customers in one Roleplay count as one item; verify its generated
+   `input_payload.number_of_customers: 2` before execution. Then complete the shared
    [company asset preflight](../safe-content-administration/references/company-asset-preflight.md)
    before generating an overview, item inputs or child exercises. It requires
    `content:read` for company assets/configuration and `knowledge:read` for
@@ -61,11 +67,9 @@ for Journey context, duplicate names and internal identifiers.
    leaves open (why now, for whom, what they should be able to do, duration and
    cadence, level, mix, constraints). A brief written as topics produces a
    list; a brief written as behaviors produces a program.
-4. Create or inspect a generation request, start it when requested, and poll
-   `generation_request_detail` within a bounded window until it reaches a
-   terminal or reviewable state. Use the continuation handoff below if time or
-   tool budget ends first.
-   Do not invent successful completion while work is still queued or running.
+4. Create or inspect a request, start it when requested, and poll
+   `generation_request_detail` within a bounded window. Use the handoff below
+   if time or tool budget ends; never claim completion while it runs.
 5. Open `journey_plan_detail`. Review the overview and every item. Use
    `journey_plan_update_item_input` for specific edits and
    `journey_plan_update_overview` only after the user explicitly confirms the
@@ -78,14 +82,12 @@ for Journey context, duplicate names and internal identifiers.
    `reuse_from_client_id` with a new `customer_seed`. Several sections can share
    one scenario with a different customer each; prefer that over near-identical
    scenarios. A `reuse_from_client_id` must point at an earlier Roleplay item,
-   never forward or at itself. Compare the requested total and per-format item
-   counts with the saved overview before generating item inputs. For a request
-   for one Roleplay with two customers, require one Roleplay item with
-   `number_of_customers: 2`. The server treats `format_mix` as advice: disclose
-   any drift, propose the exact correction, and use
-   `journey_plan_update_overview` only after confirmation. Re-read the saved
-   overview and count again before continuing; do not describe a drifted plan
-   as the requested mix.
+   never forward or at itself. Before item-input generation, compare saved
+   `journey_title`, language, section counts and format totals to the brief;
+   `format_mix` is advice. For drift, show exact differences and a correction,
+   obtain approval, call `journey_plan_update_overview` with `request_id` and the complete
+   corrected `overview`, then re-read and validate. Never execute unresolved
+   name, mix or section drift.
    Check material use of the verified company sources. If format mix, sources,
    revisions or configuration change, repeat the affected preflight before
    generating item inputs or executing the plan; an old snapshot is not refreshed
@@ -138,26 +140,26 @@ for Journey context, duplicate names and internal identifiers.
     instructions have metadata only. A completed plan or green Journey
     readiness does not prove child artifact provenance. Use the packaged local
     checker when available, or the same evidence rules without local execution.
-    Report draft/published status, each part's provenance and freshness, remaining
-    warnings, and a concise audit-friendly summary. A partial result is not a
-    completed Journey generation.
+    Review each linked child's learner-facing root and component fields for
+    requested language. Flag drift despite green steps or freshness;
+    keep the Journey in draft for review and use supported correction workflows.
+    Report draft/published status, provenance, freshness, warnings and a concise
+    audit-friendly summary. A partial result is not completed generation.
     Repeat the preflight's source-use review on saved child exercises; a plausible
     plan does not prove that child outputs used the selected company sources.
 
 ## Bounded continuation handoff
 
-Use growing polling intervals and a bounded number of status reads per turn
-(normally no more than six). If the window or tool budget ends while work is
-queued or running, give an interim status, not a final completion claim. Record
-the existing request ID, plan ID, Journey ID if returned, all child request IDs,
-and the latest verified linked/pending/failed counts with observation time.
-State the exact next safe read (`generation_request_detail` for the existing
-request, followed by `journey_plan_detail` and child status reads as needed).
-Use `journey_plan_reconcile` only if that refreshed state or server guidance
-calls for it and the product action contract permits it. Continue the same
-operation on the next turn; do not create a new request, plan, Journey or child
-job to recover from a polling cutoff. Clearly mark child artifact verification
-as pending until the generation evidence reads are complete.
+Poll with growing intervals (normally at most six reads per turn). Give brief
+plain-language milestones and the next step. At a cutoff, report observed
+linked/pending/failed counts with observation time; keep request, plan, Journey
+and child IDs in the handoff, not the main answer unless needed for clarity.
+Explain that the same operation will continue without duplicate jobs. Resume
+with `generation_request_detail`, then `journey_plan_detail` and child status as
+needed; refresh before repeating earlier counts. Reconcile only when refreshed
+state or server guidance calls for it under the product action contract. Never
+recreate a request, plan, Journey or child job due to a cutoff. Mark artifact
+verification pending until evidence reads finish.
 
 ## Safety Rules
 

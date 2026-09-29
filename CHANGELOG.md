@@ -4,6 +4,14 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+- Preserve exact Journey names, section allocation and language when reviewing
+  generated plans; clarify schema placement for format mix, constraints and
+  language. Review linked learner-facing text for language drift.
+- Distinguish an unexpected `Manual Ui` history write on editor open from a
+  deliberate edit or a generation failure when explaining freshness.
+- Summarize Journey briefs and long-running progress in plain language while
+  retaining request IDs for safe continuation and refreshing counts before reuse.
+
 ## [1.6.0] - 2026-09-28
 
 - Route enrolled Journey section/item changes through the new complete-structure

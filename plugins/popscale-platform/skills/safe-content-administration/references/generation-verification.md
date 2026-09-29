@@ -49,8 +49,10 @@ artifact unless it has its own stale artifact row. A completed generation step
 establishes historical provenance only; it does not prove the saved artifact is
 current. Check available change history or revision evidence before attributing
 the warning to generation order: a later manual UI edit can change dependencies
-after every step completed. If the writer or chronology is unavailable, say so;
-only raise a possible server ordering issue when later writes are ruled out.
+after every step completed. A `Manual Ui` entry on opening without an intended
+save proves a write, not user intent; flag a suspected UI/backend issue, not a
+generation failure. If the writer or chronology is unavailable, say so; only raise
+a possible server ordering issue when later writes are ruled out.
 Read and preserve manually curated visible fields; do not overwrite or
 regenerate them merely to clear a warning. Apply the generation-only workflow
 stop if protected output metadata shows an edit. Report review/publication
