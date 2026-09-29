@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PLUGIN = ROOT / "plugins" / "popscale-platform"
-EXPECTED_VERSION = "1.6.4"
+EXPECTED_VERSION = "1.6.5"
 EXPECTED_SERVERS = {
     "popscale-platform": {"type": "http", "url": "https://app.popscale.io/mcp/"},
     "popscale-docs": {"type": "http", "url": "https://docs.popscale.io/mcp"},

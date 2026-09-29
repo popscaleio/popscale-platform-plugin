@@ -2,6 +2,19 @@
 
 Last updated: 2026-09-29
 
+## Journey required goals — 1.6.5
+
+- [x] Match the backend Journey-plan input contract: nonempty `learning_goals`
+  string list and `knowledge_asset_ids`, with exact `section_item_counts` when
+  requested. Correct rejected payloads from `error_field` without repeating
+  unchanged calls or treating an unsaved text outline as the saved overview.
+- [x] Add a synthetic 30-call host scenario with both review gates preserved.
+- [x] Align Codex and Claude manifests, marketplace metadata, validator and
+  package test at 1.6.5. Publish without a detailed postrelease host check as
+  requested.
+- [ ] Verify the corrected behavior in a fresh staging host session with a
+  dedicated test company and explicit product-write confirmation.
+
 ## Journey selector validation and continuation — 1.6.4
 
 - [x] Treat `reuse_scenario` plus an earlier item and `customer_seed` as a
