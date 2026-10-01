@@ -76,6 +76,7 @@ EXPECTED_CONTENT_TOOLS = (
     "product_action_execute",
 )
 EXPECTED_USAGE_TOOLS = (
+    "get_company_activity_summary",
     "get_journey_insights",
     "list_journey_members",
     "get_member_journey",
@@ -312,7 +313,8 @@ class PluginPackageContractTests(unittest.TestCase):
         for required_semantic in (
             "current-state view",
             "current stored values",
-            "removed or inactive customer-human memberships",
+            "currently active",
+            "Removed or inactive memberships are hidden",
             "support and service identities",
             "Roleplay and Coaching history",
             "Flashcard sessions",

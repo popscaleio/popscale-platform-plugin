@@ -73,41 +73,27 @@ for Journey context, duplicate names and internal identifiers.
    format: stop only on what the server requires, warn about thin recommended
    inputs and offer to fill them, then generate when the user decides. The
    preflight does not apply to targeted regeneration or language generation;
-   those check only the selected subpart's dependencies. Call
+   those check only the selected subpart's dependencies. For new generated
+   Coaching/Flashcards, read [standalone generation](references/standalone-generation.md)
+   for payload shape and follow-through. Call
    `content_generation_capabilities` and follow the returned format/subpart
    contract. Create a new Episode through `generation_request_create`, never
    `create_company_content`; use the company-reported audio mode and the
    structured Next Generation brief and locales when that mode is enabled.
-   An explicit request for Original remains available. Targeted regeneration
-   supports draft and active roots when the live
-   capability allows it; it preserves the object ID and Journey links. It is
-   asynchronous and idempotent. Poll with `generation_request_detail`
-   and `generation_request_steps`; do not claim completion early.
-   After changing a dependency of a generation-only output, refresh detail and
-   freshness, read generation capabilities, and follow the dependency decision
-   flow in [tool-workflow.md](references/tool-workflow.md). Choose the subpart
-   from the user's intent, never from what is available: a changed evaluation
-   rule means `evaluation_instructions`; changed criteria mean
-   `evaluation_criteria`, which replaces the whole criteria list; a new or
-   reworked situation means `setup`; more customers means `customers`, which
-   appends. On an existing Roleplay, `setup`, `evaluation_criteria` and
-   `customers` require that you first describe what will be replaced or added
-   and obtain a yes; `evaluation_instructions` and `agent_prompt` do not. Never
-   queue several subparts "to be safe". Report the status/tool/scope/approval
-   blocker when the chosen subpart cannot run.
-   Source edits alone must not be reported as synchronized generated output.
-   For Roleplay `description`/`education_text`, resolve the company language
-   and pass `source_language_id`; prompt text alone does not select it.
+   An explicit request for Original remains available. For existing-root
+   regeneration, follow the intent, replacement/append consent, language and
+   dependency rules in [tool-workflow.md](references/tool-workflow.md), preserving
+   IDs and Journey links. Read detail/freshness and capabilities first;
+   never queue extra subparts or claim synchronization from source edits alone.
+   Choose from intent, never from what is available. Changed criteria mean
+   `evaluation_criteria`, which replaces the whole criteria list; explain and confirm it.
    **Coaching exception:** any Coaching input change regenerates BOTH
    `agent_prompt` and `evaluation_instructions` afterwards, never only the one
    marked stale and never an older run. If the pair cannot be generated, report
    the update as incomplete.
-   For Episodes, read [speaker and voice rules](references/episode-speakers.md)
-   before generation or correction. Put anonymous, topic-led dialogue rules in
-   Script input (`model_steering`). Include tailored listening-experience guidance and review saved scripts for
-   conversational quality. Prefer script review before audio when the actual
-   operation supports staging; otherwise use supported combined generation and
-   inspect outputs afterwards, as defined by the shared rules.
+   For Episodes, apply [speaker and voice rules](references/episode-speakers.md)
+   to Script input (`model_steering`), listening guidance, review and supported
+   combined generation.
    Stop active input corrections when safe regeneration is unavailable.
 9. Before publication, review the root against the public checklists: fetch
    `/journeys/review-before-activation/` and `/content/language-in-exercises/`
@@ -121,20 +107,12 @@ for Journey context, duplicate names and internal identifiers.
    Call `content_activation_readiness`, present every failed or warning check,
    and call `content_activate` only after immediate explicit confirmation with
    `confirm_publish=true`.
-10. Report content names, status, change history/freshness,
-    generation state, and remaining warnings. Before any generation claim, follow
-    [generation-verification.md](references/generation-verification.md): verify
-    each requested artifact against its linked completed request step and fresh
-    server metadata. Read back visible saved output where MCP permits it; the
-    server omits Roleplay `evaluation_instructions` and Coaching `agent_prompt`
-    and `evaluation_instructions`, so never seek their text through another route.
-    Separate readiness, freshness and provenance; `legacy_unknown`
-    never proves generation, and `output_edited` must be reported separately.
-    Use the packaged evidence checker when local Python is available, otherwise
-    apply the same checks to tool results. Never invent a URL, field,
-    component, completion state, or permission.
-    Review material use of verified company sources in visible saved outputs as
-    specified by the preflight; do not claim to inspect redacted instructions.
+10. Follow [generation-verification.md](references/generation-verification.md)
+    before generation claims, using the evidence checker when available. Read
+    visible saved output and source use; verify redacted instructions through
+    metadata only. Report content names, draft/publication status, generation,
+    freshness, provenance and concrete remaining review needs separately.
+    Never invent links, fields, completion, permissions or hidden output text.
 
 ## Safety Rules
 

@@ -10,6 +10,7 @@ privacy metadata, and server validation remain authoritative over this guide.
 | `current_user` | Verify the effective role and OAuth-selected company | Authenticated session |
 | `capabilities` | Verify tool availability and `usage:read` | Authenticated session |
 | `search_company_content` | Resolve a title to a company-scoped stable ID when needed | Optional `content:read`; offer scoped reauthorization if absent |
+| `get_company_activity_summary` | Company period activity first, without content lookup | Optional `from_date`, `to_date`, `tz`, `department_ids`, `roles`, `minimum_cohort_size`; no `group_by` |
 | `get_journey_insights` | Compare current Journey participation, completion, and mastery | `journey_id`; `group_by`; optional `department_ids`, `roles`, `minimum_cohort_size` |
 | `get_content_outcomes` | Compare attempt outcomes for one content root | `content_type`, `object_id`; optional group/filter/date/cohort inputs |
 
@@ -18,6 +19,11 @@ comparisons, and `role` for `company_admin`, `department_admin`, or `employee`
 comparisons. Department IDs must come from the authenticated company. The
 minimum cohort defaults to 3 and can be 2 through 20; never lower or reshape it
 to reveal a suppressed result.
+
+For the company summary, preserve `summary`, `by_source`, `metric_definitions`
+and `data_status`. A nonempty format below the threshold can trigger
+`complementary_suppression` for company and format metrics; do not reconstruct
+hidden attempts or time from dashboard observations, content calls or subtraction.
 
 Resolve IDs as described in the skill entrypoint; `usage:read` alone cannot
 search the catalog. Reuse resolved names without extra presentation permissions.

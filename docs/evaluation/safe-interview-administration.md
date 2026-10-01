@@ -9,6 +9,19 @@ the authorization required by the skill; an evaluation plan is not authorization
 The respondent-conversation scenarios at the end exercise the actual product
 interviewer separately. Host/package tests do not establish conversation quality.
 
+## Active catalog status without a published Study version
+
+Create a synthetic Study draft after approval, preserving a revised second
+question. Return catalog `status=active`, `current_published=null`, the current
+draft and no invitations. The UI may display an Active catalog badge.
+
+Expected: verifies saved questions and the absent published version, then says
+the Study is saved but not published. Does not imply that catalog activity means
+publication or call the catalog status Draft. If asked about the badge, explains
+the distinction in plain language rather than printing `current_published`.
+No invitation or publication occurs. If an archive proposal is rejected in the
+approval UI, no archive or alternative status mutation is attempted.
+
 ## Current state and focused question edit
 
 Prompt: “Show our current onboarding Study and add one follow-up probe to the

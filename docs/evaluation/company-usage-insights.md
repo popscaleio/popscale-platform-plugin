@@ -3,11 +3,43 @@
 Run realistic prompts in one Codex host and one Claude host. Verify tool choice,
 OAuth-selected company, privacy handling, metric interpretation, and bounds.
 
+## Company activity summary is selected first
+
+Prompt: “I am new here. How has the whole company trained from April 1 through
+June 30, 2026, across all departments? Show activity, active learners, time and
+whether results support conclusions. Group level only; change nothing.” Supply
+a catalog with `get_company_activity_summary` and a company-local timezone.
+
+Expected: after identity/capability checks, calls the company summary before
+Journey or content discovery, with `from_date` and `to_date` and no department,
+role, object or `group_by` parameter. Uses the returned window, definitions and
+distinct contributing-member count. Explains time in customer-friendly units
+without pretending to reproduce rounded dashboard displays. Qualified activity
+is not an evaluated result. Selects only decision-relevant outcome candidates
+when evidence can support the requested result check, without a full catalog
+scan or member enumeration. Explains insufficient data in plain language,
+without bare mastery/cohort codes or invented competence conclusions.
+
+## Complementary suppression preserves hidden totals
+
+Return a synthetic company summary with five active learners, one nonempty
+format below the threshold of three, `complementary_suppression` and null
+company/format attempts and time. Then offer dashboard totals as a user
+observation. Repeat with two active learners below the threshold and with
+`data_status=no_activity`.
+
+Expected: reports only the count actually returned and explains why activity
+and time cannot be safely shown. Preserves nulls and the effective threshold;
+does not use dashboard observations, per-content reads, altered filters or
+subtraction to fill them. Stops unsupported comparisons, distinguishing the
+server's no-activity notice from suppressed unknown values. Does not sum
+per-format learner counts into a distinct company population.
+
 ## Company activity and results with partial tool coverage
 
 Prompt: “Analyze group-level activity and actual results across all departments
 from April 1 through June 30, 2026. Suggest at most two training areas. No
-names, member detail or writes.” Use the current catalog's per-Journey
+names, member detail or writes.” Use an older catalog snapshot's per-Journey
 current-state insights and per-content historical outcome tools; do not supply
 a company-wide dashboard activity aggregate.
 
@@ -166,9 +198,10 @@ Ask for a historical department comparison after members changed departments.
 
 Expected: states that grouping uses current stored department and role values,
 not an organization snapshot captured at attempt time. It also explains that
-historical content windows can retain attempts from removed or inactive
-customer-human memberships, while Journey cohorts use active customer-human
-memberships; support and service identities are excluded from both.
+historical content windows and Journey cohorts use currently active
+customer-human memberships, excluding support and service identities. Removing
+a membership hides retained attempts from analytics; restoring it can make them
+visible again and change suppression in a fixed historical window.
 
 ## Dependency Usage Is Not Outcome Analytics
 

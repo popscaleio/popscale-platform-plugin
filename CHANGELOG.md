@@ -4,6 +4,13 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+- Start company activity analysis with the new privacy-preserving summary tool;
+  align historical membership visibility with the deployed analytics contract.
+- Use the standalone Coaching/Flashcard request shapes, preserve accepted jobs
+  and distinguish delivered drafts awaiting review from pending generation.
+- Explain review needs and Study publication plainly, and offer supported
+  alternatives when a requested Knowledge source is not generation-eligible.
+
 ## [1.6.7] - 2026-10-01
 
 - Check related Roleplay customer rules and outcomes when patching behavior;

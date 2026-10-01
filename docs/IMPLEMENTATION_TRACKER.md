@@ -2,6 +2,28 @@
 
 Last updated: 2026-10-01
 
+## Company activity and standalone draft delivery — unreleased
+
+- [x] Review exact backend PR #493 merge commit
+  `28aaf27de1949d778e0da22060dec11636d85ef6`: add company activity summary
+  discovery, schema and consumer-tool coverage; align active-membership history
+  semantics and complementary suppression with the committed contract.
+- [x] Align standalone Coaching/Flashcard payload guidance and follow the saved
+  job through terminal generation, verified output and outstanding human review.
+  Preserve identity across uncertain responses and host turns; no duplicate job
+  or cancellation is authorized by unclear progress.
+- [x] Add focused Study publication checks, readable review guidance and
+  supported alternatives to ineligible Knowledge; synthetic QA examples contain
+  no company content or identifiers.
+- [x] All 85 package tests, release validation, four changed-skill validators,
+  public Docs MCP smoke and whitespace checks pass. The new tool reaches the
+  consumer requirements and runtime instructions remain within 22,000 words.
+- [ ] Verify staging's actual cached profile and fresh-session skill source/hash
+  through authorized operator metadata. Public release does not establish the
+  hosted snapshot. No staging metadata access or host evaluation is claimed.
+- [x] Keep the user's editable product instructions untouched. This PR leaves
+  version 1.6.7 unchanged and does not authorize merge or publication.
+
 ## Roleplay rule consistency and analysis scope — 1.6.7
 
 - [x] Address staging observations with minimal related customer/rule patches,

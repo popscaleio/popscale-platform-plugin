@@ -221,3 +221,11 @@ trusted links; otherwise the assistant describes the page without claiming it
 opened. Host progress UI varies; a completed submission tool does not mean its
 background job is finished. The 1.5.0 workflow requires compatible production
 tools; first-party sessions need a restart to pick up a refreshed profile.
+
+For staging verification, distinguish the public release from the host's cached
+profile and the session's frozen snapshot. An authorized operator should check
+the cached version and the fresh session's `profile_version`,
+`skill_source_commit` and `skill_bundle_sha256`. Reloading an old session does
+not replace its snapshot. Record the observed metadata; without it, hosted
+version remains unverified. Updating public skills does not require replacing
+the user's editable product instructions.

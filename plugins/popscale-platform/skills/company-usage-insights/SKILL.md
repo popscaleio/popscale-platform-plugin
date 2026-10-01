@@ -1,6 +1,6 @@
 ---
 name: company-usage-insights
-description: Analyze company-scoped Popscale Journey participation and learning-content outcomes with privacy-safe aggregates and bounded member or attempt drilldown. Use when a company admin asks about completion, mastery, usage, scores, outcomes, departments, roles, learners, or attempts; do not use it to edit content or create and publish a Journey.
+description: Analyze company activity, Journey participation and content outcomes through privacy-safe aggregates and requested member or attempt drilldown. Use for company-admin questions about activity, learning time, completion, mastery, scores or groups; never edit content or publish a Journey.
 ---
 
 # Company Usage Insights
@@ -19,7 +19,10 @@ for Journey context, duplicate names and internal identifiers.
    `company_admin` in the intended OAuth-selected company and `usage:read`.
    A superuser acting for a company still needs that explicit company context;
    a company ID or name in the prompt is never authorization.
-2. Resolve the Journey or content object from authenticated product state. Use
+2. For company-wide period activity, start with `get_company_activity_summary`
+   and the requested dates; omit department/role filters for the whole company.
+   No content ID or catalog scan is needed. For object-specific questions,
+   resolve the Journey or content object from authenticated product state. Use
    a server-returned ID/link already available in the current Product MCP context. For a
    title-only request, call `search_company_content` only when `content:read` is
    granted; otherwise offer scoped reauthorization for name resolution or use
@@ -30,7 +33,7 @@ for Journey context, duplicate names and internal identifiers.
    the first answer: a Journey view is not company-wide activity, and
    `group_by=company` still covers only the selected object. Do not promise
    dashboard parity without matching definitions and coverage. Start with the
-   smallest supported aggregate:
+   smallest supported result aggregate after the company summary when needed:
    `get_journey_insights` for current Journey participation/completion/mastery,
    or `get_content_outcomes` for Roleplay, Coaching Session, Episode,
    Challenge, or Flashcard outcomes in a bounded date window.
@@ -40,9 +43,9 @@ for Journey context, duplicate names and internal identifiers.
 4. Use `group_by=department` or `group_by=role` only when the comparison calls
    for it. Apply company-validated department and role filters before adding
    detail; do not infer an organization snapshot at the time of an attempt.
-   Journey cohorts use active customer-human memberships, while historical
-   content windows can retain attempts from removed or inactive customer-human
-   memberships. Both exclude support and service identities.
+   Activity, Journey and historical content reads use currently active
+   customer-human memberships and exclude support and service identities.
+   Removal/restoration can change even fixed-window historical results.
 5. Preserve every `suppressed`, `minimum_cohort_size`, count, metric-definition,
    timezone, notice, and availability field. Never reconstruct a suppressed
    value by changing filters, subtracting groups, combining calls, or using
@@ -68,12 +71,15 @@ for Journey context, duplicate names and internal identifiers.
    proposal count and label unsupported areas as data-collection hypotheses.
    A request for a coaching proposal authorizes no creation or generation;
    use relevant intended sources, not unrelated test/demo assets.
+   Explain mastery as reported learning results, cohorts as contributing people
+   and suppression as too few people for safe reporting; retain technical fields
+   internally and describe score/window limitations in plain language.
 
 ## Boundaries
 
 - `usage:read` is a dedicated read-only scope. Existing grants are not silently
   widened; ask the user to reconnect or reauthorize when it is missing.
-- The five analytics tools require only `usage:read`, but title-based catalog
+- The six analytics tools require only `usage:read`, but title-based catalog
   resolution uses `search_company_content` and therefore also requires
   `content:read`. Do not silently broaden the grant when an ID is already known.
 - `get_content_usage` belongs to `safe-content-administration`: it reviews

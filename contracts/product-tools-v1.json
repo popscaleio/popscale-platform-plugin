@@ -1,6 +1,9 @@
 {
   "tool_contract_version": "popscale.product.actions.v1",
   "source_commit": "43b1b17406edebb62baa9e3695c21738aed2b35e",
+  "additive_tool_sources": {
+    "get_company_activity_summary": "28aaf27de1949d778e0da22060dec11636d85ef6"
+  },
   "product_tools": [
     "admin_credits_operation_get",
     "admin_credits_rate_card",
@@ -41,6 +44,7 @@
     "generation_request_steps",
     "generation_requests_list",
     "generation_step_retry",
+    "get_company_activity_summary",
     "get_content_component",
     "get_content_freshness",
     "get_content_outcomes",

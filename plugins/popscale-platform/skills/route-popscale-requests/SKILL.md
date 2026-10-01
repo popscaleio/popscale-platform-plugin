@@ -42,7 +42,8 @@ for Journey context, duplicate names and internal identifiers.
    `create_company_content` does not create Episode drafts. New Journey Episode
    items belong to `safe-journey-creation` and its per-item brief review.
    Use `company-usage-insights` for company-scoped
-   Journey participation, completion, mastery, content outcomes, and bounded
+   period activity (company summary first), Journey participation, completion,
+   mastery, content outcomes, and bounded
    member or attempt drilldown. Use
    [safe-product-feedback](../safe-product-feedback/SKILL.md) for reports and
    authorized review. For destinations/progress, read

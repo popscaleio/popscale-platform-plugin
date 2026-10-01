@@ -32,6 +32,10 @@ for Journey context, duplicate names and internal identifiers.
 2. Read current state before changing it. Start with
    `list_interview_studies` or `get_interview_study`; use the returned current
    published snapshot, current editable draft, publish readiness, and edit token.
+   Study catalog status `active` does not prove publication. Verify the actual
+   published version; report an unpublished Study as “saved, not published”.
+   Explain catalog status separately only when relevant; do not archive to make
+   labels agree or expose `current_published` in a routine customer answer.
 3. For authoring, create a Study or call `ensure_interview_study_draft`, then use
    the narrowest mutation. Update Study metadata separately from draft content.
    Use the topic tools for one question, probe, must-cover point, or keyed
@@ -82,13 +86,11 @@ for Journey context, duplicate names and internal identifiers.
    preserve truncation indicators, distinguish stored evidence from inference,
    and never attempt to reconstruct hidden identity, metadata filters, or
    omitted provenance.
-9. Report only what you verified. After every mutation, check that the result
-   is not an error, read the object back, and confirm the change is present
-   before saying it is done. Never report a batch as complete because the
-   calls were sent, and never parse an unstructured error text as if it were
-   a result. Then summarize Study names, outcomes, remaining warnings,
-   truncation, and the next safe action. Do not invent URLs, completion, or
-   publication state.
+9. Check mutation results for errors and verify saved changes before reporting
+   completion; sent calls or unstructured errors prove nothing. Summarize Study
+   names, publication, remaining warnings, truncation and next action in plain
+   language. Keep internal field/status codes out of routine customer answers;
+   never invent links or completion.
 
 ## Scope Boundaries
 

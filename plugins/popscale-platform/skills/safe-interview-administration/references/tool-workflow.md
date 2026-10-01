@@ -43,14 +43,11 @@ dropped without error. Verify the stored input with
 
 ## Publication
 
-1. Call `get_interview_publish_readiness` with `interview:read`.
-2. Present errors, warnings, changed sections, and the exact draft target.
-3. Obtain immediate explicit confirmation.
-4. Call `publish_interview_study` with `confirm_publish=true`, the current edit
-   token, `interview:read`, `interview:write`, and `publish:write`.
-
-Publication is separate from editing or generating content. Earlier approval to
-edit does not authorize publication.
+Call `get_interview_publish_readiness`, then follow the skill's publication
+review and immediate confirmation gate.
+`publish_interview_study` requires the current edit token, `confirm_publish=true`,
+`interview:read`, `interview:write`, and `publish:write`; editing approval never
+authorizes publication.
 
 ## Invitations
 

@@ -76,15 +76,10 @@ a generation claim for that artifact. A manually entered value is only known to
 be directly authored when a confirmed write and readback/history prove it;
 missing generation IDs do not establish that origin.
 
-Manual override applies only to fields explicitly editable under both the live
-contract and the plugin's [format policy](content-format-map.md). It never
-applies to Roleplay or Coaching `evaluation_instructions`, Coaching
-`agent_prompt`, Challenge `evaluation_prompt`, or Episode `script` and source/
-translated variant `script_text`, even on an explicit request
-to rewrite, correct, translate, or clear them. These are generation-only outputs.
-For other permitted, explicitly requested manual edits, explain the provenance
-consequence, use only confirmation fields exposed by the live schema, and read
-back the result and freshness.
+Manual override applies only to requested fields allowed by both the live
+contract and [format policy](content-format-map.md), never generation-only
+outputs even when explicitly requested. Explain provenance consequences, use
+only exposed confirmation fields, and read back saved values and freshness.
 
 `source_changed_and_output_edited` on a generation-only output is a workflow
 failure, not successful synchronization. The same stop applies to `output_edited`
@@ -201,6 +196,12 @@ Without local execution, apply the same rules to tool results and disclose that
 the checker was not run. Missing evidence must still remain unverified.
 
 ## Final report
+
+Translate review flags into concrete checks: question/answer alignment, language,
+card count and source accuracy as applicable. Separate a verified manual
+description from generated instructions/cards; unknown origin is not a failed
+job or proof of manual authorship. Say “review the description before publishing”
+when relevant, rather than presenting `needs_review` or provenance codes alone.
 
 Give one concise row per requested part: current content name, artifact/language,
 generation state, provenance, freshness, and missing evidence or next action.
