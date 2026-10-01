@@ -2,7 +2,7 @@
 
 Last updated: 2026-10-01
 
-## Journey staging QA follow-up — unreleased
+## Journey staging QA follow-up — 1.6.6
 
 - [x] A fresh staging host flow saved the overview and item inputs, paused for
   both human reviews and created a three-item draft Journey after explicit
@@ -17,6 +17,9 @@ Last updated: 2026-10-01
 - [x] Distinguish a practical Challenge from a question-based check and ask
   before changing the learner task. Verify final draft status and saved links,
   use host-provided result controls, and keep pending checkpoints readable.
+- [x] Align host manifests, marketplace metadata, release validator and package
+  test at 1.6.6. Publish for staging testing without new Codex or Claude host
+  checks, as requested.
 - [ ] Host-managed turn continuation and frontend progress readability remain
   separate from plugin instructions; UI activity rows are not tool-call counts.
 
