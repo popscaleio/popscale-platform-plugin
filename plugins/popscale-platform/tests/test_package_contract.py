@@ -5,7 +5,7 @@ from pathlib import Path
 
 PLUGIN_ROOT = Path(__file__).resolve().parents[1]
 REPO_ROOT = PLUGIN_ROOT.parents[1]
-EXPECTED_VERSION = "1.6.6"
+EXPECTED_VERSION = "1.6.7"
 EXPECTED_SERVERS = {
     "popscale-platform": {
         "type": "http",

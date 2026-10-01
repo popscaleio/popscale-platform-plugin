@@ -4,6 +4,8 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+## [1.6.7] - 2026-10-01
+
 - Check related Roleplay customer rules and outcomes when patching behavior;
   preserve unchanged components and align the intended acceptance state.
 - Declare analytics coverage gaps early, bound content comparisons and separate
