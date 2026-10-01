@@ -19,14 +19,8 @@ comparisons. Department IDs must come from the authenticated company. The
 minimum cohort defaults to 3 and can be 2 through 20; never lower or reshape it
 to reveal a suppressed result.
 
-Do not guess `journey_id` or `object_id`. Prefer an ID/link already returned in
-the current authenticated context. A title-only prompt needs
-`search_company_content` and `content:read`; if that optional discovery scope is
-absent, offer scoped reauthorization or use an app link supplied by the user
-when the live tools support resolving it. Explain any remaining lookup limitation
-in plain language; `usage:read` alone cannot search the catalog. If the target
-is already resolved, use the current available name without extra permissions
-solely for presentation.
+Resolve IDs as described in the skill entrypoint; `usage:read` alone cannot
+search the catalog. Reuse resolved names without extra presentation permissions.
 
 Supported content outcome types are `roleplay`, `coaching_session`, `episode`,
 `challenge`, and `flashcard_deck`. The default date window is the last 90
@@ -52,20 +46,6 @@ when explaining which attempts support an aggregate. A 20,000-row aggregate
 guard is a request to narrow filters or dates, not permission to reconstruct the
 same aggregate from every detail page.
 
-## Example selection
-
-- “Which department has the highest completion rate on Journey X?”:
-  `get_journey_insights` with `group_by=department`.
-- “What is the average result for department managers on Roleplay X?”:
-  `get_content_outcomes` with `content_type=roleplay`,
-  `roles=[department_admin]`, and the requested date window.
-- “Which learners in that department are stuck?”: after presenting the
-  aggregate and suppression state, call `list_journey_members` with the selected
-  department and `status=stuck`; use `get_member_journey` only for a named row
-  the user asks to inspect.
-- “Show the attempts behind this Flashcard result”: call
-  `list_content_attempts` with matching filters and preserve its historical
-  score notice and cursor.
-
 All tools are read-only. No confirmation flag or write scope belongs in this
-workflow.
+workflow. UI activity/loading rows do not measure provider tool-call counts;
+do not infer backend latency or call volume from them.

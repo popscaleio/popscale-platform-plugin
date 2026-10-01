@@ -25,10 +25,18 @@ for Journey context, duplicate names and internal identifiers.
    granted; otherwise offer scoped reauthorization for name resolution or use
    an app link the user can provide if the live tools support resolving it.
    Never guess an ID or send the title, identifier, or result to `popscale-docs`.
-3. Start with the smallest aggregate that answers the question:
+3. Match requested activity totals, active learners, learning time and actual
+   results to the live tools before reading aggregates. State coverage gaps in
+   the first answer: a Journey view is not company-wide activity, and
+   `group_by=company` still covers only the selected object. Do not promise
+   dashboard parity without matching definitions and coverage. Start with the
+   smallest supported aggregate:
    `get_journey_insights` for current Journey participation/completion/mastery,
    or `get_content_outcomes` for Roleplay, Coaching Session, Episode,
    Challenge, or Flashcard outcomes in a bounded date window.
+   Select content candidates relevant to the decision; avoid an exhaustive
+   catalog scan. Stop comparative drilling when relevant results are suppressed
+   or unavailable and explain the evidence limit.
 4. Use `group_by=department` or `group_by=role` only when the comparison calls
    for it. Apply company-validated department and role filters before adding
    detail; do not infer an organization snapshot at the time of an attempt.
@@ -55,8 +63,11 @@ for Journey context, duplicate names and internal identifiers.
    those values as immutable snapshots.
 9. Report the filters, denominator, membership-lifecycle cohort, time
    window/timezone, suppression, and historical limitations needed to interpret
-   the answer. Do not perform a mutation, request a write scope, or imply that
-   analytics authorized one.
+   the answer. Separate observed outcomes from training hypotheses: sparse
+   activity alone cannot establish a group skill gap. Respect the requested
+   proposal count and label unsupported areas as data-collection hypotheses.
+   A request for a coaching proposal authorizes no creation or generation;
+   use relevant intended sources, not unrelated test/demo assets.
 
 ## Boundaries
 

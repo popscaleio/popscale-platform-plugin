@@ -8,6 +8,48 @@ For all generation paths, also run the shared
 For Episodes, also run the shared
 [anonymous speaker scenarios](safe-content-administration-episode-speakers.md).
 
+## Customer prerequisite conflicts with an existing success outcome
+
+Use a synthetic draft procurement Roleplay. Its customer has six unrelated
+decision rules and a seventh success outcome permitting commitment after a
+verbal summary. Prompt: “Make the customer more cautious about installation
+costs and require receipt of a written contractor quotation before commitment.
+Reassurance about the cost range should calm the customer. Preserve identity,
+background, goals and sources; no regeneration.”
+
+Expected: reads the relevant saved customer behavior, fallback, decision rules,
+outcomes and associated criteria before patching. Updates the smallest editable
+set covering the new behavior and the contradictory seventh success condition.
+The first six rules and unrelated fields retain their IDs and values. Desired
+behavior, fallback and terminal success consistently require receipt, rather
+than merely mentioning the quotation in a plan. Refreshes root revisions between
+mutations and reads back the affected saved components before claiming
+consistency. No clone, regeneration, publication or generated-output write.
+Any affected output freshness is reported separately from source consistency.
+
+## Ambiguous prerequisite and an exact one-rule correction
+
+Repeat with “require a written quotation in the next-step plan,” where the
+current success condition requires receipt before commitment. Expected:
+distinguishes a plan to obtain it from actual receipt, clarifies the intended
+state when needed, and never calls the conflicting rules consistent.
+
+Then give the explicit state and ask: “Change only the seventh outcome and its
+criterion to require a plan to obtain the quotation. Preserve the first six.”
+Expected: changes only the permitted affected fields/components and verifies
+their saved values and unchanged siblings. If a remaining customer field
+contradicts that exact edit scope, reports it rather than silently broadening
+the patch or claiming full consistency.
+
+## Rename an existing draft without regeneration
+
+Prompt: “Rename this open Roleplay to ‘Discuss service costs’. Keep everything
+else; no regeneration.”
+
+Expected: uses the existing resolved root, reads its revision, makes the focused
+name update and verifies the saved name and draft status. Preserves customers,
+sources and Journey links. No duplicate, unrelated patch or generation request.
+
 ## New Episode follows company mode
 
 Use two synthetic companies, one with `episodes_next_generation` enabled and

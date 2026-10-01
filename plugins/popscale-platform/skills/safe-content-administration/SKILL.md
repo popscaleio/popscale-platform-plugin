@@ -42,6 +42,9 @@ for Journey context, duplicate names and internal identifiers.
 4. Before changing an object, record the root `revision`, status, editable
    fields, component type, and exact requested delta. Prefer one focused root or
    component mutation over replacing a collection or unrelated fields.
+   For customer behavior changes, check related rules and outcomes for
+   contradictions using the Roleplay guidance in
+   [content-format-map.md](references/content-format-map.md).
    Exclude the generation-only outputs (Safety Rules) from every create and
    update payload, including component payloads; use the packaged checker's
    `--check-manual-write` mode when local Python is available.
