@@ -41,6 +41,17 @@ write the output. See [tool-workflow.md](tool-workflow.md).
   customer's nested lists to make a one-row edit.
 - Customer and evaluation-criterion changes may update calculated root totals;
   refresh the root revision before the next call.
+- Before changing customer behavior, read its relevant desired/fallback behavior,
+  decision rules, outcomes and associated criteria. A new prerequisite must not
+  coexist with an old success path that bypasses it. Define the same state
+  throughout: promising a written quotation, including it in a plan and receiving
+  it are different conditions; clarify only when the requested state is ambiguous.
+  Patch the smallest editable field/component set needed for the user's intent,
+  preserving unrelated rules, identity, background, goals and sources. An exact
+  field-only request does not authorize additional edits: report any remaining
+  conflict. Read back affected saved rules before claiming consistency. Follow
+  the dependency workflow for generated outputs; a no-regeneration request
+  permits no extra generation or synchronized-output claim.
 - Generated customers are append-only when the live capabilities say
   `add_generated_customers`; do not interpret regeneration as replacement.
 - `evaluation_criteria` regeneration replaces the whole criteria list and

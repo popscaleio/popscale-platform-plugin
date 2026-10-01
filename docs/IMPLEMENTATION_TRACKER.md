@@ -2,6 +2,25 @@
 
 Last updated: 2026-10-01
 
+## Roleplay rule consistency and analysis scope — 1.6.7
+
+- [x] Address staging observations with minimal related customer/rule patches,
+  consistent prerequisite states and saved readback; preserve exact edit scope
+  and existing generation boundaries.
+- [x] State company-activity coverage gaps in the first analysis response;
+  restrict comparisons to decision-relevant content and stop when outcomes
+  cannot support the comparison. Treat sparse activity as a hypothesis.
+- [x] Add synthetic scenarios for contradictory outcomes, precise corrections,
+  rename-only edits, partial analytics, suppression and source-grounded coaching
+  proposals without creation. No company content or identifiers are included.
+- [x] All 85 package tests, release validation, changed-skill validation,
+  read-only Docs MCP smoke and whitespace checks pass; the public runtime
+  bundle remains within 22,000 words.
+- [ ] Behavioral host evaluation remains separate; synthetic scenarios alone
+  do not prove host behavior.
+- [x] Align host manifests, marketplace version, release validator, package test
+  and changelog at 1.6.7 for the requested publication without new host checks.
+
 ## Journey staging QA follow-up — 1.6.6
 
 - [x] A fresh staging host flow saved the overview and item inputs, paused for
