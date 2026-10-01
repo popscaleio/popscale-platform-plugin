@@ -4,6 +4,8 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+## [1.6.8] - 2026-10-01
+
 - Start company activity analysis with the new privacy-preserving summary tool;
   align historical membership visibility with the deployed analytics contract.
 - Use the standalone Coaching/Flashcard request shapes, preserve accepted jobs

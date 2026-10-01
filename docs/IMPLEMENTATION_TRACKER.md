@@ -2,7 +2,7 @@
 
 Last updated: 2026-10-01
 
-## Company activity and standalone draft delivery — unreleased
+## Company activity and standalone draft delivery — 1.6.8
 
 - [x] Review exact backend PR #493 merge commit
   `28aaf27de1949d778e0da22060dec11636d85ef6`: add company activity summary
@@ -21,8 +21,9 @@ Last updated: 2026-10-01
 - [ ] Verify staging's actual cached profile and fresh-session skill source/hash
   through authorized operator metadata. Public release does not establish the
   hosted snapshot. No staging metadata access or host evaluation is claimed.
-- [x] Keep the user's editable product instructions untouched. This PR leaves
-  version 1.6.7 unchanged and does not authorize merge or publication.
+- [x] Keep the user's editable product instructions untouched. Align both host
+  manifests, marketplace version, validator, package test and changelog at
+  1.6.8 for the user's requested merge and publication without new host checks.
 
 ## Roleplay rule consistency and analysis scope — 1.6.7
 
