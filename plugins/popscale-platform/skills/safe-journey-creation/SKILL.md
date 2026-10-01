@@ -40,6 +40,14 @@ for Journey context, duplicate names and internal identifiers.
    before generation. It distinguishes blocking server requirements from thin
    recommended inputs the user may accept. At review, inspect captured company
    context; omitted or truncated required facts block affected items.
+   Select Knowledge by eligibility, relevance and metadata. Do not default to
+   test/demo assets when suitable real sources exist; ask if intent is unclear.
+   A changed plan-level source set needs a new request because its Knowledge
+   snapshot is frozen. Carry forward approved title, goals, language, section
+   split, formats, durations and constraints unless the user changes them.
+   A Challenge is a practical task with a written response, not a question quiz.
+   For a requested knowledge check, explain supported question-based options
+   such as Coaching or Flashcards and confirm any format substitution.
    For plans that may include audio Episodes, read
    `content_generation_capabilities.episode.creation`.
    When the audio default is `next_generation`, include a company-scoped
@@ -79,17 +87,20 @@ for Journey context, duplicate names and internal identifiers.
    during execution; no `customer_id` is expected beforehand. Existing
    customers need separate `link_existing` items with distinct `customer_id`
    values. Reject forward or self references. Compare saved
-   `journey_title`, language, section counts and format totals to the brief;
-   `format_mix` is advice. Count customer encounters as items; show drift and
-   proposed corrections. Stop if the requested total or mix conflicts.
+   `journey_title`, language, section counts, formats, per-item minutes and
+   total duration to the last approved brief, including after source-driven
+   recreation. `format_mix` is advice. Correct drift to already approved,
+   server-valid values with `journey_plan_update_overview`, then re-read before
+   review; do not invent fixed platform estimates. Stop on conflicting totals.
    A Next Generation Episode item estimated above 10 minutes cannot fit the
    brief's 600-second limit. Propose shortening it or splitting it into
    multiple Episodes in the overview before generating item inputs.
-   Verify company source use. Repeat affected preflight after format, source,
-   revision or configuration changes; re-reading assets does not refresh a
-   snapshot. Inspect each new Roleplay's `source_knowledge_asset_ids` subset
-   before execution (empty means parent selection); reused Roleplays retain
-   their saved pins.
+   Verify plan-level `knowledge_asset_ids` and its frozen snapshot separately
+   from each new Roleplay's `source_knowledge_asset_ids` subset (empty means
+   parent selection); reused Roleplays retain their pins. Removing an item pin
+   does not remove a plan source. For a requested source removal, verify the
+   whole effect, explain the locked snapshot and agree on recreation. Repeat
+   affected preflight after format, source, revision or configuration changes.
    Ask which sections/items to adjust or whether to accept the overview. Wait.
    For confirmed changes, call
    `journey_plan_update_overview` with the complete corrected `overview` on the
@@ -133,7 +144,11 @@ for Journey context, duplicate names and internal identifiers.
    product action contract; never duplicate plans or child requests. Before
    claiming completion, inspect saved Journey structure: shared Roleplay items
    must link the same scenario with different selected customers. Report any
-   mismatch as incomplete.
+   mismatch as incomplete. Require `journey_draft_ready` and all requested
+   saved links before saying the draft is ready; pending items need a short
+   status, not a completion claim.
+   Point to a host-provided Open result or suggested page control when present;
+   otherwise offer supported navigation. Keep raw IDs in technical detail.
 10. When the user asks to publish, first review the whole Journey against the
     public checklist (`/journeys/review-before-activation/`, fetched as the
     routing skill describes): empty sections, placeholder text, unfinished
@@ -173,11 +188,13 @@ for Journey context, duplicate names and internal identifiers.
 ## Bounded continuation handoff
 
 Budget calls for preflight and both reviews; poll with growing intervals
-(normally at most six reads per turn). UI status snapshots do not resume an
-agent turn or renew its tool budget. Before cutoff, hand off a brief checkpoint:
+(normally at most six reads per turn). UI activity counts are not tool-call
+counts; snapshots do not resume an agent turn or renew its tool budget. Before
+cutoff, hand off a brief checkpoint:
 observed linked/pending/failed counts, time, saved request/plan/Journey/child
-IDs and the next safe read. Only an actual host continuation may resume reads;
-never cross a human review. Inspecting the same job needs no new consent.
+IDs and the next safe read; keep IDs in technical detail. Only an actual host
+continuation may resume reads; never cross a human review. Inspecting the same
+job needs no new consent.
 Resume with `generation_request_detail`, then only needed plan or child reads;
 refresh before repeating counts. Reconcile only on server guidance or observed
 inconsistency. Never recreate work because of cutoff; keep artifact

@@ -4,6 +4,13 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+## [1.6.6] - 2026-10-01
+
+- Preserve accepted Journey constraints when recreating a plan for new sources;
+  distinguish frozen plan Knowledge from child pins and verify source removal.
+- Explain Challenge as a practical task before substituting it for a knowledge
+  check; report pending generation plainly and use available result controls.
+
 ## [1.6.5] - 2026-09-29
 
 - Include required Journey plan goals and Knowledge IDs in the generation
