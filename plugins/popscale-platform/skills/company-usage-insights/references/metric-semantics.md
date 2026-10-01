@@ -1,5 +1,15 @@
 # Usage Metric Semantics
 
+## Company period activity
+
+The summary uses native dashboard qualified activity across all five formats,
+including direct and Journey attempts. Active users are distinct currently
+active customer-human memberships. Time is voice/flashcard elapsed time plus
+Episode consumed duration in seconds; Challenges add no measured duration.
+Timed averages exclude Episodes/Challenges. Use the returned inclusive local
+window and definitions; do not equate activity with evaluated results or sum
+format users into unique company users. Privacy may hide dashboard-visible values.
+
 ## Journey current state
 
 Journey insights are a current-state view, not an “as of” historical snapshot.
@@ -17,13 +27,11 @@ organizational reorganization could change the interpretation.
 
 ## Content attempts
 
-Content-attempt windows preserve company learning history: they can include
-attempts from removed or inactive customer-human memberships. Journey insights,
-by contrast, use active customer-human memberships. Both cohort paths exclude
-support and service identities. Department and role grouping still use the
-membership's current stored dimensions, not an attempt-time organization
-snapshot. Report this lifecycle distinction whenever `members_with_attempts` is
-compared with a current learner, enrollment, department, or role population.
+Historical content windows and Journey insights use currently active
+customer-human memberships, excluding support and service identities.
+Removed or inactive memberships are hidden; restoration can reveal retained
+history again without recreating attempts. Grouping uses current stored
+department/role values, not an attempt-time organization snapshot.
 
 An evaluated attempt depends on its format:
 

@@ -66,11 +66,8 @@ write the output. See [tool-workflow.md](tool-workflow.md).
 
 - Any Coaching generation input change requires BOTH `agent_prompt` and
   `evaluation_instructions`, regardless of freshness.
-- After saving the final inputs, request
-  `subparts: ["agent_prompt", "evaluation_instructions"]` through
-  `content_regenerate_subparts`. Later input edits require a new pair.
-- Verify new linked steps and saved-output metadata for both. An old successful
-  run or only one newly generated instruction cannot complete the input update.
+- Follow [tool-workflow.md](tool-workflow.md) for the pair after final inputs;
+  later edits require new generation, never an old successful run.
 - Administrative changes that do not alter generation inputs, such as department
   assignment, do not by themselves require instruction regeneration.
 

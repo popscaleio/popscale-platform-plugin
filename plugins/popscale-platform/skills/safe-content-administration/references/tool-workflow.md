@@ -174,29 +174,15 @@ exercise is created, not to targeted regeneration, language/media work or
 retries on an existing root. For those, check the dependencies of the selected
 subpart and verify the saved output afterwards.
 
-1. Call `content_generation_capabilities` with `content:read` immediately before
-   choosing a format, subpart, or granular generation operation.
-2. Confirm the current draft/active status and supported subparts. Present the
-   active learner impact, Roleplay Knowledge binding when relevant, and exact
-   generated subparts.
-3. For targeted regeneration, call `content_regenerate_subparts` with a stable
-   idempotency key. It requires `content:write` and `generation:write`. For
-   Roleplay `description`/`education_text`, resolve the company language and
-   pass `source_language_id`; replay retains it.
-4. For Episode or Flashcard language generation, resolve the language through
-   `list_company_content_references`, then call `content_language_generate` with
-   `content:read`, `content:write`, and `generation:write`. Use
-   `gemini_tts_voices_list` when Episode audio voice names are needed.
-5. Poll `generation_request_detail` and `generation_request_steps`. Retry or
-   cancel only when the server reports a supported state and the user approves
-   that separate mutation. Voice discovery and both polling tools require
-   `generation:read`; do not queue work under a grant that cannot monitor it.
-6. Refresh `content_detail`, `list_content_components`, and
-   `get_content_freshness` after completion. Follow
-   [generation-verification.md](generation-verification.md) before reporting:
-   check each requested artifact, linked completed step, readable saved output
-   and any current failed/running attempt. Protected instruction text is omitted
-   by MCP; use its server metadata. Readiness does not prove generator origin.
+The dependency workflow above owns targeted regeneration, including status,
+consent, source binding and evidence checks. `content_regenerate_subparts` needs
+`content:write` and `generation:write`; Roleplay `description`/`education_text`
+also need company `source_language_id`, retained on replay.
+For Episode/Flashcard languages, resolve references and use
+`content_language_generate` with `content:read`, `content:write`, `generation:write`.
+Voice discovery uses `gemini_tts_voices_list`. Both status tools and voice
+discovery require `generation:read`; never queue unmonitorable work. Retry/cancel
+only in supported states with separate user approval.
 
 An idempotency key replay is safe only for identical input. A conflict means the
 key was already used for different work; create a new key rather than mutating

@@ -50,7 +50,7 @@ class PublicSkillsBundleTests(unittest.TestCase):
         # Allow the bounded continuation and freshness guidance in the public bundle.
         self.assertLessEqual(total_words, 22_000, f"runtime skill text is {total_words} words")
         self.assertTrue(set(body["required_reference_paths"]).issubset(body["instruction_paths"]))
-        for tool in ("current_user", "product_action_prepare", "product_action_get", "product_action_execute", "request_company_switch", "knowledge_asset_version_detail"):
+        for tool in ("current_user", "product_action_prepare", "product_action_get", "product_action_execute", "request_company_switch", "knowledge_asset_version_detail", "get_company_activity_summary"):
             self.assertIn(tool, body["required_tools"])
         for tool in ("journey_structure_get", "journey_structure_update"):
             self.assertIn(tool, body["required_tools"])
