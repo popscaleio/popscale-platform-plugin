@@ -1,6 +1,24 @@
 # V1 implementation tracker
 
-Last updated: 2026-09-29
+Last updated: 2026-10-01
+
+## Journey staging QA follow-up — unreleased
+
+- [x] A fresh staging host flow saved the overview and item inputs, paused for
+  both human reviews and created a three-item draft Journey after explicit
+  execution approval without argument or transport errors; it neither
+  activated nor enrolled the Journey. The
+  observed planning, source and final-message gaps are covered by focused
+  skill guidance and synthetic scenarios without company content.
+- [x] Carry forward accepted title, structure, formats and durations when a
+  source change requires a new plan. Compare and correct server-valid overview
+  drift before the first review; distinguish frozen plan Knowledge from child
+  pins and verify the full effect of source removal.
+- [x] Distinguish a practical Challenge from a question-based check and ask
+  before changing the learner task. Verify final draft status and saved links,
+  use host-provided result controls, and keep pending checkpoints readable.
+- [ ] Host-managed turn continuation and frontend progress readability remain
+  separate from plugin instructions; UI activity rows are not tool-call counts.
 
 ## Journey required goals — 1.6.5
 
@@ -12,8 +30,9 @@ Last updated: 2026-09-29
 - [x] Align Codex and Claude manifests, marketplace metadata, validator and
   package test at 1.6.5. Publish without a detailed postrelease host check as
   requested.
-- [ ] Verify the corrected behavior in a fresh staging host session with a
-  dedicated test company and explicit product-write confirmation.
+- [x] A fresh staging host session created and executed a draft after both
+  review gates without a Journey create argument error. No activation or
+  enrollment was performed.
 
 ## Journey selector validation and continuation — 1.6.4
 

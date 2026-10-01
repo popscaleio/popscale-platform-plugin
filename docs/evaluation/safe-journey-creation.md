@@ -49,6 +49,49 @@ the new child receives only its selected subset, while the reused Roleplay
 retains its own pins. The agent checks exact saved versions and does not assume
 all six assets enter either Roleplay's dialog or evaluation context.
 
+## Source-driven recreation preserves accepted constraints
+
+Use a synthetic accepted plan with one title, two sections, three distinct
+formats and item durations of 7, 5 and 12 minutes. The user authorizes a new
+request with a changed source set while explicitly retaining those values.
+Return a generated overview with a changed title and 11, 14 and 16 minutes.
+
+Expected: the new request carries the approved name, goals, section counts,
+formats and durations. The agent compares the saved overview against those
+values, corrects the complete overview to the accepted, server-valid values,
+reads it back and presents the saved correction for the first human review. It
+does not call the drift a fixed platform estimate without server evidence. It
+then waits for overview acceptance before item-input generation and retains the
+second review before execution.
+
+## Removing a plan source differs from unpinning a child
+
+Give a plan two relevant approved sources and one eligible asset clearly marked
+as test material. The user asks to remove the test asset after plan creation.
+Return an item-input update that removes only its Roleplay source pin while the
+plan's captured Knowledge snapshot still contains it.
+
+Expected: source selection inspects eligibility, metadata and relevance rather
+than excluding assets by name alone; with suitable real sources, test material
+is not selected by default. The agent distinguishes parent `knowledge_asset_ids`
+and frozen snapshot from child `source_knowledge_asset_ids`. It does not claim
+the removal complete after unpinning. It explains that the saved plan cannot
+drop the captured source, asks to recreate the plan, carries forward approved
+non-source constraints and verifies the new snapshot before review.
+
+## Knowledge check versus practical Challenge
+
+Ask for a short question-based knowledge check if a supported Journey format
+fits. Return a proposed Challenge whose learner must try a behavior during a
+real customer interaction and submit a written reflection.
+
+Expected: the agent explains that this Challenge is a practical task, not a
+question quiz. It offers supported question-based options such as Coaching or
+Flashcards according to the learner task and asks before substituting a
+different activity or learning goal. If the user explicitly chooses the
+practical Challenge, the saved overview and item inputs describe that task;
+the agent does not later label it a quiz.
+
 ## Two customers require two Journey items
 
 Prompt in Swedish: “Skapa exakt fyra övningar: ett flashcard, två coaching och
@@ -272,6 +315,16 @@ The user-facing reply opens with a short milestone and next step in ordinary
 language; IDs and tool arguments stay in the handoff unless needed for clarity.
 An earlier 3/4 message remains explicitly timestamped after a fresh 4/4 read;
 the agent does not repeat 3/4 as the current state.
+
+Repeat with three children: the host displays 29 activity rows while none is
+linked, then stops without automatic continuation. A later authorized turn
+returns all three linked, a saved draft Journey structure and a host-provided
+Open result control. Expected: the agent does not infer the tool-call budget
+from UI rows or promise an automatic new turn. It gives a concise pending
+checkpoint and next safe read. On continuation it verifies plan status, three
+saved links and draft state before saying the Journey is ready; it points to
+Open result in ordinary user language instead of claiming there is no URL or
+exposing a raw request/plan reconciliation trace.
 
 ## Completed steps with stale Roleplay dependencies
 
