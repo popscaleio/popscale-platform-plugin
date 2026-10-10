@@ -11,7 +11,9 @@ Last updated: 2026-10-10
 - [x] Existing CompanyAdmin authoring/analytics, approval, billing, company and
       public/private Docs boundaries preserved. Endpoints/tool names unchanged.
 - [x] Added package/instruction regressions and host acceptance scenarios.
-- [x] All 93 unit tests, release validator, public Docs MCP smoke and diff check
+- [x] Study skill discovery includes delegated readers/editors, with a metadata
+      regression; each operation still requires live tool authority.
+- [x] All 94 unit tests, release validator, public Docs MCP smoke and diff check
       pass locally; these do not verify delegated live host behavior.
 - [ ] Clean Codex/Claude and built-in behavioral acceptance with delegated actors.
 - [ ] Confirm compatible backend in the release target before publication.

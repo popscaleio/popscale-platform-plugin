@@ -4,6 +4,8 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+- Include delegated Study readers and editors in skill discovery metadata, with
+  a regression that prevents restoring a CompanyAdmin-only trigger.
 - Separate external MCP and built-in assistant channel permissions from native
   rights and OAuth consent; document documentation-only and delegated access.
 - Follow live Studies read/edit authority rather than a blanket CompanyAdmin

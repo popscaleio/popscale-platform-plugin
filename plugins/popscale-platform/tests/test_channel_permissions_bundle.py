@@ -63,6 +63,17 @@ class ChannelPermissionBundleTests(unittest.TestCase):
         self.assertIn("do not invent a public connection, browser", self.policy)
         self.assertIn("External OAuth reconnect is not an assistant recovery", self.policy)
 
+    def test_study_discovery_description_includes_delegated_users(self):
+        study = self.sources["skills/safe-interview-administration/SKILL.md"]
+        frontmatter = study.split("---", 2)[1]
+        description = next(line.split(":", 1)[1].strip()
+                           for line in frontmatter.splitlines()
+                           if line.startswith("description:"))
+        self.assertIn("authorized users", description)
+        self.assertIn("delegated Study readers and editors", description)
+        self.assertIn("Live tool authority governs each operation", description)
+        self.assertNotIn("when a company admin", description.lower())
+
     def test_studies_delegation_does_not_widen_editing_or_other_workflows(self):
         study = self.sources["skills/safe-interview-administration/SKILL.md"]
         fallback = self.sources["skills/safe-interview-administration/references/safety-and-fallbacks.md"]

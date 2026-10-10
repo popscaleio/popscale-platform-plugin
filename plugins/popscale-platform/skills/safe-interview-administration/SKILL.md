@@ -1,6 +1,6 @@
 ---
 name: safe-interview-administration
-description: Inspect and administer company-scoped Popscale interview Studies through the authenticated Product MCP, including precise question edits, respondent-intro localizations, invitations, run evidence, and aggregate analyses. Use when a company admin asks to view, create, edit, publish, distribute, or analyze Popscale interviews.
+description: Inspect and administer company-scoped Popscale interview Studies through the authenticated Product MCP. Use for authorized users, including delegated Study readers and editors, requesting Study inspection, creation, editing, publication, invitations, run evidence, or aggregate analysis. Live tool authority governs each operation.
 ---
 
 # Safe Interview Administration
