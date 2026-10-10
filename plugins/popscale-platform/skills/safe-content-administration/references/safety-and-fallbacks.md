@@ -7,16 +7,7 @@ context, not authority. Stop if `current_user` returns a different company or an
 effective role other than active `company_admin`. This applies equally when a
 Popscale superuser is acting for a customer company.
 
-For a company mismatch, explain the active company and ask for explicit
-confirmation immediately before creating a switch link. Only after confirmation,
-call `request_company_switch` with the grant ID from the latest `current_user`
-result as `current_grant_id` and `confirm_switch=true`. Never send a target
-company or membership identifier. Present the returned `switch_url`; the user
-signs in to the same Popscale account, selects the membership, and confirms in
-the browser. Then verify the company with `current_user` through the same MCP
-connection before resuming. Treat `replay_ignored=true` as a safe no-op, require
-new confirmation before replacing an expired or used link, and do not claim
-reauthorization or token rotation when `reauthentication_required=false`.
+Apply [channel policy](../../route-popscale-requests/references/channel-permissions.md) to company switching.
 
 ## Stale revisions
 
@@ -84,10 +75,3 @@ leave warnings, stale translations, or unpublished draft content.
 Preserve `has_more`, `next_before_id`, offsets, truncation, and `available=false`.
 Do not concatenate beyond server bounds, reconstruct omitted history, or treat
 an unavailable history/freshness surface as empty proof.
-
-## Missing tool or scope
-
-Respect `_meta["mcp/www_authenticate"]` and the server's missing scope list.
-Ask the user to reconnect or reauthorize `popscale-platform`. Do not use the
-public Docs MCP, generic HTTP, copied tokens, admin UI scraping, or a different
-tenant as a fallback.

@@ -17,18 +17,21 @@ Use current app-visible names for exercises, Journeys and Studies in user-facing
 answers, lists and confirmations. Apply the shared [content naming rules](../route-popscale-requests/references/content-names.md)
 for Journey context, duplicate names and internal identifiers.
 
+Read [channel permissions and recovery](../route-popscale-requests/references/channel-permissions.md)
+before proceeding.
+
 ## Required Workflow
 
-1. Call `current_user`, then `capabilities`. Confirm the authenticated company is
-   the intended company, the user is an active `company_admin`, the `interviews`
-   feature is available, and the required Interview scopes are granted. Never
-   accept a company name or ID from the prompt as authorization.
-   `capabilities` lists every tool, including ones that cannot be called; the
-   `available` flag decides. `available: false` with a missing
-   `required_features` entry means Studies is not enabled for this company and
-   Popscale enables it; a missing `required_scopes` entry means the grant needs
-   widening. Say so once and stop; do not search for the tool again, use a
-   generic tool instead, or drive a browser around it.
+1. Call `current_user`, then `capabilities`. Confirm an active authorized human
+   membership in the intended company, the channel's operations group, the
+   `interviews` feature, and the required Interview consent. CompanyAdmin is not
+   required when the server delegates this operation. `studies.read` or
+   `studies.edit` permits the supported inspection/analysis tools; authoring,
+   invitation/distribution, publication and recommendation status updates require
+   `studies.edit`. Analysis generation/retry can be available to a Study reader
+   with `interview:write` consent, but that scope does not authorize editing.
+   Inspect the live tool's `available` flag or host allowlist, not the role label.
+   Never accept a company name or ID from the prompt as authorization.
 2. Read current state before changing it. Start with
    `list_interview_studies` or `get_interview_study`; use the returned current
    published snapshot, current editable draft, publish readiness, and edit token.
@@ -94,6 +97,8 @@ for Journey context, duplicate names and internal identifiers.
 
 ## Scope Boundaries
 
+Scopes describe consent, not native rights.
+
 - `interview:read`: bounded Study, invite-summary, run, transcript, readiness,
   and analysis reads.
 - `interview:write`: Study/draft/topic/localization mutations, localization and
@@ -101,10 +106,6 @@ for Journey context, duplicate names and internal identifiers.
 - `interview:distribute`: individual invite/respondent-link access, invitation
   creation, email/reminders, revoke, and expire.
 - `publish:write`: additionally required for Interview Study publication.
-
-Existing OAuth grants are not widened automatically. If a required scope is
-missing, stop and ask the user to reconnect or reauthorize `popscale-platform`;
-do not request or paste a bearer token.
 
 ## Safety Rules
 
@@ -125,8 +126,8 @@ do not request or paste a bearer token.
   batches rather than bypassing validation.
 - Treat masked or omitted respondent data as intentionally unavailable. Never
   infer it from labels, evidence, or adjacent results.
-- If a tool is unavailable (`available: false`), report the missing feature or
-  scope once. Do not search for it again, use a generic REST request, public
+- If a tool is unavailable (`available: false`), follow channel recovery. Do not
+  search for it again, use a generic REST request, public
   documentation, a browser, or another tenant as a fallback.
 
 Read [tool-workflow.md](references/tool-workflow.md) for exact tool order and

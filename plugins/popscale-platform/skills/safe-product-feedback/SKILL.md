@@ -5,6 +5,9 @@ description: Submit Popscale bugs, ideas and improvements, read own feedback, or
 
 # Safe Product Feedback
 
+Read [channel permissions and recovery](../route-popscale-requests/references/channel-permissions.md)
+before proceeding.
+
 Use authenticated `popscale-platform`; check `current_user`, `capabilities` and company. Never send context to Docs or evade denial; missing tools do not mean an empty queue. Read [ProductAction](../route-popscale-requests/references/product-actions.md) before writes, [platform review](references/platform-review.md) for privileged work and [navigation/activity](../route-popscale-requests/references/navigation-and-activity.md) for destinations/progress.
 
 Classify `general`, `bug`, `improvement` or `idea`. Get title (≤200 characters), text (≤5,000) and attempted/expected/observed bug behavior when known. Clarify vague reports. `submit_feedback` requires optional `admin:write`, `kind`, `title`, `text`, `share_context:false` and stable UUID `command_id`. Server derives company/actor/source/status and first-party conversation IDs. On uncertain response inspect `product_action_get` and retry exact arguments/ID; never duplicate.

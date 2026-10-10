@@ -1,6 +1,9 @@
 # Product action contract
 
-Read the live `capabilities` and tool schemas before a mutation. Under
+Read [channel permissions and recovery](channel-permissions.md), the live
+`capabilities` and tool schemas before a mutation. Documentation-only access
+never authorizes generic action tools, and channel operations access alone never
+authorizes a native target. Revocation invalidates old previews and approvals. Under
 `popscale.product.actions.v1`, mutation tools require a stable UUID `command_id`
 for one exact intent. Reuse it only for the identical payload after a transport
 retry; a changed target, input or scope is a new intent. Never generate another

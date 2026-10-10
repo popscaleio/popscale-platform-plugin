@@ -17,6 +17,10 @@ Use current app-visible names for exercises, Journeys and Studies in user-facing
 answers, lists and confirmations. Apply the shared [content naming rules](references/content-names.md)
 for Journey context, duplicate names and internal identifiers.
 
+Read [channel permissions and recovery](references/channel-permissions.md)
+before proceeding. Built-in hosts follow its server-owned Docs and company-switch
+boundaries instead of the external connection steps below.
+
 ## Route the Request
 
 1. Classify each part of the request:
@@ -80,9 +84,10 @@ for Journey context, duplicate names and internal identifiers.
   miss means no matching title/text, not that the company has no approved,
   active, generation-eligible source. Inspect eligibility in the list before
   claiming that no source exists; report relevant-source gaps separately.
-- A tool that `capabilities` marks `available: false` is not callable. Say
-  which feature or scope is missing, once. Do not search for the tool again,
-  substitute a generic tool, or drive a browser to work around it.
+- A tool that `capabilities` marks `available: false` is not callable. Use
+  channel recovery to distinguish feature, consent, authority and host-profile
+  limits. Explain only the cause supported by the result, once. Do not search
+  for the tool again, substitute a generic tool, or drive a browser to work around it.
 - While a generation request is running, poll with a growing interval and
   report only when the status changes. Do not narrate every read.
 

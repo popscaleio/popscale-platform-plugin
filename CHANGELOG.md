@@ -4,6 +4,15 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+- Separate external MCP and built-in assistant channel permissions from native
+  rights and OAuth consent; document documentation-only and delegated access.
+- Follow live Studies read/edit authority rather than a blanket CompanyAdmin
+  gate, preserving invitation, publication, pricing and human-review boundaries.
+- Diagnose missing consent, permission revocation, feature and profile limits
+  separately; reconnect cannot grant native or channel powers.
+- Add package policy regressions and synthetic host acceptance scenarios for
+  docs-only, delegated Studies, scoped people reads and revoked access.
+
 ## [1.6.8] - 2026-10-01
 
 - Start company activity analysis with the new privacy-preserving summary tool;

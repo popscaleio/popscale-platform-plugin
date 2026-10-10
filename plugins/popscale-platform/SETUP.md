@@ -66,8 +66,23 @@ The first `popscale-platform` use opens Popscale authorization:
 2. Select the intended company and approve the requested scopes.
 3. After redirecting to the host, call `current_user` and `capabilities`.
 4. Confirm the returned company is the company the user intended to use.
-5. If authorization is unavailable, ask a Popscale company admin to enable the
-   company feature and the user's MCP access.
+5. Verify the channel and native rights, not a CompanyAdmin role label. External
+   access requires the company `mcp_access` feature, membership MCP switch and
+   `mcp.external.use` plus the requested docs/operations group. CompanyAdmin keeps
+   established access; other active human memberships need explicitly assigned
+   permissions. An operations group does not grant native product authority.
+6. Request only scopes available for the task. Documentation-only users can
+   consent to optional `docs:read`; do not request every operational scope.
+   Native `studies.read`/`studies.edit` permits the supported Study tools and
+   `people.read` permits bounded people reads within allowed units. Study editing,
+   invitations, publication and recommendation status updates require
+   `studies.edit`; Journey/content authoring and usage insights retain CompanyAdmin.
+
+Read [channel permissions and recovery](skills/route-popscale-requests/references/channel-permissions.md)
+for consent versus authority failures. The built-in assistant separately uses
+`assistant.use` plus docs/operations groups and `admin_assistant`, independently
+of the external MCP switch. It has no external OAuth reconnect or company-switch
+workflow. Public `popscale-docs` remains unauthenticated and read-only.
 
 ## Switch the active company
 
@@ -95,9 +110,11 @@ Interview administration uses the dedicated `interview:read`,
 `interview:write`, and `interview:distribute` scopes. Publishing an Interview
 Study also requires `publish:write`. Existing OAuth grants are not silently
 widened after a plugin or server update. Reconnect `popscale-platform`, review
-the consent page, and approve only the scopes needed for the requested work. A
-read-only user can list PII-safe invitation summaries, but individual respondent
-links require both `interview:read` and `interview:distribute`.
+the consent page, and approve only the scopes needed for the requested work. An
+OAuth read-only CompanyAdmin may list PII-safe invitation summaries, but a
+delegated Study reader has no invitation-list access. Invitation operations
+require native `studies.edit`; individual respondent links also require both
+`interview:read` and `interview:distribute`.
 
 Granular company-content reads use `content:read`. Creating or editing roots and
 stable-ID components additionally requires `content:write`; supported
@@ -149,22 +166,29 @@ OAuth session or customer data.
   configuration contains only `type` and `url`.
 - If a docs page is missing, run `get_docs_overview` or `search_docs` before
   `get_pages`; do not invent or guess a path.
-- If product tools return an authorization challenge, reconnect
-  `popscale-platform`; do not copy its credentials to `popscale-docs`.
+- For an explicit authentication/consent challenge, reconnect the external
+  `popscale-platform` connection with only the required available scopes. For
+  channel/group/native denial, ask an authorized administrator to review access;
+  disabled company features require their feature owner. If the reason is unknown
+  or the host profile excludes the tool, report that limitation rather than
+  assuming reconnect will help. Never copy credentials to `popscale-docs`.
 - If the wrong company is active, use the confirmed `request_company_switch`
   flow above instead of reconnecting. Never pass the intended company as a tool
   input; select it only in Popscale's authenticated browser and verify it with
   `current_user` on the same connection.
-- If Interview tools or respondent-link access are missing after an update,
-  reconnect `popscale-platform` and review the dedicated Interview scopes. Do
+- If Interview tools or respondent-link access are missing, check native
+  `studies.read`/`studies.edit` and channel operations authority first. Reconnect
+  only when the server identifies missing dedicated Interview consent. Do
   not paste a bearer token or treat `interview:read` as distribution authority.
 - If content search, focused editing, generation, or activation is unavailable,
-  reconnect `popscale-platform` and review `content:read`, `content:write`,
-  `generation:read`, `generation:write`, and `publish:write` as appropriate. Do
+  retain its CompanyAdmin/native authority requirement. If authority is present
+  and only OAuth consent is missing, reconnect and review `content:read`,
+  `content:write`, `generation:read`, `generation:write`, and `publish:write`. Do
   not broaden a grant beyond the requested operation or queue generation that
   the grant cannot monitor.
-- If usage insights are unavailable, reconnect `popscale-platform` and approve
-  `usage:read`. Do not use a write scope, public Docs, generic REST, or member
+- If usage insights are unavailable, check its CompanyAdmin/native authority
+  first; reconnect for `usage:read` only when that consent is missing. Do not use
+  a write scope, public Docs, generic REST, or member
   enumeration to substitute for the missing analytics capability. For a
   title-only request, approve optional `content:read` or provide a Product
   MCP-returned ID/link.
