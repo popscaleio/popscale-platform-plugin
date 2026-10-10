@@ -6,9 +6,24 @@ Public documentation has no account prerequisite. Authenticated product use
 requires all of the following:
 
 1. The company has the `mcp_access` feature enabled.
-2. The user is active and has MCP access enabled.
-3. The user's role grants the requested product scopes.
+2. The human membership is active and has MCP access enabled.
+3. CompanyAdmin retains established access; other users need `mcp.external.use`
+   plus `mcp.external.docs` and/or `mcp.external.operations`. Native rights and
+   available OAuth consent must also permit the specific operation.
 4. The user selects and approves the intended company during OAuth.
+
+Documentation-only Product MCP access uses optional `docs:read`; it does not
+expose private company data or actions. Public `popscale-docs` needs no permission
+or consent. The built-in assistant independently requires `assistant.use` plus
+its docs/operations groups and `admin_assistant`; external MCP switches and
+reconnects are unrelated to its access.
+
+Supported delegated operations are Studies inspection/analysis with
+`studies.read` or `studies.edit`, Study editing/invitations/publication and
+recommendation updates with `studies.edit`, and people reads within the units
+covered by `people.read`. An operations group or an OAuth scope grants none of
+these native rights. Other operations retain CompanyAdmin/domain restrictions.
+See the [shared channel recovery policy](../plugins/popscale-platform/skills/route-popscale-requests/references/channel-permissions.md).
 
 Interview administration also requires the company `interviews` feature and the
 dedicated scopes appropriate to the task: `interview:read`, `interview:write`,
@@ -187,17 +202,20 @@ session should be reused without a new login unless it was revoked or expired.
   verify it with `current_user` through the same MCP connection. Never pass the
   target company to the tool. If `replay_ignored=true`, refresh `current_user`;
   if the link expired or was used, confirm again before creating another.
-- **Interview tools or links are unavailable:** reconnect the product connector
-  and review `interview:read`, `interview:write`, and
-  `interview:distribute`. Do not manually paste tokens or assume a read scope
+- **Interview tools or links are unavailable:** verify native Study read/edit
+  and channel authority first. Reconnect only for server-identified missing
+  `interview:read`, `interview:write`, or `interview:distribute` consent. Do not
+  manually paste tokens or assume a read scope
   authorizes respondent-link access.
-- **Content tools are unavailable:** reconnect the product connector and review
-  `content:read`, `content:write`, `generation:read`, `generation:write`, and
-  `publish:write` for the requested operation. Do not paste tokens, guess a
+- **Content tools are unavailable:** retain CompanyAdmin/native authority;
+  reconnect only for missing `content:read`, `content:write`, `generation:read`,
+  `generation:write`, or `publish:write` consent for the requested operation. Do
+  not paste tokens, guess a
   company ID, queue generation that cannot be monitored, or treat a read grant
   as mutation authority.
-- **Usage insights are unavailable:** reconnect the product connector and
-  approve `usage:read`. Do not substitute Journey/content write scopes, public
+- **Usage insights are unavailable:** check CompanyAdmin/native authority;
+  reconnect for `usage:read` only if that consent is missing. Do not
+  substitute Journey/content write scopes, public
   Docs, generic REST, UI scraping, or broad member enumeration. If only
   title-based discovery fails, provide a Product MCP-returned ID/link or approve
   optional `content:read` for `search_company_content`.

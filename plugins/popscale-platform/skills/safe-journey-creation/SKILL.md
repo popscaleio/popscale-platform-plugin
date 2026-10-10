@@ -16,6 +16,9 @@ Use current app-visible names for exercises, Journeys and Studies in user-facing
 answers, lists and confirmations. Apply the shared [content naming rules](../route-popscale-requests/references/content-names.md)
 for Journey context, duplicate names and internal identifiers.
 
+Read [channel permissions and recovery](../route-popscale-requests/references/channel-permissions.md)
+before proceeding.
+
 ## Required Workflow
 
 1. Call `current_user`, then `capabilities`.
@@ -211,12 +214,12 @@ verification pending until evidence reads finish.
 - Do not combine reads and writes into a generic or hidden operation.
 - Do not automatically execute, publish, activate, cancel, regenerate, archive,
   or overwrite merely because the user earlier asked to create a journey.
-- If scopes are missing, surface the server's required scopes and ask the user to
-  reauthorize or contact their Popscale admin.
 - Do not infer child-content activation authority from Journey scopes. Existing
   grants may need reauthorization for `content:read` before publication.
-- If a tool or App view is unavailable, use the structured tool fallback; do not
-  work around Popscale's authorization or validation layer.
+- If an App view is unavailable but its tool remains authorized, use the
+  structured result. An unavailable tool is a permission/feature/profile or
+  consent boundary, not an App rendering failure; do not substitute another tool
+  or work around Popscale's authorization or validation layer.
 - Never activate the journey until `journey_activation_readiness` confirms that
   execution finished and every linked content item is active.
 - Never set an item's `passing_score` yourself. The server computes it (60 % of

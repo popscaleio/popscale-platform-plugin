@@ -13,6 +13,9 @@ Use current app-visible names for exercises, Journeys and Studies in user-facing
 answers, lists and confirmations. Apply the shared [content naming rules](../route-popscale-requests/references/content-names.md)
 for Journey context, duplicate names and internal identifiers.
 
+Read [channel permissions and recovery](../route-popscale-requests/references/channel-permissions.md)
+before proceeding.
+
 ## Required Workflow
 
 1. Call `current_user`, then `capabilities`. Require an active effective
@@ -77,8 +80,7 @@ for Journey context, duplicate names and internal identifiers.
 
 ## Boundaries
 
-- `usage:read` is a dedicated read-only scope. Existing grants are not silently
-  widened; ask the user to reconnect or reauthorize when it is missing.
+- `usage:read` is read-only; follow shared channel recovery when unavailable.
 - The six analytics tools require only `usage:read`, but title-based catalog
   resolution uses `search_company_content` and therefore also requires
   `content:read`. Do not silently broaden the grant when an ID is already known.

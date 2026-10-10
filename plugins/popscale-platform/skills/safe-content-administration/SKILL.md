@@ -17,6 +17,9 @@ Use current app-visible names for exercises, Journeys and Studies in user-facing
 answers, lists and confirmations. Apply the shared [content naming rules](../route-popscale-requests/references/content-names.md)
 for Journey context, duplicate names and internal identifiers.
 
+Read [channel permissions and recovery](../route-popscale-requests/references/channel-permissions.md)
+before proceeding.
+
 ## Required Workflow
 
 1. Call `current_user`, then `capabilities`. Require an active effective
@@ -135,9 +138,6 @@ for Journey context, duplicate names and internal identifiers.
   targeted regeneration requires `content:write` and `generation:write`, while
   language generation additionally requires `content:read` and
   `generation:write`. Activation additionally requires `publish:write`.
-- Existing grants are not widened automatically. Surface the server's missing
-  scopes and ask the user to reconnect or reauthorize instead of requesting a
-  bearer token.
 - Never add a confirmation field that the live tool schema does not expose.
   `archive_company_content` uses `confirm_archive` and, when required by the
   server, `confirm_learner_impact`; it does not accept `confirm_active_edit`.

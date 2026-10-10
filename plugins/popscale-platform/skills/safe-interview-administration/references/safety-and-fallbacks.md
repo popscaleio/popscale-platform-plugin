@@ -2,31 +2,11 @@
 
 ## Authorization and company scope
 
-The OAuth session selects the company. A prompt-supplied company name or ID is
-context, not authority. If `current_user` returns another company, stop before
-further reads or writes. Explain the active company and ask for explicit
-confirmation immediately before creating a switch link. Only after confirmation,
-call `request_company_switch` with the latest `current_grant_id` and
-`confirm_switch=true`; never pass a target company or membership identifier.
-Present the returned `switch_url` and wait while the user signs in to the same
-Popscale account, selects the intended membership, and confirms in the browser.
-Then call `current_user` through the same MCP connection and verify the company
-before resuming. Treat `replay_ignored=true` as a safe no-op and require new
-confirmation before replacing an expired or used link. Do not claim token
-rotation or reauthorization when `reauthentication_required=false`.
+Apply [channel policy](../../route-popscale-requests/references/channel-permissions.md) to company switching.
 
-If a capability is unavailable or a result supplies an
-`_meta["mcp/www_authenticate"]` challenge, preserve the required scopes in the
-explanation and ask the user to reconnect or reauthorize. Never ask for a raw
-access token or respondent link token.
-
-## Feature disabled for the company
-
-The `interviews` feature is off by default per company, and Interview scopes
-are granted only to company admins. When `capabilities` shows the Interview
-tools with `available: false`, say which feature or scope is missing and who
-enables it. One check is enough; repeated tool searches, generic tools and
-browser automation are not fallbacks.
+The company needs `interviews` enabled. Study delegation follows live operation
+availability; an unavailable capability alone does not imply missing consent.
+Never ask for raw access or respondent tokens.
 
 ## Silently dropped generation fields
 

@@ -1,6 +1,24 @@
 # V1 implementation tracker
 
-Last updated: 2026-10-01
+Last updated: 2026-10-10
+
+## MCP channel permissions — unreleased
+
+- [x] Reviewed backend PR #528 staging contract at
+      `776c449a9b6f14e73a7237666e3d4d0319809e1c`.
+- [x] Shared channel/native/consent recovery policy reachable from all six skills;
+      delegated Studies workflow, docs-only and bounded people rules documented.
+- [x] Existing CompanyAdmin authoring/analytics, approval, billing, company and
+      public/private Docs boundaries preserved. Endpoints/tool names unchanged.
+- [x] Added package/instruction regressions and host acceptance scenarios.
+- [x] Study skill discovery includes delegated readers/editors, with a metadata
+      regression; each operation still requires live tool authority.
+- [x] All 94 unit tests, release validator, public Docs MCP smoke and diff check
+      pass locally; these do not verify delegated live host behavior.
+- [ ] Clean Codex/Claude and built-in behavioral acceptance with delegated actors.
+- [ ] Confirm compatible backend in the release target before publication.
+- [ ] Review, select the next patch version, tag and publish separately. Current
+      manifests remain at 1.6.8; this PR does not release or refresh runtime profiles.
 
 ## Company activity and standalone draft delivery — 1.6.8
 

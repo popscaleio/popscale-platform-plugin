@@ -38,6 +38,23 @@ Then perform read-only OAuth smoke tests in clean Codex and Claude installations
 - host restart and credential persistence;
 - no write or mutation unless separately approved in a dedicated test company.
 
+## Channel-permission candidate — unreleased
+
+This candidate keeps version 1.6.8, endpoints, manifest capabilities and tool
+contract metadata unchanged until review. Backend PR #528 defines the required
+channel/Docs/delegation/revocation policy. Verify that compatible backend policy
+is deployed in the intended release environment before selecting a patch version
+or publishing. Staging verification does not prove production compatibility.
+
+Run [channel host acceptance](evaluation/channel-permissions.md) in clean Codex,
+Claude and built-in sessions with approved test actors. Package tests prove
+instruction/dependency integrity, not runtime authorization or host behavior.
+Upon a separately authorized release, regenerate checksummed public skill assets;
+the built-in consumer must use a verified compatible published bundle. Existing
+conversations retain their pinned snapshot; start a new conversation to adopt
+new policy. Do not refresh from unreviewed branch assets. No release, tag,
+production install or consumer refresh is authorized by this implementation PR.
+
 ## Publish
 
 1. Open a PR and require the package validation check.

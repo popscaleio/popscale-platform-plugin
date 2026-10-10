@@ -38,7 +38,16 @@ still reject unauthorized scopes, roles, memberships, and companies server-side.
 
 - PKCE and exact redirect binding for OAuth authorization-code flows.
 - No static customer credential in the repository or MCP configuration.
-- Product grants remain company-scoped and revocable.
+- Product grants remain company-scoped and revocable. External MCP and the
+  built-in assistant have independent activation and docs/operations groups.
+  Channel groups, OAuth consent and native authority must all allow the operation;
+  none substitutes for another. Documentation-only `docs:read` grants no company
+  data or generic action access. Public Docs remains independently unauthenticated.
+- Delegation is operation-local: native Study read/edit and unit-scoped people
+  rights open only their allowed tools. Journey/content authoring, usage insights
+  and other admin domains retain CompanyAdmin restrictions. Revocation stops
+  affected reads, preparations, executions and old-result replay; plugin text is
+  never permission or evidence that an earlier approval remains valid.
 - Company switching preserves the active OAuth connection and requires two
   explicit boundaries: confirmation before `request_company_switch` creates a
   short-lived link, then authenticated membership selection and confirmation in

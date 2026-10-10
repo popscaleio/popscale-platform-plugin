@@ -98,8 +98,29 @@ Public documentation requires only network access to `https://docs.popscale.io`.
 Authenticated product work additionally requires:
 
 1. The customer's company has the `mcp_access` feature enabled.
-2. The user is an active `company_admin` and has MCP access enabled.
-3. The user completes Popscale OAuth and selects the intended company.
+2. The user has an active authorized human membership with MCP access enabled.
+   CompanyAdmin keeps established access; other users need explicit
+   `mcp.external.use` plus `mcp.external.docs` and/or `mcp.external.operations`.
+3. The user completes Popscale OAuth, selects the intended company and consents
+   only to scopes available for their requested work.
+
+Channel permissions do not grant system authority. Delegated Studies inspection
+and analysis requires `studies.read` or `studies.edit`; authoring, invitations,
+publication and recommendation status updates require `studies.edit`. Delegated
+people reads require `people.read` within permitted units. Journey/content
+creation, learning usage insights and other admin operations retain CompanyAdmin
+and domain restrictions. Runtime `capabilities` determines the exact tools.
+
+Documentation-only Product MCP consent uses optional `docs:read`; it grants no
+company data or ProductAction access. Existing CompanyAdmin `admin:read` grants
+can still read documentation, but the alias does not work in reverse. The public
+`popscale-docs` connection needs no channel permission or OAuth.
+
+The built-in assistant has independent `assistant.use`, `assistant.docs` and
+`assistant.operations` permissions and the `admin_assistant` feature. Turning
+off external MCP access does not turn off an otherwise authorized assistant.
+Both hosts consume the same public skill policy; neither inherits powers from
+it. See [channel permissions and recovery](skills/route-popscale-requests/references/channel-permissions.md).
 
 If the active company later needs to change, the agent can keep the same MCP
 connection. After explicit confirmation it calls `request_company_switch` with
@@ -125,8 +146,10 @@ require `content:write`. Supported generation also requires `generation:read`
 for voice/status reads and `generation:write` to queue work; activation
 additionally requires `publish:write`.
 Existing grants are not silently widened after these scopes become available.
-Reconnect and review consent before using a missing capability. Protected
-mutations use the latest root `revision` as `expected_revision`; active
+Reconnect and review consent only for missing OAuth scopes. Missing channel,
+group or native permission requires an authorized administrator; reconnect cannot
+grant it. Disabled features and host-profile limits have separate recovery.
+Protected mutations use the latest root `revision` as `expected_revision`; active
 field/component edits use `confirm_active_edit` only when the live schema
 exposes it. Archive uses separate archive and learner-impact confirmations.
 
