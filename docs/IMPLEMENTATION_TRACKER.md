@@ -1,6 +1,43 @@
 # V1 implementation tracker
 
-Last updated: 2026-10-01
+Last updated: 2026-10-17
+
+## Compact Studies data and private criteria — Unreleased candidate
+
+- [x] Prepare an exported review proposal against public main
+  `d42f163d2bc26286f315753b10f22f723d9a51dd`, retaining published version 1.6.8.
+- [x] Separate compact-profile analysis from broad Company Admin administration;
+  preserve all administration tool names and safety boundaries. Keep Journey and
+  `.mcp.json` unchanged and the runtime bundle within its existing word limit.
+- [x] Add the exact twelve names, reachable compact reference and package/eval
+  contracts; retain Product Actions v1 and public bundle v1.
+- [x] Apply the explicitly authorized 15-file proposal on a separate branch from
+  fresh main. Preserve the existing channel-permission PR #41 and its checkout;
+  overlapping guidance must be reconciled before merging either candidate.
+- [x] Validate the real branch: all 89 package tests, release validator, live
+  public Docs smoke, changed local links and whitespace checks pass. Statically
+  compare the exact twelve added tool names with backend P3b2/P0; manifests,
+  MCP configuration and Journey files remain unchanged. A proportional read-only
+  review found no actionable workflow regression; no formal native review or
+  product/host calls were needed. The candidate PR records clean committed
+  bundle provenance/checksums. The tool contract depends on backend P3b2
+  (backend PR #564); target deployment is a separate verification gate.
+- [x] Review/apply the separate P4a2 proposal adding exactly three private
+  criteria operations: list/get with R, save with R+W and the sixth action
+  envelope. Preserve consent 1 R10/RW12; package 2 R12/RW15 requires server
+  activation and new explicit consent. Default issuance remains 1. Save remains
+  private/draft/non-AI, without quality approval/classification/publication.
+  Compare with backend application commit `f6139ba2` (P4a2, atop PR #565),
+  including the frozen-package scope-challenge compatibility fix. All 91 package
+  tests, release validator, live public Docs smoke and whitespace checks passed
+  after applying the real 13-file update. A clean committed bundle is built and
+  recorded by the PR handoff; no target deployment or activation is claimed.
+- [ ] Verify target-environment deployment, explicit profile consent, actual
+  private credential-preserving host adapter and clean host behavior. No current
+  production availability, Codex desktop D08 or P3b3 platform support is claimed.
+- [ ] Separately approve version selection, merge/publication and release assets.
+  This implementation PR changes source only; published version 1.6.8, host
+  manifests, marketplaces and MCP configuration remain unchanged.
 
 ## Company activity and standalone draft delivery — 1.6.8
 

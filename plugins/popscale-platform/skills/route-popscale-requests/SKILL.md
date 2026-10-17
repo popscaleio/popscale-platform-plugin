@@ -33,7 +33,9 @@ for Journey context, duplicate names and internal identifiers.
 4. For an authenticated action, follow the relevant product workflow. Use
    `safe-journey-creation` for journey creation, execution, or publication. Use
    `safe-interview-administration` for Interview Study authoring, precise
-   question edits, invitations, respondent links, run review, or analysis. Use
+   question edits, invitations, respondent links, run review, or analysis.
+   Saved-data analysis and private criteria versions follow its compact branch;
+   neither authorizes Study administration or Journey creation. Use
    `safe-content-administration` to find, create, inspect, or granularly edit
    roleplays, coaching sessions, challenges, episodes, flashcards, or existing
    Journey sections/items, including complete structure changes on an enrolled

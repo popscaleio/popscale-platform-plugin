@@ -2,78 +2,44 @@
 
 ## Authorization and company scope
 
-The OAuth session selects the company. A prompt-supplied company name or ID is
-context, not authority. If `current_user` returns another company, stop before
-further reads or writes. Explain the active company and ask for explicit
-confirmation immediately before creating a switch link. Only after confirmation,
-call `request_company_switch` with the latest `current_grant_id` and
-`confirm_switch=true`; never pass a target company or membership identifier.
-Present the returned `switch_url` and wait while the user signs in to the same
-Popscale account, selects the intended membership, and confirms in the browser.
-Then call `current_user` through the same MCP connection and verify the company
-before resuming. Treat `replay_ignored=true` as a safe no-op and require new
-confirmation before replacing an expired or used link. Do not claim token
-rotation or reauthorization when `reauthentication_required=false`.
+The OAuth-selected company is authority, never a prompt company ID. On mismatch,
+stop reads/writes. Follow the routing skill's company-switch boundary: explicit
+confirmation, `request_company_switch(current_grant_id, confirm_switch=true)`,
+then authenticated browser selection/confirmation and fresh `current_user` on
+the same MCP connection. No target identifiers in tool inputs. Respect
+`replay_ignored=true`; replacing expired/used links needs new confirmation.
+Do not claim token rotation when `reauthentication_required=false`.
 
-If a capability is unavailable or a result supplies an
-`_meta["mcp/www_authenticate"]` challenge, preserve the required scopes in the
-explanation and ask the user to reconnect or reauthorize. Never ask for a raw
-access token or respondent link token.
+Unavailable tools or `_meta["mcp/www_authenticate"]` challenges require the
+stated feature/right or reauthorization, never raw bearer material. Broad
+administration requires Company Admin and its dedicated scopes; compact analysis
+uses [compact-analysis.md](compact-analysis.md) and separate current rights.
+One capability check suffices; generic tools/UI/public Docs are not bypasses.
 
-## Feature disabled for the company
+## Administration conflicts and privacy
 
-The `interviews` feature is off by default per company, and Interview scopes
-are granted only to company admins. When `capabilities` shows the Interview
-tools with `available: false`, say which feature or scope is missing and who
-enables it. One check is enough; repeated tool searches, generic tools and
-browser automation are not fallbacks.
+Only mutate the returned current editable draft. Pass current timestamps;
+refresh after child edits. On `edit_conflict`, use `current_updated_at`, preserve
+others' changes and ask again if the intended effect materially changes. Never
+recover a missing old draft by guessing IDs.
 
-## Silently dropped generation fields
+Invitation summaries omit contacts and reusable links; detail/distribution need
+their own rights. Preserve masking/anonymous identity boundaries and never infer
+identity from adjacent evidence. Repeat links only for the requested task.
+Transcripts/analyses are private; keep attribution and send nothing to public
+Docs. Compact rich saved data has its own strict projection, not a new PII
+content filter or a promise that every permitted value is anonymized.
 
-The Study generation input drops unknown fields without error. A request
-created with `questions` instead of `must_include` succeeds with an empty
-requirement list. Read the request back and show the normalized input before
-starting; cancel and recreate if a requirement is missing.
+## Bounded asynchronous work
 
-## Optimistic concurrency
+Preserve legacy truncation/provenance markers; bounded pages are not exhaustive.
+For localization/aggregate generation inspect durable jobs and persisted output.
+Retry only a server-designated retryable failure after the user requests or
+confirms it. Unknown Study-generation input fields can be dropped; read back
+before start. Compact inputs reject extras and dataset retries keep identity.
 
-Study, draft, and topic edits use server-returned timestamps as edit tokens; a
-topic's token is its own `updated_at`, not the draft's. On an `edit_conflict`,
-use the returned `current_updated_at`, refresh Study detail and compare the
-current focused field with the user's requested change. Do not replay an old full object or overwrite
-unrelated concurrent edits. Ask for renewed confirmation if the refreshed state
-changes the consequence of the operation.
-
-Only the current editable draft returned by Study detail may be mutated. Treat a
-not-found response for an older draft as a safety boundary, not a reason to
-guess another version ID.
-
-## Respondent privacy
-
-List results intentionally omit contact PII and reusable links. Detail and
-delivery results may contain only masked values, while anonymous respondents
-return no identity or segmentation fragments. Preserve masking, do not combine
-adjacent evidence to identify a respondent, and do not repeat a respondent link
-unless the user explicitly needs it for the current distribution task.
-
-Transcripts and analyses are sensitive company data. Summarize only the portion
-needed for the user's request, retain evidence attribution, and never send this
-content to the public Docs MCP.
-
-## Bounded and asynchronous results
-
-Study history, runs, transcript turns, findings, evidence, recommendations, and
-provenance are bounded. Report truncation and page intentionally when more data
-is needed; never claim a bounded response is exhaustive.
-
-Localization and analysis generation may return durable asynchronous work.
-Report queued/running states accurately and use supported status reads. Retry
-only a server-designated retryable failure and only after the user requests or
-confirms that separate action.
-
-## Confirmation boundaries
-
-Ask for confirmation immediately before sending email/reminders or publishing a
-Study, after presenting the exact target and consequences. Creation, editing,
-generation, deletion, revoke, expire, retry, send, and publish are separate
-actions. Approval for one does not authorize another.
+Confirmation is action-specific: create/edit/generate/delete/revoke/expire/
+retry/send/publish are separate. Immediately confirm exact email/reminder or
+publication consequences. Server ProductAction approval remains authoritative.
+A compact file descriptor or completed action does not prove file installation,
+full-data computation or completed background work.
