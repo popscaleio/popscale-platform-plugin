@@ -1,82 +1,52 @@
 # Interview Tool Workflow Reference
 
-Discover the live catalog with `capabilities`. The names below describe the
-current Product MCP contract; server results and authorization remain
-authoritative.
+Live `capabilities` and schemas are authoritative. Compact saved-data analysis
+uses [compact-analysis.md](compact-analysis.md), not the administration route.
 
-## Identity and discovery
+## Administration discovery and authoring
 
-| Order | Tool | Purpose | Required scope |
-| --- | --- | --- | --- |
-| 1 | `current_user` | Verify identity, selected company, role, and granted scopes | Authenticated MCP session |
-| 2 | `capabilities` | Verify the Interviews feature and available operations | Authenticated MCP session |
-| 3 | `list_interview_studies` | Find a bounded Study summary | `interview:read` |
-| 4 | `get_interview_study` | Read current published state, current draft, edit tokens, and readiness | `interview:read` |
+After `current_user` / `capabilities`, use `list_interview_studies` and
+`get_interview_study` for current published state, editable draft and edit tokens.
+Authoring requires `interview:read` + `interview:write`:
 
-## Authoring
-
-Use `create_interview_study` only for a new Study. Use
-`ensure_interview_study_draft` to idempotently reuse or create the current draft.
-
-- `update_interview_study` changes non-versioned Study metadata.
-- `update_interview_draft` changes versioned purpose, description, intro,
-  closing, completion rules, action areas, change summary, or report language.
+- `create_interview_study` creates only a requested new Study;
+  `ensure_interview_study_draft` idempotently finds/creates its current draft.
+- `update_interview_study` changes non-versioned metadata;
+  `update_interview_draft` changes versioned content/report language.
 - `create_interview_topic`, `update_interview_topic`,
-  `delete_interview_topic`, and `reorder_interview_topics` make focused question
-  changes. Prefer append/remove/upsert operations for probes, must-cover points,
-  and extraction fields when the user did not ask to replace the whole list.
-- `upsert_interview_localization` and `delete_interview_localization` manage one
-  normalized locale. `generate_interview_localizations` queues durable
-  respondent-intro generation.
+  `delete_interview_topic`, `reorder_interview_topics` make focused topic changes.
+- `upsert_interview_localization`, `delete_interview_localization` affect the
+  current draft; `generate_interview_localizations` queues asynchronous work.
 
-These mutations require `interview:read` and `interview:write`. Use the latest
-returned `updated_at` as `expected_updated_at` where required: for a topic, the
-topic's own timestamp. A successful topic edit also advances the draft token
-without returning it, so refresh Study detail after every child mutation.
+Use exact latest `expected_updated_at` (topic timestamp for topic edits), then
+refresh Study detail after child changes. Study generation through
+`generation_request_create(request_type=interview_study)` takes required `name`,
+`purpose`, `context`, optional category/respondent/report language,
+`desired_duration_minutes` (5–240), and `must_include` (up to 30). Unknown fields
+are dropped: read `generation_request_detail` before start. Compact inputs
+instead reject unknown fields.
 
-`generation_request_create` with `request_type: interview_study` takes `name`,
-`purpose`, `context` (required), `interview_category`,
-`default_respondent_type`, `report_language`, `desired_duration_minutes`
-(5–240) and `must_include` (up to 30 question requirements). Unknown fields are
-dropped without error. Verify the stored input with
-`generation_request_detail` before starting.
+## Publication and distribution
 
-## Publication
+`get_interview_publish_readiness` precedes confirmed `publish_interview_study`:
+latest edit token, `confirm_publish=true`, read/write plus `publish:write`.
 
-Call `get_interview_publish_readiness`, then follow the skill's publication
-review and immediate confirmation gate.
-`publish_interview_study` requires the current edit token, `confirm_publish=true`,
-`interview:read`, `interview:write`, and `publish:write`; editing approval never
-authorizes publication.
+`list_interview_invites` returns summaries under `interview:read`.
+`get_interview_invite`, `create_interview_invite`,
+`create_interview_invites_bulk`, `send_interview_invite_email`,
+`revoke_interview_invite`, `expire_interview_invite` also need
+`interview:distribute`. Sending needs immediate confirmation, `confirm_send=true`
+and at most 500 explicit `invite_ids`. Summaries do not authorize link/contact
+reconstruction.
 
-## Invitations
+## Existing runs and aggregate analyses
 
-| Tool | Purpose | Required scope |
-| --- | --- | --- |
-| `list_interview_invites` | Read PII-minimized Study invitation summaries | `interview:read` |
-| `get_interview_invite` | Read one masked detail and reusable respondent link | `interview:read` + `interview:distribute` |
-| `create_interview_invite` | Create one invitation | `interview:read` + `interview:distribute` |
-| `create_interview_invites_bulk` | Create a validated invitation batch | `interview:read` + `interview:distribute` |
-| `send_interview_invite_email` | Send invitations or reminders after confirmation | `interview:read` + `interview:distribute` |
-| `revoke_interview_invite` | Revoke one invitation | `interview:read` + `interview:distribute` |
-| `expire_interview_invite` | Expire one invitation | `interview:read` + `interview:distribute` |
-
-`send_interview_invite_email` requires `confirm_send=true` and at most 500
-explicit `invite_ids`. Do not treat list output as a source of raw respondent
-contact data or reusable links.
-
-## Runs and analyses
-
-- `list_interview_runs` and `get_interview_run_review` provide bounded,
-  evidence-first run data. Page transcript turns using the returned cursor and
-  limits rather than requesting or concatenating an unbounded transcript.
-- `list_interview_analyses`, `preview_interview_analysis`, and
-  `get_interview_analysis` are reads under `interview:read`.
-- `generate_interview_analysis`, `retry_interview_analysis`,
-  `update_interview_run_action_status`, and
-  `update_interview_analysis_action_status` also require `interview:write`.
-
-Analysis generation and retry are explicit asynchronous mutations. Preserve
-truncation markers and the global provenance limits in summaries. Hidden
-metadata filter values, raw processing errors, and omitted respondent identity
-are not recoverable fields.
+`list_interview_runs`, `get_interview_run_review` provide bounded evidence;
+page transcript turns only using their returned cursors/limits.
+`list_interview_analyses`, `preview_interview_analysis`,
+`get_interview_analysis` use `interview:read`.
+`generate_interview_analysis`, `retry_interview_analysis`,
+`update_interview_run_action_status`, `update_interview_analysis_action_status`
+also require `interview:write`. Generation/retry are explicit asynchronous
+mutations. Preserve truncation/provenance bounds and omitted identity, filter
+values and raw errors. These tools never substitute for a compact dataset.

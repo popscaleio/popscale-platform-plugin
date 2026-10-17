@@ -147,3 +147,26 @@ never load arbitrary branch assets to bypass release verification. Record exact
 commit, validation commands/results and artifact hashes in the PR. Publishing,
 frontend integration, clean-host checks and backend deployment remain separate
 release gates; a packaged skill is not proof of end-to-end behavior.
+
+## Compact Studies candidate — no release version assigned
+
+The Unreleased compact workflow must be gated by actual deployed backend
+capabilities and explicit `studies_analysis_v1` consent. Before release, record
+the final backend source for the twelve additive tool names and coordinate any
+other unpublished plugin work. Keep both current MCP URLs and all existing
+Product Actions/public-bundle compatibility and size gates.
+
+This candidate applies the separately authorized proposal in a real branch from
+main; its P3b2 tool contract depends on backend PR #564. Run the ordinary package
+and release validators, live public Docs smoke and clean committed bundle build
+against this branch. Preserve the parallel channel-permission PR #41 and review
+any overlapping guidance before merge. Package checks do not replace the host
+evaluations above. Version 1.6.8 is retained as an Unreleased implementation
+candidate; choose/synchronize the next version only for a separately authorized
+release. No tag, publication, backend deployment or runtime adapter is included.
+
+File delivery requires a verified private credential-preserving host adapter;
+no bearer in chat/prompts/tool arguments/URLs. A descriptor or backend test is
+not full-file installation/computation. Record exact Codex desktop/macOS/local
+runtime versions and D08 evidence separately. Platform assistant remains
+unsupported until P3b3. Do not publish claims for either unverified path.

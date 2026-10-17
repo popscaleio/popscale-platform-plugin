@@ -4,6 +4,13 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+- Candidate compact Studies dataset workflow behind live analysis-profile
+  capabilities, with strict inputs, five action envelopes and stable job identity.
+  Preserve the broad administration branch and current MCP/Journey contracts.
+- Require verified private host-adapter support for protected file installation;
+  no Codex desktop D08, platform-agent P3b3 or production availability is claimed.
+  Add focused routing/evaluation/package coverage without changing release versions.
+
 ## [1.6.8] - 2026-10-01
 
 - Start company activity analysis with the new privacy-preserving summary tool;

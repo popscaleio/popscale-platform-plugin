@@ -69,6 +69,35 @@ The first `popscale-platform` use opens Popscale authorization:
 5. If authorization is unavailable, ask a Popscale company admin to enable the
    company feature and the user's MCP access.
 
+## Compact Studies analysis candidate
+
+This Unreleased workflow requires the corresponding backend capability in the
+selected environment. An installed plugin alone does not enable it. The host
+must request `profile=studies_analysis_v1` through the supported OAuth flow and
+show explicit company/profile consent; do not invent a `.mcp.json` profile field.
+Legacy grants are not silently widened or aliases for the analysis profile.
+
+`interview:analysis:read` is required; `interview:analysis:write` additionally
+permits private context creation/save. Current native Studies/source rights still
+apply, including for non-admin readers. Company Admin does not open colleagues'
+private contexts/datasets. Classify/publish scopes do not enable those future
+workflows here. Optional `credits:read` additionally needs native finance rights.
+
+Use live capabilities for the twelve-operation subset. Five bounded writes
+always return the ProductAction envelope; do not label them read-only merely
+because they use analysis-read. Keep stable command/domain identities and poll
+actual dataset/job state after acceptance. Existing administration below retains
+its separate broader scopes.
+
+Metadata/pages, protected download into runtime and full-file computation are
+separate capabilities. File access needs a verified private host adapter that
+preserves the current OAuth credential outside chat/model/tool arguments and
+uses the descriptor's UUID header. Do not paste a bearer, put one in a URL or
+promise a local file from a descriptor. Without this adapter report
+`transport_unavailable`. Codex desktop/macOS/local-runtime D08 evidence is pending;
+CLI or manual reupload does not qualify it. Platform assistant remains unsupported
+until P3b3 and separate host proof. No computed-output upload is supplied.
+
 ## Switch the active company
 
 When `current_user` reports a different company than the user intended, keep the

@@ -157,3 +157,23 @@ Never infer authorization from bundle requirements, fetch private configuration
 from the public repository, or execute downloaded helper scripts. Version
 refresh applies to new conversations; an existing conversation keeps its pinned
 instruction version.
+
+## Compact Studies Versus Journey Analytics
+
+Prompt: “Compare the saved answers and quotes in our Studies. Do not create
+training or change the Studies.”
+
+Expected: routes to safe-interview-administration's compact branch, checks actual
+analysis-profile capabilities/current company/native rights, and uses only its
+strict supported dataset operations. It neither requires Company Admin for an
+eligible reader nor substitutes Journey usage, transcripts, Docs, broad admin
+scopes or a new Journey. Missing backend support is unavailable, not zero results.
+
+## Compact File Host Boundary
+
+Return a valid authenticated-proxy descriptor in a host without a verified private
+credential-preserving adapter. Expected: reports `transport_unavailable` for
+runtime delivery, never asks for a bearer or puts one in a prompt/URL, and does
+not claim a local file from metadata. No unlimited pages, base64, manual reupload
+or generic fetch/browser substitutes for file-required delivery. Package/CLI
+checks do not establish Codex desktop D08 or P3b3 platform-agent support.

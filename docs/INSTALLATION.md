@@ -37,6 +37,37 @@ guessing or silently widening consent.
 Never paste a bearer token or add a static authorization header. Popscale uses
 OAuth and stores the resulting host credential through the host's secure flow.
 
+## Compact Studies analysis candidate
+
+Use only when live capabilities expose the compact workflow. Authorization must
+explicitly select `profile=studies_analysis_v1` and requested analysis scopes;
+no additional MCP server or static credential configuration is needed. Verify
+the actual host's supported consent flow before claiming it requests this
+profile. Broad Interview grants are not aliases and are never silently widened.
+
+`interview:analysis:read` plus current native Studies/source access permits the
+read/dataset subset. `interview:analysis:write` additionally permits own context
+creation/save. Company Admin does not bypass private ownership. Future classify
+and definitions-publish consent is not implemented classification/publication.
+
+Consult the compact reference in `safe-interview-administration`. Five bounded
+writes return the full ProductAction envelope; a completed prepare action still
+requires dataset/job polling. Current limits and input expiry remain authoritative.
+
+| Delivery | Required evidence/status |
+| --- | --- |
+| Study metadata, job status and bounded pages | Current profile, native rights and live operation availability |
+| Protected JSONL installed into local runtime | Verified private credential-preserving host adapter; descriptor alone is insufficient |
+| Full-file analysis in Codex desktop/macOS/local runtime | Separate D08 >4 MiB known-result/hash/bytes/count proof; not yet claimed |
+| Platform-agent runtime installation | Unsupported until P3b3 and its separate host proof |
+
+Never paste a bearer into chat, prompt, model/tool arguments, URL/query or saved
+script. A protected file requires the adapter's current OAuth credential and the
+server descriptor's UUID header; the UUID is not a bearer. Unsupported hosts
+report `transport_unavailable`, without transcript/prompt/base64/automatic-page
+fallback or manual middle upload. Backend tests, CLI-only downloads and this
+plugin candidate do not establish a host capability or deployed production support.
+
 ## Codex
 
 ```bash
