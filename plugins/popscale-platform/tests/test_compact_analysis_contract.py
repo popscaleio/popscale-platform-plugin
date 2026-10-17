@@ -12,7 +12,7 @@ SPEC = importlib.util.spec_from_file_location("compact_bundle_builder", ROOT / "
 builder = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(builder)
 
-# Reviewed P3b2 subset. W is independently required only for own context/save.
+# Reviewed P3b2 + P4a2 subset. W adds own context/dataset/criteria saving.
 OPERATIONS = {
     "get_interview_analysis_capabilities": ("R", "AnalysisCapabilities"),
     "list_interview_analysis_studies": ("R", "StudyList"),
@@ -26,6 +26,9 @@ OPERATIONS = {
     "get_interview_dataset_artifact": ("R", "envelope: ArtifactAccess"),
     "save_interview_dataset": ("R+W", "envelope: Dataset"),
     "cancel_interview_dataset_job": ("R", "envelope: DatasetJob"),
+    "list_interview_classification_definitions": ("R", "DefinitionList"),
+    "get_interview_classification_definition": ("R", "DefinitionVersion"),
+    "save_interview_classification_definition": ("R+W", "envelope: DefinitionVersion"),
 }
 
 
@@ -44,23 +47,26 @@ class CompactAnalysisContractTests(unittest.TestCase):
     def test_exact_operation_matrix_preserves_effects_and_minimal_write_scopes(self):
         text = (PLUGIN / REFERENCE).read_text()
         rows = re.findall(r"^\| `([a-z_]+)` \| (R(?:\+W)?) \| ([^|]+) \|$", text, re.M)
-        self.assertEqual(len(rows), 12)
+        self.assertEqual(len(rows), 15)
         self.assertEqual({name: (scope, result.strip()) for name, scope, result in rows}, OPERATIONS)
         actions = {name for name, (_, result) in OPERATIONS.items() if result.startswith("envelope:")}
-        self.assertEqual(len(actions), 5)
-        self.assertEqual(actions - {"create_interview_analysis", "save_interview_dataset"}, {
+        self.assertEqual(len(actions), 6)
+        self.assertEqual(actions - {"create_interview_analysis", "save_interview_dataset",
+                                    "save_interview_classification_definition"}, {
             "prepare_interview_dataset", "get_interview_dataset_artifact", "cancel_interview_dataset_job"})
         contract = json.loads((ROOT / "contracts/product-tools-v1.json").read_text())
         self.assertEqual(len(contract["product_tools"]), len(set(contract["product_tools"])))
         self.assertTrue(set(OPERATIONS).issubset(contract["product_tools"]))
         self.assertEqual(contract["tool_contract_version"], "popscale.product.actions.v1")
 
-    def test_all_twelve_tools_and_reference_reach_the_real_runtime_bundle(self):
+    def test_all_fifteen_tools_and_reference_reach_the_real_runtime_bundle(self):
         bundle = build()
         self.assertIn(REFERENCE, bundle["instruction_paths"])
         self.assertIn(REFERENCE, bundle["required_reference_paths"])
         self.assertTrue(set(OPERATIONS).issubset(bundle["required_tools"]))
-        self.assertNotIn("start_interview_classification", bundle["required_tools"])
+        for future in ("start_interview_classification", "publish_interview_classification_definition",
+                       "save_interview_classification_correction", "prepare_interview_classification"):
+            self.assertNotIn(future, bundle["required_tools"])
         self.assertFalse(any("docs/evaluation/" in path for path in bundle["instruction_paths"]))
         self.assertEqual(bundle["schema_version"], "popscale.public_skills.v1")
 
@@ -82,9 +88,30 @@ class CompactAnalysisContractTests(unittest.TestCase):
         self.assertIn("transport_unavailable", compact)
         self.assertIn("never a bearer in", (ROOT / "docs/evaluation/safe-interview-administration.md").read_text())
         self.assertIn("A skill cannot extract the host credential", compact)
-        self.assertIn("Five bounded writes always return `{product_action, action_url}`", compact)
+        self.assertIn("Six bounded writes always return `{product_action, action_url}`", compact)
         self.assertIn("result is `product_action.result`", compact)
         self.assertIn("`idempotency_key` and transport `command_id`", compact)
+
+
+    def test_private_criteria_workflow_preserves_exact_append_and_json_host_boundary(self):
+        text = (PLUGIN / REFERENCE).read_text()
+        criteria = text.split("## Own private criteria versions", 1)[1].split("## Private file delivery", 1)[0]
+        for field in ("`definition_id=null`", "`expected_family_revision`", "`predecessor_version_id`",
+                      "`change_reason`", "`command_id`", "`idempotency_key`", "`plan_stale`"):
+            self.assertIn(field, criteria)
+        self.assertIn("Criteria JSON does not require a file adapter", criteria)
+        self.assertIn("private draft, `recommended=false`", criteria)
+        self.assertIn("never overwrites history", criteria)
+        self.assertIn("no quality approval", criteria)
+
+    def test_consent_package_guidance_never_claims_upgrade_or_client_revision_selection(self):
+        text = (PLUGIN / REFERENCE).read_text()
+        consent = text.split("## Consent and scope limits", 1)[1]
+        for required in ("consent 1 retains R10/RW12", "consent 2", "R12/RW15",
+                         "until\nserver activation", "no client revision/config selector",
+                         "refresh, switch\nor plugin update never upgrades", "New grants inherit no old private handles"):
+            self.assertIn(required, consent)
+        self.assertIn("W permits own context/dataset/criteria saving, not classification/publication", consent)
 
 
 if __name__ == "__main__":

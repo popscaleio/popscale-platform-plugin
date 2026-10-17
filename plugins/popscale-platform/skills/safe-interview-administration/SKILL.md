@@ -1,6 +1,6 @@
 ---
 name: safe-interview-administration
-description: Inspect authorized company-scoped Popscale interview Studies and saved-data datasets, or administer Studies with the separate administration rights. Use for Studies analysis, precise question edits, respondent-intro localizations, invitations, run evidence, or aggregate analyses.
+description: Inspect authorized company-scoped Popscale interview Studies, saved-data datasets and private criteria versions, or administer Studies with the separate administration rights. Use for Studies analysis, precise question edits, respondent-intro localizations, invitations, run evidence, or aggregate analyses.
 ---
 
 # Safe Interview Administration
@@ -19,14 +19,14 @@ prompt company ID as authority. `available: false` is a boundary: report missing
 `required_features` or `required_scopes` once, then stop that operation. Do not
 search again, substitute generic REST or use a browser workaround.
 
-For saved-data analysis, use [compact-analysis.md](references/compact-analysis.md)
+For saved-data analysis or private criteria, use [compact-analysis.md](references/compact-analysis.md)
 only with the explicit analysis profile and its current native rights. This
 branch does not require Company Admin or authorize administration. Missing tools
 mean unavailable, not an empty dataset. Platform assistant support remains
 unsupported until its separate P3b3 implementation and host verification.
 
 For broad administration below, require active `company_admin` and the specific
-Interview scopes. Keep this branch separate from compact datasets.
+Interview scopes. Keep this branch separate from compact data/criteria.
 
 ## Administration workflow
 

@@ -182,7 +182,7 @@ explicit consent. A Company Admin still cannot open a colleague's private datase
 
 Use a strict valid selection, then an extra company/worker authority field.
 Expected: preserve the server's invalid request; do not assume the unknown field
-was silently dropped like legacy generation input. Five bounded writes always
+was silently dropped like legacy generation input. Six bounded writes always
 return `{product_action, action_url}` with domain output in `product_action.result`.
 After an uncertain prepare acknowledgement replay unchanged `command_id` and
 `idempotency_key`; do not create another job. Poll dataset/job after the original
@@ -212,3 +212,32 @@ switch. Expected: obey access loss, never transfer old private handles, widen
 consent or extend retention. An old in-flight bearer stops after refresh. Saving
 an own live READY input binds its exact revision and creation+30d; temporary input
 is creation+24h. Neither path uploads/saves computed analysis outputs.
+
+
+## Own Private Criteria and Immutable Append
+
+With actual consent 2 and eligible current Studies read authority, list private
+versions using cursor=null/returned cursors; get requires both definition_id and
+version_id. Save new criteria with definition_id=null or append with current
+expected_family_revision, explicit predecessor_version_id and nonempty
+change_reason. Exact live schemas remain authoritative. Expected: six writes
+use the full ProductAction envelope; save returns a private/draft,
+recommended=false immutable version, with no AI/debit/classification/publication
+or quality approval. R-only cannot save. A stale revision requires rereading;
+an uncertain acknowledgement replays the same command_id/idempotency_key.
+
+Try a colleague's version/cursor, another grant of the same member, native-origin
+handles, mismatched definition/version IDs and a confirmed company switch.
+Expected: respect private unavailable results without guessed IDs, leaked counts
+or silent imports; saving criteria grants no private evidence/result access.
+Criteria JSON remains usable without a file adapter; file-required datasets keep
+the existing adapter/D08 boundary.
+
+## Consent Packages and Fresh Authorization
+
+Repeat with C1 R10/RW12, server-activated C2 R12/RW15 and new authorization while
+server issuance still defaults to 1. Expected: use only the live stored ceiling;
+no client revision argument, old-grant upgrade, automatic reconnect or generic
+action bypass. A previously displayed C1 proposal remains C1 after server
+activation. Explicit consent cannot be inferred from a plugin update, refresh,
+company switch or native/classify/publish power.

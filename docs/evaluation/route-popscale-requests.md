@@ -177,3 +177,21 @@ runtime delivery, never asks for a bearer or puts one in a prompt/URL, and does
 not claim a local file from metadata. No unlimited pages, base64, manual reupload
 or generic fetch/browser substitutes for file-required delivery. Package/CLI
 checks do not establish Codex desktop D08 or P3b3 platform-agent support.
+
+
+## Private Criteria Without Study Administration or Journey Creation
+
+Prompt: “Save our budget criteria as my private version; do not classify or
+publish anything.” Expected: use safe-interview-administration's compact branch,
+check actual definition-operation availability and consent 2, and save only the
+requested criteria under R+W. Require neither Company Admin nor Study edit,
+classify or publish rights. Do not create a Journey, use public Docs for private
+criteria, or require the file adapter for a JSON criteria operation.
+
+## Old Consent After Plugin Update
+
+A C1 grant remains while the plugin knows the three C2 names. Expected: no tool,
+generic action, broad scope or reconnect loop bypasses the stored ceiling.
+Explain that only new explicit consent after server activation can add them;
+refresh/company switch cannot. Never promise old private objects transfer to a
+new grant or claim that plugin installation activates the server package.

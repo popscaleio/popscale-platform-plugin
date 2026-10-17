@@ -2,7 +2,7 @@
 
 Last updated: 2026-10-17
 
-## Compact Studies datasets — Unreleased candidate
+## Compact Studies data and private criteria — Unreleased candidate
 
 - [x] Prepare an exported review proposal against public main
   `d42f163d2bc26286f315753b10f22f723d9a51dd`, retaining published version 1.6.8.
@@ -22,6 +22,16 @@ Last updated: 2026-10-17
   product/host calls were needed. The candidate PR records clean committed
   bundle provenance/checksums. The tool contract depends on backend P3b2
   (backend PR #564); target deployment is a separate verification gate.
+- [x] Review/apply the separate P4a2 proposal adding exactly three private
+  criteria operations: list/get with R, save with R+W and the sixth action
+  envelope. Preserve consent 1 R10/RW12; package 2 R12/RW15 requires server
+  activation and new explicit consent. Default issuance remains 1. Save remains
+  private/draft/non-AI, without quality approval/classification/publication.
+  Compare with backend application commit `f6139ba2` (P4a2, atop PR #565),
+  including the frozen-package scope-challenge compatibility fix. All 91 package
+  tests, release validator, live public Docs smoke and whitespace checks passed
+  after applying the real 13-file update. A clean committed bundle is built and
+  recorded by the PR handoff; no target deployment or activation is claimed.
 - [ ] Verify target-environment deployment, explicit profile consent, actual
   private credential-preserving host adapter and clean host behavior. No current
   production availability, Codex desktop D08 or P3b3 platform support is claimed.

@@ -46,13 +46,20 @@ the actual host's supported consent flow before claiming it requests this
 profile. Broad Interview grants are not aliases and are never silently widened.
 
 `interview:analysis:read` plus current native Studies/source access permits the
-read/dataset subset. `interview:analysis:write` additionally permits own context
-creation/save. Company Admin does not bypass private ownership. Future classify
+read/dataset subset and, with consent 2, private criteria list/get.
+`interview:analysis:write` additionally permits own context/dataset/criteria saving.
+Company Admin does not bypass private ownership. Consent 1 retains R10/RW12;
+server-activated consent 2 permits R12/RW15. New authorizations remain on 1 by
+default until activation; clients cannot choose revisions. Explicit reauthorization
+is needed after activation; refresh/switch/plugin updates never upgrade old grants.
+New grants do not inherit old private objects. Future classify
 and definitions-publish consent is not implemented classification/publication.
 
-Consult the compact reference in `safe-interview-administration`. Five bounded
+Consult the compact reference in `safe-interview-administration`. Six bounded
 writes return the full ProductAction envelope; a completed prepare action still
-requires dataset/job polling. Current limits and input expiry remain authoritative.
+requires dataset/job polling. Criteria saving is private draft, non-AI and
+without quality approval or publication. It does not require a file adapter;
+current limits, ownership and input expiry remain authoritative.
 
 | Delivery | Required evidence/status |
 | --- | --- |

@@ -152,8 +152,14 @@ release gates; a packaged skill is not proof of end-to-end behavior.
 
 The Unreleased compact workflow must be gated by actual deployed backend
 capabilities and explicit `studies_analysis_v1` consent. Before release, record
-the final backend source for the twelve additive tool names and coordinate any
-other unpublished plugin work. Keep both current MCP URLs and all existing
+the final backend source for the twelve P3b2 and three P4a2 additive tool names,
+and coordinate other unpublished plugin work. Private criteria list/get/save
+require the compatible P4a2 backend (reviewed application source `f6139ba2`,
+atop backend PR #565) plus server activation and explicit consent
+2; deploying the plugin cannot activate it. Issuance defaults to consent 1 until
+the application fleet and SQL guards are compatible; historical grants stay
+unchanged. Saving criteria is not classification, quality approval or publication.
+Keep both current MCP URLs and all existing
 Product Actions/public-bundle compatibility and size gates.
 
 This candidate applies the separately authorized proposal in a real branch from

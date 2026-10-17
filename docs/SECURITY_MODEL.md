@@ -49,8 +49,12 @@ still reject unauthorized scopes, roles, memberships, and companies server-side.
   by the safe journey workflow.
 - Compact Studies analysis requires explicit `studies_analysis_v1` consent,
   `interview:analysis:read`, current native/source rights and private ownership;
-  own context/save additionally require `interview:analysis:write`. Legacy scopes
-  are not aliases, and refresh/switch do not widen consent. The UUID file access
+  own context/dataset/criteria saving additionally requires `interview:analysis:write`.
+  Private criteria require server-activated consent 2; consent 1 retains its old
+  ceiling. Plugin updates, refresh and switch never upgrade it. Criteria saving is
+  non-AI private draft, not classification, publication or colleague/evidence
+  access. Legacy scopes are not aliases, and refresh/switch do not widen consent.
+  The UUID file access
   reference is not a bearer: only a verified private host adapter may send current
   credentials, outside chat/prompts/model arguments/URLs, with the required header.
   No file/host/platform-agent support is inferred from skill installation.

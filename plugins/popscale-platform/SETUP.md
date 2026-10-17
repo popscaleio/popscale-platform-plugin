@@ -78,12 +78,18 @@ show explicit company/profile consent; do not invent a `.mcp.json` profile field
 Legacy grants are not silently widened or aliases for the analysis profile.
 
 `interview:analysis:read` is required; `interview:analysis:write` additionally
-permits private context creation/save. Current native Studies/source rights still
+permits own private context/dataset/criteria saving. Current native Studies/source
+rights still
 apply, including for non-admin readers. Company Admin does not open colleagues'
-private contexts/datasets. Classify/publish scopes do not enable those future
+private contexts/datasets/criteria. Classify/publish scopes do not enable those future
 workflows here. Optional `credits:read` additionally needs native finance rights.
 
-Use live capabilities for the twelve-operation subset. Five bounded writes
+The server retains consent 1 (R10/RW12) by default. Consent 2 adds private
+criteria list/get (R) and save (R+W), R12/RW15, only after server activation and
+explicit new consent. Clients cannot choose a revision; plugin updates, refresh
+and company switch never upgrade old grants or transfer private objects.
+
+Use live capabilities for the supported subset. Six bounded writes
 always return the ProductAction envelope; do not label them read-only merely
 because they use analysis-read. Keep stable command/domain identities and poll
 actual dataset/job state after acceptance. Existing administration below retains
