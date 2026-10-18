@@ -17,8 +17,10 @@ Last updated: 2026-10-18
   its narrow correction and five-subcase regression pass. The single focused
   rereview of 41f941a found no actionable issue. No third review was run.
   No host/OAuth/install/provider proof follows.
-- [ ] Backend P8b is IN_VALIDATION; C4 is NOT_APPLIED. Deploy/activation and actual
-  new consent/profile selection are separate from package merge/tag/publication.
+- [x] Clarify pending human-review recovery separately from stale conflicts;
+  preserve the original action, command and grant across approval.
+- [ ] Backend deployment/activation and actual new consent/profile selection
+  are separate from package merge/tag/publication.
   D08 and clean-host write/approval/file workflows remain NOT_RUN.
 
 ## C3 classification — 1.7.0 source candidate

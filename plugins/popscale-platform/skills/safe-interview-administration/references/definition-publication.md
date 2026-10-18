@@ -1,21 +1,25 @@
 # Conditional C4 Definition Publication
 
-Require actual C4 discovery, current company/read rights and exact version.
-C1/C2/C3 never expand through refresh/switch/plugin update. Keep same-grant handles.
+Require actual C4 discovery, company/read rights and exact version.
+Keep original-grant handles; C1/C2/C3 never expand.
 
-`submit_interview_classification_definition` is bounded R+W: share only the
-requested version's safe criteria card, never private evidence, quality, results,
-corrections, colleague drafts/counts. Submission is not publication.
+`submit_interview_classification_definition`: bounded R+W shares safe criteria
+only, never private evidence/drafts/counts. Submission is not publication.
 
-With R plus interview:definitions:publish and current native publish permission,
+With R+`interview:definitions:publish` and current native publish permission,
 `publish_interview_classification_definition`, `recommend_interview_classification_definition`,
-`archive_interview_classification_definition` and `restore_interview_classification_definition`
-require REVIEW_REQUIRED human approval of the exact server preview. Classify is
-not publish authority. Use the shared ProductAction workflow; never self-approve.
+`archive_interview_classification_definition`, `restore_interview_classification_definition`
+require REVIEW_REQUIRED initiating-human approval of the exact server preview.
+Classify grants no publish authority.
 
-At most one version per family is recommended; older published versions remain
-explicitly selectable. Archive blocks new acceptance while preserving accepted
-work/price/deadlines and permitted historical selection. Restore revives neither
-old approvals nor recommendations. Conflicts require fresh preview/approval.
-Safe cards grant no private-source access. No provider call/debit, external output
-restore or organization MCP is included.
+Valid `awaiting_approval` envelopes (compatibility HTTP409; named MCP
+`isError=false`) retain action_id/command_id/idempotency_key/body/grant.
+After human approval, repeat the same named request. Generic execute reports
+`approval_required` before approval. Recover with `product_action_get` before
+uncertain retries; fresh preview/approval is for actual stale/conflicting intent.
+Never self-approve or replace a pending action.
+
+One recommendation per family; older published versions remain selectable.
+Archive blocks new acceptance, preserves accepted work/prices/deadlines.
+Restore revives no approvals/recommendations. Safe cards grant no private-source
+access; no AI/debit, external output restore or organization MCP.
