@@ -104,6 +104,44 @@ promise a local file from a descriptor. Without this adapter report
 CLI or manual reupload does not qualify it. Platform assistant remains unsupported
 until P3b3 and separate host proof. No computed-output upload is supplied.
 
+## Optional new classification connection — proposed C3
+
+After compatible backend deployment and server activation, a **new** explicit
+OAuth authorization for `profile=studies_analysis_v1` can receive consent3.
+Do not send a consent/profile revision or operation ceiling in client config.
+C1 R10/RW12 and C2 R12/RW15 remain unchanged through plugin updates, refresh and
+company switch. A new grant inherits no private handles from an older grant.
+
+C3 adds15 classification/budget/review/correction operations to the compact15:
+R20/RW26/RC24/RWC30 before current native-right/feature filtering. R means
+`interview:analysis:read`, W `interview:analysis:write`, C `interview:classify`.
+New classification planning/start/cancel additionally needs native Studies
+classify. Human review, budget and correction proposals require R+W and current
+read/private source rights; classify is no substitute for the actual initiating
+human's authenticated approval. Optional `credits:read` still separately requires
+native finance rights. Null company-finance fields do not mean zero.
+
+Follow [the classification workflow](skills/safe-interview-administration/references/classification-analysis.md).
+Keep stable command/domain identities. REVIEW_REQUIRED actions are pending,
+not a completed order. `action_url` is an exact backend action-detail reference;
+it does not establish a host approval UI. The person must use a supported native
+review surface and approve the actual preview; no agent approve tool is added.
+
+A separately installed own-grant local stdio adapter can request this opt-in
+through a documented `auth login --classification` flow only after separately
+authorized configuration/auth. Its `--classification-scopes` may explicitly
+choose read (R), review (RW), classify (RC), or full (RWC, the C3 default); this
+selects requested scopes, never a consent revision or native right. It must use
+that same new grant for MCP and
+protected file GET, never import an existing Codex/connector credential. Backend
+C3, adapter code, actual OAuth/Keychain, installation and D08 remain separate
+verification events. No plugin install changes the host config automatically.
+
+P8a backend and the corresponding adapter/plugin deltas remain proposals here.
+External saved-output upload/restore, P7 organization reports, P9 publication
+and platform-v2 classification are not supplied by this workflow. No new
+`.mcp.json` field or endpoint is invented; no host/version support is claimed.
+
 ## Switch the active company
 
 When `current_user` reports a different company than the user intended, keep the

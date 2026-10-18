@@ -5,8 +5,12 @@ description: Inspect authorized company-scoped Popscale interview Studies, saved
 
 # Safe Interview Administration
 
-Use `popscale-platform`; company, current rights, strict schemas, revisions and
-server approval are authoritative. Before mutations read the shared
+Use `popscale-platform` for the direct Product MCP connection. When the user
+selects a separately authorized own-grant Studies adapter, use that one actually
+configured named server for all private contexts, datasets, criteria, actions and
+file installation; never transfer handles between it and the direct connection.
+Company, current rights, strict schemas, revisions and server approval remain
+authoritative. Before mutations read the shared
 [product action contract](../route-popscale-requests/references/product-actions.md).
 Use app-visible names and the shared
 [content naming rules](../route-popscale-requests/references/content-names.md).
@@ -22,8 +26,9 @@ search again, substitute generic REST or use a browser workaround.
 For saved-data analysis or private criteria, use [compact-analysis.md](references/compact-analysis.md)
 only with the explicit analysis profile and its current native rights. This
 branch does not require Company Admin or authorize administration. Missing tools
-mean unavailable, not an empty dataset. Platform assistant support remains
-unsupported until its separate P3b3 implementation and host verification.
+mean unavailable, not an empty dataset. For explicitly available C3 classification,
+follow [classification-analysis.md](references/classification-analysis.md).
+Platform support needs a new accepted runtime/source/file proof, never old assistant12.
 
 For broad administration below, require active `company_admin` and the specific
 Interview scopes. Keep this branch separate from compact data/criteria.
