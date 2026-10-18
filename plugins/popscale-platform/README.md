@@ -168,3 +168,7 @@ trusted links; otherwise the assistant describes the page without claiming it
 opened. Host progress UI varies; a completed submission tool does not mean its
 background job is finished. The 1.5.0 workflow requires compatible production
 tools; first-party sessions need a restart to pick up a refreshed profile.
+
+The separately opted-in C4 publication and exact-36 embedded classification method
+assets are described in [SETUP.md](SETUP.md). They do not widen default/C1/C2/C3
+connections or prove deployed backend, host, OAuth or file support.

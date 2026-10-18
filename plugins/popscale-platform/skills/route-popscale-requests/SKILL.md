@@ -34,8 +34,8 @@ for Journey context, duplicate names and internal identifiers.
    `safe-journey-creation` for journey creation, execution, or publication. Use
    `safe-interview-administration` for Interview Study authoring, precise
    question edits, invitations, respondent links, run review, or analysis.
-   Data/private criteria and explicitly available C3 follow its compact branches;
-   no Study administration/Journey creation/output upload. Keep the whole private
+   Data/private criteria and available C3/C4 use its compact branches,
+   separately from administration, Journeys and output upload. Keep the whole private
    workflow on one configured same-grant server; never mix local-adapter and direct
    Product handles. Use
    `safe-content-administration` to find, create, inspect, or granularly edit

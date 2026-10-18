@@ -209,3 +209,26 @@ server human approval and conditional availability. No external output restore,
 organization report MCP, platform-v2 activation, installation, OAuth trial or D08
 support is established. Merge/tag/publication and clean-host checks are separate
 authorizations after this source PR.
+
+## Separate C4 / platform-classification — 1.8.0 source candidate
+
+The separately stacked 1.8.0 source candidate follows PR43 at 149ed0be. Fresh main,
+parent and tag checks found 1.8.0 unused; both host manifests, Claude marketplace
+and version validators are aligned. PR43 remains unchanged. No tag, release or
+publication is performed. Backend P8b remains IN_VALIDATION and C4 NOT_APPLIED;
+these package methods require actual deployed capability/consent/profile support.
+
+Build optional artifacts independently from a clean committed checkout:
+
+```bash
+python3 scripts/build_publication_skills.py --output-dir /private/tmp/popscale-publication-artifact
+python3 scripts/build_platform_classification_skills.py --output-dir /private/tmp/popscale-platform-classification-artifact
+```
+
+Retain the default and C3 builds unchanged. Record exact complete-file SHA/source
+for each asset; the public text SHA alone is not a tool-authority cache key. The
+platform asset is text-only, schema popscale.public_skills.v1, exact36 tools; operator
+configuration must verify its full digest and compile private instructions/policies
+separately. It does not carry private host instructions, OAuth credentials or local
+paths. Actual backend C4/platform availability, human approval UI, same-grant file
+adapter and D08 host verification remain independent gates.

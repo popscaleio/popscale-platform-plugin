@@ -1,0 +1,71 @@
+{
+  "schema_version": "popscale.studies.publication-plugin.v1",
+  "tool_contract_version": "popscale.product.actions.v1",
+  "profile_name": "studies_analysis_v1",
+  "profile_revision": 1,
+  "consent_revision": 4,
+  "operations": [
+    "submit_interview_classification_definition",
+    "publish_interview_classification_definition",
+    "recommend_interview_classification_definition",
+    "archive_interview_classification_definition",
+    "restore_interview_classification_definition"
+  ],
+  "operation_contracts": {
+    "submit_interview_classification_definition": {
+      "required_scopes": [
+        "interview:analysis:read",
+        "interview:analysis:write"
+      ],
+      "request_schema": "DefinitionLifecycleRequest",
+      "result_schema": "DefinitionVersion",
+      "risk": "bounded_write"
+    },
+    "publish_interview_classification_definition": {
+      "required_scopes": [
+        "interview:analysis:read",
+        "interview:definitions:publish"
+      ],
+      "request_schema": "DefinitionLifecycleRequest",
+      "result_schema": "DefinitionVersion",
+      "risk": "review_required"
+    },
+    "recommend_interview_classification_definition": {
+      "required_scopes": [
+        "interview:analysis:read",
+        "interview:definitions:publish"
+      ],
+      "request_schema": "DefinitionLifecycleRequest",
+      "result_schema": "DefinitionVersion",
+      "risk": "review_required"
+    },
+    "archive_interview_classification_definition": {
+      "required_scopes": [
+        "interview:analysis:read",
+        "interview:definitions:publish"
+      ],
+      "request_schema": "DefinitionLifecycleRequest",
+      "result_schema": "DefinitionVersion",
+      "risk": "review_required"
+    },
+    "restore_interview_classification_definition": {
+      "required_scopes": [
+        "interview:analysis:read",
+        "interview:definitions:publish"
+      ],
+      "request_schema": "DefinitionLifecycleRequest",
+      "result_schema": "DefinitionVersion",
+      "risk": "review_required"
+    }
+  },
+  "scope_counts": {
+    "R": 20,
+    "RW": 27,
+    "RC": 24,
+    "RP": 24,
+    "RWC": 31,
+    "RWP": 31,
+    "RCP": 28,
+    "RWCP": 35
+  }
+}

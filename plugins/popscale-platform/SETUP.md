@@ -266,3 +266,26 @@ trusted links; otherwise the assistant describes the page without claiming it
 opened. Host progress UI varies; a completed submission tool does not mean its
 background job is finished. The 1.5.0 workflow requires compatible production
 tools; first-party sessions need a restart to pick up a refreshed profile.
+
+## Separately opted-in publication and platform classification
+
+These candidate workflows require compatible deployed backend support and actual
+current discovery; package installation does not activate them. C1/C2/C3 and default
+consent1 retain their exact ceilings. No client selects a consent revision. A newly
+approved C4 connection can request R/W/C and definitions-publish independently;
+R/RW/RC/RP/RWC/RWP/RCP/RWCP yield 20/27/24/24/31/31/28/35 domain operations before
+native filtering. Four publication effects need current read+publish permission
+and actual initiating-human approval, not classify. Refresh and company switch
+never expand an old ceiling. Existing local adapter C3 flags do not request C4;
+this package adds no new adapter command or credential-export mechanism.
+
+The embedded platform classification workflow is a different, explicitly selected
+native profile. Its separate public-platform-classification-skills.json asset has
+exactly 31 domain operations plus five controls. It supplies only public method
+text; private operator configuration, current policy and an immutable profile pin
+establish authority. Default public-skills.json and optional C3 assets keep their
+existing contracts. The server must accept explicit criteria/dataset/prior-job
+references before a new turn; an existing accepted turn is never widened. Pending
+input installation is not verified S2 or completed output. No C4 publication tools
+are part of that platform asset. Backend rollout and public package release remain
+separate. Host/OAuth/provider trials and D08 are NOT_RUN for this candidate.
