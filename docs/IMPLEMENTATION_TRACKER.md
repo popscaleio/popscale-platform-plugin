@@ -11,13 +11,18 @@ Last updated: 2026-10-18
 - [x] Verify remote PR42 is `codex/studies-analysis-plugin` at 9efc02f2 and
   public release is 1.6.8; remote tag 1.7.0 is unused. Align both manifests,
   Claude marketplace and release/test expected-version constants at 1.7.0.
-- [x] All98 package tests pass, including the seven new C3 artifact regressions;
+- [x] All 98 package tests pass, including the seven new C3 artifact regressions;
   release/tag validation, public read-only Docs MCP smoke and whitespace pass.
   Fix the candidate's malformed calibration-tool backticks and condense only
-  analysis references to retain the22000-word gate (actual21993). Default
+  analysis references to retain the 22000-word gate (actual 21993). Default
   builder, Journey code and MCP URLs remain byte-identical to PR42.
-- [ ] Complete one stable native read-only review and clean-commit builds of
-  both distinct artifacts; record exact source/hashes in the separate PR handoff.
+- [x] One native read-only review of stable application source
+  `ba83d1991128a58ad28076c619d2bd666ac13d0c` found no actionable issue.
+  No focused rereview was needed. Build both artifacts from that clean commit:
+  default 113 tools and optional C3 128 tools (exactly 15 additional), 28 identical
+  instruction files and 21993 words. Checksums differ despite identical text SHA;
+  consumers must pin the complete artifact/source/profile, never only text identity.
+  The PR records final source/build hashes; no host or runtime proof follows.
 - [ ] Apply/verify the separate backend C3 proposal and its controlled rollout
   before activation or workflow availability claims. No backend change is
   included here; only actual live discovery and explicit new consent enable it.

@@ -148,7 +148,7 @@ commit, validation commands/results and artifact hashes in the PR. Publishing,
 frontend integration, clean-host checks and backend deployment remain separate
 release gates; a packaged skill is not proof of end-to-end behavior.
 
-## Compact Studies candidate — no release version assigned
+## Historical compact Studies candidate preparation
 
 The Unreleased compact workflow must be gated by actual deployed backend
 capabilities and explicit `studies_analysis_v1` consent. Before release, record
@@ -176,3 +176,36 @@ no bearer in chat/prompts/tool arguments/URLs. A descriptor or backend test is
 not full-file installation/computation. Record exact Codex desktop/macOS/local
 runtime versions and D08 evidence separately. Platform assistant remains
 unsupported until P3b3. Do not publish claims for either unverified path.
+
+
+## Optional C3 classification — 1.7.0 source candidate
+
+The stacked C3 candidate selects previously unused version 1.7.0; this is not a
+published release. Its parent PR42 carries compact datasets/private definitions.
+C1/C2 ceilings and default issuance remain unchanged; the C3 backend proposal is
+still NOT_APPLIED. Actual live capability discovery and new explicit consent are
+required after compatible backend rollout. Never enable C3 by a plugin update,
+refresh, company switch or loading new instructions into an old accepted profile.
+
+From the final clean committed checkout, build distinct assets without replacing
+the default artifact:
+
+```sh
+python3 scripts/build_public_skills.py --output-dir dist
+python3 scripts/build_classification_skills.py --output-dir dist
+```
+
+`public-skills.json` keeps the existing default tool contract;
+`public-classification-skills.json` adds exactly 15 reviewed operation requirements.
+Each has its own companion SHA file. The complete JSON hashes differ while the
+text bundle SHA may match. Pin exact artifact hash, source commit and accepted
+profile; the shared text identity alone cannot select authority. The optional
+asset does not register tools, issue grants, approve orders or activate a cache.
+Coordinate its separate release-asset inclusion and compatible consumer before
+publication; this change does not alter the tag workflow.
+
+Keep the existing 22000-word gate, exact MCP URLs, same-grant private file flow,
+server human approval and conditional availability. No external output restore,
+organization report MCP, platform-v2 activation, installation, OAuth trial or D08
+support is established. Merge/tag/publication and clean-host checks are separate
+authorizations after this source PR.
