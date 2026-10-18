@@ -2,6 +2,22 @@
 
 Last updated: 2026-10-18
 
+## C4 / platform classification — 1.8.0 source candidate
+
+- [x] Apply the hash-verified frozen proposal on a separate branch from unchanged
+  PR43 source 149ed0be. Exact C4 adds five operations to C3's 30; the separate platform
+  asset is 31+5, without publication authority or automatic profile expansion.
+- [x] Fetch main, PR43 parent and tags; 1.8.0 is unused. Align both manifests,
+  Claude marketplace and version validators; leave MCP URLs/Journey/old grants unchanged.
+- [x] All 103 package tests, release validation, public read-only Docs smoke and
+  whitespace checks pass. Four clean-source asset builds remain pending; retain
+  exact command/source/hash evidence outside the source tree.
+- [ ] Complete one stable native read-only code review, with at most one focused
+  findings rereview. No host/OAuth/install/provider proof follows.
+- [ ] Backend P8b is IN_VALIDATION; C4 is NOT_APPLIED. Deploy/activation and actual
+  new consent/profile selection are separate from package merge/tag/publication.
+  D08 and clean-host write/approval/file workflows remain NOT_RUN.
+
 ## C3 classification — 1.7.0 source candidate
 
 - [x] Apply the hash-verified frozen C3 reference, exact 15-operation contract,

@@ -28,7 +28,9 @@ only with the explicit analysis profile and its current native rights. This
 branch does not require Company Admin or authorize administration. Missing tools
 mean unavailable, not an empty dataset. For explicitly available C3 classification,
 follow [classification-analysis.md](references/classification-analysis.md).
-Platform support needs a new accepted runtime/source/file proof, never old assistant12.
+C4 publication uses [definition-publication.md](references/definition-publication.md)
+only when actually available. Platform classification requires its separate accepted
+profile and verified input/output receipts; old assistant12 remains unchanged.
 
 For broad administration below, require active `company_admin` and the specific
 Interview scopes. Keep this branch separate from compact data/criteria.

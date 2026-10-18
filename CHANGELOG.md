@@ -4,6 +4,15 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+## [1.8.0] - Unreleased candidate
+
+- Add separate C4 publication and exact-36 embedded classification
+  method artifacts, conditional routing and human-review guidance. Preserve
+  default/C1/C2/C3/old assistant12 authority and both MCP endpoints.
+- Select unused 1.8.0 after fresh main/PR43/tag checks. Backend P8b remains
+  IN_VALIDATION and C4 NOT_APPLIED; no tag/release, activation, credential setup
+  or host proof follows.
+
 ## [1.7.0] - Unreleased candidate
 
 - Package the explicit C3 classification workflow with a separate optional
