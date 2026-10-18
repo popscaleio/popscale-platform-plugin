@@ -4,15 +4,20 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
-- Candidate compact Studies dataset workflow behind live analysis-profile
-  capabilities, with strict inputs, six action envelopes and stable job identity.
-  Add consent-2 private criteria list/get/save with immutable versions; existing
-  consent-1 grants stay bounded and server activation defaults to package 1.
-  Criteria saving adds no AI, quality approval, classification or publication.
-  Preserve the broad administration branch and current MCP/Journey contracts.
-- Require verified private host-adapter support for protected file installation;
-  no Codex desktop D08, platform-agent P3b3 or production availability is claimed.
-  Add focused routing/evaluation/package coverage without changing release versions.
+## [1.7.0] - Unreleased candidate
+
+- Package the explicit C3 classification workflow with a separate optional
+  tool contract and artifact. Preserve C1/C2 consent ceilings, current native
+  rights, real human approval, stable order identities and exact result selection.
+- Include compact Studies datasets and immutable private criteria versions from
+  the preceding candidate, retaining separate broad administration and Journey
+  workflows. The default bundle does not require C3 tools.
+- Require live backend discovery and new explicit server-selected C3 consent;
+  the C3 backend proposal is not applied or activated by this package. Keep
+  external output restore, publication and organization report MCP unavailable.
+- Align source manifests and release validators at 1.7.0 after verifying the tag
+  is unused. No merge, tag, publication, installation or OAuth/host trial is
+  included. Protected full-file adapters and both D08 host gates remain unverified.
 
 ## [1.6.8] - 2026-10-01
 

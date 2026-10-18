@@ -1,0 +1,173 @@
+{
+  "schema_version": "popscale.studies.classification-plugin.v1",
+  "tool_contract_version": "popscale.product.actions.v1",
+  "profile_name": "studies_analysis_v1",
+  "profile_revision": 1,
+  "consent_revision": 3,
+  "operations": [
+    "prepare_interview_classification_review",
+    "get_interview_classification_review",
+    "save_interview_classification_review",
+    "prepare_interview_classification",
+    "get_interview_classification_plan",
+    "start_interview_classification",
+    "get_interview_classification_job",
+    "list_interview_classification_jobs",
+    "read_interview_classification_results",
+    "cancel_interview_classification_job",
+    "get_interview_analysis_budget",
+    "set_interview_analysis_budget",
+    "get_interview_classification_post_review",
+    "save_interview_classification_correction",
+    "list_interview_classification_corrections"
+  ],
+  "operation_contracts": {
+    "prepare_interview_classification_review": {
+      "required_scopes": [
+        "interview:analysis:read",
+        "interview:classify"
+      ],
+      "request_schema": "PrepareQualityPlanRequest",
+      "result_schema": "QualityPlan",
+      "risk": "bounded_write"
+    },
+    "get_interview_classification_review": {
+      "required_scopes": [
+        "interview:analysis:read"
+      ],
+      "request_schema": "QualityPlanIdRequest",
+      "result_schema": "QualityPlan",
+      "risk": "read"
+    },
+    "save_interview_classification_review": {
+      "required_scopes": [
+        "interview:analysis:read",
+        "interview:analysis:write"
+      ],
+      "request_schema": "SaveQualityReviewRequest",
+      "result_schema": "QualityPlan",
+      "risk": "review_required"
+    },
+    "prepare_interview_classification": {
+      "required_scopes": [
+        "interview:analysis:read",
+        "interview:classify"
+      ],
+      "request_schema": "PrepareClassificationRequest",
+      "result_schema": "ClassificationPlan",
+      "risk": "bounded_write"
+    },
+    "get_interview_classification_plan": {
+      "required_scopes": [
+        "interview:analysis:read"
+      ],
+      "request_schema": "PlanIdRequest",
+      "result_schema": "ClassificationPlan",
+      "risk": "read"
+    },
+    "start_interview_classification": {
+      "required_scopes": [
+        "interview:analysis:read",
+        "interview:classify"
+      ],
+      "request_schema": "StartClassificationRequest",
+      "result_schema": "ClassificationJob",
+      "risk": "review_required"
+    },
+    "get_interview_classification_job": {
+      "required_scopes": [
+        "interview:analysis:read"
+      ],
+      "request_schema": "JobIdRequest",
+      "result_schema": "ClassificationJob",
+      "risk": "read"
+    },
+    "list_interview_classification_jobs": {
+      "required_scopes": [
+        "interview:analysis:read"
+      ],
+      "request_schema": "ListRequest",
+      "result_schema": "ClassificationJobList",
+      "risk": "read"
+    },
+    "read_interview_classification_results": {
+      "required_scopes": [
+        "interview:analysis:read"
+      ],
+      "request_schema": "ReadResultsRequest",
+      "result_schema": "ClassificationResultsPage",
+      "risk": "read"
+    },
+    "cancel_interview_classification_job": {
+      "required_scopes": [
+        "interview:analysis:read",
+        "interview:classify"
+      ],
+      "request_schema": "CancelClassificationJobRequest",
+      "result_schema": "ClassificationJob",
+      "risk": "bounded_write"
+    },
+    "get_interview_analysis_budget": {
+      "required_scopes": [
+        "interview:analysis:read"
+      ],
+      "request_schema": "AnalysisIdRequest",
+      "result_schema": "MissionBudget",
+      "risk": "read"
+    },
+    "set_interview_analysis_budget": {
+      "required_scopes": [
+        "interview:analysis:read",
+        "interview:analysis:write"
+      ],
+      "request_schema": "BudgetMandateRequest",
+      "result_schema": "MissionBudget",
+      "risk": "review_required"
+    },
+    "get_interview_classification_post_review": {
+      "required_scopes": [
+        "interview:analysis:read"
+      ],
+      "request_schema": "PostReviewPageRequest",
+      "result_schema": "PostReviewPage",
+      "risk": "read"
+    },
+    "save_interview_classification_correction": {
+      "required_scopes": [
+        "interview:analysis:read",
+        "interview:analysis:write"
+      ],
+      "request_schema": "SaveCorrectionRequest",
+      "result_schema": "Correction",
+      "risk": "review_required"
+    },
+    "list_interview_classification_corrections": {
+      "required_scopes": [
+        "interview:analysis:read"
+      ],
+      "request_schema": "C3CorrectionPageRequest",
+      "result_schema": "CorrectionPage",
+      "risk": "read"
+    }
+  },
+  "scope_counts": {
+    "R": 20,
+    "RW": 26,
+    "RC": 24,
+    "RWC": 30
+  },
+  "excluded": [
+    "save_interview_analysis_revision",
+    "get_interview_analysis_revision",
+    "resume_interview_analysis",
+    "prepare_interview_report_edition",
+    "get_interview_report_edition",
+    "submit_interview_classification_definition",
+    "publish_interview_classification_definition",
+    "recommend_interview_classification_definition",
+    "archive_interview_classification_definition",
+    "restore_interview_classification_definition"
+  ],
+  "backend_status": "PROPOSED_NOT_APPLIED",
+  "host_proof": "NOT_RUN"
+}
