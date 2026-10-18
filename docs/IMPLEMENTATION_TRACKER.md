@@ -9,11 +9,14 @@ Last updated: 2026-10-18
   asset is 31+5, without publication authority or automatic profile expansion.
 - [x] Fetch main, PR43 parent and tags; 1.8.0 is unused. Align both manifests,
   Claude marketplace and version validators; leave MCP URLs/Journey/old grants unchanged.
-- [x] All 103 package tests, release validation, public read-only Docs smoke and
-  whitespace checks pass. Four clean-source asset builds remain pending; retain
-  exact command/source/hash evidence outside the source tree.
-- [ ] Complete one stable native read-only code review, with at most one focused
-  findings rereview. No host/OAuth/install/provider proof follows.
+- [x] All 104 package tests, release validation, public read-only Docs smoke and
+  whitespace checks pass. Build all four distinct assets from the final clean
+  candidate and retain exact command/source/hash evidence with the handover.
+- [x] One native full review of application source 9111901 found no actionable
+  issue. A separate self-check reproduced a focused-builder path/consumer mismatch;
+  its narrow correction and five-subcase regression pass. The single focused
+  rereview of 41f941a found no actionable issue. No third review was run.
+  No host/OAuth/install/provider proof follows.
 - [ ] Backend P8b is IN_VALIDATION; C4 is NOT_APPLIED. Deploy/activation and actual
   new consent/profile selection are separate from package merge/tag/publication.
   D08 and clean-host write/approval/file workflows remain NOT_RUN.
