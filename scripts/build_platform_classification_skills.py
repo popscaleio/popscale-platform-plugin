@@ -29,7 +29,9 @@ def build_platform_classification_bundle(sources, version, commit, extension):
     for name in paths:
         parts = PurePosixPath(name).parts
         text = sources[name]
-        if (not name.startswith("skills/") or "\\" in name
+        if (not name.startswith("skills/") or "\\" in name or len(name) > 512
+                or any(char in name for char in ("%", "?", "#", ":"))
+                or any(ord(char) < 32 for char in name)
                 or any(part in ("", ".", "..") for part in name.split("/"))
                 or len(parts) != 4 or parts[1] not in SKILLS or parts[2] != "references"
                 or not name.endswith(".md") or type(text) is not str

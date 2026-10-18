@@ -82,3 +82,16 @@ class PublicationPlatformBundleTests(unittest.TestCase):
         self.assertNotEqual(hashlib.sha256(raw).hexdigest(),hashlib.sha256(changed).hexdigest())
         self.assertFalse({"consent_revision","allowed_tools","host_instructions","private_sha256"} & set(json.loads(raw)))
         with self.assertRaises(ValueError):build_platform_classification_bundle(sources,"1.7.0","not-a-commit",platform)
+
+    def test_platform_paths_match_existing_consumer_without_encoded_or_oversized_names(self):
+        sources, base, c3, c4, platform = self.inputs()
+        prefix = ENTRYPOINT.rsplit('/', 1)[0] + '/'
+        for name, link in (("bad%2fname.md", "bad%252fname.md"),
+                           ("bad?name.md", "bad%3Fname.md"),
+                           ("bad#name.md", "bad%23name.md"),
+                           ("bad:name.md", "bad%3Aname.md"),
+                           ("x" * 480 + ".md", "x" * 480 + ".md")):
+            selected = sources | {prefix + name: "Public method reference.",
+                ENTRYPOINT: sources[ENTRYPOINT] + "\nRead [extra](" + link + ").\n"}
+            with self.subTest(name=name), self.assertRaises(ValueError):
+                build_platform_classification_bundle(selected, "1.8.0", "a" * 40, platform)
