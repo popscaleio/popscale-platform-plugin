@@ -1,6 +1,22 @@
 # V1 implementation tracker
 
-Last updated: 2026-10-01
+Last updated: 2026-10-22
+
+## Conversation assessment alignment — unreleased
+
+- [x] Add shared Roleplay/Coaching review guidance for observable evidence,
+  attainable tasks, consistent reactions and goal-appropriate endings.
+- [x] Distinguish reflection, spoken performance, claimed actions and verified
+  execution; preserve explicit edit scope and redacted-instruction boundaries.
+- [x] Review critical-goal compensation at actual Journey thresholds without
+  claiming weights are mandatory-pass rules or changing scores automatically.
+- [x] Add synthetic acceptance cases for both intended safety-oriented endings,
+  missing evidence, unsupported system work, scoring and unexecuted live trials.
+- [x] All 85 package tests, both changed-skill validators, release validation,
+  live public Docs MCP smoke and whitespace checks pass. Shared prose is
+  consolidated to preserve the existing 22,000-word runtime budget.
+- [ ] Live host/trial validation and a separately authorized release remain pending.
+  No customer changes or backend implementation are included.
 
 ## Company activity and standalone draft delivery — 1.6.8
 

@@ -62,6 +62,9 @@ for Journey context, duplicate names and internal identifiers.
    Put tailored guidance in supported Script `model_steering`. Review platform
    output; request script-before-audio review only where staging is supported.
    Never edit generated scripts or invent an intermediate gate.
+   For Roleplay/Coaching items, apply shared
+   [conversation assessment](../safe-content-administration/references/conversation-assessment.md)
+   to briefs, item inputs and saved children before activation.
    For Coaching items, apply shared
    [question design](../safe-content-administration/references/coaching-question-design.md)
    to the generation brief and review generated item inputs before execution.

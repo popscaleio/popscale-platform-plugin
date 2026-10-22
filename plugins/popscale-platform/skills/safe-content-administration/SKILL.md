@@ -34,6 +34,8 @@ for Journey context, duplicate names and internal identifiers.
    For Coaching input authoring or review, apply
    [question design](references/coaching-question-design.md): one primary goal,
    type-appropriate progression, aligned answers and preserved total score.
+   Apply [conversation assessment](references/conversation-assessment.md) for
+   Roleplay/Coaching design and review.
    Before authoring new or rewritten input, fetch the matching writing guide
    from `popscale-docs` as described in the routing skill's "Before authoring"
    step (`/content/writing-good-input/` and the format-specific guides) and ask
@@ -95,7 +97,9 @@ for Journey context, duplicate names and internal identifiers.
    to Script input (`model_steering`), listening guidance, review and supported
    combined generation.
    Stop active input corrections when safe regeneration is unavailable.
-9. Before publication, review the root against the public checklists: fetch
+9. Before publication, repeat the conversation-assessment review for affected
+   Roleplay/Coaching content; report unresolved gaps.
+   Review the root against the public checklists: fetch
    `/journeys/review-before-activation/` and `/content/language-in-exercises/`
    from `popscale-docs` (see the routing skill's "Before authoring" step) and
    read every learner-facing field with them. Report findings in the
