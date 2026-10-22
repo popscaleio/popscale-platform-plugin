@@ -40,23 +40,16 @@ Readiness measures publicability; freshness measures changes relative to a
 baseline; provenance measures origin. **Never infer platform generation from
 green readiness, a filled field, `current`, or a timestamp alone.**
 
-When a Roleplay reports "Update required" immediately after completed steps,
-read every returned freshness row and its changed dependencies. Count rows with
-`source_changed` or `source_changed_and_output_edited` as stale, and count
-`output_edited` separately as edited; name the exact keys in each count. Do not
-count a changed source field such as public description as a stale generated
-artifact unless it has its own stale artifact row. A completed generation step
-establishes historical provenance only; it does not prove the saved artifact is
-current. Check available change history or revision evidence before attributing
-the warning to generation order: a later manual UI edit can change dependencies
-after every step completed. A `Manual Ui` entry on opening without an intended
-save proves a write, not user intent; flag a suspected UI/backend issue, not a
-generation failure. If the writer or chronology is unavailable, say so; only raise
-a possible server ordering issue when later writes are ruled out.
-Read and preserve manually curated visible fields; do not overwrite or
-regenerate them merely to clear a warning. Apply the generation-only workflow
-stop if protected output metadata shows an edit. Report review/publication
-readiness only after separate checks and explicit confirmation for any mutation.
+When a Roleplay reports "Update required" after completed steps, inspect every
+freshness row and dependency. Count `source_changed` and
+`source_changed_and_output_edited` as stale; count `output_edited` separately.
+Name exact artifact keys, not changed source fields without their own artifact
+row. Completed steps prove historical generation, not currentness. Check revision
+history before blaming generation order: later UI writes may change dependencies.
+A `Manual Ui` entry on opening proves a write, not intent; flag a suspected UI/backend
+issue. State unknown chronology/writer; suggest server ordering only after excluding
+later writes. Preserve curated visible fields. Edited protected outputs trigger the
+generation-only stop below. Review readiness separately; mutations need confirmation.
 
 ## Interpret each part
 
@@ -98,19 +91,14 @@ without request/step links. Episode audio may have no freshness row. Do not
 invent missing IDs or infer media provenance from a filename, timestamp or URL.
 The step-status tool does not promise output snapshots, media IDs or hashes.
 
-For an observed language/audio operation, verify the request's target and
-language, the appropriate completed step, and the actual variant/media via
-component reads. Report the narrow evidence: “The language generation step
-completed and the corresponding output was read back.” If the current file or
-translation cannot be bound to that generation, explicitly say its exact origin
-is not verified. Never claim it is unchanged or matches the current script
-without server evidence. Missing native provenance does not authorize a rebuild.
-For Episode identity corrections, the [speaker policy](episode-speakers.md)
-requires Script input edits and platform regeneration, with verification of
-affected scripts and audio before
-publication. For other work, missing native provenance alone does not prevent
-separately authorized publication that passes server readiness and applicable
-plugin checks. Script review is not a claim that the audio was listened to.
+For language/audio operations, verify target, language, completed step and actual
+variant/media through component reads. Report those observations narrowly. Without
+binding evidence, say exact origin is unverified; do not claim unchanged output or
+script/audio correspondence. Missing native provenance does not authorize rebuilding.
+[Episode identity corrections](episode-speakers.md) require Script input edits,
+platform regeneration and script/audio verification before publication. Otherwise,
+missing native provenance alone does not block separately authorized publication
+passing readiness and plugin checks. Script review proves no audio listening.
 
 ## Local evidence check
 

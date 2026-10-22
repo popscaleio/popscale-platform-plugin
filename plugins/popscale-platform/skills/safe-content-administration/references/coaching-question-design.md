@@ -1,83 +1,50 @@
 # Coaching question design
 
-Apply when authoring, reviewing or revising Coaching inputs, including Journey
-items. Adapt to the selected Coaching type, learning purpose, audience and
-company's approved sources. This is an input-quality review, not a new platform
-validator or a fixed question-count rule.
+Review proposed and generated Coaching inputs before saving/dispatching, including
+Journey items. Adapt to type, audience, purpose and approved sources. This is
+quality guidance, not a validator or fixed question count. Apply
+[conversation assessment](conversation-assessment.md) for task mode and evidence.
 
-## Design the participant's task
+## Participant task
 
-- Give each participant-facing question one primary reflection or assessment
-  goal. Phrase it as the natural utterance the participant should hear, with a
-  clear expectation: identify, explain, decide, practise a response or reflect.
-- When a brief trains separate skills, use an ordered progression where the
-  selected type supports multiple questions. For example, understanding a need
-  can precede selecting a relevant response. That is one possible progression,
-  not a universal customer/sales sequence or a required number of questions.
-- Preserve the selected type's interaction: a knowledge assessment should not
-  gain coaching hints, and a type built around one sustained question, objection
-  or situation should not become a multi-question quiz. Narrow the task or
-  propose a suitable separate session/type if needed, within the user's scope.
-- Give only the scenario facts needed to understand the current task. Include
-  essential context in participant-facing wording rather than assuming the
-  participant sees administrative background fields. Later questions can refer
-  to established context and earlier answers without repeating the whole case.
-- Use natural language in questions. Keep internal labels such as `Analysis:`,
-  `Task:` or `Instructions:`, scoring mechanics and model-facing directions in
-  the appropriate authoring fields rather than spoken text. Ordinary use of
-  those words in the subject matter is not a defect by itself.
-- Keep constraints the participant needs to perform the task in the question.
-  Put answer expectations in the reference answer and assessment guidance in
-  supported inputs such as `evaluation_input`, `success_behaviours` or
-  `critical_missteps`, according to the live schema. These inputs do not replace
-  an essential participant instruction and are not generated instruction outputs.
-- Align each reference answer and its points with that question's goal. A
-  question about understanding a situation should be assessable on that basis,
-  without requiring an unasked product list or a later response formulation.
-  Keep facts grounded in approved sources and qualify information that may vary.
+Give each question one primary goal, expressed naturally: identify, explain,
+decide, practise or reflect. Separate independent skills into an ordered progression
+only where the type supports multiple questions. Preserve knowledge assessment
+without coaching hints and sustained-question types without converting them into
+quizzes. Otherwise narrow scope or propose another session/type.
 
-## Review before saving or dispatching
+Include essential facts and constraints in participant-facing wording; administrative
+background may be invisible. Later questions can reuse established context. Put
+internal labels, scoring mechanics and model directions in authoring fields;
+ordinary subject-matter uses of those words are acceptable. Put answer expectations
+in reference answers and assessment guidance in schema-supported inputs such as
+`evaluation_input`, `success_behaviours` or `critical_missteps`. These cannot replace
+necessary participant instructions and are not generated outputs.
 
-Review proposed inputs before a write or generation dispatch, and generated
-inputs when they become available for review. Flag dense scenario text,
-internal labels, multiple independent tasks, or several question marks for
-semantic review. Explain the specific ambiguity and propose a focused change;
-punctuation or length alone is not grounds for automatic rewriting.
+Align answers and points to the asked goal without unasked product lists or later
+tasks. Ground facts in approved sources and qualify variable information. Review
+dense scenarios, labels, independent tasks and multiple question marks semantically;
+length/punctuation alone do not justify rewriting. A decision with its justification
+can be one coherent goal; explain retained multipart questions. Choose count/length
+from purpose, duration and live limits, not a fixed split.
 
-A decision and its justification can form one coherent goal. Keep a multipart
-question when the parts need to be answered together and explain why. Choose
-question count and length from the skill being practised, session duration and
-live schema limits, rather than always splitting into three or four steps.
+## Preserve and verify
 
-When revising existing inputs, read the current complete question set and total
-score first. For a focused split, preserve unaffected questions, answers and
-points. Distribute the original question's points across its replacements so
-the total remains unchanged unless a score change was explicitly requested.
-If the live point/count limits make that impossible, explain the conflict and
-resolve the proposed design before saving; never silently change the total.
+Read the complete question set and total before revision. Preserve unaffected
+questions, answers and points. Splits redistribute existing points unless a score
+change was explicitly requested; resolve incompatible point/count limits before saving.
 
-## Save inputs, regenerate instructions, verify
+Use structured `reference_facts` (`question`, `answer`, `max_points`) where supported;
+`questions_answers` is its legacy mirror. Follow the schema for legacy-only routes.
+Read back order, answers, allocations and calculated `obtainable_evaluation_score`.
 
-Use structured `reference_facts` (`question`, `answer`, `max_points`) when the
-live contract supports it. Treat `questions_answers` as its legacy mirror;
-follow the live schema for any legacy-only route. Read saved inputs back to
-verify the question order, answer alignment, each point allocation and the
-server-calculated `obtainable_evaluation_score`. A successful write alone does
-not establish that the intended split or total was preserved.
+Establish a supported, authorized regeneration path before any input edit, including
+active content. After the final edit regenerate BOTH `agent_prompt` and
+`evaluation_instructions` through the platform; never manually edit them. Follow
+[generation verification](generation-verification.md): both require fresh, current,
+unmodified metadata linked to completed post-edit request steps. Redacted text
+cannot be semantically reviewed. Keep missing, stale, edited or unverified pairs
+incomplete despite green readiness. Check visible type, questions, answers and totals;
+correct mismatches through authorized input edits and regeneration.
 
-Every change to Coaching generation inputs still requires platform generation
-of BOTH `agent_prompt` and `evaluation_instructions` after the final input edit,
-as defined in [generation verification](generation-verification.md). Never edit
-either output manually. Establish a supported, authorized regeneration path
-before changing inputs, including for active content.
-
-Read both outputs' fresh metadata and linked completed request steps. MCP hides
-the instruction text, so do not claim semantic review of it. Verify the visible
-question order, selected type, answers and point totals; require both hidden
-outputs to link to the post-edit request with current, unmodified metadata.
-Keep the update incomplete if either is missing, stale, edited or unverified,
-even if readiness is green. Route visible input mismatches through focused
-correction and authorized regeneration.
-
-Read the coaching-question evaluation scenarios in the repository's `docs/evaluation/` directory when
-evaluating this guidance in a host.
+See the repository's `docs/evaluation/` coaching-question scenarios.

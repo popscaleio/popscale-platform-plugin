@@ -4,6 +4,12 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+- Review Roleplay and Coaching against the evidence available in the simulation,
+  aligning participant tasks, counterpart rules, criteria and valid endings.
+  Distinguish described actions from verified execution and check whether score
+  weights permit passing without critical goals; preserve scope and platform
+  generation boundaries, including metadata-only review of hidden instructions.
+
 ## [1.6.8] - 2026-10-01
 
 - Start company activity analysis with the new privacy-preserving summary tool;

@@ -31,6 +31,8 @@ write the output. See [tool-workflow.md](tool-workflow.md).
 
 ## Format-specific decisions
 
+Apply [conversation assessment](conversation-assessment.md) to Roleplay/Coaching.
+
 ### Roleplays
 
 - Use `roleplay_customer` for one persona,
