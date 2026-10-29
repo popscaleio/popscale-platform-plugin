@@ -2,7 +2,7 @@
 
 Last updated: 2026-10-29
 
-## Product action review handoff — unreleased
+## Product action review handoff — 1.6.9 release preparation
 
 - [x] Shared contract uses server `review_url`/`next_step`, keeps `action_url`
   machine-only, and distinguishes human approval, execution and native delivery.
@@ -11,8 +11,9 @@ Last updated: 2026-10-29
   replacement after rejection/revocation without new user intent.
 - [x] Reviewed routing and Journey skills: both already reach the shared
   contract. No tool name, scope, OAuth endpoint, manifest capability, bundle
-  schema or name-only tool fixture change is required. Host versions remain
-  1.6.8 until a separately authorized release decision.
+  schema or name-only tool fixture change is required. Host manifests, Claude
+  marketplace, validator and package version tests are aligned at 1.6.9 for
+  the explicitly authorized release; exact server endpoints stay unchanged.
 - [x] Setup explains external login/company selection, approval and host return;
   shared synthetic host cases cover active enrolled content, exact continuation,
   replay, expiry, partial proposals, missing route and async outcomes.
@@ -24,9 +25,20 @@ Last updated: 2026-10-29
   and `git diff --check` passed. Public Docs initialization, discovery, search,
   page retrieval and resources remain read-only; no Product MCP call was made.
   Runtime skill text is 21,986 words within the 22,000-word limit.
-- [ ] Compatible backend/frontend deployment and clean Codex/Claude acceptance.
-  No host acceptance, customer writes, publication or runtime-profile refresh
-  is claimed by this implementation. Backend and plugin release separately.
+- [x] Release preparation reran all 86 package tests successfully, plus
+  `python3 scripts/validate_release.py --tag v1.6.9`,
+  `python3 scripts/live_docs_smoke.py` and `git diff --check`. Endpoint/auth
+  boundaries and the source-bound bundle checks remain green.
+- [ ] Merge/tag/publication is held until the production backend contract is
+  deployed and verified. Release verification records the exact tag, source
+  commit, workflow result and published asset hashes separately.
+- [ ] Clean Codex/Claude behavioral acceptance remains unverified. Package tests
+  do not prove browser or host behavior. Existing conversations keep their
+  pinned skill snapshots; publication does not refresh them automatically.
+- [x] Proportionate diff review preserves company/actor/origin authority,
+  explicit human approval, exact command identity and generation-owner rules.
+  No backend code, credentials or customer-specific content enters this public
+  release. Already-merged conversation-assessment guidance is included from main.
 
 ## Conversation assessment alignment — unreleased
 
