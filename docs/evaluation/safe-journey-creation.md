@@ -9,6 +9,9 @@ For overview, item-input and child generation, also run the shared
 For Episode items, also run the shared
 [anonymous speaker scenarios](safe-content-administration-episode-speakers.md).
 
+For external authenticated approvals and recovery, also run the shared
+[product action review handoff scenarios](product-action-review.md).
+
 ## Two Episode briefs in a Next Generation Journey
 
 Use an enabled company and a synthetic plan with one discovery Episode and one

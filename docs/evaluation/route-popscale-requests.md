@@ -3,6 +3,9 @@
 Run these prompts in one Codex plugin host and one Claude plugin host. Confirm
 the selected server and the treatment of document status metadata.
 
+For external authenticated approvals and recovery, also run the shared
+[product action review handoff scenarios](product-action-review.md).
+
 ## Public Documentation
 
 Prompt: “How do I connect Claude to Popscale documentation?”

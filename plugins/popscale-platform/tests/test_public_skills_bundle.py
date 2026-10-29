@@ -57,6 +57,25 @@ class PublicSkillsBundleTests(unittest.TestCase):
         for docs_tool in ("get_docs_overview", "search_docs", "get_pages"):
             self.assertNotIn(docs_tool, body["required_tools"])
 
+    def test_every_mutating_skill_packages_the_same_review_handoff(self):
+        content = sources()
+        reference = "skills/route-popscale-requests/references/product-actions.md"
+        for name in ("route-popscale-requests", "safe-content-administration",
+                     "safe-journey-creation", "safe-interview-administration",
+                     "safe-product-feedback"):
+            with self.subTest(skill=name):
+                paths, _ = builder.dependency_closure(content, [f"skills/{name}/SKILL.md"])
+                self.assertIn(reference, paths)
+        bundle = json.loads(self.build(content))
+        self.assertEqual(len([entry for entry in bundle["files"]
+                              if entry["path"] == reference]), 1)
+        self.assertNotIn("product_action_approve", bundle["required_tools"])
+        self.assertFalse(any("evaluation/" in path for path in bundle["instruction_paths"]))
+        changed = dict(content)
+        changed[reference] += "\nUpdated review handoff.\n"
+        updated = json.loads(self.build(changed))
+        self.assertNotEqual(bundle["skill_bundle_sha256"], updated["skill_bundle_sha256"])
+
     def test_transitive_reference_change_changes_identity(self):
         original = sources()
         before = json.loads(self.build(original))

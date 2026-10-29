@@ -69,6 +69,29 @@ The first `popscale-platform` use opens Popscale authorization:
 5. If authorization is unavailable, ask a Popscale company admin to enable the
    company feature and the user's MCP access.
 
+## Review a proposed product change
+
+A host's tool confirmation and a chat “yes” are distinct from Popscale's
+approval of an exact saved proposal. When the server requires review, the
+assistant shows its `review_url`, the affected objects/changes, credit effects
+and expiry. Open that link, sign in to the same account if needed, explicitly
+select the intended company, and review the proposal. A link does not grant
+access or select a company for you. The API-only `action_url` is not a browser
+approval page; do not paste tokens into URLs or public Docs.
+
+After approving in Popscale, return to the originating conversation. The
+assistant checks the same action, executes only when server-authorized and
+verifies the saved result; generation may continue separately. Approval alone
+does not save the change. The same flow applies when the host cannot render an
+interactive card. An active exercise does not generally need to become draft.
+
+Proposals have a short approval window; read `expires_at` rather than treating
+retained text as valid approval. For expired or changed revisions, inspect the
+prior result and current content before preparing a fresh proposal, preserving
+the full requested changes. Rejected/revoked proposals do not authorize an
+automatic replacement. If the server supplies no `review_url`, report the
+missing route rather than guessing one or creating duplicate proposals.
+
 ## Switch the active company
 
 When `current_user` reports a different company than the user intended, keep the

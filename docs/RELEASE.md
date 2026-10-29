@@ -38,6 +38,21 @@ Then perform read-only OAuth smoke tests in clean Codex and Claude installations
 - host restart and credential persistence;
 - no write or mutation unless separately approved in a dedicated test company.
 
+## Product action review handoff candidate — unreleased
+
+Before publication, verify the target backend returns the human `review_url`
+and `next_step` fields, reports expired approval state on reads/replay, and
+retains the machine-only `action_url`. Verify the deployed frontend review route
+preserves login destination and explicit company selection. Run the shared
+[review handoff acceptance](evaluation/product-action-review.md) in clean Codex
+and Claude hosts; package tests do not establish browser or host behavior.
+
+This candidate does not change tool names, OAuth scopes, manifest capabilities,
+contract version or current 1.6.8 host versions. Select a patch version and
+synchronize manifests/marketplace/validator only for an authorized release.
+Backend deployment, plugin publication and pinned conversation/profile adoption
+are separate events; do not load branch assets into customer conversations.
+
 ## Publish
 
 1. Open a PR and require the package validation check.

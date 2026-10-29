@@ -1,6 +1,32 @@
 # V1 implementation tracker
 
-Last updated: 2026-10-22
+Last updated: 2026-10-29
+
+## Product action review handoff — unreleased
+
+- [x] Shared contract uses server `review_url`/`next_step`, keeps `action_url`
+  machine-only, and distinguishes human approval, execution and native delivery.
+- [x] Preserve complete requested input on expired/stale replacement; check prior
+  outcome/revision and require a new command/review. No draft workaround or
+  replacement after rejection/revocation without new user intent.
+- [x] Reviewed routing and Journey skills: both already reach the shared
+  contract. No tool name, scope, OAuth endpoint, manifest capability, bundle
+  schema or name-only tool fixture change is required. Host versions remain
+  1.6.8 until a separately authorized release decision.
+- [x] Setup explains external login/company selection, approval and host return;
+  shared synthetic host cases cover active enrolled content, exact continuation,
+  replay, expiry, partial proposals, missing route and async outcomes.
+- [x] `python3 -m unittest discover -s plugins/popscale-platform/tests -p 'test_*.py' -v`:
+  86 tests passed, including `PublicSkillsBundleTests.test_every_mutating_skill_packages_the_same_review_handoff`.
+  The shared review reference reaches all five mutating workflows exactly once
+  in the checksummed bundle; no approval tool or evaluation source is packaged.
+- [x] `python3 scripts/validate_release.py`, `python3 scripts/live_docs_smoke.py`
+  and `git diff --check` passed. Public Docs initialization, discovery, search,
+  page retrieval and resources remain read-only; no Product MCP call was made.
+  Runtime skill text is 21,986 words within the 22,000-word limit.
+- [ ] Compatible backend/frontend deployment and clean Codex/Claude acceptance.
+  No host acceptance, customer writes, publication or runtime-profile refresh
+  is claimed by this implementation. Backend and plugin release separately.
 
 ## Conversation assessment alignment — unreleased
 
