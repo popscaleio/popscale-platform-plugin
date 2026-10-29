@@ -4,6 +4,13 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+## [1.6.9] - 2026-10-29
+
+- Hand off review-required changes through the server's human `review_url`,
+  distinguish approval from execution, and resume the same verified proposal.
+  Recover expired proposals with their complete requested scope and fresh
+  review, preserving active content and existing billing/permission boundaries.
+
 - Review Roleplay and Coaching against the evidence available in the simulation,
   aligning participant tasks, counterpart rules, criteria and valid endings.
   Distinguish described actions from verified execution and check whether score
