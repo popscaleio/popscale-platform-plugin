@@ -212,35 +212,23 @@ class PluginPackageContractTests(unittest.TestCase):
         self.assertIn('url: "https://app.popscale.io/mcp/"', metadata)
 
     def test_company_switch_guidance_matches_product_contract(self):
-        switch_paths = (
-            PLUGIN_ROOT / "skills" / "route-popscale-requests" / "SKILL.md",
-            PLUGIN_ROOT
-            / "skills"
-            / "safe-journey-creation"
-            / "references"
-            / "safety-and-fallbacks.md",
-            PLUGIN_ROOT
-            / "skills"
-            / "safe-interview-administration"
-            / "references"
-            / "safety-and-fallbacks.md",
-            PLUGIN_ROOT
-            / "skills"
-            / "safe-content-administration"
-            / "references"
-            / "safety-and-fallbacks.md",
-            PLUGIN_ROOT
-            / "skills"
-            / "company-usage-insights"
-            / "references"
-            / "privacy-and-limits.md",
-            PLUGIN_ROOT / "SETUP.md",
-            REPO_ROOT / "docs" / "INSTALLATION.md",
-            REPO_ROOT / "docs" / "SECURITY_MODEL.md",
-        )
-        guidance = "\n".join(
-            path.read_text(encoding="utf-8") for path in switch_paths
-        )
+        skills = PLUGIN_ROOT / "skills"
+        route = skills / "route-popscale-requests" / "SKILL.md"
+        guidance = " ".join(route.read_text(encoding="utf-8").split())
+        for skill, reference in (
+            ("safe-journey-creation", "safety-and-fallbacks.md"),
+            ("safe-interview-administration", "safety-and-fallbacks.md"),
+            ("safe-content-administration", "safety-and-fallbacks.md"),
+            ("company-usage-insights", "privacy-and-limits.md"),
+        ):
+            with self.subTest(skill=skill):
+                text = (skills / skill / "references" / reference).read_text(
+                    encoding="utf-8"
+                )
+                self.assertIn(
+                    "../../route-popscale-requests/SKILL.md#company-switch-boundary",
+                    text,
+                )
         for required in (
             "request_company_switch",
             "current_grant_id",
@@ -250,10 +238,32 @@ class PluginPackageContractTests(unittest.TestCase):
             "same MCP connection",
             "replay_ignored=true",
             "reauthentication_required=false",
+            "treat it as opaque",
+            "Admin scopes do not transfer",
+            "reconnect guidance without a switch link",
+            "source binding stays active",
         ):
             self.assertIn(required, guidance)
         self.assertNotIn("reconnect to Company B", guidance)
         self.assertNotIn("reconnect/select Company B", guidance)
+
+    def test_admin_consent_guidance_preserves_separate_opt_in_and_approval(self):
+        for path in (
+            PLUGIN_ROOT / "skills" / "route-popscale-requests" / "SKILL.md",
+            PLUGIN_ROOT / "SETUP.md",
+            REPO_ROOT / "docs" / "INSTALLATION.md",
+        ):
+            with self.subTest(path=path):
+                guidance = " ".join(path.read_text(encoding="utf-8").split())
+                for required in (
+                    "Extend access",
+                    "`admin:read`",
+                    "`admin:write`",
+                    "unchecked",
+                    "memberships and invitations",
+                    "separate Product Action approval",
+                ):
+                    self.assertIn(required, guidance)
 
     def test_company_switch_evaluations_cover_confirmation_and_safe_replay(self):
         evaluations = "\n".join(
@@ -265,6 +275,8 @@ class PluginPackageContractTests(unittest.TestCase):
         )
         for required in (
             "Authenticated Company Switch",
+            "Admin Access After a Company Switch",
+            "Admin-Only Company Switch",
             "Declined or Stale Company Switch",
             "Declined, Replayed, or Expired Company Switch",
             "explicit confirmation",

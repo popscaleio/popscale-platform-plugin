@@ -123,6 +123,32 @@ passes no target identifier, presents the short-lived `switch_url`, waits for
 the user to select and confirm the membership in Popscale, then verifies Company
 B with `current_user` through the same MCP connection before resuming.
 
+## Admin Access After a Company Switch
+
+Use a synthetic connection with ordinary and admin scopes. Complete the
+authenticated switch and request an admin operation in the target company.
+
+The assistant verifies the target with `current_user` on the same connection
+and uses compatible ordinary scopes. It explains that the target needs fresh
+admin consent and guides the user to reconnect in the MCP host, verify the
+target company and connecting client, and choose only the needed unchecked
+options under **Extend access**. For a read-only request, selecting
+`admin:read` leaves `admin:write` unchecked. Sensitive changes still require
+separate Product Action approval. When the consent page offers no admin
+options, the assistant respects the available scopes.
+
+## Admin-Only Company Switch
+
+Use a synthetic connection that has only admin scopes. After confirmation,
+`request_company_switch` returns reconnect guidance without a `switch_url`.
+Separately, simulate a browser switch refusal because only admin scopes match
+the selected target.
+
+The assistant reports that the source binding is still active and guides the
+user to reconnect and approve the needed scopes for the target. It verifies
+the target with `current_user` before resuming. It does not construct a link,
+reuse an old one or retry the switch tool.
+
 ## Declined or Stale Company Switch
 
 Decline link creation, then separately test a confirmed request with an old

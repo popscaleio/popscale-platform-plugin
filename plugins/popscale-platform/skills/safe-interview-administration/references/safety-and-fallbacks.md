@@ -3,17 +3,10 @@
 ## Authorization and company scope
 
 The OAuth session selects the company. A prompt-supplied company name or ID is
-context, not authority. If `current_user` returns another company, stop before
-further reads or writes. Explain the active company and ask for explicit
-confirmation immediately before creating a switch link. Only after confirmation,
-call `request_company_switch` with the latest `current_grant_id` and
-`confirm_switch=true`; never pass a target company or membership identifier.
-Present the returned `switch_url` and wait while the user signs in to the same
-Popscale account, selects the intended membership, and confirms in the browser.
-Then call `current_user` through the same MCP connection and verify the company
-before resuming. Treat `replay_ignored=true` as a safe no-op and require new
-confirmation before replacing an expired or used link. Do not claim token
-rotation or reauthorization when `reauthentication_required=false`.
+context, not authority.
+
+If the connected company differs from the intended company, follow the
+[company-switch workflow](../../route-popscale-requests/SKILL.md#company-switch-boundary).
 
 If a capability is unavailable or a result supplies an
 `_meta["mcp/www_authenticate"]` challenge, preserve the required scopes in the

@@ -93,6 +93,16 @@ use two custom web connectors with the exact URLs from `.mcp.json`.
 Cowork calls remote connectors from Anthropic's cloud rather than the local
 computer. Local or VPN-only endpoints are not supported by this package.
 
+## Add company administration access
+
+For an existing connection, reconnect `popscale-platform` from the host
+where you use it. Confirm the intended company and connecting client in
+Popscale. Under **Extend access**, eligible company admins can opt in to
+`admin:read` and `admin:write` independently. Both options start unchecked.
+Choose only the access needed, then approve. These scopes cover permitted
+admin tools, including memberships and invitations where available. Sensitive
+changes still require separate Product Action approval.
+
 ## Read-only acceptance test
 
 Run these prompts in a clean task or conversation.
@@ -182,11 +192,17 @@ session should be reused without a new login unless it was revoked or expired.
   complete callback URL; do not rewrite `localhost` to `127.0.0.1` or vice versa.
 - **Wrong company:** stop product reads and writes, explicitly confirm link
   creation, then call `request_company_switch` with `current_grant_id` from the
-  latest `current_user` result and `confirm_switch=true`. Open the returned
-  `switch_url`, select and confirm the intended membership in Popscale, then
-  verify it with `current_user` through the same MCP connection. Never pass the
-  target company to the tool. If `replay_ignored=true`, refresh `current_user`;
-  if the link expired or was used, confirm again before creating another.
+  latest `current_user` result and `confirm_switch=true`. If a `switch_url` is
+  returned, open it unchanged and confirm the intended membership in Popscale.
+  The tool takes no target identifier. Verify the result with `current_user`
+  through the same MCP connection. If
+  `replay_ignored=true`, refresh `current_user`. If the link expired or was used,
+  confirm again before creating another.
+- **Admin access after a company switch:** compatible ordinary scopes carry
+  over. Admin scopes need fresh consent for the target company. If the server
+  directs you to reconnect, use the host's connector settings and approve the
+  needed admin scopes for that company. An admin-only connection receives
+  this guidance without a switch link.
 - **Interview tools or links are unavailable:** reconnect the product connector
   and review `interview:read`, `interview:write`, and
   `interview:distribute`. Do not manually paste tokens or assume a read scope

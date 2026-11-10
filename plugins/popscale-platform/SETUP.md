@@ -69,6 +69,18 @@ The first `popscale-platform` use opens Popscale authorization:
 5. If authorization is unavailable, ask a Popscale company admin to enable the
    company feature and the user's MCP access.
 
+## Extend an existing connection's admin access
+
+Reconnect `popscale-platform` from the MCP host's connector settings. In the
+Popscale browser consent page, verify the company and connecting client.
+Eligible company admins can choose among the unchecked options offered under
+**Extend access**. Select **Read company administration data** (`admin:read`)
+for permitted reads and **Allow company administration changes**
+(`admin:write`) for permitted changes. Choose only the access you need and
+approve it in Popscale. The scopes can cover memberships and invitations where
+permitted. Sensitive changes still require separate Product Action approval
+in Popscale. Availability depends on the server and your company permissions.
+
 ## Review a proposed product change
 
 A host's tool confirmation and a chat “yes” are distinct from Popscale's
@@ -102,17 +114,24 @@ existing MCP connection and stop product reads and writes:
 2. Call `request_company_switch` with the grant ID from the latest
    `current_user` result as `current_grant_id` and `confirm_switch=true`. Do not
    pass a target company name, company ID, or membership ID.
-3. Open or present the returned `switch_url`. The user signs in to the same
-   Popscale account, selects the intended membership, and confirms in the
-   authenticated browser.
+3. If a `switch_url` is returned, open or present it unchanged. The user signs
+   in to the same Popscale account, selects the intended membership, and
+   confirms in the authenticated browser.
 4. Call `current_user` again through the same MCP connection and verify the
    returned company before resuming product work.
 
-Creating the link does not complete the switch. If `replay_ignored=true`, refresh
-`current_user`; the connection remains active. If the link expired or was
+The connection stays with the source company until browser confirmation. If
+`replay_ignored=true`, refresh `current_user`. If the link expired or was
 already used, ask for new confirmation before creating another. When
-`reauthentication_required=false`, do not reconnect the connector or claim that
-its OAuth access or refresh token was rotated or revoked.
+`reauthentication_required=false`, compatible ordinary scopes are ready on
+the same connection.
+
+Admin scopes do not carry over. If you need them in the new company, reconnect
+from your MCP host and approve them for that company under **Extend access**.
+An admin-only connection receives reconnect guidance without a switch link.
+You may also see that guidance if only admin scopes match the target. In both
+cases the switch leaves the source binding active.
+After reconnecting, verify the intended company with `current_user`.
 
 Interview administration uses the dedicated `interview:read`,
 `interview:write`, and `interview:distribute` scopes. Publishing an Interview
@@ -175,9 +194,9 @@ OAuth session or customer data.
 - If product tools return an authorization challenge, reconnect
   `popscale-platform`; do not copy its credentials to `popscale-docs`.
 - If the wrong company is active, use the confirmed `request_company_switch`
-  flow above instead of reconnecting. Never pass the intended company as a tool
-  input; select it only in Popscale's authenticated browser and verify it with
-  `current_user` on the same connection.
+  flow above and follow any reconnect guidance for admin access. Select the
+  intended company only in Popscale's authenticated browser and verify it with
+  `current_user` before resuming work.
 - If Interview tools or respondent-link access are missing after an update,
   reconnect `popscale-platform` and review the dedicated Interview scopes. Do
   not paste a bearer token or treat `interview:read` as distribution authority.
