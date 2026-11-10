@@ -4,6 +4,13 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+## [1.6.10] - 2026-11-10
+
+- Explain how company administrators can explicitly add read or write access
+  when reconnecting Popscale in their AI client.
+- Explain fresh consent for administration access when switching companies,
+  including reconnect guidance for connections with only admin access.
+
 ## [1.6.9] - 2026-10-29
 
 - Hand off review-required changes through the server's human `review_url`,
