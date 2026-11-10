@@ -1,6 +1,16 @@
 # V1 implementation tracker
 
-Last updated: 2026-10-29
+Last updated: 2026-11-10
+
+## Optional company administration access — 1.6.10
+
+- Setup and shared routing guidance explain independent read and write choices
+  and fresh consent for administration access in the target company.
+- Package contracts and synthetic host evaluation scenarios cover admin-only
+  reconnect guidance and company switches that leave no compatible ordinary scopes.
+- Runtime tool names, MCP endpoints and the public Docs boundary are unchanged.
+  Publication requires the compatible Popscale production service and the
+  release checks in [the release runbook](RELEASE.md).
 
 ## Product action review handoff — 1.6.9 release preparation
 

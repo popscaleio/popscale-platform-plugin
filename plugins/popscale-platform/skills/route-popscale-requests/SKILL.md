@@ -88,22 +88,43 @@ for Journey context, duplicate names and internal identifiers.
 
 ## Company Switch Boundary
 
-1. Use the grant ID from the latest `current_user` result. Explain the current
-   company and ask for explicit confirmation immediately before creating a
-   short-lived switch link.
-2. Only after confirmation, call `request_company_switch` with
-   `current_grant_id` and `confirm_switch=true`. Never pass a target company
-   name, company ID, or membership ID to the tool.
-3. Present the returned `switch_url`. The user signs in to the same Popscale
-   account, selects the intended membership in the authenticated browser, and
-   confirms there. Creating the link alone does not switch the company.
+1. Stop product reads and writes if the connected company differs from the
+   intended company. Explain the current company and obtain explicit
+   confirmation immediately before requesting a short-lived switch link.
+2. Call `request_company_switch` with `current_grant_id` from the latest
+   `current_user` result and `confirm_switch=true`. The tool takes no target
+   company name, company ID, or membership ID.
+3. If a `switch_url` is returned, treat it as opaque and present it unchanged.
+   The user signs in to the same Popscale account, selects the intended
+   membership in the authenticated browser, and confirms the switch there.
+   Creating the link alone leaves the current company active.
 4. After browser confirmation, call `current_user` again through the same MCP
    connection and verify the returned company before resuming product work.
-5. If the result has `replay_ignored=true`, refresh `current_user`; the current
-   connection remains active. If a link expired or was already used, obtain new
-   confirmation before creating another. Do not claim reauthorization, token
-   rotation, or grant revocation when the server returns
-   `reauthentication_required=false`.
+   Compatible ordinary scopes carry over. When the server returns
+   `reauthentication_required=false`, those scopes require no reconnect.
+   Report token rotation or revocation only when the server confirms it.
+5. If the result has `replay_ignored=true`, refresh `current_user`. Obtain new
+   confirmation before replacing an expired or used link.
+
+Admin scopes do not transfer. If the user needs admin access after switching,
+follow the optional administration access steps below for the target company.
+An admin-only connection receives reconnect guidance without a switch link.
+Browser confirmation can also return this guidance when only admin scopes
+match the target. In either case the source binding stays active. Follow the
+server's guidance and verify the target with `current_user` after reconnecting.
+
+## Optional Administration Access
+
+To add missing admin scopes, the user reconnects `popscale-platform` in their
+MCP host and verifies the company and client on the Popscale consent page.
+Eligible company admins can select the offered `admin:read` and `admin:write`
+options separately under **Extend access**. Both start unchecked. The user
+selects only what the work requires and approves in the browser. If a choice
+is absent, respect the server's available scopes and current permissions.
+
+These scopes cover permitted company administration, including memberships
+and invitations where available. Check live capabilities after consent.
+Sensitive changes still require separate Product Action approval in Popscale.
 
 ## Boundary Rules
 
