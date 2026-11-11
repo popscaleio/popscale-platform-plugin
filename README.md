@@ -1,6 +1,8 @@
 # Popscale Platform Plugin
 
 The official Popscale plugin for Codex, Claude Code, Claude Desktop, and Claude
+
+[![Popscale MCP Plugin on StartupScores](https://startupscores.com/badge/popscale-mcp-plugin.svg?style=shield&v=combo&theme=dark)](https://startupscores.com/open-source/popscale-mcp-plugin)
 Cowork. One install provides public Popscale documentation and authenticated,
 company-scoped Interview, granular learning-content, Journey, and privacy-safe
 usage-insights workflows while keeping those trust boundaries separate.
