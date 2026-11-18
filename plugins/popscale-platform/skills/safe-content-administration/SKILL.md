@@ -35,7 +35,8 @@ for Journey context, duplicate names and internal identifiers.
    [question design](references/coaching-question-design.md): one primary goal,
    type-appropriate progression, aligned answers and preserved total score.
    Apply [conversation assessment](references/conversation-assessment.md) for
-   Roleplay/Coaching design and review.
+   Roleplay/Coaching design and review, including participant information and
+   the linked Roleplay audience map before writing or correcting fields.
    Before authoring new or rewritten input, fetch the matching writing guide
    from `popscale-docs` as described in the routing skill's "Before authoring"
    step (`/content/writing-good-input/` and the format-specific guides) and ask

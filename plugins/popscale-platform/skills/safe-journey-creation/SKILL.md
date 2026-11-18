@@ -64,7 +64,8 @@ for Journey context, duplicate names and internal identifiers.
    Never edit generated scripts or invent an intermediate gate.
    For Roleplay/Coaching items, apply shared
    [conversation assessment](../safe-content-administration/references/conversation-assessment.md)
-   to briefs, item inputs and saved children before activation.
+   to briefs, item inputs and saved children before activation, including
+   participant information.
    For Coaching items, apply shared
    [question design](../safe-content-administration/references/coaching-question-design.md)
    to the generation brief and review generated item inputs before execution.
@@ -180,8 +181,8 @@ for Journey context, duplicate names and internal identifiers.
     readiness does not prove child artifact provenance. Use the packaged local
     checker when available, or the same evidence rules without local execution.
     Review each linked child's learner-facing root and component fields for
-    requested language, including stray English prose or unexplained acronyms
-    in Swedish content. Flag drift despite green steps or freshness;
+    audience boundaries and requested language, including stray English prose
+    or unexplained acronyms in Swedish content. Flag drift despite green steps or freshness;
     keep the Journey in draft for review and use supported correction workflows.
     Report draft/published status, provenance, freshness, warnings and a concise
     audit-friendly summary. A partial result is not completed generation.

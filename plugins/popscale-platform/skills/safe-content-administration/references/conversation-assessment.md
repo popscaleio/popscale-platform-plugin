@@ -5,6 +5,20 @@ pre-activation reviews. Review goals, preparation, participant tasks, counterpar
 rules, reference answers, criteria and scoring together. Findings do not authorize
 additional edits, generation or publication.
 
+## Participant information
+
+Apply the [Roleplay audience map](content-format-map.md) to briefings, missions
+and tips, including reused Journey customers.
+Preserve necessary context while leaving needs, decision conditions and solution
+steps for discovery in independent practice. Guided practice may include method
+support; AI-role directions belong in role inputs. Do not automatically
+minimize briefings or clear tips. Apply this check automatically within normal
+authoring and saved readback; correct in-scope issues under existing authorization.
+Add no user review gate, routine UI inspection or approval request. Surface only
+unresolved issues needing a decision or authorization. Preserve role information
+and regeneration dependencies. Green metadata cannot clear leakage; claim only
+checks actually performed.
+
 ## Observable evidence
 
 Define transcript criteria through identifiable utterances. Distinguish reasoning,
