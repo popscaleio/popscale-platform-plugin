@@ -9,6 +9,8 @@ Last updated: 2026-11-18
 - [x] Preserve necessary participant context, intentional guided support and
   existing role information; separate field readback, UI review, generation
   evidence and trial conversations.
+- [x] Integrate the check into normal authoring/readback without an extra user
+  review gate; surface only unresolved decisions or missing authorization.
 - [x] Add synthetic host acceptance cases; no customer content is included.
 - [x] All 87 package tests, both changed-skill validators, release validation,
   live Docs MCP smoke and whitespace checks pass within the existing runtime budget.

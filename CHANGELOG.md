@@ -5,8 +5,9 @@ All notable changes to the Popscale Platform plugin are documented here.
 ## [Unreleased]
 
 - Map Roleplay participant briefings, missions and tips to their intended fields.
-  Review information disclosure separately from generation status, preserve role
-  inputs and necessary context, and distinguish independent from guided practice.
+  Check information disclosure within normal authoring and readback, without
+  an extra user review gate. Preserve role inputs and necessary context, and
+  distinguish independent from guided practice.
 
 ## [1.6.10] - 2026-11-10
 

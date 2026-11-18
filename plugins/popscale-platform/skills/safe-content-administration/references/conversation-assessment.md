@@ -7,16 +7,17 @@ additional edits, generation or publication.
 
 ## Participant information
 
-Apply the [Roleplay audience map](content-format-map.md) to proposed and saved
-customer briefings, missions and tips, including selected/reused Journey customers.
-Separate what participants need to know from what they should discover. Keep
-necessary history and constraints; independent practice should preserve discovery
-of needs, decision conditions and solution steps. Guided practice may include
-intentional method support, but never AI-role directions. Do not automatically
-minimize briefings or clear tips. Correct only authorized fields, preserve role
-information, read back saved texts and follow regeneration dependencies. A leakage
-finding remains unresolved despite green generation/readiness. Report field readback,
-UI inspection, generation metadata and executed conversations separately.
+Apply the [Roleplay audience map](content-format-map.md) to briefings, missions
+and tips, including reused Journey customers.
+Preserve necessary context while leaving needs, decision conditions and solution
+steps for discovery in independent practice. Guided practice may include method
+support; AI-role directions belong in role inputs. Do not automatically
+minimize briefings or clear tips. Apply this check automatically within normal
+authoring and saved readback; correct in-scope issues under existing authorization.
+Add no user review gate, routine UI inspection or approval request. Surface only
+unresolved issues needing a decision or authorization. Preserve role information
+and regeneration dependencies. Green metadata cannot clear leakage; claim only
+checks actually performed.
 
 ## Observable evidence
 
