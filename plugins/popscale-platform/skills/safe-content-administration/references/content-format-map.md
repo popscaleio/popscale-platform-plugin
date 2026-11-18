@@ -33,6 +33,25 @@ write the output. See [tool-workflow.md](tool-workflow.md).
 
 Apply [conversation assessment](conversation-assessment.md) to Roleplay/Coaching.
 
+### Roleplay audiences
+
+Before authoring or correcting Roleplays, establish field audiences. The reviewed
+Journey pre-conversation view uses:
+
+| Field | Participant view and purpose |
+| --- | --- |
+| Customer `conversation_starter_message` | Meet the customer: briefing with necessary, plausibly known context; not AI directions or the opening dialogue line |
+| Root `description_public` | Your mission: goal and necessary boundaries |
+| Root `education_text` | Expandable tips: intentionally chosen preparation |
+| Customer `personality_description` | AI-role behavior; not rendered in that customer card |
+| Customer background, needs and decision rules | Role facts/conditions; not rendered in that card |
+
+This map is view-specific, not a confidentiality guarantee across views/APIs.
+Verify unfamiliar surfaces; field names alone cannot establish visibility. When
+uncertain, leave placement unresolved and seek supported documentation or UI
+evidence. Preserve internal facts/rules in verified, editable role inputs when
+correcting participant text, without overwriting existing material or changing intent.
+
 ### Roleplays
 
 - Use `roleplay_customer` for one persona,
@@ -43,17 +62,14 @@ Apply [conversation assessment](conversation-assessment.md) to Roleplay/Coaching
   customer's nested lists to make a one-row edit.
 - Customer and evaluation-criterion changes may update calculated root totals;
   refresh the root revision before the next call.
-- Before changing customer behavior, read its relevant desired/fallback behavior,
-  decision rules, outcomes and associated criteria. A new prerequisite must not
-  coexist with an old success path that bypasses it. Define the same state
-  throughout: promising a written quotation, including it in a plan and receiving
-  it are different conditions; clarify only when the requested state is ambiguous.
-  Patch the smallest editable field/component set needed for the user's intent,
-  preserving unrelated rules, identity, background, goals and sources. An exact
-  field-only request does not authorize additional edits: report any remaining
-  conflict. Read back affected saved rules before claiming consistency. Follow
-  the dependency workflow for generated outputs; a no-regeneration request
-  permits no extra generation or synchronized-output claim.
+- Before behavior edits, read desired/fallback behavior, decision rules, outcomes
+  and criteria. Align prerequisites and success paths: promising a quotation,
+  planning it and receiving it differ; clarify ambiguous intent. Patch only the
+  necessary editable fields/components, preserving unrelated rules, identity,
+  background, goals and sources. Field-only requests authorize no extra edits;
+  report remaining conflicts. Read back saved rules before claiming consistency.
+  Follow generated-output dependencies; no-regeneration requests permit neither
+  extra generation nor synchronized-output claims.
 - Generated customers are append-only when the live capabilities say
   `add_generated_customers`; do not interpret regeneration as replacement.
 - `evaluation_criteria` regeneration replaces the whole criteria list and

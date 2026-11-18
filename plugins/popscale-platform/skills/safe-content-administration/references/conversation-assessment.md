@@ -5,6 +5,19 @@ pre-activation reviews. Review goals, preparation, participant tasks, counterpar
 rules, reference answers, criteria and scoring together. Findings do not authorize
 additional edits, generation or publication.
 
+## Participant information
+
+Apply the [Roleplay audience map](content-format-map.md) to proposed and saved
+customer briefings, missions and tips, including selected/reused Journey customers.
+Separate what participants need to know from what they should discover. Keep
+necessary history and constraints; independent practice should preserve discovery
+of needs, decision conditions and solution steps. Guided practice may include
+intentional method support, but never AI-role directions. Do not automatically
+minimize briefings or clear tips. Correct only authorized fields, preserve role
+information, read back saved texts and follow regeneration dependencies. A leakage
+finding remains unresolved despite green generation/readiness. Report field readback,
+UI inspection, generation metadata and executed conversations separately.
+
 ## Observable evidence
 
 Define transcript criteria through identifiable utterances. Distinguish reasoning,
