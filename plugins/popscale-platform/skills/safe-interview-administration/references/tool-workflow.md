@@ -44,7 +44,7 @@ dropped without error. Verify the stored input with
 ## Publication
 
 Call `get_interview_publish_readiness`, then follow the skill's publication
-review and immediate confirmation gate.
+checks, scoped publication intent and platform-required approval.
 `publish_interview_study` requires the current edit token, `confirm_publish=true`,
 `interview:read`, `interview:write`, and `publish:write`; editing approval never
 authorizes publication.

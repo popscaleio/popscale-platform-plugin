@@ -49,7 +49,8 @@ history before blaming generation order: later UI writes may change dependencies
 A `Manual Ui` entry on opening proves a write, not intent; flag a suspected UI/backend
 issue. State unknown chronology/writer; suggest server ordering only after excluding
 later writes. Preserve curated visible fields. Edited protected outputs trigger the
-generation-only stop below. Review readiness separately; mutations need confirmation.
+generation-only stop below. Review readiness separately; reuse scoped intent
+while retaining platform-required approvals.
 
 ## Interpret each part
 

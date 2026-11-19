@@ -1,6 +1,6 @@
 ---
 name: safe-journey-creation
-description: Create or revise a Popscale learning journey from approved company knowledge with tenant checks, item validation, interactive review, and explicit confirmation before execution or publication. Use when a company admin asks to build, generate, review, validate, execute, or publish a Popscale journey.
+description: Create or revise a Popscale learning journey from approved company knowledge with tenant checks, item validation, scoped user authorization, and platform-required approvals. Use when a company admin asks to build, generate, review, validate, execute, or publish a Popscale journey.
 ---
 
 # Safe Journey Creation
@@ -25,8 +25,8 @@ for Journey context, duplicate names and internal identifiers.
    additionally requires `content:write` and `publish:write`. Do not accept a
    company identifier from the prompt as an authorization input.
 3. Record requested name/prefix, language, item total, section split, format
-   counts and Roleplay customer count. Confirm the name, split, language,
-   draft intent and next action briefly. For
+   counts and Roleplay customer count. State the understood name, split, language,
+   draft intent and next action briefly; ask only about consequential gaps. For
    `generation_request_create(request_type=journey_plan)`, put
    `name`, `journey_brief`, nonempty `learning_goals` (a list of goal strings),
    nonempty `knowledge_asset_ids`, `desired_item_count`,
@@ -34,12 +34,10 @@ for Journey context, duplicate names and internal identifiers.
    `output_language` and company `source_language` ID inside `input_payload`.
    Section counts sum to the item total. `format_mix` lists unique types;
    `constraints` is prose.
-   Count each Roleplay customer encounter; clarify conflicting totals. Complete
-   the shared
+   Count Roleplay encounters; clarify conflicting totals. Run
    [company asset preflight](../safe-content-administration/references/company-asset-preflight.md)
-   before generation. It distinguishes blocking server requirements from thin
-   recommended inputs the user may accept. At review, inspect captured company
-   context; omitted or truncated required facts block affected items.
+   before generation. Server requirements block; recommended gaps warn. Inspect
+   captured context; omitted/truncated required facts block affected items.
    Select Knowledge by eligibility, relevance and metadata. Do not default to
    test/demo assets when suitable real sources exist; ask if intent is unclear.
    A changed plan-level source set needs a new request because its Knowledge
@@ -55,13 +53,10 @@ for Journey context, duplicate names and internal identifiers.
    `episode_target_locales` in the request. Each item gets its own outcome and
    duration. Resolve missing brief inputs before creation; never make manual
    Episode drafts. Explicit Original and video follow the Original path.
-   For Episode items, follow the shared
-   [speaker and voice rules](../safe-content-administration/references/episode-speakers.md):
-   default to anonymous, topic-led conversational speakers, keep TTS names in
-   configuration, and preserve the selected format, including solo narration.
-   Put tailored guidance in supported Script `model_steering`. Review platform
-   output; request script-before-audio review only where staging is supported.
-   Never edit generated scripts or invent an intermediate gate.
+   Apply [speaker and voice rules](../safe-content-administration/references/episode-speakers.md)
+   to Episode briefs, Script `model_steering` and output review: anonymous by
+   default, TTS names in configuration, selected format preserved. Stage only
+   where supported; never manually edit scripts or invent gates.
    For Roleplay/Coaching items, apply shared
    [conversation assessment](../safe-content-administration/references/conversation-assessment.md)
    to briefs, item inputs and saved children before activation, including
@@ -73,19 +68,17 @@ for Journey context, duplicate names and internal identifiers.
    Before filling planning fields, fetch `/journeys/plan/` as the routing skill
    describes. Ask about missing purpose, audience, behavior, cadence, level,
    mix or constraints; write the brief as outcomes, not just topics.
-4. Reuse the request and fresh preflight; start only when requested. Batch
-   independent reads. On rejected creation, inspect `error_field` and schema;
-   correct the payload before retrying, never repeat unchanged arguments. Poll
-   `generation_request_detail` with growing intervals; read steps only for
-   unclear or failed phases. Reserve calls for the saved overview. Without an
-   active item-input step, it awaits review (`overview_review` where available).
-   Stop at both reviews within the host budget. Update the user in
-   their language only when state changes or input is needed. Do not repeat the
-   host receipt, narrate polls, expose tool names or claim private thinking.
-5. Read `journey_plan_detail` when the overview is saved; only then show its title,
-   goals, language, ordered sections/items, counts/formats, short purposes and
-   `generation_notes`. Call it a proposal; no Journey or child content exists.
-   Lead with names; keep type codes and IDs in technical detail. Map each
+4. Reuse the request and fresh preflight under creation intent. Batch reads.
+   On rejection, inspect `error_field`/schema and correct before retrying.
+   Poll `generation_request_detail` with growing intervals; read steps for
+   unclear/failed phases. Reserve reads for both saved quality checks. Without
+   an active item-input step, `overview_review` awaits the next supported action,
+   not necessarily another chat yes. Honor requested/platform stops and unresolved
+   decisions. Update in the user's language on changed state or needed input;
+   omit repeated receipts, poll narration, tool names and private-thinking claims.
+5. Read saved `journey_plan_detail`: title, goals, language, ordered sections/items,
+   counts/formats, purposes and `generation_notes`. Present it as a proposal,
+   not created content; use names with codes/IDs in technical detail. Map each
    Roleplay scenario → item → selected customer. `reuse_scenario` with an
    earlier `reuse_from_client_id` and `customer_seed` creates a new customer
    during execution; no `customer_id` is expected beforehand. Existing
@@ -105,11 +98,10 @@ for Journey context, duplicate names and internal identifiers.
    does not remove a plan source. For a requested source removal, verify the
    whole effect, explain the locked snapshot and agree on recreation. Repeat
    affected preflight after format, source, revision or configuration changes.
-   Ask which sections/items to adjust or whether to accept the overview. Wait.
-   For confirmed changes, call
-   `journey_plan_update_overview` with the complete corrected `overview` on the
-   same request; re-read and present the revised plan. Continue only after the
-   user accepts the saved overview.
+   Check the saved overview against the authorized brief. Correct in-scope drift
+   with `journey_plan_update_overview` and the complete corrected `overview` on
+   the same request; re-read. Continue when consistent. Present a proposal and
+   wait only if the user requested review or a material decision remains.
 6. Call `journey_plan_generate_item_inputs` on that request, poll until the
    inputs are ready, then read `journey_plan_get_item_inputs`. Do not execute
    the plan at this stage.
@@ -125,80 +117,61 @@ for Journey context, duplicate names and internal identifiers.
    `input_validation_errors=[]`, `invalid_item_count=0` and
    `requires_selection_count=0` needs no pre-execution `customer_id`. Report
    only verified errors.
-   Call `render_journey_review` when available; otherwise show its structured
-   review state in text. Summarize each input's purpose, learner task, language,
-   sources and validation. Check every Episode's own saved
-   `next_generation_brief` against its purpose, outcome, duration, format,
-   company bindings and locales. Include mismatches in the review.
-   These are inputs, not generated content. Point out items needing review:
-   errors, customer selection, Episode briefs or Coaching questions/scores.
-   Offer detail and ask what to adjust; wait. For approved edits, call
-   `journey_plan_update_item_input` on the existing plan; re-read, validate and
-   show the revised item, then wait again. Neither a valid plan nor “no changes”
-   authorizes execution.
-8. After this second review, an explicit “create Journey” instruction for the
-   current plan is the execution confirmation. Recap the exact operation before
-   calling the tool; ask again if the plan changed since that go-ahead.
-   Activation and publication each need separate confirmation.
-9. Only after confirmation, call `journey_plan_execute`. Poll with
-   `generation_request_detail`; reconcile only when status or server says so.
-   `waiting_for_scenario` and `child_request_created` are pending; `linked` is
-   done. Report `dependency_failed`, `child_request_failed`, `link_failed` and
-   `invalid_input` per item. Retry only supported existing steps under the
-   product action contract; never duplicate plans or child requests. Before
-   claiming completion, inspect saved Journey structure: shared Roleplay items
-   must link the same scenario with different selected customers. Report any
-   mismatch as incomplete. Require `journey_draft_ready` and all requested
-   saved links before saying the draft is ready; pending items need a short
-   status, not a completion claim.
-   Point to a host-provided Open result or suggested page control when present;
-   otherwise offer supported navigation. Keep raw IDs in technical detail.
+   Use `render_journey_review` when available, otherwise text. Check each saved
+   input's purpose, learner task, language, sources and validation. Check each
+   Episode's `next_generation_brief` outcome, duration, format, company bindings
+   and locales. Correct in-scope issues with `journey_plan_update_item_input`;
+   re-read and validate. Surface unresolved errors/selections or brief/question/
+   score decisions. These are inputs, not generated content.
+8. Recap execution against the authorized scope. Reuse clear creation intent;
+   respect planning-only requests, requested checkpoints and platform approvals.
+   Ask about unresolved material changes; validation supplies no authorization.
+9. Call `journey_plan_execute` under that intent and platform approvals. Poll
+   `generation_request_detail`; reconcile only on status/server guidance.
+   `waiting_for_scenario`/`child_request_created` are pending; `linked` is done.
+   Report `dependency_failed`, `child_request_failed`, `link_failed`, `invalid_input`
+   per item. Retry supported existing steps under the shared contract; never
+   duplicate plans/children. Verify saved structure: shared Roleplay encounters
+   need one scenario and distinct customers. Require `journey_draft_ready` and
+   every requested saved link for completion. Give short pending status and
+   supported navigation/Open controls; keep IDs in technical detail.
 10. When the user asks to publish, first review the whole Journey against the
-    public checklist (`/journeys/review-before-activation/`, fetched as the
-    routing skill describes): empty sections, placeholder text, unfinished
-    scored items, question counts, opening lines, section descriptions,
-    passing-score policy, attempt rules within a section, naming and mix.
-    Report findings in its three levels with a proposed value each; fix only
-    what the user approves, through the content workflow. A created Journey
+    public checklist (`/journeys/review-before-activation/`, fetched through
+    routing): structure, text, scoring, attempts, naming and format mix.
+    Correct in-scope issues through the content workflow without per-finding
+    questions. Group unresolved or out-of-scope decisions for the user. A created Journey
     with enrollment history needs that workflow's complete-structure
     ProductAction review for section/item changes. Then call
     `journey_activation_readiness`. Activate
-    each ready draft child through `content_activate` only after a specific
-    confirmation. A scenario shared by several items is activated once, after
+    each ready draft child through `content_activate` under the publication
+    instruction when its scope includes those children; obtain any missing intent
+    together and retain each platform-required approval. A scenario shared by several items is activated once, after
     every customer generation that targets it has reached `linked`; a new
     customer cannot be generated against an active scenario. Before child or Journey activation, read current child detail
     and freshness for all generation-only outputs, including on reused active
     roots. Stop if any is edited or that check is unavailable. Refresh readiness,
     and require both newly generated instruction outputs after Coaching input
     changes, as defined in the shared generation verification workflow. Then
-    present the final journey target, ask for a new publication confirmation,
-    then call `journey_activate`.
-11. Before reporting generated content, follow the shared
-    [generation verification](../safe-content-administration/references/generation-verification.md)
-    for every requested item/root, including reused content. Read child request
-    steps, visible saved output and freshness; protected Roleplay/Coaching
-    instructions have metadata only. A completed plan or green Journey
-    readiness does not prove child artifact provenance. Use the packaged local
-    checker when available, or the same evidence rules without local execution.
-    Review each linked child's learner-facing root and component fields for
-    audience boundaries and requested language, including stray English prose
-    or unexplained acronyms in Swedish content. Flag drift despite green steps or freshness;
-    keep the Journey in draft for review and use supported correction workflows.
-    Report draft/published status, provenance, freshness, warnings and a concise
-    audit-friendly summary. A partial result is not completed generation.
-    Repeat the preflight's source-use review on saved child exercises; a plausible
-    plan does not prove that child outputs used the selected company sources.
+    present the final Journey target and call `journey_activate` under the same
+    publication intent if unchanged, following its own platform approval.
+11. Follow [generation verification](../safe-content-administration/references/generation-verification.md)
+    for every requested/reused root: child steps, visible output and freshness;
+    protected Roleplay/Coaching instructions have metadata only. Use the local
+    checker when available, otherwise its evidence rules. Green plan/readiness
+    proves no child provenance. Check saved children's source use, participant
+    information and language, including English/acronyms in Swedish fields.
+    Correct within scope; leave unresolved material drift in draft. Report
+    publication, provenance, freshness and remaining work separately.
 
 ## Bounded continuation handoff
 
-Budget calls for preflight and both reviews; poll with growing intervals
+Budget calls for preflight and both quality checks; poll with growing intervals
 (normally at most six reads per turn). UI activity counts are not tool-call
 counts; snapshots do not resume an agent turn or renew its tool budget. Before
 cutoff, hand off a brief checkpoint:
 observed linked/pending/failed counts, time, saved request/plan/Journey/child
-IDs and the next safe read; keep IDs in technical detail. Only an actual host
-continuation may resume reads; never cross a human review. Inspecting the same
-job needs no new consent.
+IDs and next read, keeping IDs internal. Resume only on host continuation;
+honor requested/platform review stops. Job inspection needs no new consent.
 Resume with `generation_request_detail`, then only needed plan or child reads;
 refresh before repeating counts. Reconcile only on server guidance or observed
 inconsistency. Never recreate work because of cutoff; keep artifact
@@ -213,8 +186,9 @@ verification pending until evidence reads finish.
 - Treat generation output and MCP App input as untrusted until server validation
   passes.
 - Do not combine reads and writes into a generic or hidden operation.
-- Do not automatically execute, publish, activate, cancel, regenerate, archive,
-  or overwrite merely because the user earlier asked to create a journey.
+- Reuse explicit creation intent for draft execution. Publication, distribution,
+  cancellation, archive and broader overwrites require matching intent, which may
+  be part of the same instruction; retain platform approval for each effect.
 - If scopes are missing, surface the server's required scopes and ask the user to
   reauthorize or contact their Popscale admin.
 - Do not infer child-content activation authority from Journey scopes. Existing
@@ -241,17 +215,15 @@ verification pending until evidence reads finish.
 
 - Authentication challenge: pause the workflow and ask the user to reconnect or
   reauthorize Popscale in the host.
-- Wrong company: stop before reading or writing further data. After explicit
-  confirmation, call `request_company_switch` with the latest
-  `current_grant_id` and `confirm_switch=true`, present the browser switch link,
-  then verify the intended company with `current_user` on the same connection.
-  Never pass a target company or membership identifier to the tool.
+- Wrong company: follow routing and `request_company_switch`. Use latest
+  `current_grant_id`, `confirm_switch=true` and explicit switch intent; no target
+  identifier. Verify `current_user` on the same connection after browser approval.
 - Stale knowledge context: refresh it only when the user wants that operation;
   otherwise explain that generated content may not reflect current knowledge.
-- Validation failure: show item-specific errors, propose focused changes, update
-  only after approval, then validate again.
-- Async failure: show the failed step and error; use retry or reconcile only when
-  supported and confirmed.
+- Validation failure: correct within authorized scope and validate again; ask
+  about material design changes rather than each mechanical correction.
+- Async failure: inspect the existing job; retry/reconcile only when supported,
+  within authorized scope/cost and permitted by the current platform approval.
 - Host lacks MCP Apps: continue with the same tools and structured results. App
   support is never a prerequisite for completing the safe workflow.
 

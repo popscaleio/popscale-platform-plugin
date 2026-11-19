@@ -73,8 +73,8 @@ correcting participant text, without overwriting existing material or changing i
 - Generated customers are append-only when the live capabilities say
   `add_generated_customers`; do not interpret regeneration as replacement.
 - `evaluation_criteria` regeneration replaces the whole criteria list and
-  `setup` rewrites scenario fields; both need a described, confirmed change on
-  an existing Roleplay. See the intent table in
+  `setup` rewrites scenario fields; both need intent covering those disclosed
+  effects on an existing Roleplay, with platform-required approvals. See the intent table in
   [tool-workflow.md](tool-workflow.md).
 
 ### Coaching sessions

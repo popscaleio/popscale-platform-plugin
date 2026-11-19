@@ -29,11 +29,12 @@ queued or running. Never retry speculatively.
 
 ## Journey Review
 
-Follow the main skill's two saved review gates. For Episode items, apply the
+Follow the main skill's two saved quality checks within the authorized operation.
+For Episode items, apply the
 shared [speaker policy](../../safe-content-administration/references/episode-speakers.md)
 and inspect each saved brief before execution. `render_journey_review` is
-optional; structured text works. Only an explicit instruction after the second
-review authorizes `journey_plan_execute` on the accepted plan.
+optional; structured text works. Reuse clear creation intent after both checks;
+honor planning-only requests, requested review stops and platform approvals.
 
 Each Roleplay item selects one customer. Scenario customer count does not count
 Journey items. Overview selectors are mutually exclusive:
@@ -52,8 +53,10 @@ a tool argument error does not establish invalid content.
 ## Publication
 
 Follow the main skill's publication step: verify `journey_activation_readiness`,
-confirm and activate each child, refresh readiness, then separately confirm the
-Journey. Activation uses `confirm_publish=true`; `content_activate` needs
+activate in-scope children, refresh readiness, then activate the Journey under
+explicit publication intent. Retain each platform-required approval without
+adding a chat confirmation for every child or repeating the final question.
+Activation uses `confirm_publish=true`; `content_activate` needs
 `content:read`, `content:write` and `publish:write`.
 App controls use the same server authorization.
 

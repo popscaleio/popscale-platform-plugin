@@ -73,14 +73,17 @@ for Journey context, duplicate names and internal identifiers.
    never claim completion before the server does.
 6. Call `get_interview_publish_readiness` before publication. Present the exact
    Study, draft, changed sections, errors, and warnings. Call
-   `publish_interview_study` only after immediate explicit confirmation and with
-   `confirm_publish=true`.
+   `publish_interview_study` under explicit intent covering that publication,
+   with `confirm_publish=true` and platform-required approval. Reuse matching
+   intent instead of asking for another chat yes.
    Report publish readiness separately from design review and observed
    conversation quality; readiness does not prove interviewer behavior.
 7. For invitations, list summaries before opening a specific invitation. Access
    respondent links or create, send, revoke, or expire invitations only when the
-   `interview:distribute` capability is present. Ask for immediate confirmation
-   before sending email or reminders and use `confirm_send=true`. Never expose a
+   `interview:distribute` capability is present. Sending/reminders require intent
+   covering recipients, message and effect, plus platform-required approval; reuse
+   matching intent without another chat question and use `confirm_send=true`.
+   Never expose a
    respondent link or masked contact value beyond the user's requested context.
 8. For insights, use bounded run and analysis tools. Page transcript turns,
    preserve truncation indicators, distinguish stored evidence from inference,
@@ -118,11 +121,12 @@ do not request or paste a bearer token.
 - Do not retry a stale edit blindly. Show the conflict, refresh, preserve the
   user's intended focused change, and ask again if the refreshed state changes
   the operation materially.
-- Do not combine create, send, publish, revoke, expire, delete, regenerate, or
-  retry actions behind one inferred confirmation.
+- A combined explicit instruction may cover create, send, publish, revoke,
+  expire, delete, regenerate or retry. Never infer unrelated effects; retain
+  each action's platform approval and ask about material changes.
 - Respect server limits. Invitation email/reminder batches accept at most 500
-  explicit invite IDs; split larger user-approved work into separately reviewed
-  batches rather than bypassing validation.
+  explicit invite IDs; split larger authorized work within that recipient set,
+  retaining each platform-required batch approval without duplicate chat questions.
 - Treat masked or omitted respondent data as intentionally unavailable. Never
   infer it from labels, evidence, or adjacent results.
 - If a tool is unavailable (`available: false`), report the missing feature or

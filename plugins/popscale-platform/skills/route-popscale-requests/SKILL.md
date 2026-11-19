@@ -89,8 +89,8 @@ for Journey context, duplicate names and internal identifiers.
 ## Company Switch Boundary
 
 1. Stop product reads and writes if the connected company differs from the
-   intended company. Explain the current company and obtain explicit
-   confirmation immediately before requesting a short-lived switch link.
+   intended company. Explain the current company; require explicit switch intent,
+   reusing an existing clear request rather than asking again for the link.
 2. Call `request_company_switch` with `current_grant_id` from the latest
    `current_user` result and `confirm_switch=true`. The tool takes no target
    company name, company ID, or membership ID.
@@ -103,8 +103,8 @@ for Journey context, duplicate names and internal identifiers.
    Compatible ordinary scopes carry over. When the server returns
    `reauthentication_required=false`, those scopes require no reconnect.
    Report token rotation or revocation only when the server confirms it.
-5. If the result has `replay_ignored=true`, refresh `current_user`. Obtain new
-   confirmation before replacing an expired or used link.
+5. On `replay_ignored=true`, refresh `current_user`. Replace an expired/used link
+   only under still-valid switch intent and server rules; ask about changed intent.
 
 Admin scopes do not transfer. If the user needs admin access after switching,
 follow the optional administration access steps below for the target company.
