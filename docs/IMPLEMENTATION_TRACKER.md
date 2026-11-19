@@ -2,6 +2,32 @@
 
 Last updated: 2026-11-19
 
+## Full role assignment — unreleased candidate
+
+- [x] Route explicit role/responsibility-unit requests to a focused reference
+  using `admin_membership_role_units_add`, exact human review and the committed
+  `role_assignment_verification` receipt. Existing direct access is not role
+  provenance; zero net effects still retain source review.
+- [x] Preserve legacy role-label additions and their live host restrictions;
+  never substitute them for confirmed role-unit authority. Preserve unrelated
+  roles/scopes, affiliations, tier and direct grants.
+- [x] Extend required-tool fixture, checksummed dependency coverage, setup,
+  installation guidance, capability descriptions and synthetic host cases.
+- [x] Review `safe-journey-creation`: unchanged because this is organization
+  administration; live Journey authority and publication boundaries still apply.
+  Existing Read/Write capabilities, OAuth scopes, MCP URLs, six entrypoints,
+  Product Actions v1 and hard runtime limits remain unchanged. Increase only
+  the editorial word ceiling to 23,000 for this bounded additional workflow.
+- [x] All 90 package tests, release validation, public Docs MCP smoke, local
+  Markdown links and whitespace checks pass. The compiled bundle is 22,629
+  words / 173,979 characters; hard runtime limits are unchanged.
+- [x] Record backend contract source
+  `218d3beb8e59c45d657b8c3c3f8688d08fbf734f` for all eight newly required
+  administration tool names in the compatibility fixture.
+- [ ] Deploy the compatible backend, execute separately authorized clean-host
+  cases, verify new first-party profile adoption, and publish separately with
+  release-version parity. No version bump, publication or live write is included.
+
 ## Coaching round count — unreleased
 
 - [x] Add numeric count guidance across Coaching design, manual/standalone

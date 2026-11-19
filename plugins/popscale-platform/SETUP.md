@@ -81,6 +81,26 @@ approve it in Popscale. The scopes can cover memberships and invitations where
 permitted. Sensitive changes still require separate Product Action approval
 in Popscale. Availability depends on the server and your company permissions.
 
+## Assign a person's role and responsibility units
+
+Choose the exact person, business role and responsibility units. Full assignment
+uses `admin_membership_role_units_add` when live capabilities permit it; selected
+units must already be the person's own units. Review the named role/unit pairs,
+unit and company permission sources, descendant scope and session effects in
+Popscale before applying the exact proposal. Existing direct permissions may
+make the net access change zero; the role-owned sources still need approval.
+
+Completion requires the saved `role_assignment_verification` receipt, including
+confirmed complete role scopes and complete role-owned source evidence. A role
+label or existing access alone is insufficient. The legacy
+`admin_membership_business_roles_set` additions save labels without confirming
+new scopes or permissions. If full assignment is unavailable, use organization
+administration. See the [role assignment workflow](skills/route-popscale-requests/references/role-assignment.md).
+
+Full assignment requires a compatible backend and a new host conversation after
+the released package/profile is adopted. Updating the plugin does not replace
+an existing first-party conversation's frozen instructions or grant new scopes.
+
 ## Review a proposed product change
 
 A host's tool confirmation and a chat “yes” are distinct from Popscale's
