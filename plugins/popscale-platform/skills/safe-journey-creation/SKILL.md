@@ -64,7 +64,8 @@ for Journey context, duplicate names and internal identifiers.
    For Coaching items, apply shared
    [question design](../safe-content-administration/references/coaching-question-design.md)
    to the generation brief and review generated item inputs before execution.
-   Preserve the selected type, aligned answers and intended total score.
+   Preserve type, answers and total score; check numeric `round_limit` in
+   proposed, normalized and saved Coaching inputs under that guide.
    Fetch `/journeys/plan/` before writing outcome-based planning fields. Apply
    shared defaults to minor cadence, level or style gaps; ask only about material
    choices or purpose/audience/behavior that cannot be inferred.

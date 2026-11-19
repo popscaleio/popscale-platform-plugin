@@ -2,6 +2,18 @@
 
 Last updated: 2026-11-19
 
+## Coaching round count — unreleased
+
+- [x] Add numeric count guidance across Coaching design, manual/standalone
+  authoring, Journey inputs, saved review and legacy correction.
+- [x] Preserve live representation/range, focused scope and paired regeneration;
+  neither metadata nor permissive schemas prove runtime round semantics.
+- [x] Add synthetic cases. No customer facts, product changes or release included.
+- [x] All 87 package tests, both changed-skill validators, release validation,
+  public Docs smoke and whitespace checks pass within the runtime word budget.
+- [ ] Execute authorized host cases and trial conversations. Product round
+  definition, shared validation and UI consistency remain separate decisions.
+
 ## Defaults and local blockers — unreleased
 
 - [x] Add shared contextual-default and dependency-scoped blocker guidance;
