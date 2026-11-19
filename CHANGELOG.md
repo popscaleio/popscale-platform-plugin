@@ -4,6 +4,11 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+- Treat Coaching `round_limit` as a whole-number count in the live contract's
+  representation, keeping timing/conduct guidance in supported inputs. Verify
+  normalized/saved values, preserve legacy instructions and regenerate both
+  outputs without inventing round definitions, limits or runtime guarantees.
+
 - Use contextual defaults for minor authoring/planning gaps and limit blockers
   to affected operations and dependencies. Continue independently authorized
   work without bypassing whole-plan validation, costs or platform approvals;

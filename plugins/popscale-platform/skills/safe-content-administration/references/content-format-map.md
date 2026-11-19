@@ -80,7 +80,8 @@ correcting participant text, without overwriting existing material or changing i
 ### Coaching sessions
 
 - Follow [question design](coaching-question-design.md) for participant-facing
-  wording, progression, reference-answer alignment and score-preserving splits.
+  wording, progression, aligned answers, score-preserving splits and numeric
+  `round_limit` inputs/readback.
 
 - Any Coaching generation input change requires BOTH `agent_prompt` and
   `evaluation_instructions`, regardless of freshness.
