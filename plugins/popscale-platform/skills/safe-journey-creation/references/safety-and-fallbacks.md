@@ -24,7 +24,8 @@ changes; honor requested review stops and every platform-required approval.
 Show saved validation failures beside the affected item. Validate generated
 payloads with the item-input tool; use saved selector status and summary for
 linked or reused items. A tool invocation error proves neither validity nor
-invalidity. Correct in-scope inputs, then re-read and revalidate; ask about material changes.
+invalidity. Correct in-scope inputs and revalidate. Independent preparation can
+continue; whole-plan execution still requires every required item to pass.
 
 ## MCP App Capability
 
@@ -53,8 +54,10 @@ and stop before claiming that two distinct encounters were created.
 ## Waiting Dependencies and Failed Sources
 
 `waiting_for_scenario` means the source item has not reached `linked`. If the
-source fails, dependent items become `dependency_failed`. Reconcile and retry
-the existing step; a second plan produces duplicates.
+source fails, dependent items become `dependency_failed`. Continue independent
+supported jobs, preserving the existing plan, identities and requested counts.
+Reconcile/retry only as supported and authorized; never claim the whole draft ready
+while any required item remains blocked.
 
 ## Async and Partial Failure
 

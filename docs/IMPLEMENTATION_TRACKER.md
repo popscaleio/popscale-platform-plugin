@@ -2,6 +2,19 @@
 
 Last updated: 2026-11-19
 
+## Defaults and local blockers — unreleased
+
+- [x] Add shared contextual-default and dependency-scoped blocker guidance;
+  align writing-guide, Journey, content and Study instructions.
+- [x] Preserve material decisions, explicit choices/scoring, company facts,
+  access boundaries, whole-plan validation and exact platform approvals.
+- [x] Add synthetic acceptance cases for defaults, independent progress and
+  atomic/dependent failures. No backend changes or customer writes are included.
+- [x] All 87 package tests, four changed-skill validators, release validation,
+  public Docs smoke and whitespace checks pass within the runtime word budget.
+- [ ] Execute host cases in authorized test environments. Package checks do not
+  establish real host behavior; release remains separate.
+
 ## Scoped authorization — unreleased
 
 - [x] Centralize chat-intent reuse in the shared ProductAction contract. Keep

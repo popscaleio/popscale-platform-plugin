@@ -4,6 +4,11 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+- Use contextual defaults for minor authoring/planning gaps and limit blockers
+  to affected operations and dependencies. Continue independently authorized
+  work without bypassing whole-plan validation, costs or platform approvals;
+  preserve explicit choices and report partial progress accurately.
+
 - Reuse clear user authorization across the described operation without repeated
   chat confirmations, per-finding approval or routine Journey planning pauses.
   Preserve requested review stops, material-change decisions and every required
