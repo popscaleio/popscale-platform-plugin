@@ -61,7 +61,7 @@ for Journey context, duplicate names and internal identifiers.
    field. Before activating content or a Journey, fetch
    `/journeys/review-before-activation/` and review against it. The guides
    describe what good input contains, not how the platform processes it. Ask
-   the user for what the guide says is missing before creating anything. Never
+   only about material gaps; apply shared defaults to minor ones. Never
    put company facts into the docs query; fetch the guide, then author on the
    product side.
 6. For a mixed request, answer the public portion from `popscale-docs`, clearly

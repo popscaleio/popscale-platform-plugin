@@ -45,13 +45,10 @@ before new input edits; if discovered after saving inputs, report the update as
 incomplete. Never skip one output because freshness appears current, or manually
 patch either output after a partial or failed generation.
 
-Before delete, reorder, reassignment, or archive, inspect bounded usage. If
-usage is truncated, do not infer that unseen dependencies are absent. Retry
-once with `limit` equal to the larger returned Journey/department count, capped
-at the server maximum of 100. If the retry remains truncated, report the totals
-and truncation flags and stop when the decision requires exact dependency
-details. `get_content_usage` has no filters, offset, or cursor; do not invent
-unsupported narrowing or pagination arguments.
+Before destructive or assignment changes, inspect bounded usage following
+[tool-workflow.md](tool-workflow.md). Truncation blocks only decisions needing
+unavailable dependency detail; it proves no absence. Continue independent work
+under the shared rule, never an unsafe destructive action.
 
 ## Async generation and partial failure
 

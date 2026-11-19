@@ -39,9 +39,8 @@ for Journey context, duplicate names and internal identifiers.
    the linked Roleplay audience map before writing or correcting fields.
    Before authoring new or rewritten input, fetch the matching writing guide
    from `popscale-docs` as described in the routing skill's "Before authoring"
-   step (`/content/writing-good-input/` and the format-specific guides) and ask
-   for what it says is missing. The guide shapes the input; the platform owns
-   the generation.
+   step (`/content/writing-good-input/` and format-specific guides). Apply shared
+   defaults to minor gaps; ask about material missing input. The platform generates.
 4. Before changing an object, record the root `revision`, status, editable
    fields, component type, and exact requested delta. Prefer one focused root or
    component mutation over replacing a collection or unrelated fields.
@@ -73,8 +72,8 @@ for Journey context, duplicate names and internal identifiers.
    dependency details. This tool cannot be filtered, offset, or paged.
 8. Before creating a new exercise, run the shared
    [company asset preflight](references/company-asset-preflight.md) for the target
-   format: stop only on what the server requires, warn about thin recommended
-   inputs and offer to fill them, then generate when the user decides. The
+   format: required gaps block affected operations; recommended gaps warn.
+   Apply shared defaults and local blockers under clear generation intent. The
    preflight does not apply to targeted regeneration or language generation;
    those check only the selected subpart's dependencies. For new generated
    Coaching/Flashcards, read [standalone generation](references/standalone-generation.md)
@@ -98,7 +97,8 @@ for Journey context, duplicate names and internal identifiers.
    For Episodes, apply [speaker and voice rules](references/episode-speakers.md)
    to Script input (`model_steering`), listening guidance, review and supported
    combined generation.
-   Stop active input corrections when safe regeneration is unavailable.
+   Stop affected input corrections when safe regeneration is unavailable;
+   continue independent authorized work under the shared local-blocker rule.
 9. Before publication, repeat the conversation-assessment review for affected
    Roleplay/Coaching content; report unresolved gaps.
    Review the root against the public checklists: fetch

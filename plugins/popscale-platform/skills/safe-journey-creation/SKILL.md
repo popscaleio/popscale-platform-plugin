@@ -65,9 +65,9 @@ for Journey context, duplicate names and internal identifiers.
    [question design](../safe-content-administration/references/coaching-question-design.md)
    to the generation brief and review generated item inputs before execution.
    Preserve the selected type, aligned answers and intended total score.
-   Before filling planning fields, fetch `/journeys/plan/` as the routing skill
-   describes. Ask about missing purpose, audience, behavior, cadence, level,
-   mix or constraints; write the brief as outcomes, not just topics.
+   Fetch `/journeys/plan/` before writing outcome-based planning fields. Apply
+   shared defaults to minor cadence, level or style gaps; ask only about material
+   choices or purpose/audience/behavior that cannot be inferred.
 4. Reuse the request and fresh preflight under creation intent. Batch reads.
    On rejection, inspect `error_field`/schema and correct before retrying.
    Poll `generation_request_detail` with growing intervals; read steps for
@@ -98,10 +98,7 @@ for Journey context, duplicate names and internal identifiers.
    does not remove a plan source. For a requested source removal, verify the
    whole effect, explain the locked snapshot and agree on recreation. Repeat
    affected preflight after format, source, revision or configuration changes.
-   Check the saved overview against the authorized brief. Correct in-scope drift
-   with `journey_plan_update_overview` and the complete corrected `overview` on
-   the same request; re-read. Continue when consistent. Present a proposal and
-   wait only if the user requested review or a material decision remains.
+   Honor requested review stops; unresolved material decisions block dependents.
 6. Call `journey_plan_generate_item_inputs` on that request, poll until the
    inputs are ready, then read `journey_plan_get_item_inputs`. Do not execute
    the plan at this stage.
@@ -130,8 +127,10 @@ for Journey context, duplicate names and internal identifiers.
    `generation_request_detail`; reconcile only on status/server guidance.
    `waiting_for_scenario`/`child_request_created` are pending; `linked` is done.
    Report `dependency_failed`, `child_request_failed`, `link_failed`, `invalid_input`
-   per item. Retry supported existing steps under the shared contract; never
-   duplicate plans/children. Verify saved structure: shared Roleplay encounters
+   per item. Continue supported independent child jobs under the shared local-
+   blocker rule; never bypass whole-plan validation, drop items or duplicate jobs.
+   Retry supported existing steps under the shared contract. Verify saved structure:
+   shared Roleplay encounters
    need one scenario and distinct customers. Require `journey_draft_ready` and
    every requested saved link for completion. Give short pending status and
    supported navigation/Open controls; keep IDs in technical detail.
@@ -220,8 +219,8 @@ verification pending until evidence reads finish.
   identifier. Verify `current_user` on the same connection after browser approval.
 - Stale knowledge context: refresh it only when the user wants that operation;
   otherwise explain that generated content may not reflect current knowledge.
-- Validation failure: correct within authorized scope and validate again; ask
-  about material design changes rather than each mechanical correction.
+- Validation failure: correct within scope and revalidate. Continue independent
+  preparation; whole-plan execution waits for all required items. Ask about material changes.
 - Async failure: inspect the existing job; retry/reconcile only when supported,
   within authorized scope/cost and permitted by the current platform approval.
 - Host lacks MCP Apps: continue with the same tools and structured results. App

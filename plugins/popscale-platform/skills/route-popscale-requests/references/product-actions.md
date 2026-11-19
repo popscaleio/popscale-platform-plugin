@@ -5,8 +5,8 @@
 A clear instruction authorizes its described operation and necessary in-scope
 quality/dependency steps across turns. Add no routine chat confirmation,
 per-finding approval or planning pause. Honor preview-only work and requested
-review stops. Ask about ambiguity or material changes in scope, cost, recipients
-or consequences; disclose newly discovered destructive/shared-content effects.
+review stops. Ask about material ambiguity or material changes in scope, cost,
+recipients or consequences; disclose new destructive/shared-content effects.
 Narrow edits do not authorize broader replacement, publication or distribution.
 Creating a Journey means a draft; publication needs explicit intent, possibly in
 the same request. Combined intent never combines server approvals.
@@ -16,18 +16,33 @@ Present required review directly; after server approval, execute without another
 chat yes. Changed/expired/different proposals need their own server approval.
 Quality checks and public checklists supply agent work, not extra consent gates.
 
+## Defaults and local blockers
+
+Fill minor gaps from the brief, approved sources and defaults: neutral
+wording, simple structure, duration within authorized limits/cost. State important
+assumptions; preserve them and explicit choices/scoring. Ask about
+uninferable purpose/audience/behavior or material scope/cost/outcome choices.
+Invent no company facts, identifiers, consent or unsupported settings.
+
+Block affected operations/dependents only. Continue independently authorized work
+with verified identity/access, inputs, dependencies and cost. Report completed/
+pending/blocked parts and next steps. Never use blocked outputs, duplicate jobs,
+drop items, change counts or execute invalid whole plans to bypass blockers. Atomic validation and
+whole-operation approvals remain binding. Wrong-company/unknown authority,
+rejection and requested stops cover their full scope; no bypass.
+
+## Platform approval
+
 Read live `capabilities` and tool schemas. Under `popscale.product.actions.v1`,
 mutations require a stable UUID `command_id` per exact intent. Reuse it and the
 identical payload after transport uncertainty; never create duplicates while
 waiting. `product_action_prepare` freezes a proposal without execution.
 
-A mutation can return `product_action`, `review_url`, `next_step` and `action_url`
-instead of its native result. Show exact targets, changes, revision, audience,
-credit effects and expiry. Present the server-returned `review_url` unchanged:
-**Review and approve in Popscale, then return to this conversation.** `action_url`
-is a machine API address, never the human review link. If `review_url` is absent
-or null, report the missing review route; never guess a URL or request tokens.
-Adapt presentation to host support; a rendered chat card is optional.
+A mutation may return `product_action`, `review_url`, `next_step`, `action_url`.
+Show targets, changes, revision, audience, credit effects and expiry with unchanged
+`review_url`: **Review and approve in Popscale, then return to this conversation.**
+`action_url` is machine-only. Missing/null links block required review; never
+guess URLs or request tokens. Chat cards are optional.
 
 Human approval must be registered in Popscale for this exact proposal. A chat
 “yes”, host tool confirmation or legacy boolean does not approve it. Never
@@ -40,9 +55,8 @@ On return, call `product_action_get` for the same action. Follow `next_step`:
 with current approved state for review-required actions (or server-permitted
 bounded work); `inspect_result` verifies persisted native output and asynchronous
 jobs separately; `prepare_new_action` requires fresh review; `none` stops.
-Prepared, approved and accepted do not mean completed. After uncertainty, inspect
-existing action/result before retrying; preserve originating company, actor and
-connection authority.
+Approval/acceptance is not completion. After uncertainty inspect the existing
+result; retain company, actor and connection authority.
 
 Check `expires_at` even if an older server still reports `awaiting_approval`.
 Expired or superseded proposals cannot authorize execution. First inspect prior

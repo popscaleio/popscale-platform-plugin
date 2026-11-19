@@ -27,7 +27,8 @@ for Journey context, duplicate names and internal identifiers.
    `available` flag decides. `available: false` with a missing
    `required_features` entry means Studies is not enabled for this company and
    Popscale enables it; a missing `required_scopes` entry means the grant needs
-   widening. Say so once and stop; do not search for the tool again, use a
+   widening. Stop that operation; continue only independently authorized work.
+   Do not search for the tool again, use a
    generic tool instead, or drive a browser around it.
 2. Read current state before changing it. Start with
    `list_interview_studies` or `get_interview_study`; use the returned current
