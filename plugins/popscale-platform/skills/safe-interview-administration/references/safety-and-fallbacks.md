@@ -61,12 +61,13 @@ is needed; never claim a bounded response is exhaustive.
 
 Localization and analysis generation may return durable asynchronous work.
 Report queued/running states accurately and use supported status reads. Retry
-only a server-designated retryable failure and only after the user requests or
-confirms that separate action.
+only server-designated retryable failures within authorized scope/cost and
+platform approval; ask about new costs or missing retry intent.
 
 ## Confirmation boundaries
 
-Ask for confirmation immediately before sending email/reminders or publishing a
-Study, after presenting the exact target and consequences. Creation, editing,
-generation, deletion, revoke, expire, retry, send, and publish are separate
-actions. Approval for one does not authorize another.
+Reuse explicit intent covering the exact Study publication or invitation
+recipients/message/effect, while retaining each platform-required approval. An
+instruction may cover multiple effects; editing alone is not send/publish intent.
+Ask about missing intent or material scope, cost, recipient or consequence changes,
+not an unchanged operation already requested.

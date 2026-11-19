@@ -58,8 +58,8 @@ for Journey context, duplicate names and internal identifiers.
    re-read and reconcile the
    user's requested delta; never retry blindly.
 6. For an active-content edit through a tool whose live schema exposes
-   `confirm_active_edit`, present the learner-visible consequence and obtain
-   immediate explicit approval before setting `confirm_active_edit=true`.
+   `confirm_active_edit`, disclose learner impact and reuse covering intent.
+   Set `confirm_active_edit=true` only under the live contract; ask about new impact.
    Editing approval does not authorize deletion, reordering, archiving,
    unrelated regeneration, reassignment, or publication. For Coaching input
    changes, include mandatory regeneration of both instruction outputs in the
@@ -89,7 +89,8 @@ for Journey context, duplicate names and internal identifiers.
    IDs and Journey links. Read detail/freshness and capabilities first;
    never queue extra subparts or claim synchronization from source edits alone.
    Choose from intent, never from what is available. Changed criteria mean
-   `evaluation_criteria`, which replaces the whole criteria list; explain and confirm it.
+   `evaluation_criteria`, which replaces the whole criteria list; disclose that
+   effect and verify it is covered by the user's intent.
    **Coaching exception:** any Coaching input change regenerates BOTH
    `agent_prompt` and `evaluation_instructions` afterwards, never only the one
    marked stale and never an older run. If the pair cannot be generated, report
@@ -104,14 +105,15 @@ for Journey context, duplicate names and internal identifiers.
    `/journeys/review-before-activation/` and `/content/language-in-exercises/`
    from `popscale-docs` (see the routing skill's "Before authoring" step) and
    read every learner-facing field with them. Report findings in the
-   checklist's three levels (stops activation, breaks a rule, cosmetic) with a
-   proposed value per finding; change nothing without a yes per finding, and
-   never touch generation-only outputs. Then read detail and freshness for
+   checklist's three levels (stops activation, breaks a rule, cosmetic).
+   Correct within authorized scope; group unresolved/out-of-scope decisions.
+   Add no per-finding approval; never touch generation-only outputs.
+   Then read detail and freshness for
    every generation-only output on the root; an edited one blocks activation
    regardless of readiness.
    Call `content_activation_readiness`, present every failed or warning check,
-   and call `content_activate` only after immediate explicit confirmation with
-   `confirm_publish=true`.
+   and call `content_activate` with `confirm_publish=true` under covering
+   publication intent and platform approval, without repeating chat consent.
 10. Follow [generation-verification.md](references/generation-verification.md)
     before generation claims, using the evidence checker when available. Read
     visible saved output and source use; verify redacted instructions through

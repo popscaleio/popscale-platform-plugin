@@ -14,17 +14,17 @@ what the user or Popscale admin must enable.
 
 ## Explicit Confirmation
 
-Ask for confirmation at the final boundary, after presenting the exact target and
-consequences. A confirmation for editing a draft does not also authorize publish,
-activation, cancellation, regeneration, archive, or execution. If the target or
-proposed change materially changes after confirmation, ask again.
+Apply the shared scoped-authorization rule. Present exact targets/consequences;
+reuse clear intent for the complete described operation. Draft-edit intent alone
+is not publication intent. Ask about material scope, cost, recipient or consequence
+changes; honor requested review stops and every platform-required approval.
 
 ## Validation
 
 Show saved validation failures beside the affected item. Validate generated
 payloads with the item-input tool; use saved selector status and summary for
 linked or reused items. A tool invocation error proves neither validity nor
-invalidity. Obtain approval for a focused edit, then re-read and revalidate.
+invalidity. Correct in-scope inputs, then re-read and revalidate; ask about material changes.
 
 ## MCP App Capability
 

@@ -46,10 +46,11 @@ are required. Do not invent offset, cursor, or filter arguments.
 Every protected mutation uses the latest root `revision` as
 `expected_revision`. Refresh root detail after success. Active-content edits
 require `confirm_active_edit=true` only on tools whose live schema exposes that
-field, after the user approves the exact edit. Deletion requires
+field, when the exact active edit is authorized. Deletion requires
 `confirm_delete=true`. `archive_company_content` does not accept
 `confirm_active_edit`; it requires `confirm_archive=true` and may require
-`confirm_learner_impact=true` after a separate learner-impact confirmation.
+`confirm_learner_impact=true` with authorized learner impact and any required
+platform approval; do not duplicate chat consent already covering that impact.
 
 Use component CRUD for a single roleplay customer/question/objection/decision
 rule/criterion, flashcard/card translation, or unused Journey section/item.
@@ -89,15 +90,16 @@ status.
 | --- | --- | --- | --- |
 | Change how a Roleplay is judged (weighting, tone of feedback, a rule) | `evaluation_instructions` | Rewrites the instruction only | Run after the source edit; no extra confirmation |
 | Change Coaching inputs of any kind | `agent_prompt` + `evaluation_instructions` | Rewrites both instructions | Always the pair; see the Coaching rule above |
-| Change the scoring criteria themselves | `evaluation_criteria` | Deletes every criterion and creates a new list; totals change | Describe the replacement and obtain a yes first |
-| Change the situation, goal or setting of a Roleplay | `setup` | Rewrites scenario fields the user did not name | Describe what is rewritten and obtain a yes first |
-| Add customers to a Roleplay | `customers` | Appends; existing customers and Journey links remain | State how many are added and obtain a yes first |
+| Change the scoring criteria themselves | `evaluation_criteria` | Deletes every criterion and creates a new list; totals change | Disclose replacement; reuse covering intent, otherwise ask |
+| Change the situation, goal or setting of a Roleplay | `setup` | Rewrites scenario fields the user did not name | Disclose all rewritten fields; ask if beyond authorized scope |
+| Add customers to a Roleplay | `customers` | Appends; existing customers and Journey links remain | Use the requested count; ask only if missing or changed |
 | Refresh learner-facing text after a source change | `description`, `education_text` | Rewrites those texts only | No extra confirmation |
 | Change an Episode's content or speaker rules | `script` (then audio) | Regenerates script, marks translations stale | Edit `content` / `model_steering` first |
 
 Never queue several subparts because you are unsure which one applies; ask.
 `evaluation_criteria` and `setup` are the two that discard work the admin may
-have done by hand, which is why they require a described, confirmed change.
+have done by hand. Disclose replacement and ensure the authorized scope covers
+it; a narrow field edit cannot authorize that broader rewrite.
 
 1. Identify whether the requested source/component changes affect a protected
    output using current detail, freshness, dependency hints, and capabilities.
@@ -147,8 +149,9 @@ The public checklist `/journeys/review-before-activation/` and the language
 guide `/content/language-in-exercises/` are the review criteria for
 learner-facing text and Journey structure. Server readiness checks structure
 and thresholds; the checklist covers what readiness cannot see (placeholder
-text, question counts, opening lines, dashes, jargon). Report, propose, wait
-for approval per finding, then edit through the focused tools.
+text, question counts, opening lines, dashes, jargon). Check automatically and
+correct in-scope issues through focused tools. Public checklist wording does not
+add per-finding consent; group only unresolved/out-of-scope decisions.
 
 ## Generation
 
@@ -182,7 +185,9 @@ For Episode/Flashcard languages, resolve references and use
 `content_language_generate` with `content:read`, `content:write`, `generation:write`.
 Voice discovery uses `gemini_tts_voices_list`. Both status tools and voice
 discovery require `generation:read`; never queue unmonitorable work. Retry/cancel
-only in supported states with separate user approval.
+only in supported states, within authorized scope/cost and platform approval.
+Ask if retry/cancellation intent is missing or consequences change; do not infer
+cancellation or unlimited paid retries from a creation request.
 
 An idempotency key replay is safe only for identical input. A conflict means the
 key was already used for different work; create a new key rather than mutating
@@ -207,5 +212,5 @@ rather than assuming there is no failure.
 
 Present the exact target, current revision/status, readiness checks, unresolved
 generation-only failures, and learner-visible consequence. Once no such failure
-remains, obtain immediate confirmation, then call
-`content_activate` with `confirm_publish=true`. Refresh detail after success.
+remains, call `content_activate` with `confirm_publish=true` under covering
+publication intent and platform approval; ask only about missing/changed intent. Refresh detail after success.

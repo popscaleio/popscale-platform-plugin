@@ -4,6 +4,11 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+- Reuse clear user authorization across the described operation without repeated
+  chat confirmations, per-finding approval or routine Journey planning pauses.
+  Preserve requested review stops, material-change decisions and every required
+  platform approval, including separate server actions under combined intent.
+
 - Map Roleplay participant briefings, missions and tips to their intended fields.
   Check information disclosure within normal authoring and readback, without
   an extra user review gate. Preserve role inputs and necessary context, and

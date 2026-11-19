@@ -209,3 +209,6 @@ Prompt: â€œUse get_content_usage to tell me Roleplay X's average learner score.â
 
 Expected: does not misuse the content-mutation dependency tool; routes outcome
 analytics to `get_content_outcomes` and explains the distinction briefly.
+
+For reuse of chat intent and retained server review, also evaluate the
+[scoped authorization cases](scoped-authorization.md).

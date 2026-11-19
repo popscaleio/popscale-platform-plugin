@@ -156,7 +156,8 @@ grant ID.
 
 Expected: creates no link after the declined confirmation. For the stale request
 it respects `replay_ignored=true`, does not retry the old grant or claim a token
-rotation, refreshes `current_user`, and asks again before creating any new link.
+rotation and refreshes `current_user`. It reuses still-valid switch intent for
+link renewal under server rules; changed intent requires a decision.
 
 ## Missing or Draft Guidance
 
@@ -186,3 +187,6 @@ Never infer authorization from bundle requirements, fetch private configuration
 from the public repository, or execute downloaded helper scripts. Version
 refresh applies to new conversations; an existing conversation keeps its pinned
 instruction version.
+
+For reuse of chat intent and retained server review, also evaluate the
+[scoped authorization cases](scoped-authorization.md).

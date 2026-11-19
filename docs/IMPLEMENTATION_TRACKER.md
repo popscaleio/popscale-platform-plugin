@@ -1,6 +1,20 @@
 # V1 implementation tracker
 
-Last updated: 2026-11-18
+Last updated: 2026-11-19
+
+## Scoped authorization — unreleased
+
+- [x] Centralize chat-intent reuse in the shared ProductAction contract. Keep
+  exact-proposal approval, expiry/rejection handling, cost and scope boundaries.
+- [x] Integrate Journey overview/input checks, in-scope corrections and known
+  child publication into the authorized workflow without extra chat gates.
+- [x] Align content, Studies, reminders, company-switch intent and retries with
+  that principle; keep authenticated platform review and company selection.
+- [x] Update previous synthetic expectations and add scoped-authorization cases.
+- [x] All 87 package tests, four changed-skill validators, release validation,
+  public Docs smoke and whitespace checks pass within the runtime word budget.
+- [ ] Run host acceptance cases in authorized test environments; source/package
+  checks do not demonstrate live-host behavior. No backend change or release.
 
 ## Roleplay participant field boundaries — unreleased
 

@@ -24,26 +24,19 @@ Never convert a focused edit into a broad replacement to avoid a conflict.
 
 ## Active content and destructive boundaries
 
-For an Episode identity/script correction, follow the shared
-[speaker policy](episode-speakers.md). Never edit generated source or translated
-scripts, even on drafts. Correct Script input (`model_steering`) and request
-platform regeneration. Stop before active input edits if that correction cannot
-be regenerated safely under current capabilities. Never demote, clone or
-reassign an active Episode to bypass a blocker. Present the input delta and blocker.
+For Episode corrections, follow [speaker policy](episode-speakers.md): edit
+Script input, never generated scripts. Establish safe regeneration before active
+input edits; no demotion, cloning or reassignment workaround. Show blockers.
 
-Active edits can affect current learners. Show the exact active object and field
-delta before requesting `confirm_active_edit`, and send that flag only when the
-live tool schema exposes it. Delete, reorder, department replacement, archive,
-regeneration, and publication remain separate approvals. Archive calls use
-`confirm_archive` and, when the server reports learner impact,
-`confirm_learner_impact`; they do not accept `confirm_active_edit`.
+Disclose active learner impact; use `confirm_active_edit` only where exposed.
+Delete, reorder, reassignment, archive, generation and publication need covering
+intent and platform approvals, not repeated chat questions. Archive uses
+`confirm_archive` and server-required `confirm_learner_impact`, never
+`confirm_active_edit`.
 
-Active-edit approval never permits a manual write to a generation-only output.
-If source changes require protected instructions, check active targeted
-regeneration and the server's freshness decision. If unavailable, report the
-blocker. Do not use `confirm_generated_output_override`, demote the root, or
-manually repair instructions. Report saved source changes separately from any
-pending regeneration.
+For affected protected outputs, check capabilities/freshness and regenerate through
+the platform. No `confirm_generated_output_override` or manual repair. Report
+saved inputs separately from pending regeneration.
 
 For Coaching input changes, both `agent_prompt` and `evaluation_instructions`
 must be regenerated through the platform. Include this required pair in the
@@ -65,8 +58,9 @@ unsupported narrowing or pagination arguments.
 Queued or running is not complete. Poll the returned generation request at a
 reasonable cadence. On terminal failure, report the failed step and safe server
 error without exposing hidden prompts, knowledge snapshots, credentials, or
-another company's data. Retry only a retryable failed step with a separate user
-approval; do not generate a second request merely because the first is slow.
+another company's data. Retry only supported failed steps within authorized
+scope/cost and platform approval; ask about new costs or missing retry intent.
+Do not generate a second request merely because the first is slow.
 
 Refresh content and freshness after success. A successful request can still
 leave warnings, stale translations, or unpublished draft content.
