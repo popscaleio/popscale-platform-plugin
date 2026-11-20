@@ -38,6 +38,24 @@ Then perform read-only OAuth smoke tests in clean Codex and Claude installations
 - host restart and credential persistence;
 - no write or mutation unless separately approved in a dedicated test company.
 
+## Role assignment candidate — unreleased
+
+Before publication, deploy the compatible `admin_membership_role_units_add`
+contract, named `role_assignment_review` version 1 and committed
+`role_assignment_verification` receipt. Record the reviewed backend source for
+every newly required administration tool in the public compatibility fixture.
+Keep the legacy label tool's contract, Product Actions v1, exact MCP URLs and
+OAuth scope boundaries unchanged.
+
+Run the [role assignment cases](evaluation/role-assignment.md) in clean Codex and
+Claude conversations. Live writes need separate authorization and a dedicated
+test company. Verify zero-net-access cases through role-owned sources, exact
+human approval and committed receipts; aggregate access is insufficient. Record
+fresh first-party profile/source/digest adoption separately from public package
+publication. Existing sessions retain frozen profiles. Apply release-version
+parity only for separately authorized publication; this source candidate has no
+version bump, tag or release.
+
 ## Product action review handoff — 1.6.9
 
 Before publication, verify the target backend returns the human `review_url`
