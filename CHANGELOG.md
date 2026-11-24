@@ -4,6 +4,12 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+- Prepare conditional guidance for one exact, server-owned Journey publication
+  approval, with explicit automatic-assignment inclusion, unchanged active roots,
+  atomic publication receipts and original-command recovery. Preserve individual
+  publication. This candidate requires matching backend/review deployment and
+  separate host acceptance; no version bump or publication is included.
+
 - Treat Coaching `round_limit` as a whole-number count in the live contract's
   representation, keeping timing/conduct guidance in supported inputs. Verify
   normalized/saved values, preserve legacy instructions and regenerate both

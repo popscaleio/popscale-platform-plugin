@@ -52,13 +52,9 @@ a tool argument error does not establish invalid content.
 
 ## Publication
 
-Follow the main skill's publication step: verify `journey_activation_readiness`,
-activate in-scope children, refresh readiness, then activate the Journey under
-explicit publication intent. Retain each platform-required approval without
-adding a chat confirmation for every child or repeating the final question.
-Activation uses `confirm_publish=true`; `content_activate` needs
-`content:read`, `content:write` and `publish:write`.
-App controls use the same server authorization.
+Use the [publication workflow](publication.md), explicit intent and platform
+approval. Child activation requires `content:read`, `content:write` and
+`publish:write`; Journey rights alone are insufficient.
 
 ## Completion
 

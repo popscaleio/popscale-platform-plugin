@@ -12,6 +12,9 @@ For Episode items, also run the shared
 For external authenticated approvals and recovery, also run the shared
 [product action review handoff scenarios](product-action-review.md).
 
+For whole-Journey and individual publication, also run the
+[unified publication scenarios](journey-publication.md).
+
 ## Two Episode briefs in a Next Generation Journey
 
 Use an enabled company and a synthetic plan with one discovery Episode and one

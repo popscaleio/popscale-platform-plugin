@@ -1,6 +1,32 @@
 # V1 implementation tracker
 
-Last updated: 2026-11-19
+Last updated: 2026-11-24
+
+## Unified Journey publication — unreleased candidate
+
+- [x] Route supported whole-Journey publication to `journey_publish_bundle`;
+  preserve individual `content_activate` / `journey_activate` approvals.
+- [x] Document Coaching/Roleplay-only v1, current child freshness, deduplicated
+  roots and exact human review. Unsupported or denied bundles never fall back
+  to bypass their server checks.
+- [x] Require explicit automatic-assignment inclusion even with zero candidates
+  or paused rules. Preserve saved rules and distinguish queued from delivered.
+- [x] Define exact-hash committed-receipt verification and original-command
+  recovery; no generation or debit is part of publication.
+- [x] Add package-dependency checks and synthetic clean-host scenarios.
+- [x] Bind the additive tool to backend source
+  `704c4a8df0daaef816c0249cea5e190ddcad2f8a`.
+- [x] Run all 90 package tests, release validation, public read-only Docs MCP
+  smoke and diff checks. Runtime text is 21,986 words across 28 reachable files,
+  under the unchanged 22,000-word cap; the bundle requires 99 product tools.
+- [ ] Verify compatible backend and human-review deployment, then execute the
+  authorized clean Codex/Claude cases before plugin publication.
+
+This is a source candidate, not deployment or live-host proof. Version 1.6.10,
+manifest capabilities, OAuth configuration and both exact MCP endpoints remain
+unchanged. The additive source revision identifies the implemented tool; it
+does not assert deployment. Backend deployment, application acceptance and
+plugin release remain separate events.
 
 ## Coaching round count — unreleased
 

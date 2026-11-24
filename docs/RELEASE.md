@@ -56,6 +56,27 @@ into customer conversations. Publication waits for verified compatible
 production backend deployment. Record unexecuted clean-host acceptance honestly;
 a published package alone proves neither browser behavior nor snapshot adoption.
 
+## Unified Journey publication — unreleased candidate
+
+Before releasing this guidance, verify the exact implementation/source for
+`journey_publish_bundle`, `journey_publication_review` v1 and
+`journey_publication_verification` v1, plus the matching authenticated approval
+client. V1 supports draft Journeys with at most 20 current items and ready
+Coaching/Roleplay roots. Existing individual tools,
+Product Actions v1 and OAuth scope boundaries remain supported.
+
+Run the [publication acceptance cases](evaluation/journey-publication.md) in clean
+Codex and Claude hosts after compatible application deployment. Include 1/5/20
+sessions, reused active roots, duplicates, stale or denied proposals, rollback,
+response loss and AUTO journeys with zero/paused candidates. Test explicit
+assignment inclusion, retain the paused-allocation blocker even with inclusion,
+and never describe queued work as delivered.
+
+Package tests establish metadata/dependency integrity only. Record actual source,
+application deployment and host results separately. Do not bump, merge, tag or
+publish this candidate as part of local preparation; verify backend and frontend
+in production before a separately authorized plugin release.
+
 ## Publish
 
 1. Open a PR and require the package validation check.

@@ -245,3 +245,30 @@ the cached version and the fresh session's `profile_version`,
 not replace its snapshot. Record the observed metadata; without it, hosted
 version remains unverified. Updating public skills does not require replacing
 the user's editable product instructions.
+
+
+## Unified Journey publication candidate
+
+A compatible deployment can expose `journey_publish_bundle` for one exact human
+approval of a draft Journey with at most 20 current items and ready
+Coaching/Roleplay sessions. Repeated items still count toward that limit. The reviewed
+proposal includes versions, visibility and automatic-assignment effects; the
+matching authenticated review button applies it atomically. Merely installing
+this plugin, selecting OAuth scopes or writing yes in chat does not approve it.
+
+`include_new_assignments` defaults to false. An AUTO Journey needs explicit
+inclusion even with no current candidates or paused rules. Paused allocation
+still blocks the bundle even with inclusion; the bundle never unpauses it.
+Resolve the pause only through its normal approved management flow. Do not
+change saved enrollment rules to avoid review. If legacy rules would reassign
+previously removed/excluded people outside the reviewed audience, stop for a
+separate exact allocation review. Empty selectors do not imply global learner
+access. Report queued assignments separately from completed allocation. Individual publication remains available with its
+own platform approvals; a denied or unsupported bundle is not a reason to
+bypass server checks through individual commands.
+
+This unreleased candidate needs the matching backend/review contract and clean
+host verification before release. The text bundle requires the new tool; it
+must not be installed as a compatible snapshot on an older deployment. Product
+capabilities, current rights and server validation remain authoritative. No
+endpoint, credential, version or live product state is changed here.
