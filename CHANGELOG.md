@@ -4,6 +4,8 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+## [1.6.11] - 2026-11-25
+
 - Assign business roles on explicitly selected responsibility units through the
   additive reviewed workflow. Verify complete role scopes and committed
   role-owned permission sources, including when direct access makes the net

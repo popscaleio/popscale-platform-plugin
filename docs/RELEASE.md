@@ -38,7 +38,7 @@ Then perform read-only OAuth smoke tests in clean Codex and Claude installations
 - host restart and credential persistence;
 - no write or mutation unless separately approved in a dedicated test company.
 
-## Role assignment candidate — unreleased
+## Role assignment — 1.6.11
 
 Before publication, deploy the compatible `admin_membership_role_units_add`
 contract, named `role_assignment_review` version 1 and committed
@@ -52,9 +52,9 @@ Claude conversations. Live writes need separate authorization and a dedicated
 test company. Verify zero-net-access cases through role-owned sources, exact
 human approval and committed receipts; aggregate access is insufficient. Record
 fresh first-party profile/source/digest adoption separately from public package
-publication. Existing sessions retain frozen profiles. Apply release-version
-parity only for separately authorized publication; this source candidate has no
-version bump, tag or release.
+publication. Existing sessions retain frozen profiles. The 1.6.11 release
+version is shared by both host manifests, the Claude marketplace, the validator
+and package tests.
 
 ## Product action review handoff — 1.6.9
 

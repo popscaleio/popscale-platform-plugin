@@ -1,8 +1,8 @@
 # V1 implementation tracker
 
-Last updated: 2026-11-19
+Last updated: 2026-11-25
 
-## Full role assignment — unreleased candidate
+## Full role assignment — 1.6.11 release candidate
 
 - [x] Route explicit role/responsibility-unit requests to a focused reference
   using `admin_membership_role_units_add`, exact human review and the committed
@@ -24,11 +24,14 @@ Last updated: 2026-11-19
 - [x] Record backend contract source
   `218d3beb8e59c45d657b8c3c3f8688d08fbf734f` for all eight newly required
   administration tool names in the compatibility fixture.
-- [ ] Deploy the compatible backend, execute separately authorized clean-host
-  cases, verify new first-party profile adoption, and publish separately with
-  release-version parity. No version bump, publication or live write is included.
+- [x] Deploy the compatible backend to production and align the release version
+  across both host manifests, the Claude marketplace, the validator and package
+  tests.
+- [ ] Verify the deployed production review flow and run the clean-host cases
+  before publishing.
+- [ ] Verify new first-party profile adoption after publication.
 
-## Coaching round count — unreleased
+## Coaching round count — 1.6.11 release candidate
 
 - [x] Add numeric count guidance across Coaching design, manual/standalone
   authoring, Journey inputs, saved review and legacy correction.
@@ -40,7 +43,7 @@ Last updated: 2026-11-19
 - [ ] Execute authorized host cases and trial conversations. Product round
   definition, shared validation and UI consistency remain separate decisions.
 
-## Defaults and local blockers — unreleased
+## Defaults and local blockers — 1.6.11 release candidate
 
 - [x] Add shared contextual-default and dependency-scoped blocker guidance;
   align writing-guide, Journey, content and Study instructions.
@@ -53,7 +56,7 @@ Last updated: 2026-11-19
 - [ ] Execute host cases in authorized test environments. Package checks do not
   establish real host behavior; release remains separate.
 
-## Scoped authorization — unreleased
+## Scoped authorization — 1.6.11 release candidate
 
 - [x] Centralize chat-intent reuse in the shared ProductAction contract. Keep
   exact-proposal approval, expiry/rejection handling, cost and scope boundaries.
@@ -67,7 +70,7 @@ Last updated: 2026-11-19
 - [ ] Run host acceptance cases in authorized test environments; source/package
   checks do not demonstrate live-host behavior. No backend change or release.
 
-## Roleplay participant field boundaries — unreleased
+## Roleplay participant field boundaries — 1.6.11 release candidate
 
 - [x] Add a view-scoped field map and shared review for standalone and Journey
   Roleplay authoring, corrections and saved content.
