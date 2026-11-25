@@ -1,8 +1,29 @@
 # V1 implementation tracker
 
-Last updated: 2026-11-19
+Last updated: 2026-11-25
 
-## Full role assignment — unreleased candidate
+## Plugin release 1.6.11
+
+- [x] Prepare the explicitly authorized release from current main, including
+  merged role assignment guidance and the earlier Coaching count, contextual
+  defaults, scoped authorization and Roleplay briefing changes.
+- [x] Align Codex, Claude, marketplace, validator and package-test versions.
+- [x] Verify compatible production application deployment and the production
+  catalog entry for `admin_membership_role_units_add`; keep both exact MCP
+  endpoints unchanged. The smoke-test grant lacks admin scopes, so that command
+  correctly remains unavailable to this connection.
+- [x] Pass all 90 package tests, release/tag validation, whitespace checks and
+  public Docs MCP smoke. Existing OAuth identity/capability, bounded content
+  search/detail and department-grouped Journey reads succeed without writes.
+  The aggregate is suppressed; no sufficiently large cohort was verified.
+- [ ] Clean Codex/Claude installation, restart and behavioral acceptance remain
+  unexecuted. Existing-connection read-only smoke and package checks do not prove
+  exact approval, role-source outcomes or first-party snapshot adoption.
+- [ ] Publish the reviewed, validated main commit as annotated tag `v1.6.11`
+  through the release workflow; verify the archive and checksummed public skills.
+- [x] Keep the separate Journey publication candidate outside this release.
+
+## Full role assignment — 1.6.11
 
 - [x] Route explicit role/responsibility-unit requests to a focused reference
   using `admin_membership_role_units_add`, exact human review and the committed
@@ -24,11 +45,12 @@ Last updated: 2026-11-19
 - [x] Record backend contract source
   `218d3beb8e59c45d657b8c3c3f8688d08fbf734f` for all eight newly required
   administration tool names in the compatibility fixture.
-- [ ] Deploy the compatible backend, execute separately authorized clean-host
-  cases, verify new first-party profile adoption, and publish separately with
-  release-version parity. No version bump, publication or live write is included.
+- [x] Verify compatible production backend deployment and prepare separately
+  authorized publication with release-version parity.
+- [ ] Execute separately authorized clean-host cases and verify new first-party
+  profile adoption. No live product write is part of release validation.
 
-## Coaching round count — unreleased
+## Coaching round count — 1.6.11
 
 - [x] Add numeric count guidance across Coaching design, manual/standalone
   authoring, Journey inputs, saved review and legacy correction.
@@ -40,7 +62,7 @@ Last updated: 2026-11-19
 - [ ] Execute authorized host cases and trial conversations. Product round
   definition, shared validation and UI consistency remain separate decisions.
 
-## Defaults and local blockers — unreleased
+## Defaults and local blockers — 1.6.11
 
 - [x] Add shared contextual-default and dependency-scoped blocker guidance;
   align writing-guide, Journey, content and Study instructions.
@@ -53,7 +75,7 @@ Last updated: 2026-11-19
 - [ ] Execute host cases in authorized test environments. Package checks do not
   establish real host behavior; release remains separate.
 
-## Scoped authorization — unreleased
+## Scoped authorization — 1.6.11
 
 - [x] Centralize chat-intent reuse in the shared ProductAction contract. Keep
   exact-proposal approval, expiry/rejection handling, cost and scope boundaries.
@@ -67,7 +89,7 @@ Last updated: 2026-11-19
 - [ ] Run host acceptance cases in authorized test environments; source/package
   checks do not demonstrate live-host behavior. No backend change or release.
 
-## Roleplay participant field boundaries — unreleased
+## Roleplay participant field boundaries — 1.6.11
 
 - [x] Add a view-scoped field map and shared review for standalone and Journey
   Roleplay authoring, corrections and saved content.
