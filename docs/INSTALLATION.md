@@ -37,6 +37,30 @@ guessing or silently widening consent.
 Never paste a bearer token or add a static authorization header. Popscale uses
 OAuth and stores the resulting host credential through the host's secure flow.
 
+## Role assignment and verification
+
+Full role assignment uses `admin_membership_role_units_add` with an explicitly
+selected person, role and nonempty responsibility units from their current own
+units. Discover availability with `capabilities`; optional administration scopes
+and current company permissions remain authoritative. Review exact named pairs,
+unit/company permission sources, descendant scope and session effects through
+Popscale's human ProductAction approval before execution. Zero net access change
+does not eliminate review when role-owned sources are added beside direct access.
+
+Verify the committed `role_assignment_verification` receipt: complete confirmed
+scope, the requested units and complete role-owned permission sources. A saved
+label or broad existing access does not prove full assignment. Legacy
+`admin_membership_business_roles_set` additions remain label-only. Missing full
+capability or receipt proof requires an explicit limitation, not a substitute
+grant. See the [role assignment workflow](../plugins/popscale-platform/skills/route-popscale-requests/references/role-assignment.md)
+and [synthetic host cases](evaluation/role-assignment.md).
+
+Deploy the compatible backend before separately publishing this candidate.
+Test fresh Codex and Claude conversations after installation/reload. First-party
+conversations retain frozen profiles; verify the new session's version, source
+commit and bundle digest. Package checks alone prove neither host behavior nor
+adoption, and live writes require separate authorization in a dedicated company.
+
 ## Codex
 
 ```bash

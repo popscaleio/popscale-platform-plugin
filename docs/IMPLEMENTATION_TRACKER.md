@@ -1,6 +1,6 @@
 # V1 implementation tracker
 
-Last updated: 2026-11-24
+Last updated: 2026-11-26
 
 ## Unified Journey publication — unreleased candidate
 
@@ -16,19 +16,69 @@ Last updated: 2026-11-24
 - [x] Add package-dependency checks and synthetic clean-host scenarios.
 - [x] Bind the additive tool to backend source
   `704c4a8df0daaef816c0249cea5e190ddcad2f8a`.
-- [x] Run all 90 package tests, release validation, public read-only Docs MCP
-  smoke and diff checks. Runtime text is 21,986 words across 28 reachable files,
-  under the unchanged 22,000-word cap; the bundle requires 99 product tools.
+- [x] Resolve the source candidate against current main and run all 93 package
+  tests, release validation, public read-only Docs MCP smoke and diff checks.
+  Runtime text is 22,617 words across 29 reachable files, under main's existing
+  23,000-word cap; the bundle requires 107 product tools.
 - [ ] Verify compatible backend and human-review deployment, then execute the
   authorized clean Codex/Claude cases before plugin publication.
 
-This is a source candidate, not deployment or live-host proof. Version 1.6.10,
-manifest capabilities, OAuth configuration and both exact MCP endpoints remain
+This is an explicitly authorized source merge, not deployment or live-host
+proof. The released manifest version remains 1.6.11; manifest capabilities,
+OAuth configuration and both exact MCP endpoints remain
 unchanged. The additive source revision identifies the implemented tool; it
 does not assert deployment. Backend deployment, application acceptance and
 plugin release remain separate events.
 
-## Coaching round count — unreleased
+## Plugin release 1.6.11
+
+- [x] Prepare the explicitly authorized release from current main, including
+  merged role assignment guidance and the earlier Coaching count, contextual
+  defaults, scoped authorization and Roleplay briefing changes.
+- [x] Align Codex, Claude, marketplace, validator and package-test versions.
+- [x] Verify compatible production application deployment and the production
+  catalog entry for `admin_membership_role_units_add`; keep both exact MCP
+  endpoints unchanged. The smoke-test grant lacks admin scopes, so that command
+  correctly remains unavailable to this connection.
+- [x] Pass all 90 package tests, release/tag validation, whitespace checks and
+  public Docs MCP smoke. Existing OAuth identity/capability, bounded content
+  search/detail and department-grouped Journey reads succeed without writes.
+  The aggregate is suppressed; no sufficiently large cohort was verified.
+- [ ] Clean Codex/Claude installation, restart and behavioral acceptance remain
+  unexecuted. Existing-connection read-only smoke and package checks do not prove
+  exact approval, role-source outcomes or first-party snapshot adoption.
+- [ ] Publish the reviewed, validated main commit as annotated tag `v1.6.11`
+  through the release workflow; verify the archive and checksummed public skills.
+- [x] Keep the separate Journey publication candidate outside this release.
+
+## Full role assignment — 1.6.11
+
+- [x] Route explicit role/responsibility-unit requests to a focused reference
+  using `admin_membership_role_units_add`, exact human review and the committed
+  `role_assignment_verification` receipt. Existing direct access is not role
+  provenance; zero net effects still retain source review.
+- [x] Preserve legacy role-label additions and their live host restrictions;
+  never substitute them for confirmed role-unit authority. Preserve unrelated
+  roles/scopes, affiliations, tier and direct grants.
+- [x] Extend required-tool fixture, checksummed dependency coverage, setup,
+  installation guidance, capability descriptions and synthetic host cases.
+- [x] Review `safe-journey-creation`: unchanged because this is organization
+  administration; live Journey authority and publication boundaries still apply.
+  Existing Read/Write capabilities, OAuth scopes, MCP URLs, six entrypoints,
+  Product Actions v1 and hard runtime limits remain unchanged. Increase only
+  the editorial word ceiling to 23,000 for this bounded additional workflow.
+- [x] All 90 package tests, release validation, public Docs MCP smoke, local
+  Markdown links and whitespace checks pass. The compiled bundle is 22,629
+  words / 173,979 characters; hard runtime limits are unchanged.
+- [x] Record backend contract source
+  `218d3beb8e59c45d657b8c3c3f8688d08fbf734f` for all eight newly required
+  administration tool names in the compatibility fixture.
+- [x] Verify compatible production backend deployment and prepare separately
+  authorized publication with release-version parity.
+- [ ] Execute separately authorized clean-host cases and verify new first-party
+  profile adoption. No live product write is part of release validation.
+
+## Coaching round count — 1.6.11
 
 - [x] Add numeric count guidance across Coaching design, manual/standalone
   authoring, Journey inputs, saved review and legacy correction.
@@ -40,7 +90,7 @@ plugin release remain separate events.
 - [ ] Execute authorized host cases and trial conversations. Product round
   definition, shared validation and UI consistency remain separate decisions.
 
-## Defaults and local blockers — unreleased
+## Defaults and local blockers — 1.6.11
 
 - [x] Add shared contextual-default and dependency-scoped blocker guidance;
   align writing-guide, Journey, content and Study instructions.
@@ -53,7 +103,7 @@ plugin release remain separate events.
 - [ ] Execute host cases in authorized test environments. Package checks do not
   establish real host behavior; release remains separate.
 
-## Scoped authorization — unreleased
+## Scoped authorization — 1.6.11
 
 - [x] Centralize chat-intent reuse in the shared ProductAction contract. Keep
   exact-proposal approval, expiry/rejection handling, cost and scope boundaries.
@@ -67,7 +117,7 @@ plugin release remain separate events.
 - [ ] Run host acceptance cases in authorized test environments; source/package
   checks do not demonstrate live-host behavior. No backend change or release.
 
-## Roleplay participant field boundaries — unreleased
+## Roleplay participant field boundaries — 1.6.11
 
 - [x] Add a view-scoped field map and shared review for standalone and Journey
   Roleplay authoring, corrections and saved content.

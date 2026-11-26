@@ -38,6 +38,28 @@ Then perform read-only OAuth smoke tests in clean Codex and Claude installations
 - host restart and credential persistence;
 - no write or mutation unless separately approved in a dedicated test company.
 
+## Role assignment release — 1.6.11
+
+Before publication, deploy the compatible `admin_membership_role_units_add`
+contract, named `role_assignment_review` version 1 and committed
+`role_assignment_verification` receipt. Record the reviewed backend source for
+every newly required administration tool in the public compatibility fixture.
+Keep the legacy label tool's contract, Product Actions v1, exact MCP URLs and
+OAuth scope boundaries unchanged.
+
+Run the [role assignment cases](evaluation/role-assignment.md) in clean Codex and
+Claude conversations. Live writes need separate authorization and a dedicated
+test company. Verify zero-net-access cases through role-owned sources, exact
+human approval and committed receipts; aggregate access is insufficient. Record
+fresh first-party profile/source/digest adoption separately from public package
+publication. Existing sessions retain frozen profiles. Version 1.6.11 aligns
+both host manifests, the Claude marketplace, validator and package tests under
+separate publication authorization. Compatible production application deployment
+and the live production tool catalog entry have been verified. Record clean-host and
+role-write cases that were not executed; publication does not prove installation,
+behavioral acceptance or first-party snapshot adoption. Keep the separate Journey
+publication candidate outside this release.
+
 ## Product action review handoff — 1.6.9
 
 Before publication, verify the target backend returns the human `review_url`
@@ -73,9 +95,10 @@ assignment inclusion, retain the paused-allocation blocker even with inclusion,
 and never describe queued work as delivered.
 
 Package tests establish metadata/dependency integrity only. Record actual source,
-application deployment and host results separately. Do not bump, merge, tag or
-publish this candidate as part of local preparation; verify backend and frontend
-in production before a separately authorized plugin release.
+application deployment and host results separately. Source merge requires
+explicit authorization and does not release a new plugin version. Do not bump,
+tag or publish this candidate as part of local preparation; verify backend and
+frontend in production before a separately authorized plugin release.
 
 ## Publish
 

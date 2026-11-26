@@ -5,6 +5,9 @@ the selected server and the treatment of document status metadata.
 
 For external authenticated approvals and recovery, also run the shared
 [product action review handoff scenarios](product-action-review.md).
+For business roles and responsibility units, run the
+[role assignment cases](role-assignment.md): use the authenticated additive
+workflow and committed source proof, never a label-only substitute or public Docs.
 
 ## Public Documentation
 

@@ -10,6 +10,13 @@ All notable changes to the Popscale Platform plugin are documented here.
   publication. This candidate requires matching backend/review deployment and
   separate host acceptance; no version bump or publication is included.
 
+## [1.6.11] - 2026-11-25
+
+- Assign business roles on explicitly selected responsibility units through the
+  additive reviewed workflow. Verify complete role scopes and committed
+  role-owned permission sources, including when direct access makes the net
+  change zero; preserve the legacy label-only additions contract.
+
 - Treat Coaching `round_limit` as a whole-number count in the live contract's
   representation, keeping timing/conduct guidance in supported inputs. Verify
   normalized/saved values, preserve legacy instructions and regenerate both
