@@ -19,11 +19,11 @@ for Journey context, duplicate names and internal identifiers.
 ## Required Workflow
 
 1. Call `current_user`, then `capabilities`.
-2. Confirm the user is an active `company_admin`, the intended company matches
-   the authenticated session, and the required journey/generation scopes exist.
-   Inspecting or activating child content also requires `content:read`; activation
-   additionally requires `content:write` and `publish:write`. Do not accept a
-   company identifier from the prompt as an authorization input.
+2. Confirm active `company_admin` and the intended authenticated company. Check
+   live scopes for this operation: creation/generation needs its journey/generation
+   scopes; bundle publication needs `journey:read`, `journey:write`,
+   `content:read`, `content:write` and `publish:write`. Do not accept prompt-supplied
+   company scope.
 3. Record requested name/prefix, language, item total, section split, format
    counts and Roleplay customer count. State the understood name, split, language,
    draft intent and next action briefly; ask only about consequential gaps. For
@@ -135,25 +135,14 @@ for Journey context, duplicate names and internal identifiers.
    need one scenario and distinct customers. Require `journey_draft_ready` and
    every requested saved link for completion. Give short pending status and
    supported navigation/Open controls; keep IDs in technical detail.
-10. When the user asks to publish, first review the whole Journey against the
-    public checklist (`/journeys/review-before-activation/`, fetched through
-    routing): structure, text, scoring, attempts, naming and format mix.
-    Correct in-scope issues through the content workflow without per-finding
-    questions. Group unresolved or out-of-scope decisions for the user. A created Journey
-    with enrollment history needs that workflow's complete-structure
-    ProductAction review for section/item changes. Then call
-    `journey_activation_readiness`. Activate
-    each ready draft child through `content_activate` under the publication
-    instruction when its scope includes those children; obtain any missing intent
-    together and retain each platform-required approval. A scenario shared by several items is activated once, after
-    every customer generation that targets it has reached `linked`; a new
-    customer cannot be generated against an active scenario. Before child or Journey activation, read current child detail
-    and freshness for all generation-only outputs, including on reused active
-    roots. Stop if any is edited or that check is unavailable. Refresh readiness,
-    and require both newly generated instruction outputs after Coaching input
-    changes, as defined in the shared generation verification workflow. Then
-    present the final Journey target and call `journey_activate` under the same
-    publication intent if unchanged, following its own platform approval.
+10. For publication, review the whole Journey against the public checklist
+    (`/journeys/review-before-activation/`, fetched through routing): structure,
+    text, scoring, attempts, naming and format mix. Correct in-scope issues;
+    group unresolved/material decisions. Structure edits on an enrolled Journey
+    retain their complete-structure ProductAction review. Then follow the
+    [publication workflow](references/publication.md): use a supported exact
+    server-owned bundle for whole-Journey publication, preserving individual
+    publication and every required platform approval.
 11. Follow [generation verification](../safe-content-administration/references/generation-verification.md)
     for every requested/reused root: child steps, visible output and freshness;
     protected Roleplay/Coaching instructions have metadata only. Use the local
@@ -195,8 +184,10 @@ verification pending until evidence reads finish.
   grants may need reauthorization for `content:read` before publication.
 - If a tool or App view is unavailable, use the structured tool fallback; do not
   work around Popscale's authorization or validation layer.
-- Never activate the journey until `journey_activation_readiness` confirms that
-  execution finished and every linked content item is active.
+- The bundle verifies persisted roots are ready/current and activates them before
+  the Journey, including manually assembled draft Journeys. Individual
+  `journey_activation_readiness` retains completed-plan execution and active-child
+  requirements.
 - Never set an item's `passing_score` yourself. The server computes it (60 % of
   the obtainable score by default) and rejects an impossible threshold with
   `Passing score cannot exceed the content's maximum score.`; show that error

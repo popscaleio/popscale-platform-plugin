@@ -31,7 +31,8 @@ for Journey context, duplicate names and internal identifiers.
    answering. Label `draft` content as draft and unverified, and label `review`
    content as under review. Do not present either as confirmed product behavior.
 4. For an authenticated action, follow the relevant product workflow. Use
-   `safe-journey-creation` for journey creation, execution, or publication. Use
+   `safe-journey-creation` for journey creation/execution and its
+   [publication workflow](../safe-journey-creation/references/publication.md). Use
    `safe-interview-administration` for Interview Study authoring, precise
    question edits, invitations, respondent links, run review, or analysis. Use
    `safe-content-administration` to find, create, inspect, or granularly edit

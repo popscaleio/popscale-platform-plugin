@@ -4,6 +4,12 @@ All notable changes to the Popscale Platform plugin are documented here.
 
 ## [Unreleased]
 
+- Prepare conditional guidance for one exact, server-owned Journey publication
+  approval, with explicit automatic-assignment inclusion, unchanged active roots,
+  atomic publication receipts and original-command recovery. Preserve individual
+  publication. This candidate requires matching backend/review deployment and
+  separate host acceptance; no version bump or publication is included.
+
 ## [1.6.11] - 2026-11-25
 
 - Assign business roles on explicitly selected responsibility units through the

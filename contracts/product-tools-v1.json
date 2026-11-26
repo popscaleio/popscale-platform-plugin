@@ -10,7 +10,8 @@
     "admin_unit_list": "218d3beb8e59c45d657b8c3c3f8688d08fbf734f",
     "admin_user_get": "218d3beb8e59c45d657b8c3c3f8688d08fbf734f",
     "admin_user_list": "218d3beb8e59c45d657b8c3c3f8688d08fbf734f",
-    "get_company_activity_summary": "28aaf27de1949d778e0da22060dec11636d85ef6"
+    "get_company_activity_summary": "28aaf27de1949d778e0da22060dec11636d85ef6",
+    "journey_publish_bundle": "704c4a8df0daaef816c0249cea5e190ddcad2f8a"
   },
   "product_tools": [
     "admin_business_role_list",
@@ -83,6 +84,7 @@
     "journey_plan_update_item_input",
     "journey_plan_update_overview",
     "journey_plan_validate_item_input",
+    "journey_publish_bundle",
     "journey_structure_get",
     "journey_structure_update",
     "knowledge_agent_context_manifest",
